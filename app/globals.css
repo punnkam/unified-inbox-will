@@ -26,6 +26,17 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+/* Add sitoshi font */
+@layer base {
+  @font-face {
+    font-family: "Satoshi-Variable";
+    src: url("./fonts/Satoshi-Variable.ttf") format("truetype");
+    font-weight: 300 900;
+    font-display: swap;
+    font-style: normal;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
