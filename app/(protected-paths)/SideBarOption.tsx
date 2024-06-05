@@ -14,8 +14,10 @@ export const SideBarIcon = ({
     <Link
       href={path}
       className={cn(
-        "w-10 h-10 rounded-lg flex items-center justify-center text-icon-secondary hover:text-icon-brand hover:bg-primary hover:border hover:stroke-primary",
-        selected && "border bg-primary stroke-primary text-icon-brand"
+        "w-10 h-10 rounded-lg flex items-center justify-center",
+        selected
+          ? "text-icon-brand border bg-primary stroke-primary"
+          : "text-icon-secondary hover:text-icon-brand hover:bg-primary hover:border hover:stroke-primary"
       )}
     >
       {icon}
