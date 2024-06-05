@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-satoshi bg-primary h-screen text-primary">
+      <body className="font-satoshi font-medium bg-primary h-screen text-primary">
         {children}
       </body>
     </html>
