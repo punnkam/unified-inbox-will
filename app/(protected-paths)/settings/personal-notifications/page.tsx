@@ -1,9 +1,86 @@
+"use client";
+
 import ArrowCircleBrokenUpLeftIcon from "@/components/icons/ArrowCircleBrokenUpLeftIcon";
 import MailIcon from "@/components/icons/MailIcon";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
+import { useState, useEffect } from "react";
+import { useDebounce } from "@/lib/hooks/useDebounce";
+
+// The types for every input to save
+interface Data {
+  pushNotifications: boolean;
+  email: boolean;
+  newGuestMessages: boolean;
+  conversationTag: boolean;
+  assignedToGuestConversation: boolean;
+  mentionedInConversationNote: boolean;
+  newDetectedUpsells: boolean;
+  expiringUpsells: boolean;
+  newTasks: boolean;
+  assignedTask: boolean;
+  taskMarkedAsDone: boolean;
+}
 
 export default function PersonalNotificationsPage() {
+  // All the data that needs to be saved (with default values)
+  const [data, setData] = useState<Data>({
+    pushNotifications: false,
+    email: false,
+    newGuestMessages: false,
+    conversationTag: false,
+    assignedToGuestConversation: false,
+    mentionedInConversationNote: false,
+    newDetectedUpsells: false,
+    expiringUpsells: false,
+    newTasks: false,
+    assignedTask: false,
+    taskMarkedAsDone: false,
+  });
+
+  // Handle the change of the data by updating the state
+  // This function is used by every input field
+  const handleChange = (key: keyof Data, value: boolean) => {
+    if (data) {
+      setData((prev) => ({
+        ...prev,
+        [key]: value,
+      }));
+    }
+
+    console.log(data);
+  };
+
+  // Debounce the data (Wait for 3 seconds before saving the data)
+  const debouncedData = useDebounce(data, 3000);
+
+  // This is where the save function will be called
+  useEffect(() => {
+    // Save the data here
+    console.log("Debounced data", debouncedData);
+
+    // some sort of validation from api response
+    // if success, show a message
+  }, [debouncedData]);
+
+  // This will only run once when the component is mounted
+  useEffect(() => {
+    // Fetch/Load the data into state here
+    setData({
+      pushNotifications: true,
+      email: false,
+      newGuestMessages: true,
+      conversationTag: false,
+      assignedToGuestConversation: false,
+      mentionedInConversationNote: false,
+      newDetectedUpsells: true,
+      expiringUpsells: false,
+      newTasks: true,
+      assignedTask: false,
+      taskMarkedAsDone: false,
+    });
+  }, []);
+
   return (
     <div className="flex flex-col gap-[28px]">
       <div className="flex flex-col gap-3">
@@ -32,7 +109,12 @@ export default function PersonalNotificationsPage() {
             </div>
           </div>
           <div>
-            <Switch defaultChecked />
+            <Switch
+              checked={data.pushNotifications}
+              onCheckedChange={() =>
+                handleChange("pushNotifications", !data.pushNotifications)
+              }
+            />
           </div>
         </div>
 
@@ -50,7 +132,10 @@ export default function PersonalNotificationsPage() {
             </div>
           </div>
           <div>
-            <Switch />
+            <Switch
+              checked={data.email}
+              onCheckedChange={() => handleChange("email", !data.email)}
+            />
           </div>
         </div>
       </div>
@@ -63,26 +148,62 @@ export default function PersonalNotificationsPage() {
         <div className="border border-stroke rounded-md p-4">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
-              <Checkbox id="check1" defaultChecked />
-              <label htmlFor="check1" className="text-subtitle-xs">
+              <Checkbox
+                id="newGuestMessages"
+                checked={data.newGuestMessages}
+                onCheckedChange={() =>
+                  handleChange("newGuestMessages", !data.newGuestMessages)
+                }
+              />
+              <label htmlFor="newGuestMessages" className="text-subtitle-xs">
                 All new guest messages
               </label>
             </div>
             <div className="flex items-center gap-2">
-              <Checkbox id="check2" />
-              <label htmlFor="check2" className="text-subtitle-xs">
+              <Checkbox
+                id="conversationTag"
+                checked={data.conversationTag}
+                onCheckedChange={() =>
+                  handleChange("conversationTag", !data.conversationTag)
+                }
+              />
+              <label htmlFor="conversationTag" className="text-subtitle-xs">
                 A message is tagged with a conversation tag
               </label>
             </div>
             <div className="flex items-center gap-2">
-              <Checkbox id="check3" />
-              <label htmlFor="check3" className="text-subtitle-xs">
+              <Checkbox
+                id="assignedToGuestConversation"
+                checked={data.assignedToGuestConversation}
+                onCheckedChange={() =>
+                  handleChange(
+                    "assignedToGuestConversation",
+                    !data.assignedToGuestConversation
+                  )
+                }
+              />
+              <label
+                htmlFor="assignedToGuestConversation"
+                className="text-subtitle-xs"
+              >
                 You’re assigned to a guest conversation
               </label>
             </div>
             <div className="flex items-center gap-2">
-              <Checkbox id="check4" />
-              <label htmlFor="check4" className="text-subtitle-xs">
+              <Checkbox
+                id="mentionedInConversationNote"
+                checked={data.mentionedInConversationNote}
+                onCheckedChange={() =>
+                  handleChange(
+                    "mentionedInConversationNote",
+                    !data.mentionedInConversationNote
+                  )
+                }
+              />
+              <label
+                htmlFor="mentionedInConversationNote"
+                className="text-subtitle-xs"
+              >
                 You’re mentioned in a conversation note
               </label>
             </div>
@@ -98,14 +219,26 @@ export default function PersonalNotificationsPage() {
         <div className="border border-stroke rounded-md p-4">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
-              <Checkbox id="check5" defaultChecked />
-              <label htmlFor="check5" className="text-subtitle-xs">
+              <Checkbox
+                id="newDetectedUpsells"
+                checked={data.newDetectedUpsells}
+                onCheckedChange={() =>
+                  handleChange("newDetectedUpsells", !data.newDetectedUpsells)
+                }
+              />
+              <label htmlFor="newDetectedUpsells" className="text-subtitle-xs">
                 All new detected upsells
               </label>
             </div>
             <div className="flex items-center gap-2">
-              <Checkbox id="check6" />
-              <label htmlFor="check6" className="text-subtitle-xs">
+              <Checkbox
+                id="expiringUpsells"
+                checked={data.expiringUpsells}
+                onCheckedChange={() =>
+                  handleChange("expiringUpsells", !data.expiringUpsells)
+                }
+              />
+              <label htmlFor="expiringUpsells" className="text-subtitle-xs">
                 Upsells that are expiring in 24 hours
               </label>
             </div>
@@ -121,20 +254,36 @@ export default function PersonalNotificationsPage() {
         <div className="border border-stroke rounded-md p-4">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
-              <Checkbox id="check7" defaultChecked />
-              <label htmlFor="check7" className="text-subtitle-xs">
+              <Checkbox
+                id="newTasks"
+                checked={data.newTasks}
+                onCheckedChange={() => handleChange("newTasks", !data.newTasks)}
+              />
+              <label htmlFor="newTasks" className="text-subtitle-xs">
                 All new tasks
               </label>
             </div>
             <div className="flex items-center gap-2">
-              <Checkbox id="check8" />
-              <label htmlFor="check8" className="text-subtitle-xs">
+              <Checkbox
+                id="assignedTask"
+                checked={data.assignedTask}
+                onCheckedChange={() =>
+                  handleChange("assignedTask", !data.assignedTask)
+                }
+              />
+              <label htmlFor="assignedTask" className="text-subtitle-xs">
                 You’re assigned a task
               </label>
             </div>
             <div className="flex items-center gap-2">
-              <Checkbox id="check8" />
-              <label htmlFor="check8" className="text-subtitle-xs">
+              <Checkbox
+                id="taskMarkedAsDone"
+                checked={data.taskMarkedAsDone}
+                onCheckedChange={() =>
+                  handleChange("taskMarkedAsDone", !data.taskMarkedAsDone)
+                }
+              />
+              <label htmlFor="taskMarkedAsDone" className="text-subtitle-xs">
                 A task you’re assigned to is marked as done
               </label>
             </div>
