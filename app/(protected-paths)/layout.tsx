@@ -29,16 +29,17 @@ export default function ProtectedPathsLayout({
               <HomeLineIcon className="text-icon-secondary" />
             </div>
             <div className="w-10 h-10 rounded-full flex items-center justify-center">
-              <BankNoteIcon className="text-icon-secondary" />
-            </div>
-            <div className="w-10 h-10 rounded-full flex items-center justify-center">
               <InboxIcon className="text-icon-secondary" />
             </div>
             <div className="w-10 h-10 rounded-full flex items-center justify-center">
-              <LayoutAltIcon className="text-icon-secondary" />
+              <LayersThreeIcon className="text-icon-secondary" />
             </div>
             <div className="w-10 h-10 rounded-full flex items-center justify-center">
-              <LayersThreeIcon className="text-icon-secondary" />
+              <BankNoteIcon className="text-icon-secondary" />
+            </div>
+
+            <div className="w-10 h-10 rounded-full flex items-center justify-center">
+              <LayoutAltIcon className="text-icon-secondary" />
             </div>
           </div>
         </div>
