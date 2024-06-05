@@ -114,7 +114,8 @@ const config = {
       backgroundColor: {
         primary: "#FFFFFF",
         "primary-subtle": "#F9FAFB",
-        secondary: "#F8F9FA",
+        secondary: "#F3F4F6",
+        "secondary-hover": "#E4E4E7",
         hover: "#F4F4F5",
         pressed: "#E4E4E7",
         selected: "#E5ECFD",
@@ -123,9 +124,12 @@ const config = {
         "success-subtle": "#D1FAE5",
         error: "#EF4444",
         "error-subtle": "#FEE2E2",
+        "error-hover": "#DC2626",
         brand: "#10275B",
+        "brand-hover": "#40527C",
         inverse: "#191919",
         "inverse-subtle": "#030812",
+        disabled: "#F8F9FA",
       },
       textColor: {
         primary: "#191919",
@@ -145,6 +149,8 @@ const config = {
       stroke: {
         primary: "#F0F0F0",
         secondary: "#E4E4E7",
+        "secondary-hover": "#D4D4D8",
+        "secondary-disabled": "#E5E7EB",
         tertiary: "#F9FAFB",
         info: "#BFDBFE",
         active: "#2563EB",
@@ -202,6 +208,9 @@ const config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      outlineColor: {
+        active: "#2563EB",
       },
       keyframes: {
         "accordion-down": {
