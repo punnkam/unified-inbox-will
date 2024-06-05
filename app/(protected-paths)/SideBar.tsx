@@ -15,6 +15,9 @@ import { usePathname } from "next/navigation";
 export const SideBar = () => {
   const pathname = usePathname();
 
+  // Get the first element of path
+  const path = pathname.split("/")[1];
+
   return (
     <div className="h-screen w-fit flex flex-col justify-between items-center bg-primary-subtle stroke-primary px-4 pt-6 pb-8">
       <div className="flex flex-col items-center">
@@ -23,27 +26,27 @@ export const SideBar = () => {
           <SideBarIcon
             path={"/home"}
             icon={<HomeLineIcon />}
-            selected={pathname == "/home"}
+            selected={path == "home"}
           />
           <SideBarIcon
             path={"/inbox"}
             icon={<InboxIcon />}
-            selected={pathname == "/inbox"}
+            selected={path == "inbox"}
           />
           <SideBarIcon
             path={"/three"}
             icon={<LayersThreeIcon />}
-            selected={pathname == "/three"}
+            selected={path == "three"}
           />
           <SideBarIcon
             path={"/money"}
             icon={<BankNoteIcon />}
-            selected={pathname == "/money"}
+            selected={path == "money"}
           />
           <SideBarIcon
             path={"/layout"}
             icon={<LayoutAltIcon />}
-            selected={pathname == "/layout"}
+            selected={path == "layout"}
           />
         </div>
       </div>
@@ -52,12 +55,12 @@ export const SideBar = () => {
         <SideBarIcon
           path={"/settings"}
           icon={<SettingsIcon />}
-          selected={pathname == "/settings"}
+          selected={path == "settings"}
         />
         <SideBarIcon
           path={"/guide"}
           icon={<BookOpenIcon />}
-          selected={pathname == "/guide"}
+          selected={path == "guide"}
         />
 
         {/* User Image */}
