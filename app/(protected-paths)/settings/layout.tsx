@@ -24,7 +24,7 @@ export default function ProtectedPathsLayout({
       <SettingsSidebar />
 
       {/* Page Content */}
-      <div className="flex-grow bg-primary w-full px-[120px] pt-[100px] pb-[40px]">
+      <div className="h-screen flex-grow bg-primary w-full px-[120px] pt-[100px] pb-[40px] overflow-y-auto">
         {children}
       </div>
     </div>
