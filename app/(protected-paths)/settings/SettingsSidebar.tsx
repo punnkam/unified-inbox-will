@@ -14,7 +14,7 @@ export const SettingsSidebar = () => {
 
   return (
     <div className="h-screen bg-primary-subtle w-[280px] border-e stroke-primary overflow-y-auto">
-      <h2 className="py-8 px-4 text-title-md">Settings</h2>
+      <p className="py-8 px-4 text-title-md">Settings</p>
 
       {/* User Card */}
       <div className="flex px-4 pb-2 gap-1">
