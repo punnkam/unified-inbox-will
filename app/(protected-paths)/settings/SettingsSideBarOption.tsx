@@ -14,8 +14,8 @@ export const SettingsSideBarOption = ({
     <Link href={path}>
       <p
         className={cn(
-          "w-full px-6 py-2 text-subtitle-xs hover:bg-selected-subtle",
-          selected && "bg-selected hover:bg-selected"
+          "w-full px-6 py-2 text-subtitle-xs active:bg-pressed",
+          selected ? "bg-selected hover:bg-selected" : "hover:bg-hover"
         )}
       >
         {name}
