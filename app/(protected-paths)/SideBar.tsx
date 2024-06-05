@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import HostAiIcon from "../components/icons/HostAiIcon";
-import BankNoteIcon from "../components/icons/BankNoteIcon";
-import BookOpenIcon from "../components/icons/BookOpenIcon";
-import HomeLineIcon from "../components/icons/HomeLineIcon";
-import InboxIcon from "../components/icons/InboxIcon";
-import LayersThreeIcon from "../components/icons/LayersThreeIcon";
-import LayoutAltIcon from "../components/icons/LayoutAltIcon";
-import SettingsIcon from "../components/icons/SettingsIcon";
+import HostAiIcon from "../../components/icons/HostAiIcon";
+import BankNoteIcon from "../../components/icons/BankNoteIcon";
+import BookOpenIcon from "../../components/icons/BookOpenIcon";
+import HomeLineIcon from "../../components/icons/HomeLineIcon";
+import InboxIcon from "../../components/icons/InboxIcon";
+import LayersThreeIcon from "../../components/icons/LayersThreeIcon";
+import LayoutAltIcon from "../../components/icons/LayoutAltIcon";
+import SettingsIcon from "../../components/icons/SettingsIcon";
 import { SideBarIcon } from "./SideBarOption";
 import { usePathname } from "next/navigation";
 
@@ -19,7 +19,7 @@ export const SideBar = () => {
   const path = pathname.split("/")[1];
 
   return (
-    <div className="h-screen w-fit flex flex-col justify-between items-center bg-primary-subtle stroke-primary px-4 pt-6 pb-8">
+    <div className="h-screen w-fit flex flex-col justify-between items-center bg-primary-subtle border stroke-primary px-4 pt-6 pb-8">
       <div className="flex flex-col items-center">
         <HostAiIcon />
         <div className="mt-5 flex flex-col items-center gap-5">
