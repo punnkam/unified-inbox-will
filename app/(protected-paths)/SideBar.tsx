@@ -53,7 +53,7 @@ export const SideBar = () => {
       <div className="flex flex-col items-center gap-[20px]">
         {/* settings and book */}
         <SideBarIcon
-          path={"/settings"}
+          path={"/settings/personal-notifications"}
           icon={<SettingsIcon />}
           selected={path == "settings"}
         />

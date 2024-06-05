@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { SettingsSidebar } from "./SettingsSidebar";
 
 export default function ProtectedPathsLayout({
@@ -6,6 +9,15 @@ export default function ProtectedPathsLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  // If the user dosnt have a settings path, redirect to the first one
+  if (pathname == "/settings") {
+    router.replace("/settings/personal-notifications");
+    return;
+  }
+
   return (
     <div className="flex">
       {/* Side bar */}
