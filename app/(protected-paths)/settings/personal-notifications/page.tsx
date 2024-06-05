@@ -6,6 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { useState, useEffect } from "react";
 import { useDebounce } from "@/lib/hooks/useDebounce";
+import { toast } from "sonner";
 
 // The types for every input to save
 interface Data {
@@ -47,20 +48,19 @@ export default function PersonalNotificationsPage() {
         [key]: value,
       }));
     }
-
-    console.log(data);
   };
 
   // Debounce the data (Wait for 3 seconds before saving the data)
-  const debouncedData = useDebounce(data, 3000);
+  const debouncedData = useDebounce(data, 1000);
 
   // This is where the save function will be called
   useEffect(() => {
     // Save the data here
-    console.log("Debounced data", debouncedData);
+    // console.log("Debounced data", debouncedData);
 
     // some sort of validation from api response
     // if success, show a message
+    toast.success("Settings saved successfully");
   }, [debouncedData]);
 
   // This will only run once when the component is mounted
