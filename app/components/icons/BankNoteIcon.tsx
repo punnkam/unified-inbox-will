@@ -2,8 +2,8 @@ import * as React from "react";
 const BankNoteIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    // width={23}
-    // height={16}
+    width={23}
+    height={16}
     fill="none"
     {...props}
   >
