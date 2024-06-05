@@ -167,7 +167,7 @@ const config = {
         "subtitle-xl": ["24px", "28.8px"],
         "subtitle-lg": ["20px", "24px"],
         "subtitle-xs": ["14px", "16.8px"],
-        "subtitle-medium": ["18px", "21.6px"],
+        "subtitle-md": ["18px", "21.6px"],
         "subtitle-sm": ["16px", "19.2px"],
         "subtitle-2xs": ["12px", "14.4px"],
         "subtitle-3xs": ["10px", "12px"],
@@ -176,6 +176,13 @@ const config = {
         "body-xs": ["14px", "16.8px"],
         "body-2xs": ["12px", "14.4px"],
         "body-3xs": ["10px", "12px"],
+
+        "bold-sm": ["16px", "19.2px"],
+        "bold-xs": ["14px", "16.8px"],
+        "bold-2xs": ["12px", "14.4px"],
+        "bold-2.5xs": ["11px", "13.2px"],
+        "bold-3xs": ["10px", "12px"],
+        "bold-section": ["11px", "13.2px"],
       },
       lineHeight: {
         "3xs": "10px",
