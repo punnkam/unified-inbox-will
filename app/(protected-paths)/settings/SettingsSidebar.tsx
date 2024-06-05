@@ -77,10 +77,10 @@ export const SettingsSidebar = () => {
       {/* Connected Channels */}
       <Accordion type="single" collapsible defaultValue="connected-channels">
         <AccordionItem value="connected-channels">
-          <AccordionTrigger className="px-4 pt-8 ">
+          <AccordionTrigger className="px-4 mt-8 ">
             Connected Channels
           </AccordionTrigger>
-          <AccordionContent className="pb-0">
+          <AccordionContent className="pb-0 pt-2">
             <SettingsSideBarOption
               path="/settings/connected-channels/airbnb"
               name="Airbnb"
@@ -113,10 +113,10 @@ export const SettingsSidebar = () => {
       {/* Inbox Configuration */}
       <Accordion type="single" collapsible defaultValue="inbox-configuration">
         <AccordionItem value="inbox-configuration">
-          <AccordionTrigger className="px-4 pt-[28px] ">
+          <AccordionTrigger className="px-4 mt-[28px] ">
             Inbox Configuration
           </AccordionTrigger>
-          <AccordionContent className="pb-0">
+          <AccordionContent className="pb-0 pt-2">
             <SettingsSideBarOption
               path="/settings/inbox-configuration/general"
               name="General"
