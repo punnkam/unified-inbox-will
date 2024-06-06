@@ -82,8 +82,6 @@ export const columns: ColumnDef<Member>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              {/* TODO: these do nothing right now */}
-
               <AlertDialogTrigger onClick={() => setIsOpen(true)}>
                 <DropdownMenuItem>Remove from team</DropdownMenuItem>
               </AlertDialogTrigger>
