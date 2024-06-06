@@ -85,7 +85,7 @@ export default function PersonalNotificationsPage() {
           <Input
             id="name-input"
             placeholder="Name"
-            className="text-body-sm w-96"
+            className="w-96"
             value={data.name}
             onChange={(e) => handleChange("name", e.target.value)}
           />
