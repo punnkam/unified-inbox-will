@@ -13,11 +13,11 @@ export const SettingsSidebar = () => {
   const pathname = usePathname();
 
   return (
-    <div className="h-screen bg-primary-subtle w-[280px] border-e stroke-primary overflow-y-auto">
-      <p className="py-8 px-4 text-title-md">Settings</p>
+    <div className="h-screen bg-primary-subtle w-[280px] border-e stroke-primary overflow-y-auto px-2">
+      <h2 className="py-8 px-4 text-title-md">Settings</h2>
 
       {/* User Card */}
-      <div className="flex px-4 pb-2 gap-1">
+      <div className="flex px-4 pb-2 gap-2 mb-1">
         <img
           src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="User Image"
@@ -41,7 +41,7 @@ export const SettingsSidebar = () => {
       />
 
       {/* Workspace Card */}
-      <div className="flex px-4 pb-2 gap-2 mt-6">
+      <div className="flex px-4 pb-2 gap-2 mt-6 mb-1">
         <img
           src="https://plus.unsplash.com/premium_photo-1661914978519-52a11fe159a7?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Workspace Image"
@@ -77,7 +77,7 @@ export const SettingsSidebar = () => {
       {/* Connected Channels */}
       <Accordion type="single" collapsible defaultValue="connected-channels">
         <AccordionItem value="connected-channels">
-          <AccordionTrigger className="px-4 mt-8 ">
+          <AccordionTrigger className="px-4 mt-8 rounded-md py-0.5">
             Connected Channels
           </AccordionTrigger>
           <AccordionContent className="pb-0 pt-2">
@@ -113,7 +113,7 @@ export const SettingsSidebar = () => {
       {/* Inbox Configuration */}
       <Accordion type="single" collapsible defaultValue="inbox-configuration">
         <AccordionItem value="inbox-configuration">
-          <AccordionTrigger className="px-4 mt-[28px] ">
+          <AccordionTrigger className="px-4 mt-[28px] rounded-md py-0.5">
             Inbox Configuration
           </AccordionTrigger>
           <AccordionContent className="pb-0 pt-2">
