@@ -1,16 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { useDebounce } from "@/lib/hooks/useDebounce";
+import { toast } from "sonner";
+import { useDebouncedSave } from "@/lib/hooks/useDebouncedSave";
+
+interface Data {
+  signature: string;
+}
 
 export default function PersonalNotificationsPage() {
-  const [signature, setSignature] = useState("");
-
-  const handleSave = () => {
-    // Do something with the signature here
-    console.log("Save signature", signature);
+  const initialData: Data = {
+    signature: "",
   };
+
+  const saveData = (data: Data) => {
+    // Call API to save the data
+    console.log("Saving data", data);
+
+    toast.success("Signature saved successfully");
+  };
+
+  const { data, handleChange, setData } = useDebouncedSave<Data>({
+    initialData,
+    saveData,
+  });
+
+  useEffect(() => {
+    // Fetch/Load the data into state here
+    setData({
+      signature: "Best, Will",
+    });
+  }, [setData]);
 
   return (
     <div className="flex flex-col gap-[28px]">
@@ -31,13 +54,10 @@ export default function PersonalNotificationsPage() {
           id="signature-input"
           placeholder="Best, Pun"
           className="text-body-sm resize-none"
-          value={signature}
-          onChange={(e) => setSignature(e.target.value)}
+          value={data.signature}
+          onChange={(e) => handleChange("signature", e.target.value)}
         />
       </div>
-      <Button className="w-fit" disabled={signature == ""} onClick={handleSave}>
-        Save
-      </Button>
     </div>
   );
 }

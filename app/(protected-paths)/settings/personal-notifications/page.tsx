@@ -7,8 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import { useState, useEffect } from "react";
 import { useDebounce } from "@/lib/hooks/useDebounce";
 import { toast } from "sonner";
-
-// The types for every input to save
+import { useDebouncedSave } from "@/lib/hooks/useDebouncedSave";
 interface Data {
   pushNotifications: boolean;
   email: boolean;
@@ -24,8 +23,7 @@ interface Data {
 }
 
 export default function PersonalNotificationsPage() {
-  // All the data that needs to be saved (with default values)
-  const [data, setData] = useState<Data>({
+  const initialData: Data = {
     pushNotifications: false,
     email: false,
     newGuestMessages: false,
@@ -37,42 +35,21 @@ export default function PersonalNotificationsPage() {
     newTasks: false,
     assignedTask: false,
     taskMarkedAsDone: false,
+  };
+
+  const saveData = (data: Data) => {
+    // Call API to save the data
+    console.log("Saving data", data);
+
+    toast.success("Settings saved successfully");
+  };
+
+  const { data, handleChange, setData } = useDebouncedSave<Data>({
+    initialData,
+    saveData,
   });
 
-  // Counts changes for debounce
-  const [changes, setChanges] = useState(0);
-
-  // Debounce the changes (Wait for 1 second before triggering to save the data)
-  const debouncedChanges = useDebounce(changes, 1000);
-
-  // Handle changes to the data
-  const handleChange = (key: keyof Data, value: boolean) => {
-    setData((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-    setChanges((prev) => prev + 1);
-  };
-
-  // Save data when debouncedChanges changes
   useEffect(() => {
-    if (changes === 0) return;
-
-    saveData();
-  }, [debouncedChanges]);
-
-  const saveData = () => {
-    // Call API to save the data
-    toast.success(`${changes} Settings saved successfully`);
-    setChanges(0);
-  };
-
-  // This will only run once when the component is mounted
-  useEffect(() => {
-    fetchInitialData();
-  }, []);
-
-  const fetchInitialData = () => {
     // Fetch/Load the data into state here
     setData({
       pushNotifications: true,
@@ -87,7 +64,7 @@ export default function PersonalNotificationsPage() {
       assignedTask: false,
       taskMarkedAsDone: false,
     });
-  };
+  }, [setData]);
 
   return (
     <div className="flex flex-col gap-[28px]">
