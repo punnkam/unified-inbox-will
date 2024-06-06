@@ -81,4 +81,10 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Class to show edit button on teams table dropdown */
+  .group:hover .edit-button,
+  [data-state="open"] .edit-button {
+    display: block;
+  }
 }
