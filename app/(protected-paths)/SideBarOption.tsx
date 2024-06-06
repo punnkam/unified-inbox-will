@@ -16,8 +16,8 @@ export const SideBarIcon = ({
       className={cn(
         "w-10 h-10 rounded-lg flex items-center justify-center",
         selected
-          ? "text-icon-brand bg-primary border stroke-primary"
-          : "text-icon-secondary hover:text-icon-secondary hover:bg-hover active:bg-pressed active:border active:stroke-primary"
+          ? "text-icon-brand bg-primary border border-primary"
+          : "text-icon-secondary hover:text-icon-secondary hover:bg-hover active:bg-pressed active:border active:border-primary"
       )}
     >
       {icon}

@@ -13,7 +13,7 @@ export const SettingsSidebar = () => {
   const pathname = usePathname();
 
   return (
-    <div className="h-screen bg-primary-subtle w-[280px] border-e stroke-primary overflow-y-auto px-2">
+    <div className="h-screen bg-primary-subtle w-[280px] border-e border-primary overflow-y-auto px-2">
       <h2 className="py-8 px-4 text-title-md">Settings</h2>
 
       {/* User Card */}

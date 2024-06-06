@@ -146,7 +146,7 @@ const config = {
         "link-bold": "#2563EB",
         "primary-inverse": "#FFFFFF",
       },
-      stroke: {
+      borderColor: {
         primary: "#F0F0F0",
         secondary: "#E4E4E7",
         "secondary-hover": "#D4D4D8",

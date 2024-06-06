@@ -47,7 +47,7 @@ export default function PersonalNotificationsPage() {
         </p>
       </div>
 
-      <div className="border-b stroke-primary"></div>
+      <div className="border-b border-primary"></div>
 
       <div className="flex flex-col gap-3">
         <label htmlFor="signature-input" className="text-title-sm text-primary">

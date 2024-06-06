@@ -19,7 +19,7 @@ export const SideBar = () => {
   const path = pathname.split("/")[1];
 
   return (
-    <div className="h-screen w-fit flex flex-col justify-between items-center bg-primary-subtle border stroke-primary px-4 pt-6 pb-8">
+    <div className="h-screen w-fit flex flex-col justify-between items-center bg-primary-subtle border border-primary px-4 pt-6 pb-8">
       <div className="flex flex-col items-center">
         <HostAiIcon />
         <div className="mt-5 flex flex-col items-center gap-5">

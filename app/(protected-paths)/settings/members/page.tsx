@@ -64,7 +64,7 @@ export default async function MembersPage() {
         </Button>
       </div>
 
-      <div className="border-b stroke-primary"></div>
+      <div className="border-b border-primary"></div>
 
       <DataTable columns={columns} data={data} />
     </div>

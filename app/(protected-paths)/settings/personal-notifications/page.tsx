@@ -78,7 +78,7 @@ export default function PersonalNotificationsPage() {
         </p>
       </div>
 
-      <div className="border-b stroke-primary"></div>
+      <div className="border-b border-primary"></div>
 
       <div className="flex flex-col gap-5">
         <p className="text-title-lg text-tertiary">Notification methods</p>
@@ -128,7 +128,7 @@ export default function PersonalNotificationsPage() {
         </div>
       </div>
 
-      <div className="border-b stroke-primary"></div>
+      <div className="border-b border-primary"></div>
 
       <div className="flex flex-col gap-5">
         <p className="text-title-lg text-tertiary">Guest messaging</p>
@@ -199,7 +199,7 @@ export default function PersonalNotificationsPage() {
         </div>
       </div>
 
-      <div className="border-b stroke-primary"></div>
+      <div className="border-b border-primary"></div>
 
       <div className="flex flex-col gap-5">
         <p className="text-title-lg text-tertiary">Upsells</p>
@@ -234,7 +234,7 @@ export default function PersonalNotificationsPage() {
         </div>
       </div>
 
-      <div className="border-b stroke-primary"></div>
+      <div className="border-b border-primary"></div>
 
       <div className="flex flex-col gap-5">
         <p className="text-title-lg text-tertiary">Tasks</p>

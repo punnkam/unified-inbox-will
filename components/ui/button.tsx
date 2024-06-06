@@ -14,7 +14,7 @@ const buttonVariants = cva(
         destructive:
           "bg-error text-primary-inverse hover:bg-error-hover active:bg-error",
         outline:
-          "border stroke-secondary shadow-sm bg-primary hover:bg-hover hover:stroke-secondary-hover active:bg-primary disabled:bg-primary disabled:stroke-disabled disabled:text-disabled disabled:shadow-none ",
+          "border border-secondary shadow-sm bg-primary hover:bg-hover hover:border-secondary-hover active:bg-primary disabled:bg-primary disabled:border-secondary-disabled disabled:text-disabled disabled:shadow-none ",
         secondary:
           "bg-secondary text-primary hover:bg-secondary-hover active:bg-secondary",
         ghost: "hover:bg-hover active:bg-primary",
