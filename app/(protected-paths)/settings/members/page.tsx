@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Member, columns } from "./columns";
 import { DataTable } from "./data-table";
 import { PlusIcon } from "lucide-react";
+import Link from "next/link";
 
 async function getData(): Promise<Member[]> {
   // Fetch data from your API here.
@@ -58,10 +59,12 @@ export default async function MembersPage() {
             Add and manage your members
           </p>
         </div>
-        <Button variant="default">
-          <PlusIcon className="h-5 w-5 mr-2" />
-          Add
-        </Button>
+        <Link href="/settings/members/add">
+          <Button variant="default">
+            <PlusIcon className="h-5 w-5 mr-2" />
+            Add
+          </Button>
+        </Link>
       </div>
 
       <div className="border-b border-primary"></div>

@@ -61,7 +61,10 @@ export const SettingsSidebar = () => {
       <SettingsSideBarOption
         path="/settings/members"
         name="Members"
-        selected={pathname === "/settings/members"}
+        selected={
+          pathname === "/settings/members" ||
+          pathname === "/settings/members/add"
+        }
       />
       <SettingsSideBarOption
         path="/settings/teams"
