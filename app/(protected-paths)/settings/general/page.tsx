@@ -138,9 +138,13 @@ export default function PersonalNotificationsPage() {
 
         <div className="flex gap-2">
           {/* TODO: This has no function right now */}
-          <Button variant={"secondary"}>Add or Remove listings</Button>
+          <Button size={"sm"} variant={"secondary"}>
+            Add or Remove listings
+          </Button>
           <a href="#">
-            <Button variant={"outline"}>Open Stripe billing portal</Button>
+            <Button size={"sm"} variant={"outline"}>
+              Open Stripe billing portal
+            </Button>
           </a>
         </div>
       </div>
@@ -157,7 +161,9 @@ export default function PersonalNotificationsPage() {
 
         {/* TODO: This has no function right now */}
         <div className="flex gap-2">
-          <Button variant={"outline"}>Generate new key</Button>
+          <Button size={"sm"} variant={"outline"}>
+            Generate new key
+          </Button>
         </div>
       </div>
     </div>
