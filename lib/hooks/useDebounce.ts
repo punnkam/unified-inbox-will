@@ -1,4 +1,4 @@
-// Jood to take in any value and return a debounced value after a certain delay.
+// Hook to take in any value and return a debounced value after a certain delay.
 
 import { useState, useEffect } from "react";
 

@@ -39,32 +39,40 @@ export default function PersonalNotificationsPage() {
     taskMarkedAsDone: false,
   });
 
-  // Handle the change of the data by updating the state
-  // This function is used by every input field
+  // Counts changes for debounce
+  const [changes, setChanges] = useState(0);
+
+  // Debounce the changes (Wait for 1 second before triggering to save the data)
+  const debouncedChanges = useDebounce(changes, 1000);
+
+  // Handle changes to the data
   const handleChange = (key: keyof Data, value: boolean) => {
-    if (data) {
-      setData((prev) => ({
-        ...prev,
-        [key]: value,
-      }));
-    }
+    setData((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+    setChanges((prev) => prev + 1);
   };
 
-  // Debounce the data (Wait for 3 seconds before saving the data)
-  const debouncedData = useDebounce(data, 1000);
-
-  // This is where the save function will be called
+  // Save data when debouncedChanges changes
   useEffect(() => {
-    // Save the data here
-    // console.log("Debounced data", debouncedData);
+    if (changes === 0) return;
 
-    // some sort of validation from api response
-    // if success, show a message
-    toast.success("Settings saved successfully");
-  }, [debouncedData]);
+    saveData();
+  }, [debouncedChanges]);
+
+  const saveData = () => {
+    // Call API to save the data
+    toast.success(`${changes} Settings saved successfully`);
+    setChanges(0);
+  };
 
   // This will only run once when the component is mounted
   useEffect(() => {
+    fetchInitialData();
+  }, []);
+
+  const fetchInitialData = () => {
     // Fetch/Load the data into state here
     setData({
       pushNotifications: true,
@@ -79,7 +87,7 @@ export default function PersonalNotificationsPage() {
       assignedTask: false,
       taskMarkedAsDone: false,
     });
-  }, []);
+  };
 
   return (
     <div className="flex flex-col gap-[28px]">
