@@ -20,7 +20,10 @@ export default function PersonalNotificationsPage() {
     // Call API to save the data
     console.log("Saving data", data);
 
-    toast.success("Signature saved successfully");
+    setTimeout(() => {
+      console.log("Exmaple API delay", data);
+      toast.success("Settings saved successfully");
+    }, 1000);
   };
 
   const { data, handleChange, setData } = useDebouncedSave<Data>({

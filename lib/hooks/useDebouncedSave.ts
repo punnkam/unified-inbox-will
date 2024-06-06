@@ -14,7 +14,7 @@ export const useDebouncedSave = <T>({
   debounceDelay = 1000,
 }: UseDebouncedSaveOptions<T>) => {
   const [data, setData] = useState<T>(initialData);
-  const [changes, setChanges] = useState(0);
+  const [changes, setChanges] = useState(-1);
 
   const debouncedChanges = useDebounce(changes, debounceDelay);
 
@@ -27,9 +27,12 @@ export const useDebouncedSave = <T>({
   };
 
   useEffect(() => {
-    if (changes === 0) return;
-    saveData(data);
-    setChanges(0);
+    const fetchData = async () => {
+      if (changes === -1) return;
+      setChanges(-1);
+      await saveData(data);
+    };
+    fetchData();
   }, [debouncedChanges]);
 
   return { data, handleChange, setData };
