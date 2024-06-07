@@ -40,6 +40,10 @@ export type Team = {
 
 export type MemberWithTeamId = Member & { teamId: number };
 
+export type MemberWithDeleteHandler = Member & {
+  onDelete: (member: Member) => void;
+};
+
 export type TeamWithMemberWithTeamId = Omit<Team, "members"> & {
   members: MemberWithTeamId[];
 };
