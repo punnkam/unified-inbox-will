@@ -39,12 +39,7 @@ export function DataTable<TData, TValue>({
   avaliableMembers,
   teamId,
 }: DataTableProps<TData, TValue>) {
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
-    {
-      id: "status",
-      value: "Active",
-    },
-  ]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
     data,
@@ -54,12 +49,6 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       columnFilters,
-    },
-    initialState: {
-      // hide status column - so we can filter by status without showing the column
-      columnVisibility: {
-        status: false,
-      },
     },
   });
 
