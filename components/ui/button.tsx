@@ -1,16 +1,15 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-
-import { cn } from "@/lib/utils";
+import { clsx } from "clsx";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-subtitle-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-icon-active focus-visible:ring-offset-2 disabled:pointer-events-none disabled:bg-secondary disabled:text-disabled",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-icon-active focus-visible:ring-offset-2 disabled:pointer-events-none disabled:bg-secondary disabled:text-disabled",
   {
     variants: {
       variant: {
         default:
-          "bg-brand text-primary-inverse hover:bg-brand-hover active:bg-brand",
+          " bg-brand text-primary-inverse hover:bg-brand-hover active:bg-brand",
         destructive:
           "bg-error text-primary-inverse hover:bg-error-hover active:bg-error",
         outline:
@@ -23,10 +22,10 @@ const buttonVariants = cva(
           "text-error underline-offset-4 hover:underline disabled:bg-transparent disabled:text-disabled disabled:underline-none",
       },
       size: {
-        sm: "h-9 rounded-md px-3",
-        md: "h-10 rounded-md px-4",
-        lg: "h-11 rounded-md px-8",
-        xl: "h-12 rounded-md px-10",
+        sm: "text-subtitle-xs h-9 px-3",
+        md: "text-subtitle-xs h-10 px-4",
+        lg: "text-subtitle-sm h-11 px-8",
+        xl: "text-subtitle-sm h-12 px-10",
         icon: "h-10 w-10",
       },
     },
@@ -48,7 +47,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : "button";
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={clsx(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
       />
