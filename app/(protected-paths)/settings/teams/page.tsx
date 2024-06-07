@@ -10,7 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/table-accordion";
-import EditIcon from "@/components/icons/EditIcon";
+import { EditIcon } from "@/components/icons/CustomIcons";
 
 async function getData(): Promise<Team[]> {
   // Fetch data from your API here.
