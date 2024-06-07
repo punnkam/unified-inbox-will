@@ -34,11 +34,15 @@ export type Member = {
 export type Team = {
   id: number;
   name: string;
-  iconId?: number;
+  iconId: number;
   members: Member[];
 };
 
 export type MemberWithTeamId = Member & { teamId: number };
+
+export type TeamWithMemberWithTeamId = Omit<Team, "members"> & {
+  members: MemberWithTeamId[];
+};
 
 export const fakeMembersData: Member[] = [
   {

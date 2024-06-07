@@ -20,20 +20,28 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Member } from "@/lib/types";
+import { MemberWithTeamId } from "@/lib/types";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-const handleRemoveMember = (member: Member) => {
+const handleRemoveMember = (
+  member: MemberWithTeamId,
+  router: AppRouterInstance
+) => {
   // console.log("Removing member", member);
 
   // Call your API here
   setTimeout(() => {
     toast.success(`Removed ${member.name} from team ${member.teamId}`);
+
+    // refresh the page to get the updated data
+    router.refresh();
   }, 1000);
 };
 
-export const columns: ColumnDef<Member>[] = [
+export const columns: ColumnDef<MemberWithTeamId>[] = [
   {
     accessorKey: "name",
     header: "Name",
@@ -70,6 +78,8 @@ export const columns: ColumnDef<Member>[] = [
     id: "actions",
     cell: ({ row }) => {
       const [isOpen, setIsOpen] = useState(false);
+      const router = useRouter();
+
       const member = row.original;
 
       return (
@@ -108,7 +118,7 @@ export const columns: ColumnDef<Member>[] = [
                 variant="destructive"
                 size="sm"
                 onClick={async () => {
-                  await handleRemoveMember(member);
+                  await handleRemoveMember(member, router);
                   setIsOpen(false);
                 }}
               >

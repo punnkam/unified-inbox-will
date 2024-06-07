@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
-import { Member, Team, fakeTeamsData, fakeIconsData } from "@/lib/types";
+import {
+  TeamWithMemberWithTeamId,
+  fakeTeamsData,
+  fakeIconsData,
+} from "@/lib/types";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import {
@@ -12,8 +16,18 @@ import {
 } from "@/components/ui/table-accordion";
 import { EditIcon } from "@/components/icons/CustomIcons";
 
-async function getData(): Promise<Team[]> {
+async function getData(): Promise<TeamWithMemberWithTeamId[]> {
   // Fetch data from your API here.
+
+  fakeTeamsData.forEach((team) => {
+    team.members = team.members.map((member) => ({
+      ...member,
+      teamId: team.id,
+    }));
+  });
+
+  // this is throwing a type error because of the explicit type on fakeTeamsData
+  //@ts-ignore
   return fakeTeamsData;
 }
 
@@ -43,12 +57,6 @@ export default async function MembersPage() {
         {data.map((team) => {
           // get the icon for the team
           const icon = fakeIconsData.find((icon) => icon.id === team.iconId);
-
-          // add the teamId to the members (fo the delete functionality)
-          team.members = team.members.map((member) => ({
-            ...member,
-            teamId: team.id,
-          }));
 
           return (
             <AccordionItem

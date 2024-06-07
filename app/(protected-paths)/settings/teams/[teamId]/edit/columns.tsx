@@ -23,13 +23,21 @@ import {
 import { MemberWithTeamId } from "@/lib/types";
 import { toast } from "sonner";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-const handleRemoveMember = (member: MemberWithTeamId) => {
+const handleRemoveMember = (
+  member: MemberWithTeamId,
+  router: AppRouterInstance
+) => {
   // console.log("Removing member", member);
 
   // Call your API here
   setTimeout(() => {
     toast.success(`Removed ${member.name} from team ${member.teamId}`);
+
+    // refresh the page to get the updated data
+    router.refresh();
   }, 1000);
 };
 
@@ -70,6 +78,7 @@ export const columns: ColumnDef<MemberWithTeamId>[] = [
     id: "actions",
     cell: ({ row }) => {
       const [isOpen, setIsOpen] = useState(false);
+      const router = useRouter();
       const member = row.original;
 
       return (
@@ -108,7 +117,7 @@ export const columns: ColumnDef<MemberWithTeamId>[] = [
                 variant="destructive"
                 size="sm"
                 onClick={async () => {
-                  await handleRemoveMember(member);
+                  await handleRemoveMember(member, router);
                   setIsOpen(false);
                 }}
               >
