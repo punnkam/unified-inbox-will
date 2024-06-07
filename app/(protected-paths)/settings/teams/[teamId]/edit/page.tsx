@@ -214,7 +214,7 @@ export default function EditTeamPage({
           {/* TODO this isnt opening, but If i have a button in the trigger then a hydration fails */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="w-10 h-10 p-0">
+              <Button variant="outline" className="w-10 h-10 px-0">
                 {fakeIconsData.find((icon) => icon.id === data.iconId)?.icon ||
                   fakeIconsData[0].icon}
               </Button>
@@ -224,7 +224,7 @@ export default function EditTeamPage({
                 <DropdownMenuItem key={icon.id} className="w-fit p-0">
                   <Button
                     variant="ghost"
-                    className="h-10 w-10 p-1 text-icon-disabled hover:text-icon-tertiary"
+                    className="h-10 w-10 px-0 text-icon-disabled hover:text-icon-tertiary"
                     onClick={() => {
                       handleChange("iconId", icon.id);
                     }}
