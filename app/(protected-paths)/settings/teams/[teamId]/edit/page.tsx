@@ -10,7 +10,7 @@ import {
   fakeMembersData,
   Member,
   fakeIconsData,
-  MemberWithTeamId,
+  MemberWithDeleteHandler,
 } from "@/lib/types";
 import {
   DropdownMenu,
@@ -40,8 +40,11 @@ export default function EditTeamPage({
     id: parseInt(teamId),
     name: "",
     iconId: 0,
-    members: [] as MemberWithTeamId[],
+    members: [] as number[],
   });
+  const [tableMembers, setTableMembers] = useState(
+    [] as MemberWithDeleteHandler[]
+  );
   const [avaliableMembers, setAvaliableMembers] = useState([] as Member[]);
   const [loading, setLoading] = useState({
     save: false,
@@ -58,6 +61,40 @@ export default function EditTeamPage({
     }));
   };
 
+  const handleDeleteMember = (member: Member) => {
+    // Update the data
+    setData((prev) => ({
+      ...prev,
+      members: prev.members.filter((m) => m !== member.id),
+    }));
+
+    // remove from the table state (with the delete handler)
+    setTableMembers((prev) => prev.filter((m) => m.id !== member.id));
+
+    // Update the avaliable members
+    setAvaliableMembers((prev) => [...prev, member]);
+  };
+
+  const handleAddMember = (member: Member) => {
+    // Update the state data
+    setData((prev) => ({
+      ...prev,
+      members: [...prev.members, member.id],
+    }));
+
+    // add to the table state (with the delete handler)
+    setTableMembers((prev) => [
+      ...prev,
+      {
+        ...member,
+        onDelete: () => handleDeleteMember(member),
+      },
+    ]);
+
+    // Update the avaliable members
+    setAvaliableMembers((prev) => prev.filter((m) => m.id !== member.id));
+  };
+
   const handleSave = () => {
     // console.log(data);
 
@@ -65,27 +102,12 @@ export default function EditTeamPage({
 
     // Call your API here
     setTimeout(() => {
-      toast.success("Saved team id: " + teamId);
+      toast.success("Saved team: " + JSON.stringify(data));
 
       // refresh the page to get the updated data
       router.refresh();
 
       setLoading({ ...loading, save: false });
-    }, 1000);
-  };
-
-  const handleDelete = () => {
-    setLoading({ ...loading, delete: true });
-
-    // Call your API here
-    setTimeout(() => {
-      toast.success("Team deleted id: " + teamId);
-
-      // redirect to the teams page
-
-      setLoading({ ...loading, delete: false });
-
-      router.push("/settings/teams");
     }, 1000);
   };
 
@@ -107,8 +129,16 @@ export default function EditTeamPage({
       id: parseInt(teamId),
       name: team.name,
       iconId: team.iconId,
-      members: team.members,
+      members: team.members.map((member) => member.id),
     });
+
+    // add to the table state (with the delete handler)
+    setTableMembers(
+      team.members.map((member) => ({
+        ...member,
+        onDelete: () => handleDeleteMember(member),
+      }))
+    );
   }, []);
 
   function fetchTeam(teamId: string) {
@@ -138,6 +168,21 @@ export default function EditTeamPage({
       avaliableMembers: avaliableMembers,
     };
   }
+
+  const handleDeleteTeam = () => {
+    setLoading({ ...loading, delete: true });
+
+    // Call your API here
+    setTimeout(() => {
+      toast.success("Team deleted id: " + teamId);
+
+      // redirect to the teams page
+
+      setLoading({ ...loading, delete: false });
+
+      router.push("/settings/teams");
+    }, 1000);
+  };
 
   return (
     <div className="flex flex-col gap-[28px]">
@@ -209,9 +254,9 @@ export default function EditTeamPage({
 
         <DataTable
           columns={columns}
-          data={data.members}
+          data={tableMembers}
           avaliableMembers={avaliableMembers}
-          teamId={data.id}
+          onAddMemberToTeam={handleAddMember}
         />
       </div>
 
@@ -246,8 +291,8 @@ export default function EditTeamPage({
               <Button
                 variant="destructive"
                 size="sm"
-                onClick={async () => {
-                  await handleDelete();
+                onClick={() => {
+                  handleDeleteTeam();
                   setIsOpen(false);
                 }}
               >

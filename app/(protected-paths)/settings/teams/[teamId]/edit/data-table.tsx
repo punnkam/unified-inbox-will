@@ -23,21 +23,21 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { SearchIcon } from "lucide-react";
-import { AddMemberComboBox } from "./AddMemberComboBox";
-import { Member } from "@/lib/types";
+import { AddMemberComboBox } from "../../AddMemberComboBox";
+import { Member, MemberWithDeleteHandler } from "@/lib/types";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+  columns: ColumnDef<MemberWithDeleteHandler, TValue>[];
+  data: MemberWithDeleteHandler[];
   avaliableMembers: Member[];
-  teamId: number;
+  onAddMemberToTeam: (member: Member) => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   avaliableMembers,
-  teamId,
+  onAddMemberToTeam,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -70,7 +70,7 @@ export function DataTable<TData, TValue>({
         </div>
         <AddMemberComboBox
           avaliableMembers={avaliableMembers}
-          teamId={teamId}
+          onAdd={onAddMemberToTeam}
         />
       </div>
       <div>
