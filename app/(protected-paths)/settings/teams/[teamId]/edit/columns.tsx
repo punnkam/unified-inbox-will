@@ -11,9 +11,29 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Member } from "@/lib/types";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { MemberWithTeamId } from "@/lib/types";
+import { toast } from "sonner";
+import { useState } from "react";
 
-export const columns: ColumnDef<Member>[] = [
+const handleRemoveMember = (member: MemberWithTeamId) => {
+  // console.log("Removing member", member);
+
+  // Call your API here
+  setTimeout(() => {
+    toast.success(`Removed ${member.name} from team ${member.teamId}`);
+  }, 1000);
+};
+
+export const columns: ColumnDef<MemberWithTeamId>[] = [
   {
     accessorKey: "name",
     header: "Name",
@@ -49,22 +69,54 @@ export const columns: ColumnDef<Member>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
+      const [isOpen, setIsOpen] = useState(false);
       const member = row.original;
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild className="self-end">
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4 text-icon-tertiary" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {/* TODO: these do nothing right now */}
-            <DropdownMenuItem>Edit Role</DropdownMenuItem>
-            <DropdownMenuItem>Remove Member</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <AlertDialog open={isOpen}>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild className="self-end">
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4 text-icon-tertiary" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <AlertDialogTrigger onClick={() => setIsOpen(true)}>
+                <DropdownMenuItem>Remove from team</DropdownMenuItem>
+              </AlertDialogTrigger>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                Are you sure you want to remove from team?
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                This will remove them from this team and not from the workspace.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <Button
+                variant={"secondary"}
+                size={"sm"}
+                onClick={() => setIsOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={async () => {
+                  await handleRemoveMember(member);
+                  setIsOpen(false);
+                }}
+              >
+                Remove from team
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       );
     },
   },

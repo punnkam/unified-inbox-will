@@ -38,6 +38,8 @@ export type Team = {
   members: Member[];
 };
 
+export type MemberWithTeamId = Member & { teamId: number };
+
 export const fakeMembersData: Member[] = [
   {
     id: 1,

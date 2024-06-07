@@ -10,6 +10,7 @@ import {
   fakeMembersData,
   Member,
   fakeIconsData,
+  MemberWithTeamId,
 } from "@/lib/types";
 import {
   DropdownMenu,
@@ -39,7 +40,7 @@ export default function EditTeamPage({
     id: parseInt(teamId),
     name: "",
     iconId: 0,
-    members: [] as Member[],
+    members: [] as MemberWithTeamId[],
   });
   const [avaliableMembers, setAvaliableMembers] = useState([] as Member[]);
   const [loading, setLoading] = useState({
@@ -113,6 +114,16 @@ export default function EditTeamPage({
   function fetchTeam(teamId: string) {
     const team = fakeTeamsData.find((team) => team.id === parseInt(teamId));
 
+    if (!team) {
+      return null;
+    }
+
+    // add the teamId to the members (for the delete functionality)
+    const teamMembersWithId = team?.members.map((member) => ({
+      ...member,
+      teamId: parseInt(teamId),
+    }));
+
     // get all active members not in the team
     const avaliableMembers = fakeMembersData.filter(
       (member) =>
@@ -120,14 +131,10 @@ export default function EditTeamPage({
         member.status === "Active"
     );
 
-    if (!team) {
-      return null;
-    }
-
     return {
       name: team.name,
       iconId: team.iconId || 0,
-      members: team.members,
+      members: teamMembersWithId,
       avaliableMembers: avaliableMembers,
     };
   }
