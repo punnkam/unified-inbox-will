@@ -1,7 +1,9 @@
 "use client";
 
-import ArrowCircleBrokenUpLeftIcon from "@/components/icons/ArrowCircleBrokenUpLeftIcon";
-import MailIcon from "@/components/icons/MailIcon";
+import {
+  ArrowCircleBrokenUpLeftIcon,
+  MailIcon,
+} from "@/components/icons/CustomIcons";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { useState, useEffect } from "react";

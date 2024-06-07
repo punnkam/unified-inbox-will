@@ -1,14 +1,16 @@
 "use client";
 
 import React from "react";
-import HostAiIcon from "../../components/icons/HostAiIcon";
-import BankNoteIcon from "../../components/icons/BankNoteIcon";
-import BookOpenIcon from "../../components/icons/BookOpenIcon";
-import HomeLineIcon from "../../components/icons/HomeLineIcon";
-import InboxIcon from "../../components/icons/InboxIcon";
-import LayersThreeIcon from "../../components/icons/LayersThreeIcon";
-import LayoutAltIcon from "../../components/icons/LayoutAltIcon";
-import SettingsIcon from "../../components/icons/SettingsIcon";
+import {
+  HostAiIcon,
+  BankNoteIcon,
+  BookOpenIcon,
+  HomeLineIcon,
+  InboxIcon,
+  LayersThreeIcon,
+  LayoutAltIcon,
+  SettingsIcon,
+} from "@/components/icons/CustomIcons";
 import { SideBarIcon } from "./SideBarOption";
 import { usePathname } from "next/navigation";
 

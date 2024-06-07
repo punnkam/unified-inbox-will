@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import TriangleIcon from "@/components/icons/triangleIcon";
+import { TriangleIcon } from "@/components/icons/CustomIcons";
 
 import { cn } from "@/lib/utils";
 

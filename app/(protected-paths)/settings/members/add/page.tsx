@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import ArrowNarrowLeft from "@/components/icons/ArrowNarrowLeft";
+import { ArrowNarrowLeft } from "@/components/icons/CustomIcons";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
