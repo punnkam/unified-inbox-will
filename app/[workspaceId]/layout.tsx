@@ -12,7 +12,6 @@ export default function ProtectedPathsLayout({
   params: { workspaceId: string };
 }>) {
   // some sort of auth check here
-  console.log("workspaceID", workspaceId);
 
   return (
     <div className="flex">
