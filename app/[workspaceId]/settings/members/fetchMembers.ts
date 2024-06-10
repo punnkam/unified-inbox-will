@@ -2,7 +2,7 @@
 
 import {
   Member,
-  MemberWithDeleteHandler,
+  MemberWithRemoveWorkspaceHandler,
   fakeMembersData,
   fakeTeamsData,
   fakeWorkspaceData,
@@ -10,7 +10,7 @@ import {
 
 export const fetchMembers = async (
   workspaceId: string
-): Promise<MemberWithDeleteHandler[]> => {
+): Promise<MemberWithRemoveWorkspaceHandler[]> => {
   // Get the current workspace data
   const workspace = fakeWorkspaceData.find(
     (workspace) => workspace.slug === workspaceId

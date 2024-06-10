@@ -47,8 +47,15 @@ export type Workspace = {
 export type MemberWithTeamId = Member & { teamId: number };
 
 export type MemberWithDeleteHandler = Member & {
-  currentWorkspace: Workspace;
   onDelete: (member: MemberWithDeleteHandler) => {
+    success: boolean;
+    member: Member;
+  };
+};
+
+export type MemberWithRemoveWorkspaceHandler = Member & {
+  currentWorkspace: Workspace;
+  onDelete: (member: MemberWithRemoveWorkspaceHandler) => {
     success: boolean;
     member: Member;
   };

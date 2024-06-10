@@ -21,12 +21,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import Link from "next/link";
-import { MemberWithDeleteHandler } from "@/lib/types";
+import { MemberWithRemoveWorkspaceHandler } from "@/lib/types";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-export const columns: ColumnDef<MemberWithDeleteHandler>[] = [
+export const columns: ColumnDef<MemberWithRemoveWorkspaceHandler>[] = [
   {
     accessorKey: "name",
     header: "Name",

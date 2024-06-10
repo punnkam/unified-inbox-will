@@ -3,12 +3,12 @@ import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
-import { MemberWithDeleteHandler } from "@/lib/types";
+import { MemberWithRemoveWorkspaceHandler } from "@/lib/types";
 import { fetchMembers } from "./fetchMembers";
 
 async function getData(
   workspaceId: string
-): Promise<MemberWithDeleteHandler[]> {
+): Promise<MemberWithRemoveWorkspaceHandler[]> {
   // Get the current workspace member data
   const data = await fetchMembers(workspaceId);
 
