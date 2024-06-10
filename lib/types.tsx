@@ -27,21 +27,31 @@ export type Member = {
   role: "Admin" | "Member" | "External Team";
   email: string;
   image: string;
-  status: "Active" | "Pending";
+  workspaces?: { id: number; status: "Active" | "Pending" }[];
   teamIds?: number[];
 };
 
 export type Team = {
   id: number;
+  workspaceId?: number;
   name: string;
   iconId: number;
   members: Member[];
 };
 
+export type Workspace = {
+  id: number;
+  slug: string;
+};
+
 export type MemberWithTeamId = Member & { teamId: number };
 
 export type MemberWithDeleteHandler = Member & {
-  onDelete: (member: Member) => void;
+  currentWorkspace: Workspace;
+  onDelete: (member: MemberWithDeleteHandler) => {
+    success: boolean;
+    member: Member;
+  };
 };
 
 export type TeamWithMemberWithTeamId = Omit<Team, "members"> & {
@@ -51,41 +61,44 @@ export type TeamWithMemberWithTeamId = Omit<Team, "members"> & {
 export const fakeMembersData: Member[] = [
   {
     id: 1,
+    workspaces: [
+      { id: 2, status: "Pending" },
+      { id: 1, status: "Active" },
+    ],
     teamIds: [1, 3],
     name: "James Doe",
     role: "Admin",
     email: "m@example.com",
-    status: "Active",
     image:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 2,
+    workspaces: [{ id: 1, status: "Active" }],
     teamIds: [2, 4],
     name: "Jack Doe",
     role: "Member",
     email: "jack@gmail.com",
-    status: "Active",
     image:
       "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 3,
+    workspaces: [{ id: 1, status: "Active" }],
     teamIds: [1, 2, 3],
     name: "John Doe",
     role: "External Team",
     email: "john@gmail.com",
-    status: "Active",
     image:
       "https://plus.unsplash.com/premium_photo-1664536392896-cd1743f9c02c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 4,
-    teamIds: [1, 3, 4],
+    workspaces: [{ id: 1, status: "Pending" }],
+    teamIds: [],
     name: "Jose Doe",
     role: "Member",
     email: "jose@gmail.com",
-    status: "Pending",
     image:
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
@@ -94,35 +107,62 @@ export const fakeMembersData: Member[] = [
 export const fakeTeamsData: Team[] = [
   {
     id: 1,
+    workspaceId: 1,
     name: "Team 1",
     iconId: 0,
     members: fakeMembersData.filter(
-      (member) => member.teamIds?.includes(1) && member.status === "Active"
+      (member) =>
+        member.teamIds?.includes(1) &&
+        member.workspaces?.filter(
+          (workspace) => workspace.id === 1 && workspace.status === "Active"
+        )
     ),
   },
   {
     id: 2,
+    workspaceId: 1,
     name: "Team 2",
     iconId: 2,
     members: fakeMembersData.filter(
-      (member) => member.teamIds?.includes(2) && member.status === "Active"
+      (member) =>
+        member.teamIds?.includes(2) &&
+        member.workspaces?.filter(
+          (workspace) => workspace.id === 1 && workspace.status === "Active"
+        )
     ),
   },
   {
     id: 3,
+    workspaceId: 2,
     name: "Team 3",
     iconId: 1,
     members: fakeMembersData.filter(
-      (member) => member.teamIds?.includes(3) && member.status === "Active"
+      (member) =>
+        member.teamIds?.includes(3) &&
+        member.workspaces?.filter(
+          (workspace) => workspace.id === 1 && workspace.status === "Active"
+        )
     ),
   },
   {
     id: 4,
+    workspaceId: 1,
     name: "Team 4",
     iconId: 19,
     members: fakeMembersData.filter(
-      (member) => member.teamIds?.includes(4) && member.status === "Active"
+      (member) =>
+        member.teamIds?.includes(4) &&
+        member.workspaces?.filter(
+          (workspace) => workspace.id === 1 && workspace.status === "Active"
+        )
     ),
+  },
+];
+
+export const fakeWorkspaceData: Workspace[] = [
+  {
+    id: 1,
+    slug: "will",
   },
 ];
 

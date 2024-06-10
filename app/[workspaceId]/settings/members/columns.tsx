@@ -11,20 +11,22 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import Link from "next/link";
+import { MemberWithDeleteHandler } from "@/lib/types";
+import { useState } from "react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Member = {
-  id: string;
-  name: string;
-  role: "Admin" | "Member" | "External Team";
-  email: string;
-  image: string;
-  status: "Active" | "Pending";
-};
-
-export const columns: ColumnDef<Member>[] = [
+export const columns: ColumnDef<MemberWithDeleteHandler>[] = [
   {
     accessorKey: "name",
     header: "Name",
@@ -49,6 +51,13 @@ export const columns: ColumnDef<Member>[] = [
   {
     accessorKey: "status",
     header: "Status",
+    accessorFn: (row) => {
+      // Get the current workspace user status (Active, Pending)
+      const currentWorkspace = row.workspaces?.find(
+        (memberWorkspace) => memberWorkspace.id === row.currentWorkspace.id
+      );
+      return currentWorkspace ? currentWorkspace.status : undefined;
+    },
   },
   {
     accessorKey: "role",
@@ -64,24 +73,74 @@ export const columns: ColumnDef<Member>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
+      const [isOpen, setIsOpen] = useState(false);
+      const router = useRouter();
       const member = row.original;
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild className="self-end">
-            <Button variant="ghost" size={"icon"} className="h-8 w-8 px-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4 text-icon-tertiary" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {/* TODO: these do nothing right now */}
-            <Link href={`./members/${member.id}`}>
-              <DropdownMenuItem>Edit Role</DropdownMenuItem>
-            </Link>
-            <DropdownMenuItem>Remove Member</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <AlertDialog open={isOpen}>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild className="self-end">
+              <Button variant="ghost" size={"icon"} className="h-8 w-8 px-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4 text-icon-tertiary" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <Link href={`./members/${member.id}`}>
+                <DropdownMenuItem>Edit Role</DropdownMenuItem>
+              </Link>
+              <AlertDialogTrigger onClick={() => setIsOpen(true)}>
+                <DropdownMenuItem>Remove Member</DropdownMenuItem>
+              </AlertDialogTrigger>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                Are you sure you want to remove {member.name}?
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. They won’t be able to access this
+                workspace.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <Button
+                variant={"secondary"}
+                size={"sm"}
+                onClick={() => setIsOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={async () => {
+                  const repsonse = await member.onDelete(member);
+
+                  setIsOpen(false);
+
+                  if (repsonse.success) {
+                    toast.success(
+                      "Member removed successfully: " +
+                        member.name +
+                        " from workspace: " +
+                        member.currentWorkspace.slug
+                    );
+
+                    // reload the page to fetch new data
+                    router.refresh();
+                  } else {
+                    toast.error("Failed to remove member");
+                  }
+                }}
+              >
+                Remove member
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       );
     },
   },
