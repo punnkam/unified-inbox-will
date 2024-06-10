@@ -66,7 +66,7 @@ export const columns: ColumnDef<MemberWithDeleteHandler>[] = [
         <AlertDialog open={isOpen}>
           <DropdownMenu>
             <DropdownMenuTrigger asChild className="self-end">
-              <Button variant="ghost" className="h-8 w-8 px-0">
+              <Button variant="ghost" size={"icon"} className="h-8 w-8 px-0">
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal className="h-4 w-4 text-icon-tertiary" />
               </Button>
