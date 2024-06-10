@@ -12,6 +12,10 @@ import {
 export const SettingsSidebar = () => {
   const pathname = usePathname();
 
+  const workspaceId = pathname.split("/")[1];
+
+  console.log(workspaceId);
+
   return (
     <div className="h-screen bg-primary-subtle w-[280px] border-e border-primary overflow-y-auto px-2">
       <h2 className="py-8 px-4 text-title-md">Settings</h2>
@@ -30,14 +34,16 @@ export const SettingsSidebar = () => {
       </div>
 
       <SettingsSideBarOption
-        path="/settings/personal-notifications"
+        path={`/${workspaceId}/settings/personal-notifications`}
         name="Personal notifications"
-        selected={pathname === "/settings/personal-notifications"}
+        selected={
+          pathname === `/${workspaceId}/settings/personal-notifications`
+        }
       />
       <SettingsSideBarOption
-        path="/settings/signature"
+        path={`/${workspaceId}/settings/signature`}
         name="Signature"
-        selected={pathname === "/settings/signature"}
+        selected={pathname === `/${workspaceId}/settings/signature`}
       />
 
       {/* Workspace Card */}
@@ -54,24 +60,24 @@ export const SettingsSidebar = () => {
       </div>
 
       <SettingsSideBarOption
-        path="/settings/general"
+        path={`/${workspaceId}/settings/general`}
         name="General"
-        selected={pathname === "/settings/general"}
+        selected={pathname === `/${workspaceId}/settings/general`}
       />
       <SettingsSideBarOption
-        path="/settings/members"
+        path={`/${workspaceId}/settings/members/`}
         name="Members"
-        selected={pathname.startsWith("/settings/members")}
+        selected={pathname.startsWith(`/${workspaceId}/settings/members`)}
       />
       <SettingsSideBarOption
-        path="/settings/teams"
+        path={`/${workspaceId}/settings/teams`}
         name="Teams"
-        selected={pathname.startsWith("/settings/teams")}
+        selected={pathname.startsWith(`/${workspaceId}/settings/teams`)}
       />
       <SettingsSideBarOption
-        path="/settings/integrations"
+        path={`/${workspaceId}/settings/integrations`}
         name="Integrations"
-        selected={pathname === "/settings/integrations"}
+        selected={pathname === `/${workspaceId}/settings/integrations`}
       />
 
       {/* Connected Channels */}
@@ -82,29 +88,41 @@ export const SettingsSidebar = () => {
           </AccordionTrigger>
           <AccordionContent className="pb-0 pt-2">
             <SettingsSideBarOption
-              path="/settings/connected-channels/airbnb"
+              path={`/${workspaceId}/settings/connected-channels/airbnb`}
               name="Airbnb"
-              selected={pathname === "/settings/connected-channels/airbnb"}
+              selected={
+                pathname ===
+                `/${workspaceId}/settings/connected-channels/airbnb`
+              }
             />
             <SettingsSideBarOption
-              path="/settings/connected-channels/pms"
+              path={`/${workspaceId}/settings/connected-channels/pms`}
               name="PMS"
-              selected={pathname === "/settings/connected-channels/pms"}
+              selected={
+                pathname === `/${workspaceId}/settings/connected-channels/pms`
+              }
             />
             <SettingsSideBarOption
-              path="/settings/connected-channels/email"
+              path={`/${workspaceId}/settings/connected-channels/email`}
               name="Email"
-              selected={pathname === "/settings/connected-channels/email"}
+              selected={
+                pathname === `/${workspaceId}/settings/connected-channels/email`
+              }
             />
             <SettingsSideBarOption
-              path="/settings/connected-channels/whatsapp"
+              path={`/${workspaceId}/settings/connected-channels/whatsapp`}
               name="WhatsApp"
-              selected={pathname === "/settings/connected-channels/whatsapp"}
+              selected={
+                pathname ===
+                `/${workspaceId}/settings/connected-channels/whatsapp`
+              }
             />
             <SettingsSideBarOption
-              path="/settings/connected-channels/sms"
+              path={`/${workspaceId}/settings/connected-channels/sms`}
               name="SMS"
-              selected={pathname === "/settings/connected-channels/sms"}
+              selected={
+                pathname === `/${workspaceId}/settings/connected-channels/sms`
+              }
             />
           </AccordionContent>
         </AccordionItem>
@@ -118,42 +136,51 @@ export const SettingsSidebar = () => {
           </AccordionTrigger>
           <AccordionContent className="pb-0 pt-2">
             <SettingsSideBarOption
-              path="/settings/inbox-configuration/general"
+              path={`/${workspaceId}/settings/inbox-configuration/general`}
               name="General"
-              selected={pathname === "/settings/inbox-configuration/general"}
+              selected={
+                pathname ===
+                `/${workspaceId}/settings/inbox-configuration/general`
+              }
             />
             <SettingsSideBarOption
-              path="/settings/inbox-configuration/ai-settings"
+              path={`/${workspaceId}/settings/inbox-configuration/ai-settings`}
               name="AI Settings"
               selected={
-                pathname === "/settings/inbox-configuration/ai-settings"
+                pathname ===
+                `/${workspaceId}/settings/inbox-configuration/ai-settings`
               }
             />
             <SettingsSideBarOption
-              path="/settings/inbox-configuration/reservation-labels"
+              path={`/${workspaceId}/settings/inbox-configuration/reservation-labels`}
               name="Reservation Labels"
               selected={
-                pathname === "/settings/inbox-configuration/reservation-labels"
+                pathname ===
+                `/${workspaceId}/settings/inbox-configuration/reservation-labels`
               }
             />
             <SettingsSideBarOption
-              path="/settings/inbox-configuration/conversation-tags"
+              path={`/${workspaceId}/settings/inbox-configuration/conversation-tags`}
               name="Conversation Tags"
               selected={
-                pathname === "/settings/inbox-configuration/conversation-tags"
+                pathname ===
+                `/${workspaceId}/settings/inbox-configuration/conversation-tags`
               }
             />
             <SettingsSideBarOption
-              path="/settings/inbox-configuration/saved-replies"
+              path={`/${workspaceId}/settings/inbox-configuration/saved-replies`}
               name="Saved Replies"
               selected={
-                pathname === "/settings/inbox-configuration/saved-replies"
+                pathname ===
+                `/${workspaceId}/settings/inbox-configuration/saved-replies`
               }
             />
             <SettingsSideBarOption
-              path="/settings/inbox-configuration/sla"
+              path={`/${workspaceId}/settings/inbox-configuration/sla`}
               name="SLA"
-              selected={pathname === "/settings/inbox-configuration/sla"}
+              selected={
+                pathname === `/${workspaceId}/settings/inbox-configuration/sla`
+              }
             />
           </AccordionContent>
         </AccordionItem>

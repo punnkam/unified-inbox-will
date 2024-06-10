@@ -6,10 +6,13 @@ import { SideBar } from "./SideBar";
 
 export default function ProtectedPathsLayout({
   children,
+  params: { workspaceId },
 }: Readonly<{
   children: React.ReactNode;
+  params: { workspaceId: string };
 }>) {
   // some sort of auth check here
+  console.log("workspaceID", workspaceId);
 
   return (
     <div className="flex">

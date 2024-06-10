@@ -59,7 +59,7 @@ export default async function MembersPage() {
             Add and manage your members
           </p>
         </div>
-        <Link href="/settings/members/add">
+        <Link href="./members/add">
           <Button variant="default">
             <PlusIcon className="h-5 w-5 mr-2" />
             Add

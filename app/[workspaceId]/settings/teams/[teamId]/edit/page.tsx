@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
+  fakeTeamsData,
   fakeMembersData,
   Member,
   fakeIconsData,
@@ -21,6 +22,14 @@ import { ArrowNarrowLeft } from "@/components/icons/CustomIcons";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import { useRouter } from "next/navigation";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export default function EditTeamPage({
   params: { teamId },
@@ -28,21 +37,21 @@ export default function EditTeamPage({
   params: { teamId: string };
 }) {
   const [data, setData] = useState({
+    id: parseInt(teamId),
     name: "",
     iconId: 0,
-    members: [] as number[], // array of member ids
+    members: [] as number[],
   });
   const [tableMembers, setTableMembers] = useState(
     [] as MemberWithDeleteHandler[]
   );
-
   const [avaliableMembers, setAvaliableMembers] = useState([] as Member[]);
   const [loading, setLoading] = useState({
     save: false,
     delete: false,
   });
+  const [isOpen, setIsOpen] = useState(false);
 
-  // used at handleSave
   const router = useRouter();
 
   const handleChange = (key: keyof typeof data, value: any) => {
@@ -93,13 +102,10 @@ export default function EditTeamPage({
 
     // Call your API here
     setTimeout(() => {
-      // no id exists yet bc the team is new
-      // in production, you would add the team to the database and return the id, then push the user to the edit page
+      toast.success("Saved team: " + JSON.stringify(data));
 
-      toast.success("Added team: " + JSON.stringify(data));
-
-      // push the user to the edit page (hardcoded as 1, since we have no id yet and dont have a db)
-      // router.push("/settings/teams/1/edit");
+      // refresh the page to get the updated data
+      router.refresh();
 
       setLoading({ ...loading, save: false });
     }, 1000);
@@ -110,26 +116,78 @@ export default function EditTeamPage({
     console.log("Fetching team data for team", teamId);
 
     // Call your API here
-    const data = fetchData();
+    const team = fetchTeam(teamId);
 
-    setAvaliableMembers(data.avaliableMembers);
+    if (!team) {
+      toast.error("Team not found");
+      return;
+    }
+
+    setAvaliableMembers(team.avaliableMembers);
+
+    setData({
+      id: parseInt(teamId),
+      name: team.name,
+      iconId: team.iconId,
+      members: team.members.map((member) => member.id),
+    });
+
+    // add to the table state (with the delete handler)
+    setTableMembers(
+      team.members.map((member) => ({
+        ...member,
+        onDelete: () => handleDeleteMember(member),
+      }))
+    );
   }, []);
 
-  function fetchData() {
+  function fetchTeam(teamId: string) {
+    const team = fakeTeamsData.find((team) => team.id === parseInt(teamId));
+
+    if (!team) {
+      return null;
+    }
+
+    // add the teamId to the members (for the delete functionality)
+    const teamMembersWithId = team?.members.map((member) => ({
+      ...member,
+      teamId: parseInt(teamId),
+    }));
+
     // get all active members not in the team
     const avaliableMembers = fakeMembersData.filter(
-      (member) => member.status === "Active"
+      (member) =>
+        !member.teamIds?.includes(parseInt(teamId)) &&
+        member.status === "Active"
     );
 
     return {
+      name: team.name,
+      iconId: team.iconId || 0,
+      members: teamMembersWithId,
       avaliableMembers: avaliableMembers,
     };
   }
 
+  const handleDeleteTeam = () => {
+    setLoading({ ...loading, delete: true });
+
+    // Call your API here
+    setTimeout(() => {
+      toast.success("Team deleted id: " + teamId);
+
+      // redirect to the teams page
+
+      setLoading({ ...loading, delete: false });
+
+      router.push("/settings/teams");
+    }, 1000);
+  };
+
   return (
     <div className="flex flex-col gap-[28px]">
       <div className="flex flex-col gap-4">
-        <Link href="/settings/teams">
+        <Link href="../">
           <Button
             variant="link"
             className="text-tertiary flex items-center gap-2 p-2"
@@ -138,7 +196,7 @@ export default function EditTeamPage({
             All Teams
           </Button>
         </Link>
-        <h1 className="text-title-2xl">Add team</h1>
+        <h1 className="text-title-2xl">Edit team</h1>
       </div>
 
       <div className="border-b border-primary"></div>
@@ -153,6 +211,7 @@ export default function EditTeamPage({
           </p>
         </div>
         <div className="flex gap-2">
+          {/* TODO this isnt opening, but If i have a button in the trigger then a hydration fails */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="w-10 h-10 px-0">
@@ -178,7 +237,7 @@ export default function EditTeamPage({
           </DropdownMenu>
           <Input
             id="team-name"
-            placeholder="Team Name"
+            placeholder="jared@hostai.app"
             value={data.name}
             onChange={(e) => handleChange("name", e.target.value)}
           />
@@ -201,7 +260,48 @@ export default function EditTeamPage({
         />
       </div>
 
-      <div className="w-full flex justify-end items-center py-5">
+      <div className="w-full flex justify-between items-center py-5">
+        <AlertDialog open={isOpen}>
+          <Button
+            variant="destructive"
+            onClick={() => setIsOpen(true)}
+            disabled={loading.delete}
+          >
+            <span className="sr-only">Open delete team modal</span>
+            {loading.delete ? "Deleting team..." : "Delete team"}
+          </Button>
+
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                Are you sure you want to delete this team?
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                This action is permanent and cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <Button
+                variant={"secondary"}
+                size={"sm"}
+                onClick={() => setIsOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={() => {
+                  handleDeleteTeam();
+                  setIsOpen(false);
+                }}
+              >
+                Delete team
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
         <Button
           size={"md"}
           onClick={handleSave}

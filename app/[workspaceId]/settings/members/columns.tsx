@@ -76,7 +76,7 @@ export const columns: ColumnDef<Member>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {/* TODO: these do nothing right now */}
-            <Link href={`/settings/members/${member.id}`}>
+            <Link href={`./members/${member.id}`}>
               <DropdownMenuItem>Edit Role</DropdownMenuItem>
             </Link>
             <DropdownMenuItem>Remove Member</DropdownMenuItem>
