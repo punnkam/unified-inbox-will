@@ -5,15 +5,23 @@ import Link from "next/link";
 import { ArrowNarrowLeft } from "@/components/icons/CustomIcons";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { fakeMembersData } from "@/lib/types";
+import { useRouter } from "next/navigation";
 
-export default function AddMemberPage() {
+export default function AddMemberPage({
+  params: { memberId },
+}: {
+  params: { memberId: string };
+}) {
   const [data, setData] = useState({
-    role: "admin",
+    id: parseInt(memberId),
+    role: "",
     email: "",
   });
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleChange = (key: keyof typeof data, value: string) => {
     setData((prev) => ({
@@ -29,17 +37,36 @@ export default function AddMemberPage() {
 
     // Call your API here
     setTimeout(() => {
-      toast.success("Sent invite");
+      toast.success("Updated member: " + JSON.stringify(data));
 
-      // Reset the form
-      setData({
-        role: "admin",
-        email: "",
-      });
+      // refresh the page
+      router.refresh();
 
       setLoading(false);
     }, 1000);
   };
+
+  useEffect(() => {
+    // Fetch the member data
+    fetchMember(parseInt(memberId));
+  }, []);
+
+  function fetchMember(memberId: number) {
+    // Call your API here
+    // For now, we'll use a fake data
+    const member = fakeMembersData.find((m) => m.id === memberId);
+
+    if (!member) {
+      toast.error("Member not found");
+      return;
+    }
+
+    setData({
+      id: member.id,
+      role: member.role,
+      email: member.email,
+    });
+  }
 
   return (
     <div className="flex flex-col gap-[28px]">
@@ -53,7 +80,7 @@ export default function AddMemberPage() {
             All Members
           </Button>
         </Link>
-        <h1 className="text-title-2xl">Add member</h1>
+        <h1 className="text-title-2xl">Edit Member</h1>
       </div>
 
       <div className="border-b border-primary"></div>
@@ -72,8 +99,8 @@ export default function AddMemberPage() {
               value="admin"
               id="radio-admin"
               className="mt-1"
-              checked={data.role === "admin"}
-              onClick={() => handleChange("role", "admin")}
+              checked={data.role === "Admin"}
+              onClick={() => handleChange("role", "Admin")}
             />
             <div>
               <label htmlFor="radio-admin" className="text-subtitle-sm">
@@ -89,8 +116,8 @@ export default function AddMemberPage() {
               value="member"
               id="radio-member"
               className="mt-1"
-              checked={data.role === "member"}
-              onClick={() => handleChange("role", "member")}
+              checked={data.role === "Member"}
+              onClick={() => handleChange("role", "Member")}
             />
             <div>
               <label htmlFor="radio-member" className="text-subtitle-sm">
@@ -106,8 +133,8 @@ export default function AddMemberPage() {
               value="external-team"
               id="radio-external-team"
               className="mt-1"
-              checked={data.role === "external-team"}
-              onClick={() => handleChange("role", "external-team")}
+              checked={data.role === "External Team"}
+              onClick={() => handleChange("role", "External Team")}
             />
             <div>
               <label htmlFor="radio-external-team" className="text-subtitle-sm">
@@ -127,7 +154,7 @@ export default function AddMemberPage() {
             Email
           </label>
           <p className="text-tertiary text-body-xs font-normal">
-            The name of the member
+            The email of the member
           </p>
         </div>
         <Input
@@ -144,7 +171,7 @@ export default function AddMemberPage() {
           onClick={handleSave}
           disabled={!data.email || !data.role || loading}
         >
-          {loading ? "Sending..." : "Send invite"}
+          {loading ? "Updating..." : "Update"}
         </Button>
       </div>
     </div>

@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -75,7 +76,9 @@ export const columns: ColumnDef<Member>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {/* TODO: these do nothing right now */}
-            <DropdownMenuItem>Edit Role</DropdownMenuItem>
+            <Link href={`/settings/members/${member.id}`}>
+              <DropdownMenuItem>Edit Role</DropdownMenuItem>
+            </Link>
             <DropdownMenuItem>Remove Member</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
