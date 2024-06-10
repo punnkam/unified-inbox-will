@@ -61,8 +61,8 @@ export type MemberWithRemoveWorkspaceHandler = Member & {
   };
 };
 
-export type TeamWithMemberWithTeamId = Omit<Team, "members"> & {
-  members: MemberWithTeamId[];
+export type TeamWithMemberDeleteHandler = Omit<Team, "members"> & {
+  members: MemberWithDeleteHandler[];
 };
 
 export const fakeMembersData: Member[] = [

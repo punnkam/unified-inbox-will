@@ -1,11 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
-import {
-  TeamWithMemberWithTeamId,
-  fakeTeamsData,
-  fakeIconsData,
-} from "@/lib/types";
+import { fakeIconsData } from "@/lib/types";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import {
@@ -15,24 +11,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/table-accordion";
 import { EditIcon } from "@/components/icons/CustomIcons";
+import { fetchTeams } from "@/app/actions";
 
-async function getData(): Promise<TeamWithMemberWithTeamId[]> {
-  // Fetch data from your API here.
-
-  fakeTeamsData.forEach((team) => {
-    team.members = team.members.map((member) => ({
-      ...member,
-      teamId: team.id,
-    }));
-  });
-
-  // this is throwing a type error because of the explicit type on fakeTeamsData
-  //@ts-ignore
-  return fakeTeamsData;
-}
-
-export default async function MembersPage() {
-  const data = await getData();
+export default async function MembersPage({
+  params: { workspaceId },
+}: {
+  params: { workspaceId: string };
+}) {
+  const data = await fetchTeams(workspaceId);
 
   return (
     <div className="flex flex-col gap-[28px]">

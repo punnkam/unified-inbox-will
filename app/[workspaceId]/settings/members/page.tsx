@@ -4,7 +4,7 @@ import { DataTable } from "./data-table";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { MemberWithRemoveWorkspaceHandler } from "@/lib/types";
-import { fetchMembers } from "./fetchMembers";
+import { fetchMembers } from "@/app/actions";
 
 async function getData(
   workspaceId: string

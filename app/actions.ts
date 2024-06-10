@@ -6,8 +6,10 @@ import {
   fakeMembersData,
   fakeTeamsData,
   fakeWorkspaceData,
+  TeamWithMemberDeleteHandler,
 } from "@/lib/types";
 
+// Action to handle fetching members and adding a delete handler to each member
 export const fetchMembers = async (
   workspaceId: string
 ): Promise<MemberWithRemoveWorkspaceHandler[]> => {
@@ -49,4 +51,47 @@ export const fetchMembers = async (
   }));
 
   return membersWithDeleteHandler;
+};
+
+// Action to handle fetching teams and adding a delete handler to each member
+export const fetchTeams = async (
+  workspaceId: string
+): Promise<TeamWithMemberDeleteHandler[]> => {
+  // Get the current workspace data
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return [];
+  }
+
+  // Get teams in the current workspace
+  const teams = fakeTeamsData.filter(
+    (team) => team.workspaceId === workspace.id
+  );
+
+  // Add a rmove member handler to each member on each team
+  const teamsWithDeleteHandler = teams.map((team) => ({
+    ...team,
+    members: team.members.map((member) => ({
+      ...member,
+      onDelete: () => {
+        "use server";
+        // Handle remove here
+        //   console.log("Remove member", member);
+
+        // console.log("from team: ", team);
+
+        // remove member from the team
+        // This is where you would make an API call to delete the member from the team
+
+        // Return true if the delete was successful
+        // Return false if the delete failed
+        return { success: true, member: member };
+      },
+    })),
+  }));
+
+  return teamsWithDeleteHandler;
 };

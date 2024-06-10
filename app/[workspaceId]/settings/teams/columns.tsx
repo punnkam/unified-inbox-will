@@ -20,28 +20,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { MemberWithTeamId } from "@/lib/types";
+import { MemberWithDeleteHandler } from "@/lib/types";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-const handleRemoveMember = (
-  member: MemberWithTeamId,
-  router: AppRouterInstance
-) => {
-  // console.log("Removing member", member);
-
-  // Call your API here
-  setTimeout(() => {
-    toast.success(`Removed ${member.name} from team ${member.teamId}`);
-
-    // refresh the page to get the updated data
-    router.refresh();
-  }, 1000);
-};
-
-export const columns: ColumnDef<MemberWithTeamId>[] = [
+export const columns: ColumnDef<MemberWithDeleteHandler>[] = [
   {
     accessorKey: "name",
     header: "Name",
@@ -118,8 +102,18 @@ export const columns: ColumnDef<MemberWithTeamId>[] = [
                 variant="destructive"
                 size="sm"
                 onClick={async () => {
-                  await handleRemoveMember(member, router);
+                  const repsonse = await member.onDelete(member);
+
                   setIsOpen(false);
+
+                  if (repsonse.success) {
+                    toast.success(`Removed ${member.name} from team`);
+
+                    // reload the page to fetch new data
+                    router.refresh();
+                  } else {
+                    toast.error("Failed to remove member");
+                  }
                 }}
               >
                 Remove from team
