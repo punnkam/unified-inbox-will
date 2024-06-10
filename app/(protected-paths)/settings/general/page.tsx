@@ -77,7 +77,7 @@ export default function PersonalNotificationsPage() {
             >
               Name
             </label>
-            <p className="text-tertiary text-body-sm font-normal">
+            <p className="text-tertiary text-body-xs font-normal">
               Typically your company name. Something that helps you distinguish
               this workspace from others.
             </p>
@@ -99,7 +99,7 @@ export default function PersonalNotificationsPage() {
             >
               Logo
             </label>
-            <p className="text-tertiary text-body-sm font-normal">
+            <p className="text-tertiary text-body-xs font-normal">
               Pick a logo for your workspace. Recommended size is 256x256 px.
             </p>
           </div>
@@ -131,7 +131,7 @@ export default function PersonalNotificationsPage() {
       <div className="flex flex-col gap-5">
         <p className="text-title-lg text-tertiary">Billing</p>
 
-        <p className="text-tertiary text-body-sm font-normal">
+        <p className="text-tertiary text-body-xs font-normal">
           You are on the Enterprise plan for 2 listings. Our pricing can be seen
           at hostai.app/pricing.
         </p>
@@ -154,7 +154,7 @@ export default function PersonalNotificationsPage() {
       <div className="flex flex-col gap-5">
         <p className="text-title-lg text-tertiary">Extension</p>
 
-        <p className="text-tertiary text-body-sm font-normal">
+        <p className="text-tertiary text-body-xs font-normal">
           Use HostAI messaging in your PMS. Click link here to install your
           extension from the Chrome Web Store.
         </p>
