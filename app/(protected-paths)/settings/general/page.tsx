@@ -108,10 +108,10 @@ export default function PersonalNotificationsPage() {
               <img
                 src={imagePreview}
                 alt="Selected logo"
-                className="w-16 h-16 rounded-full object-cover"
+                className="w-14 h-14 rounded-full object-cover"
               />
             ) : (
-              <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-lg text-gray-500">
+              <div className="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center text-lg text-gray-500">
                 AB
               </div>
             )}
