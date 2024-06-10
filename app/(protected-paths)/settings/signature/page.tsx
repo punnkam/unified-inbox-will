@@ -56,7 +56,7 @@ export default function PersonalNotificationsPage() {
         <Textarea
           id="signature-input"
           placeholder="Best, Pun"
-          className="text-body-sm resize-none"
+          className="resize-none"
           value={data.signature}
           onChange={(e) => handleChange("signature", e.target.value)}
         />

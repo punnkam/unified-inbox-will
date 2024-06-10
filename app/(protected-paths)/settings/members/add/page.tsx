@@ -63,7 +63,7 @@ export default function AddMemberPage() {
           <label htmlFor="role-input" className="text-subtitle-sm text-primary">
             Role
           </label>
-          <p className="text-tertiary text-body-sm font-normal">Select one</p>
+          <p className="text-tertiary text-body-xs font-normal">Select one</p>
         </div>
 
         <RadioGroup className="border border-primary rounded-md">
@@ -76,8 +76,8 @@ export default function AddMemberPage() {
               onClick={() => handleChange("role", "admin")}
             />
             <div>
-              <label htmlFor="radio-admin">Admin</label>
-              <p className="text-tertiary text-subtitle-2xs mt-1">
+              <label htmlFor="radio-admin" className="text-subtitle-sm">Admin</label>
+              <p className="text-tertiary text-body-xs font-normal mt-1">
                 Full access to everything including deleting the workspace.
               </p>
             </div>
@@ -91,8 +91,8 @@ export default function AddMemberPage() {
               onClick={() => handleChange("role", "member")}
             />
             <div>
-              <label htmlFor="radio-member">Member</label>
-              <p className="text-tertiary text-subtitle-2xs mt-1">
+              <label htmlFor="radio-member" className="text-subtitle-sm">Member</label>
+              <p className="text-tertiary text-body-xs font-normal mt-1">
                 Full access to everything including deleting the workspace.
               </p>
             </div>
@@ -106,8 +106,8 @@ export default function AddMemberPage() {
               onClick={() => handleChange("role", "external-team")}
             />
             <div>
-              <label htmlFor="radio-external-team">External Team</label>
-              <p className="text-tertiary text-subtitle-2xs mt-1">
+              <label htmlFor="radio-external-team" className="text-subtitle-sm">External Team</label>
+              <p className="text-tertiary text-body-xs font-normal mt-1">
                 Full access to everything including deleting the workspace.
               </p>
             </div>
@@ -119,11 +119,11 @@ export default function AddMemberPage() {
         <div>
           <label
             htmlFor="member-email"
-            className="text-subtitle-sm text-primary"
+            className="text-subtitle-sm"
           >
             Email
           </label>
-          <p className="text-tertiary text-body-sm font-normal">
+          <p className="text-tertiary text-body-xs font-normal">
             The name of the member
           </p>
         </div>

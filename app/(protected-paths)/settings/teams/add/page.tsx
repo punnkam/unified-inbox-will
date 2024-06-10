@@ -148,7 +148,7 @@ export default function EditTeamPage({
           <label htmlFor="team-name" className="text-subtitle-sm text-primary">
             Team
           </label>
-          <p className="text-tertiary text-body-sm font-normal">
+          <p className="text-tertiary text-body-xs font-normal">
             Name the team and choose icon
           </p>
         </div>
@@ -188,8 +188,8 @@ export default function EditTeamPage({
       <div className="flex flex-col gap-3">
         <div>
           <p className="text-subtitle-sm text-primary">Team Members</p>
-          <p className="text-tertiary text-body-sm font-normal">
-            Name the team and choose icon
+          <p className="text-tertiary text-body-xs font-normal">
+            Manage your team members
           </p>
         </div>
 
