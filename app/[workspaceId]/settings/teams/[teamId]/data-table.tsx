@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { SearchIcon } from "lucide-react";
-import { AddMemberComboBox } from "../../AddMemberComboBox";
+import { AddMemberComboBox } from "../AddMemberComboBox";
 import { Member, MemberWithDeleteHandler } from "@/lib/types";
 
 interface DataTableProps<TData, TValue> {

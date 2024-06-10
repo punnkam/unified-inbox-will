@@ -187,7 +187,7 @@ export default function EditTeamPage({
   return (
     <div className="flex flex-col gap-[28px]">
       <div className="flex flex-col gap-4">
-        <Link href="../">
+        <Link href="../teams">
           <Button
             variant="link"
             className="text-tertiary flex items-center gap-2 p-2"

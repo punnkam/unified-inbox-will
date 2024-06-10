@@ -79,7 +79,7 @@ export default async function MembersPage() {
                   </div>
                   <Link
                     className="edit-button hidden group-hover:block"
-                    href={`./teams/${team.id}/edit`}
+                    href={`./teams/${team.id}`}
                   >
                     <div className="h-9 rounded-md px-3 hover:bg-pressed active:bg-primary inline-flex items-center justify-center whitespace-nowrap text-subtitle-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-icon-active focus-visible:ring-offset-2 ">
                       <EditIcon className="text-icon-tertiary" />
