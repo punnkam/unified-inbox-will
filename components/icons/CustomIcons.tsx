@@ -737,3 +737,39 @@ export const InfoCircleIcon = (props: React.SVGProps<SVGSVGElement>) => (
     </defs>
   </svg>
 );
+
+export const DataFlowIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={21}
+    height={22}
+    fill="none"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M15.96 19h-.2c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311c-.327-.642-.327-1.482-.327-3.162V7.8c0-1.68 0-2.52.327-3.162a3 3 0 0 1 1.311-1.311C13.24 3 14.08 3 15.76 3h.2m0 16a2 2 0 1 0 4 0 2 2 0 0 0-4 0Zm0-16a2 2 0 1 0 4 0 2 2 0 0 0-4 0Zm-10 8h10m-10 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm10 0a2 2 0 1 0 4 0 2 2 0 0 0-4 0Z"
+    />
+  </svg>
+);
+
+export const ArchiveIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={23}
+    height={20}
+    fill="none"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M3.96 5.997a2.295 2.295 0 0 1-.39-.035A2 2 0 0 1 1.998 4.39c-.038-.193-.038-.425-.038-.89s0-.697.038-.89A2 2 0 0 1 3.57 1.038C3.763 1 3.995 1 4.46 1h15c.465 0 .697 0 .89.038a2 2 0 0 1 1.572 1.572c.038.193.038.425.038.89s0 .697-.038.89a2 2 0 0 1-1.572 1.572c-.107.02-.226.03-.39.035M9.96 11h4m-10-5h16v8.2c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C17.68 19 16.84 19 15.16 19h-6.4c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C3.96 16.72 3.96 15.88 3.96 14.2V6Z"
+    />
+  </svg>
+);

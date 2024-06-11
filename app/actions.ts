@@ -13,6 +13,7 @@ import {
   SlackConnection,
   BreezewayConnection,
   fakeBreezewayConnectionsData,
+  Workspace,
 } from "@/lib/types";
 
 // Action to handle fetching members and adding a delete handler to each member
@@ -246,4 +247,44 @@ export const removeSlackConnection = async (
   // This is where you would make an API call to save the slack connection
 
   return { success: true, message: "Removed" };
+};
+
+export const fetchInboxGeneralSettings = async (
+  workspaceId: string
+): Promise<{ success: boolean; message: string; data?: Workspace }> => {
+  "use server";
+
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // This is where you would make an API call to fetch the inbox general settings
+
+  return {
+    success: true,
+    message: "Fetched inbox general settings",
+    data: workspace,
+  };
+};
+
+export const saveInboxGeneralSettings = async (
+  workspace: Workspace
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  // Save the inbox general settings
+  console.log("Saved inbox general settings", workspace);
+
+  // This is where you would make an API call to save the inbox general settings
+
+  return { success: true, message: "Saved" };
 };

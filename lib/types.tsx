@@ -45,6 +45,10 @@ export type Team = {
 export type Workspace = {
   id: number;
   slug: string;
+  inboxConfiguration: {
+    asignConversations: "Members" | "Teams";
+    autoArchive: boolean;
+  };
 };
 
 export type Listing = {
@@ -228,6 +232,10 @@ export const fakeWorkspaceData: Workspace[] = [
   {
     id: 1,
     slug: "will",
+    inboxConfiguration: {
+      asignConversations: "Members",
+      autoArchive: true,
+    },
   },
 ];
 
