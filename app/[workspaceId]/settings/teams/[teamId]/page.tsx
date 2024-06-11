@@ -11,6 +11,7 @@ import {
   Member,
   fakeIconsData,
   MemberWithDeleteHandler,
+  fakeWorkspaceData,
 } from "@/lib/types";
 import {
   DropdownMenu,
@@ -32,9 +33,9 @@ import {
 } from "@/components/ui/alert-dialog";
 
 export default function EditTeamPage({
-  params: { teamId },
+  params: { workspaceId, teamId },
 }: {
-  params: { teamId: string };
+  params: { workspaceId: string; teamId: string };
 }) {
   const [data, setData] = useState({
     id: parseInt(teamId),
@@ -53,6 +54,17 @@ export default function EditTeamPage({
   const [isOpen, setIsOpen] = useState(false);
 
   const router = useRouter();
+
+  // Get the current workspace data
+  const currentWorkspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!currentWorkspace) {
+    return null;
+  }
+
+  console.log("currentWorkspace", currentWorkspace);
 
   const handleChange = (key: keyof typeof data, value: any) => {
     setData((prev) => ({
@@ -73,6 +85,8 @@ export default function EditTeamPage({
 
     // Update the avaliable members
     setAvaliableMembers((prev) => [...prev, member]);
+
+    return { success: true, member: member };
   };
 
   const handleAddMember = (member: Member) => {
@@ -155,17 +169,23 @@ export default function EditTeamPage({
     }));
 
     // get all active members not in the team
-    const avaliableMembers = fakeMembersData.filter(
+    const availableMembers = fakeMembersData.filter(
       (member) =>
+        // Check member is not in the specified team
         !member.teamIds?.includes(parseInt(teamId)) &&
-        member.status === "Active"
+        // Check member is in the current workspace and active
+        member.workspaces?.some(
+          (workspace) =>
+            currentWorkspace?.id === workspace.id &&
+            workspace.status === "Active"
+        )
     );
 
     return {
       name: team.name,
       iconId: team.iconId || 0,
       members: teamMembersWithId,
-      avaliableMembers: avaliableMembers,
+      avaliableMembers: availableMembers,
     };
   }
 
