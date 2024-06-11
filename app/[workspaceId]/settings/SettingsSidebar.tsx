@@ -62,7 +62,7 @@ export const SettingsSidebar = () => {
       <SettingsSideBarOption
         path={`/${workspaceId}/settings/general`}
         name="General"
-        selected={pathname === `/${workspaceId}/settings/general`}
+        selected={pathname.startsWith(`/${workspaceId}/settings/general`)}
       />
       <SettingsSideBarOption
         path={`/${workspaceId}/settings/members/`}
