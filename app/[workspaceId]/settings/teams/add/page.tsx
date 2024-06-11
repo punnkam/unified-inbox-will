@@ -10,6 +10,7 @@ import {
   Member,
   fakeIconsData,
   MemberWithDeleteHandler,
+  fakeWorkspaceData,
 } from "@/lib/types";
 import {
   DropdownMenu,
@@ -23,9 +24,9 @@ import { DataTable } from "./data-table";
 import { useRouter } from "next/navigation";
 
 export default function EditTeamPage({
-  params: { teamId },
+  params: { workspaceId, teamId },
 }: {
-  params: { teamId: string };
+  params: { workspaceId: string; teamId: string };
 }) {
   const [data, setData] = useState({
     name: "",
@@ -44,6 +45,15 @@ export default function EditTeamPage({
 
   // used at handleSave
   const router = useRouter();
+
+  // Get the current workspace data
+  const currentWorkspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!currentWorkspace) {
+    return null;
+  }
 
   const handleChange = (key: keyof typeof data, value: any) => {
     setData((prev) => ({
@@ -64,9 +74,27 @@ export default function EditTeamPage({
 
     // Update the avaliable members
     setAvaliableMembers((prev) => [...prev, member]);
+
+    return { success: true, member: member };
   };
 
   const handleAddMember = (member: Member) => {
+    const workspace = member.workspaces?.find(
+      (workspace) => workspace.id === currentWorkspace.id
+    );
+
+    const memberWithDeleteHandler: MemberWithDeleteHandler = {
+      ...member,
+      ...(workspace && {
+        currentWorkspace: {
+          id: workspace.id,
+          status: workspace.status,
+          role: workspace.role,
+        },
+      }),
+      onDelete: () => handleDeleteMember(member),
+    };
+
     // Update the state data
     setData((prev) => ({
       ...prev,
@@ -74,13 +102,7 @@ export default function EditTeamPage({
     }));
 
     // add to the table state (with the delete handler)
-    setTableMembers((prev) => [
-      ...prev,
-      {
-        ...member,
-        onDelete: () => handleDeleteMember(member),
-      },
-    ]);
+    setTableMembers((prev) => [...prev, memberWithDeleteHandler]);
 
     // Update the avaliable members
     setAvaliableMembers((prev) => prev.filter((m) => m.id !== member.id));
@@ -117,12 +139,20 @@ export default function EditTeamPage({
 
   function fetchData() {
     // get all active members not in the team
-    const avaliableMembers = fakeMembersData.filter(
-      (member) => member.status === "Active"
+    const availableMembers = fakeMembersData.filter(
+      (member) =>
+        // Check member is not in the specified team
+        !member.teamIds?.includes(parseInt(teamId)) &&
+        // Check member is in the current workspace and active
+        member.workspaces?.some(
+          (workspace) =>
+            currentWorkspace?.id === workspace.id &&
+            workspace.status === "Active"
+        )
     );
 
     return {
-      avaliableMembers: avaliableMembers,
+      avaliableMembers: availableMembers,
     };
   }
 
