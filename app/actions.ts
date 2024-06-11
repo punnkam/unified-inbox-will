@@ -9,6 +9,10 @@ import {
   TeamWithMemberDeleteHandler,
   ListingWithDeleteHandler,
   fakeListingsData,
+  fakeSlackConnectionsData,
+  SlackConnection,
+  BreezewayConnection,
+  fakeBreezewayConnectionsData,
 } from "@/lib/types";
 
 // Action to handle fetching members and adding a delete handler to each member
@@ -166,4 +170,65 @@ export const fetchListings = async (
   }));
 
   return listingsWithDeleteHandler;
+};
+
+export const fetchSlackConnections = async (
+  workspaceId: string
+): Promise<SlackConnection[]> => {
+  // add a 2 second wait
+  // await new Promise((resolve) => setTimeout(resolve, 5000));
+
+  // Get the current workspace data
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return [];
+  }
+
+  // Get all slack connections in the current workspace
+  const slackConnections = fakeSlackConnectionsData.filter(
+    (slackConnection) => slackConnection.workspaceId === workspace.id
+  );
+
+  return slackConnections;
+};
+
+export const fetchBreezewayConnections = async (
+  workspaceId: string
+): Promise<BreezewayConnection[]> => {
+  // add a 2 second wait
+  // await new Promise((resolve) => setTimeout(resolve, 5000));
+
+  // Get the current workspace data
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return [];
+  }
+
+  // Get all slack connections in the current workspace
+  const breezewayConnection = fakeBreezewayConnectionsData.filter(
+    (breezewayConnection) => breezewayConnection.workspaceId === workspace.id
+  );
+
+  return breezewayConnection;
+};
+
+export const saveSlackConnection = async (
+  connection: SlackConnection
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // Save the slack connection
+  console.log("Saved slack connection", connection);
+
+  // This is where you would make an API call to save the slack connection
+
+  return { success: true, message: "Saved" };
 };

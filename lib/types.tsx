@@ -97,6 +97,36 @@ export type ListingWithDeleteHandler = Listing & {
   };
 };
 
+export type SlackConnection = {
+  id: number;
+  workspaceId: number;
+  connected: boolean;
+  name: string;
+  image: string;
+  connectionDate: string;
+  options?: {
+    guestMessaging: boolean;
+    upsells: boolean;
+    tasks: boolean;
+    copySetupToListingGroups: boolean;
+  };
+};
+
+export type BreezewayConnection = {
+  id: number;
+  workspaceId: number;
+  connected: boolean;
+  name: string;
+  image: string;
+  connectionDate: string;
+  options?: {
+    guestMessaging: boolean;
+    upsells: boolean;
+    tasks: boolean;
+    copySetupToListingGroups: boolean;
+  };
+};
+
 export const fakeMembersData: Member[] = [
   {
     id: 1,
@@ -201,7 +231,7 @@ export const fakeWorkspaceData: Workspace[] = [
   },
 ];
 
-export let fakeListingsData: Listing[] = [
+export const fakeListingsData: Listing[] = [
   {
     id: 1,
     workspaceId: 1,
@@ -228,6 +258,42 @@ export let fakeListingsData: Listing[] = [
     address: "91011 Pine Street",
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+];
+
+export const fakeSlackConnectionsData: SlackConnection[] = [
+  {
+    id: 1,
+    workspaceId: 1,
+    connected: true,
+    name: "Canbnb Slack Channel",
+    image:
+      "https://images.unsplash.com/photo-1516876437184-593fda40c7ce?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    connectionDate: "2024-02-01",
+    options: {
+      guestMessaging: true,
+      upsells: true,
+      tasks: false,
+      copySetupToListingGroups: false,
+    },
+  },
+];
+
+export const fakeBreezewayConnectionsData: BreezewayConnection[] = [
+  {
+    id: 1,
+    workspaceId: 1,
+    connected: false,
+    name: "Canbnb Breezeway Channel",
+    image:
+      "https://images.unsplash.com/photo-1516876437184-593fda40c7ce?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    connectionDate: "2024-02-01",
+    options: {
+      guestMessaging: true,
+      upsells: true,
+      tasks: false,
+      copySetupToListingGroups: false,
+    },
   },
 ];
 
