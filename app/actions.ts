@@ -37,7 +37,7 @@ export const fetchMembers = async (
     onDelete: () => {
       "use server";
       // Handle delete here
-      //   console.log("Delete member", member);
+      console.log("Delete member", member);
 
       //   console.log("User workspace", workspace);
 
@@ -46,6 +46,19 @@ export const fetchMembers = async (
 
       // Return true if the delete was successful
       // Return false if the delete failed
+      return { success: true, member: member };
+    },
+    onInvite: () => {
+      "use server";
+      // Handle invite here
+      console.log("Invite member", member);
+
+      //   console.log("User workspace", workspace);
+
+      // This is where you would make an API call to invite the member to the workspace
+
+      // Return true if the invite was successful
+      // Return false if the invite failed
       return { success: true, member: member };
     },
   }));

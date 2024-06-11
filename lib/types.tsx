@@ -67,6 +67,10 @@ export type MemberWithRemoveWorkspaceHandler = Member & {
     success: boolean;
     member: Member;
   };
+  onInvite?: (member: MemberWithRemoveWorkspaceHandler) => {
+    success: boolean;
+    member: Member;
+  };
 };
 
 export type TeamWithMemberDeleteHandler = Omit<Team, "members"> & {

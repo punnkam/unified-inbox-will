@@ -104,9 +104,28 @@ export const columns: ColumnDef<MemberWithRemoveWorkspaceHandler>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <Link href={`./members/${member.id}`}>
-                <DropdownMenuItem>Edit Role</DropdownMenuItem>
-              </Link>
+              {status === "Active" ? (
+                <Link href={`./members/${member.id}`}>
+                  <DropdownMenuItem>Edit Role</DropdownMenuItem>
+                </Link>
+              ) : (
+                //  add function to resend invite
+                <DropdownMenuItem
+                  onClick={async () => {
+                    if (member.onInvite) {
+                      const response = await member.onInvite(member);
+
+                      if (response.success) {
+                        toast.success("Invite sent successfully");
+                      } else {
+                        toast.error("Failed to send invite");
+                      }
+                    }
+                  }}
+                >
+                  Resend Invite
+                </DropdownMenuItem>
+              )}
               <AlertDialogTrigger
                 onClick={() => setIsOpen(true)}
                 className="w-full"
