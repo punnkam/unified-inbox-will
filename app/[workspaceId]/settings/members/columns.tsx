@@ -62,10 +62,22 @@ export const columns: ColumnDef<MemberWithRemoveWorkspaceHandler>[] = [
   {
     accessorKey: "role",
     header: "Role",
+    accessorFn: (row) => {
+      // Get the current workspace user status (Active, Pending)
+      const currentWorkspace = row.workspaces?.find(
+        (memberWorkspace) => memberWorkspace.id === row.currentWorkspace.id
+      );
+      return currentWorkspace ? currentWorkspace.role : undefined;
+    },
     cell: ({ row }) => {
       return (
         <p className="text-tertiary text-body-2xs font-normal">
-          {row.original.role}
+          {
+            row.original.workspaces?.find(
+              (memberWorkspace) =>
+                memberWorkspace.id === row.original.currentWorkspace.id
+            )?.role
+          }
         </p>
       );
     },
