@@ -232,3 +232,18 @@ export const saveSlackConnection = async (
 
   return { success: true, message: "Saved" };
 };
+
+export const removeSlackConnection = async (
+  connection: SlackConnection
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // Save the slack connection
+  console.log("Removed slack connection", connection);
+
+  // This is where you would make an API call to save the slack connection
+
+  return { success: true, message: "Removed" };
+};
