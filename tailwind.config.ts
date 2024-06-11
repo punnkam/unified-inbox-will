@@ -172,7 +172,7 @@ const config = {
 
         "subtitle-xl": ["24px", "28.8px"],
         "subtitle-lg": ["20px", "24px"],
-        "subtitle-xs": ["13px", "16.8px"],
+        "subtitle-xs": ["14px", "16.8px"],
         "subtitle-md": ["18px", "21.6px"],
         "subtitle-sm": ["16px", "19.2px"],
         "subtitle-2xs": ["12px", "14.4px"],
