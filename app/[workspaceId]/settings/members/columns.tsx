@@ -89,6 +89,11 @@ export const columns: ColumnDef<MemberWithRemoveWorkspaceHandler>[] = [
       const router = useRouter();
       const member = row.original;
 
+      const status = row.original.workspaces?.find(
+        (memberWorkspace) =>
+          memberWorkspace.id === row.original.currentWorkspace.id
+      )?.status;
+
       return (
         <AlertDialog open={isOpen}>
           <DropdownMenu>
@@ -102,15 +107,22 @@ export const columns: ColumnDef<MemberWithRemoveWorkspaceHandler>[] = [
               <Link href={`./members/${member.id}`}>
                 <DropdownMenuItem>Edit Role</DropdownMenuItem>
               </Link>
-              <AlertDialogTrigger onClick={() => setIsOpen(true)}>
-                <DropdownMenuItem>Remove Member</DropdownMenuItem>
+              <AlertDialogTrigger
+                onClick={() => setIsOpen(true)}
+                className="w-full"
+              >
+                <DropdownMenuItem>
+                  {status === "Active" ? "Remove Memeber" : "Cancel Invite"}
+                </DropdownMenuItem>
               </AlertDialogTrigger>
             </DropdownMenuContent>
           </DropdownMenu>
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>
-                Are you sure you want to remove {member.name}?
+                {status === "Active"
+                  ? `Are you sure you want to remove ${member.name}?`
+                  : "Are you sure you want to cancel?"}
               </AlertDialogTitle>
               <AlertDialogDescription>
                 This action cannot be undone. They won’t be able to access this
@@ -148,7 +160,7 @@ export const columns: ColumnDef<MemberWithRemoveWorkspaceHandler>[] = [
                   }
                 }}
               >
-                Remove member
+                {status === "Active" ? "Remove member" : "Cancel invite"}
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
