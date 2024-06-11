@@ -39,7 +39,7 @@ export const BreezewayIntegration = async ({
         </div>
         <div>
           <Link href="./integrations/breezeway/">
-            <Button variant={"outline"}>Edit</Button>
+            <Button variant={"outline"} size={"sm"}>Edit</Button>
           </Link>
         </div>
       </div>
