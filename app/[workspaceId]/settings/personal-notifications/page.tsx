@@ -85,7 +85,7 @@ export default function PersonalNotificationsPage() {
       <div className="flex flex-col gap-5">
         <p className="text-title-lg text-tertiary">Notification methods</p>
 
-        <div className="flex justify-between items-start border border-stroke rounded-md p-4">
+        <div className="flex justify-between items-start border border-secondary rounded-md p-4">
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 flex justify-center items-center">
               <ArrowCircleBrokenUpLeftIcon className="text-icon-tertiary" />
@@ -108,7 +108,7 @@ export default function PersonalNotificationsPage() {
           </div>
         </div>
 
-        <div className="flex justify-between items-start border border-stroke rounded-md p-4">
+        <div className="flex justify-between items-start border border-secondary rounded-md p-4">
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 flex justify-center items-center">
               <MailIcon className="text-icon-tertiary" />
@@ -135,7 +135,7 @@ export default function PersonalNotificationsPage() {
       <div className="flex flex-col gap-5">
         <p className="text-title-lg text-tertiary">Guest messaging</p>
 
-        <div className="border border-stroke rounded-md p-4">
+        <div className="border border-secondary rounded-md p-4">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
               <Checkbox
@@ -206,7 +206,7 @@ export default function PersonalNotificationsPage() {
       <div className="flex flex-col gap-5">
         <p className="text-title-lg text-tertiary">Upsells</p>
 
-        <div className="border border-stroke rounded-md p-4">
+        <div className="border border-secondary rounded-md p-4">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
               <Checkbox
@@ -241,7 +241,7 @@ export default function PersonalNotificationsPage() {
       <div className="flex flex-col gap-5">
         <p className="text-title-lg text-tertiary">Tasks</p>
 
-        <div className="border border-stroke rounded-md p-4">
+        <div className="border border-secondary rounded-md p-4">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
               <Checkbox
