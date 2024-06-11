@@ -714,3 +714,29 @@ export const CopyIcon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const InfoCircleIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={17}
+    height={17}
+    fill="none"
+    viewBox="0 0 17 17"
+    {...props}
+  >
+    <g clipPath="url(#a)">
+      <path
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+        d="M8.96 11.167V8.5m0-2.667h.007m6.66 2.667a6.667 6.667 0 1 1-13.334 0 6.667 6.667 0 0 1 13.334 0Z"
+      />
+    </g>
+    <defs>
+      <clipPath id="a">
+        <path fill="#fff" d="M.96.5h16v16h-16z" />
+      </clipPath>
+    </defs>
+  </svg>
+);

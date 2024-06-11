@@ -1,8 +1,12 @@
-import { ArrowNarrowLeft } from "@/components/icons/CustomIcons";
+import {
+  ArrowNarrowLeft,
+  InfoCircleIcon,
+} from "@/components/icons/CustomIcons";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import EditSlackContent from "./content";
 import { fetchSlackConnections } from "@/app/actions";
+import moment from "moment";
 
 export default async function EditSlackPage({
   params: { workspaceId },
@@ -24,6 +28,11 @@ export default async function EditSlackPage({
           </Button>
         </Link>
         <h1 className="text-title-2xl">Slack</h1>
+        <p className="text-body-xs font-normal text-tertiary flex items-center gap-1">
+          <InfoCircleIcon />
+          Added to the {slackConnections[0].name} Slack{" "}
+          {moment(slackConnections[0].connectionDate).fromNow()}
+        </p>
       </div>
 
       <div className="border-b border-primary"></div>

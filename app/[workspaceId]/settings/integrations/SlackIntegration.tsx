@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { SlackIcon } from "@/components/icons/CustomIcons";
 import Link from "next/link";
 import { fetchSlackConnections } from "@/app/actions";
+import moment from "moment";
 
 export const SlackIntegration = async ({
   workspaceId,
@@ -28,12 +29,9 @@ export const SlackIntegration = async ({
             </div>
           </div>
           <div>
-            <p className="text-subtitle-xs">
-              You have a Slack workspace connected to HostAI
-            </p>
+            <p className="text-subtitle-xs">{connection.name}</p>
             <p className="text-body-2xs font-normal text-tertiary">
-              Slack can be used to notify your whole team of activity you care
-              about in HostAI
+              Added by you {moment(connection.connectionDate).fromNow()}
             </p>
           </div>
         </div>

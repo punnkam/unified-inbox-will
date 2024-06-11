@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { BreezewayIcon } from "@/components/icons/CustomIcons";
 import { fetchBreezewayConnections } from "@/app/actions";
 import Link from "next/link";
+import moment from "moment";
 
 export const BreezewayIntegration = async ({
   workspaceId,
@@ -28,18 +29,17 @@ export const BreezewayIntegration = async ({
             </div>
           </div>
           <div>
-            <p className="text-subtitle-xs">
-              You have a Breezeway workspace connected to HostAI
-            </p>
+            <p className="text-subtitle-xs">{connection.name}</p>
             <p className="text-body-2xs font-normal text-tertiary">
-              Breezeway can be used to notify your whole team of activity you
-              care about in HostAI
+              Added by you {moment(connection.connectionDate).fromNow()}
             </p>
           </div>
         </div>
         <div>
           <Link href="./integrations/breezeway/">
-            <Button variant={"outline"} size={"sm"}>Edit</Button>
+            <Button variant={"outline"} size={"sm"}>
+              Edit
+            </Button>
           </Link>
         </div>
       </div>
