@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { useDebouncedSave } from "@/lib/hooks/useDebouncedSave";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface Data {
   name: string;
@@ -137,10 +138,11 @@ export default function PersonalNotificationsPage() {
         </p>
 
         <div className="flex gap-2">
-          {/* TODO: This has no function right now */}
-          <Button size={"sm"} variant={"secondary"}>
-            Add or Remove listings
-          </Button>
+          <Link href="./general/listings">
+            <Button size={"sm"} variant={"secondary"}>
+              Add or Remove listings
+            </Button>
+          </Link>
           <a href="#">
             <Button size={"sm"} variant={"outline"}>
               Open Stripe billing portal

@@ -7,6 +7,8 @@ import {
   fakeTeamsData,
   fakeWorkspaceData,
   TeamWithMemberDeleteHandler,
+  ListingWithDeleteHandler,
+  fakeListingsData,
 } from "@/lib/types";
 
 // Action to handle fetching members and adding a delete handler to each member
@@ -110,4 +112,58 @@ export const fetchTeams = async (
   }));
 
   return teamsWithDeleteHandler;
+};
+
+// Action to handle fetching all listings in a workspace
+export const fetchListings = async (
+  workspaceId: string
+): Promise<ListingWithDeleteHandler[]> => {
+  // Get the current workspace data
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return [];
+  }
+
+  // Get all listings in the current workspace
+  const listings = fakeListingsData.filter(
+    (listing) => listing.workspaceId === workspace.id
+  );
+
+  // Add a delete handler to each listing
+  const listingsWithDeleteHandler = listings.map((listing) => ({
+    ...listing,
+    onDelete: () => {
+      "use server";
+      // Handle delete here
+      console.log("Delete listing", listing);
+
+      // This is where you would make an API call to delete the listing
+
+      // Return true if the delete was successful
+      // Return false if the delete failed
+      return { success: true, listing: listing };
+    },
+    onActiveChange: () => {
+      "use server";
+      // Handle active change here
+      console.log("Change active", listing);
+
+      const currentActiveState = listing.active;
+
+      // This is where you would make an API call to change the active state of the listing
+      // Change the active state of the listing
+      listing.active = !currentActiveState;
+
+      console.log("Changed active to", listing.active);
+
+      // Return true if the change was successful
+      // Return false if the change failed
+      return { success: true, listing: listing };
+    },
+  }));
+
+  return listingsWithDeleteHandler;
 };

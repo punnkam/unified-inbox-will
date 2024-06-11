@@ -47,6 +47,15 @@ export type Workspace = {
   slug: string;
 };
 
+export type Listing = {
+  id: number;
+  workspaceId: number;
+  active: boolean;
+  title: string;
+  address: string;
+  image: string;
+};
+
 export type MemberWithTeamId = Member & { teamId: number };
 
 export type MemberWithDeleteHandler = Member & {
@@ -75,6 +84,17 @@ export type MemberWithRemoveWorkspaceHandler = Member & {
 
 export type TeamWithMemberDeleteHandler = Omit<Team, "members"> & {
   members: MemberWithDeleteHandler[];
+};
+
+export type ListingWithDeleteHandler = Listing & {
+  onDelete: (listing: Listing) => {
+    success: boolean;
+    listing: Listing;
+  };
+  onActiveChange: (listing: Listing) => {
+    success: boolean;
+    listing: Listing;
+  };
 };
 
 export const fakeMembersData: Member[] = [
@@ -178,6 +198,36 @@ export const fakeWorkspaceData: Workspace[] = [
   {
     id: 1,
     slug: "will",
+  },
+];
+
+export let fakeListingsData: Listing[] = [
+  {
+    id: 1,
+    workspaceId: 1,
+    active: true,
+    title: "Cozy 2 Bedroom Apartment",
+    address: "1234 Elm Street",
+    image:
+      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    id: 2,
+    workspaceId: 1,
+    active: true,
+    title: "Modern 1 Bedroom Apartment",
+    address: "5678 Oak Street",
+    image:
+      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    id: 3,
+    workspaceId: 1,
+    active: false,
+    title: "Spacious 3 Bedroom House",
+    address: "91011 Pine Street",
+    image:
+      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
 ];
 
