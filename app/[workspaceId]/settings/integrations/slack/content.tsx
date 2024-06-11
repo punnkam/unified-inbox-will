@@ -179,7 +179,7 @@ export default function EditSlackContent({
           onClick={() => handleRemoveConnection()}
         >
           <div className="flex gap-2 items-center">
-            <SlackIcon />
+            <SlackIcon className="w-4 h-4" />
             {loading.remove ? "Removing..." : "Remove Slack integration"}
           </div>
         </Button>
