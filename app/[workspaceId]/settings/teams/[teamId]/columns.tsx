@@ -48,10 +48,13 @@ export const columns: ColumnDef<MemberWithDeleteHandler>[] = [
   {
     accessorKey: "role",
     header: "Role",
+    accessorFn: (row) => {
+      return row.currentWorkspace?.role;
+    },
     cell: ({ row }) => {
       return (
         <p className="text-tertiary text-body-2xs font-normal">
-          {row.original.role}
+          {row.original.currentWorkspace?.role}
         </p>
       );
     },

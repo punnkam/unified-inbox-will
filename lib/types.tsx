@@ -24,10 +24,13 @@ import {
 export type Member = {
   id: number;
   name: string;
-  role: "Admin" | "Member" | "External Team";
   email: string;
   image: string;
-  workspaces?: { id: number; status: "Active" | "Pending" }[];
+  workspaces?: {
+    id: number;
+    status: "Active" | "Pending";
+    role: "Admin" | "Member" | "External Team";
+  }[];
   teamIds?: number[];
 };
 
@@ -47,6 +50,11 @@ export type Workspace = {
 export type MemberWithTeamId = Member & { teamId: number };
 
 export type MemberWithDeleteHandler = Member & {
+  currentWorkspace?: {
+    id: number;
+    status: "Active" | "Pending";
+    role: "Admin" | "Member" | "External Team";
+  };
   onDelete: (member: MemberWithDeleteHandler) => {
     success: boolean;
     member: Member;
@@ -69,42 +77,38 @@ export const fakeMembersData: Member[] = [
   {
     id: 1,
     workspaces: [
-      { id: 2, status: "Pending" },
-      { id: 1, status: "Active" },
+      { id: 2, status: "Pending", role: "Member" },
+      { id: 1, status: "Active", role: "Admin" },
     ],
     teamIds: [1, 3],
     name: "James Doe",
-    role: "Admin",
     email: "m@example.com",
     image:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 2,
-    workspaces: [{ id: 1, status: "Active" }],
+    workspaces: [{ id: 1, status: "Active", role: "Member" }],
     teamIds: [2, 4],
     name: "Jack Doe",
-    role: "Member",
     email: "jack@gmail.com",
     image:
       "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 3,
-    workspaces: [{ id: 1, status: "Active" }],
-    teamIds: [1, 2, 3],
+    workspaces: [{ id: 1, status: "Active", role: "External Team" }],
+    teamIds: [1, 2, 3, 4],
     name: "John Doe",
-    role: "External Team",
     email: "john@gmail.com",
     image:
       "https://plus.unsplash.com/premium_photo-1664536392896-cd1743f9c02c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 4,
-    workspaces: [{ id: 1, status: "Pending" }],
+    workspaces: [{ id: 1, status: "Pending", role: "Member" }],
     teamIds: [],
     name: "Jose Doe",
-    role: "Member",
     email: "jose@gmail.com",
     image:
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",

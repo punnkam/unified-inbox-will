@@ -46,7 +46,7 @@ export default function EditTeamPage({
   const [tableMembers, setTableMembers] = useState(
     [] as MemberWithDeleteHandler[]
   );
-  const [avaliableMembers, setAvaliableMembers] = useState([] as Member[]);
+  const [availableMembers, setAvailableMembers] = useState([] as Member[]);
   const [loading, setLoading] = useState({
     save: false,
     delete: false,
@@ -63,8 +63,6 @@ export default function EditTeamPage({
   if (!currentWorkspace) {
     return null;
   }
-
-  console.log("currentWorkspace", currentWorkspace);
 
   const handleChange = (key: keyof typeof data, value: any) => {
     setData((prev) => ({
@@ -84,12 +82,28 @@ export default function EditTeamPage({
     setTableMembers((prev) => prev.filter((m) => m.id !== member.id));
 
     // Update the avaliable members
-    setAvaliableMembers((prev) => [...prev, member]);
+    setAvailableMembers((prev) => [...prev, member]);
 
     return { success: true, member: member };
   };
 
   const handleAddMember = (member: Member) => {
+    const workspace = member.workspaces?.find(
+      (workspace) => workspace.id === currentWorkspace.id
+    );
+
+    const memberWithDeleteHandler: MemberWithDeleteHandler = {
+      ...member,
+      ...(workspace && {
+        currentWorkspace: {
+          id: workspace.id,
+          status: workspace.status,
+          role: workspace.role,
+        },
+      }),
+      onDelete: () => handleDeleteMember(member),
+    };
+
     // Update the state data
     setData((prev) => ({
       ...prev,
@@ -97,16 +111,10 @@ export default function EditTeamPage({
     }));
 
     // add to the table state (with the delete handler)
-    setTableMembers((prev) => [
-      ...prev,
-      {
-        ...member,
-        onDelete: () => handleDeleteMember(member),
-      },
-    ]);
+    setTableMembers((prev) => [...prev, memberWithDeleteHandler]);
 
-    // Update the avaliable members
-    setAvaliableMembers((prev) => prev.filter((m) => m.id !== member.id));
+    // Update the available members
+    setAvailableMembers((prev) => prev.filter((m) => m.id !== member.id));
   };
 
   const handleSave = () => {
@@ -137,7 +145,7 @@ export default function EditTeamPage({
       return;
     }
 
-    setAvaliableMembers(team.avaliableMembers);
+    setAvailableMembers(team.availableMembers);
 
     setData({
       id: parseInt(teamId),
@@ -163,10 +171,23 @@ export default function EditTeamPage({
     }
 
     // add the teamId to the members (for the delete functionality)
-    const teamMembersWithId = team?.members.map((member) => ({
-      ...member,
-      teamId: parseInt(teamId),
-    }));
+    const teamMembersWithId = team?.members.map((member) => {
+      const workspace = member.workspaces?.find(
+        (workspace) => workspace.id === currentWorkspace?.id
+      );
+
+      return {
+        ...member,
+        teamId: parseInt(teamId),
+        ...(workspace && {
+          currentWorkspace: {
+            id: workspace.id,
+            status: workspace.status,
+            role: workspace.role,
+          },
+        }),
+      };
+    });
 
     // get all active members not in the team
     const availableMembers = fakeMembersData.filter(
@@ -185,7 +206,7 @@ export default function EditTeamPage({
       name: team.name,
       iconId: team.iconId || 0,
       members: teamMembersWithId,
-      avaliableMembers: availableMembers,
+      availableMembers: availableMembers,
     };
   }
 
@@ -276,7 +297,7 @@ export default function EditTeamPage({
         <DataTable
           columns={columns}
           data={tableMembers}
-          avaliableMembers={avaliableMembers}
+          availableMembers={availableMembers}
           onAddMemberToTeam={handleAddMember}
         />
       </div>

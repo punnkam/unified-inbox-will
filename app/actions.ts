@@ -76,6 +76,9 @@ export const fetchTeams = async (
     ...team,
     members: team.members.map((member) => ({
       ...member,
+      currentWorkspace: member.workspaces?.find(
+        (workspace) => workspace.id === workspace.id
+      ),
       onDelete: () => {
         "use server";
         // Handle remove here

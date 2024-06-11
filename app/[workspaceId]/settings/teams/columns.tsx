@@ -53,7 +53,7 @@ export const columns: ColumnDef<MemberWithDeleteHandler>[] = [
     cell: ({ row }) => {
       return (
         <p className="text-tertiary text-body-2xs font-normal">
-          {row.original.role}
+          {row.original.currentWorkspace?.role}
         </p>
       );
     },
