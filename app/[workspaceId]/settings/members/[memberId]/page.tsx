@@ -7,13 +7,13 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { fakeMembersData } from "@/lib/types";
+import { fakeMembersData, fakeWorkspaceData } from "@/lib/types";
 import { useRouter } from "next/navigation";
 
 export default function AddMemberPage({
-  params: { memberId },
+  params: { workspaceId, memberId },
 }: {
-  params: { memberId: string };
+  params: { workspaceId: string; memberId: string };
 }) {
   const [data, setData] = useState({
     id: parseInt(memberId),
@@ -61,11 +61,25 @@ export default function AddMemberPage({
       return;
     }
 
-    setData({
-      id: member.id,
-      role: member.role,
-      email: member.email,
-    });
+    // get the id of the current workspace from slug
+    const currentWorkspaceId = fakeWorkspaceData.find(
+      (workspace) => workspace.slug === workspaceId
+    )?.id;
+
+    const currentWorkspace = member.workspaces?.find(
+      (memberWorkspace) => memberWorkspace.id === currentWorkspaceId
+    );
+
+    if (currentWorkspace) {
+      setData({
+        id: member.id,
+        role: currentWorkspace?.role,
+        email: member.email,
+      });
+    } else {
+      toast.error("Member not found in this workspace");
+      router.push(`../members`);
+    }
   }
 
   return (
