@@ -29,14 +29,14 @@ import { Member, MemberWithDeleteHandler } from "@/lib/types";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<MemberWithDeleteHandler, TValue>[];
   data: MemberWithDeleteHandler[];
-  avaliableMembers: Member[];
+  availableMembers: Member[];
   onAddMemberToTeam: (member: Member) => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  avaliableMembers,
+  availableMembers,
   onAddMemberToTeam,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -69,7 +69,7 @@ export function DataTable<TData, TValue>({
           />
         </div>
         <AddMemberComboBox
-          avaliableMembers={avaliableMembers}
+          avaliableMembers={availableMembers}
           onAdd={onAddMemberToTeam}
         />
       </div>
