@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { SlackConnection } from "@/lib/types";
 import { useState } from "react";
-import { saveSlackConnection } from "@/app/actions";
+import { saveSlackConnection, removeSlackConnection } from "@/app/actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -17,7 +17,10 @@ export default function EditSlackContent({
   const [data, setData] = useState<SlackConnection["options"]>(
     connection.options
   );
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState({
+    save: false,
+    remove: false,
+  });
 
   const router = useRouter();
 
@@ -36,12 +39,12 @@ export default function EditSlackContent({
   };
 
   const handleSave = async () => {
-    setLoading(true);
+    setLoading({ ...loading, save: true });
     const repsonse = await saveSlackConnection({
       ...connection,
       options: data,
     });
-    setLoading(false);
+    setLoading({ ...loading, save: false });
 
     if (repsonse.success) {
       console.log("Slack integration saved successfully: ");
@@ -52,6 +55,26 @@ export default function EditSlackContent({
       router.refresh();
     } else {
       toast.error("Error saving Slack integration: " + repsonse.message);
+    }
+  };
+
+  const handleRemoveConnection = async () => {
+    setLoading({ ...loading, remove: true });
+    const repsonse = await removeSlackConnection({
+      ...connection,
+    });
+
+    setLoading({ ...loading, remove: true });
+
+    if (repsonse.success) {
+      console.log("Slack integration removed successfully: ");
+
+      toast.success("Slack integration removed successfully");
+
+      // refresh the page
+      router.push(`../integrations`);
+    } else {
+      toast.error("Error removing Slack integration: " + repsonse.message);
     }
   };
 
@@ -150,14 +173,22 @@ export default function EditSlackContent({
         </div>
       </div>
       <div className="flex justify-between items-center">
-        <Button variant={"outline"}>
+        <Button
+          variant={"outline"}
+          disabled={loading.remove || loading.save}
+          onClick={() => handleRemoveConnection()}
+        >
           <div className="flex gap-2 items-center">
             <SlackIcon />
-            Remove Slack integration
+            {loading.remove ? "Removing..." : "Remove Slack integration"}
           </div>
         </Button>
-        <Button size={"sm"} disabled={loading} onClick={() => handleSave()}>
-          {loading ? "Saving..." : "Save changes"}
+        <Button
+          size={"sm"}
+          disabled={loading.save || loading.remove}
+          onClick={() => handleSave()}
+        >
+          {loading.save ? "Saving..." : "Save changes"}
         </Button>
       </div>
     </div>
