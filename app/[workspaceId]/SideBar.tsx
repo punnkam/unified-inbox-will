@@ -17,8 +17,11 @@ import { usePathname } from "next/navigation";
 export const SideBar = () => {
   const pathname = usePathname();
 
-  // Get the first element of path
-  const path = pathname.split("/")[1];
+  // Get the second element of path
+  // e.g. /will/home -> home
+  // the first element is the workspace name
+  const workspace = pathname.split("/")[1];
+  const path = pathname.split("/")[2];
 
   return (
     <div className="h-screen overflow-y-auto w-fit flex flex-col justify-between items-center bg-primary-subtle border border-primary px-4 pt-6 pb-8">
@@ -26,27 +29,27 @@ export const SideBar = () => {
         <HostAiIcon />
         <div className="mt-5 flex flex-col items-center gap-5">
           <SideBarIcon
-            path={"/home"}
+            path={`/${workspace}/home`}
             icon={<HomeLineIcon />}
             selected={path == "home"}
           />
           <SideBarIcon
-            path={"/inbox"}
+            path={`/${workspace}/inbox`}
             icon={<InboxIcon />}
             selected={path == "inbox"}
           />
           <SideBarIcon
-            path={"/three"}
+            path={`/${workspace}/three`}
             icon={<LayersThreeIcon />}
             selected={path == "three"}
           />
           <SideBarIcon
-            path={"/money"}
+            path={`/${workspace}/money`}
             icon={<BankNoteIcon />}
             selected={path == "money"}
           />
           <SideBarIcon
-            path={"/layout"}
+            path={`/${workspace}/layout`}
             icon={<LayoutAltIcon />}
             selected={path == "layout"}
           />
@@ -55,12 +58,12 @@ export const SideBar = () => {
       <div className="flex flex-col items-center gap-[20px]">
         {/* settings and book */}
         <SideBarIcon
-          path={"/settings/personal-notifications"}
+          path={`/${workspace}/settings/personal-notifications`}
           icon={<SettingsIcon />}
           selected={path == "settings"}
         />
         <SideBarIcon
-          path={"/guide"}
+          path={`/${workspace}/guide`}
           icon={<BookOpenIcon />}
           selected={path == "guide"}
         />
