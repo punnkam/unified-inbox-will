@@ -14,6 +14,8 @@ import {
   BreezewayConnection,
   fakeBreezewayConnectionsData,
   Workspace,
+  fakeSavedRepliesData,
+  SavedReply,
 } from "@/lib/types";
 
 // Action to handle fetching members and adding a delete handler to each member
@@ -287,4 +289,49 @@ export const saveInboxGeneralSettings = async (
   // This is where you would make an API call to save the inbox general settings
 
   return { success: true, message: "Saved" };
+};
+
+export const fetchSavedReplies = async (
+  workspaceId: string
+): Promise<{ success: boolean; message: string; data?: SavedReply[] }> => {
+  "use server";
+
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // This is where you would make an API call to fetch the saved replies
+
+  // get the saved replies with the same workspaceId
+  const savedReplies = fakeSavedRepliesData.filter(
+    (savedReply) => savedReply.workspaceId === workspace.id
+  );
+
+  return {
+    success: true,
+    message: "Fetched saved replies",
+    data: savedReplies,
+  };
+};
+
+export const deleteSavedReply = async (
+  savedReply: SavedReply
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // Save the saved reply
+  console.log("Deleted saved reply", savedReply);
+
+  // This is where you would make an API call to delete the saved reply
+
+  return { success: true, message: "Deleted" };
 };

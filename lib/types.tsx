@@ -131,6 +131,13 @@ export type BreezewayConnection = {
   };
 };
 
+export type SavedReply = {
+  id: number;
+  workspaceId: number;
+  name: string;
+  reply: string;
+};
+
 export const fakeMembersData: Member[] = [
   {
     id: 1,
@@ -284,6 +291,36 @@ export const fakeSlackConnectionsData: SlackConnection[] = [
       tasks: false,
       copySetupToListingGroups: false,
     },
+  },
+];
+
+export const fakeSavedRepliesData: SavedReply[] = [
+  {
+    id: 1,
+    workspaceId: 1,
+    name: "Check-in instructions",
+    reply: `Hello [guest name],
+    This message is being sent out to the property to remindall guests that smoking, vaping, etc. is strictly prohibited inside your unit Any smoking must take place no less than 40 feet away from the building.
+    Thank you,
+    Andrew`,
+  },
+  {
+    id: 2,
+    workspaceId: 1,
+    name: "Check-out instructions",
+    reply: `Hello [guest name],
+    This message is being sent out to the property to remindall guests that smoking, vaping, etc. is strictly prohibited inside your unit Any smoking must take place no less than 40 feet away from the building.
+    Thank you,
+    Andrew`,
+  },
+  {
+    id: 3,
+    workspaceId: 1,
+    name: "Wifi password",
+    reply: `Hello [guest name],
+    This message is being sent out to the property to remindall guests that smoking, vaping, etc. is strictly prohibited inside your unit Any smoking must take place no less than 40 feet away from the building.
+    Thank you,
+    Andrew`,
   },
 ];
 
