@@ -365,10 +365,36 @@ export const saveSavedReply = async (
   // add a 2 second wait
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  // Save the saved reply
-  console.log("Saved saved reply", savedReply);
+  if (savedReply.id) {
+    // Update the saved reply
+    console.log("Updated saved reply", savedReply);
+  } else {
+    // if it is a new reply - it will not have an id
+    // Save the saved reply
+    console.log("Saved new reply", savedReply);
+  }
 
   // This is where you would make an API call to save the saved reply
 
   return { success: true, message: "Saved" };
+};
+
+export const getWorkspace = async (
+  workspaceId: string
+): Promise<{ success: boolean; message: string; data?: Workspace }> => {
+  "use server";
+
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  return {
+    success: true,
+    message: "Fetched workspace",
+    data: workspace,
+  };
 };

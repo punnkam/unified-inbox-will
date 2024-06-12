@@ -132,7 +132,7 @@ export type BreezewayConnection = {
 };
 
 export type SavedReply = {
-  id: number;
+  id?: number;
   workspaceId: number;
   name: string;
   reply: string;
