@@ -321,6 +321,28 @@ export const fetchSavedReplies = async (
   };
 };
 
+export const fetchSavedReply = async (
+  savedReplyId: string
+): Promise<{ success: boolean; message: string; data?: SavedReply }> => {
+  "use server";
+
+  // add a 2 second wait
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // This is where you would make an API call to fetch the saved reply
+
+  // get the saved reply with the same id
+  const savedReply = fakeSavedRepliesData.find(
+    (savedReply) => savedReply.id === parseInt(savedReplyId)
+  );
+
+  return {
+    success: true,
+    message: "Fetched saved reply",
+    data: savedReply,
+  };
+};
+
 export const deleteSavedReply = async (
   savedReply: SavedReply
 ): Promise<{ success: boolean; message: string }> => {
@@ -334,4 +356,19 @@ export const deleteSavedReply = async (
   // This is where you would make an API call to delete the saved reply
 
   return { success: true, message: "Deleted" };
+};
+
+export const saveSavedReply = async (
+  savedReply: SavedReply
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // Save the saved reply
+  console.log("Saved saved reply", savedReply);
+
+  // This is where you would make an API call to save the saved reply
+
+  return { success: true, message: "Saved" };
 };

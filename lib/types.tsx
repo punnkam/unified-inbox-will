@@ -444,3 +444,39 @@ export const fakeIconsData = [
     icon: <ShieldIcon />,
   },
 ];
+
+export const variablesList = [
+  { key: "Listing Name", value: "{listingName}" },
+  { key: "Listing City", value: "{listingCity}" },
+  { key: "Listing State", value: "{listingState}" },
+  { key: "Listing Country", value: "{listingCountry}" },
+  { key: "Listing Property Type", value: "{listingPropertyType}" },
+  { key: "Listing Address", value: "{listingAddress}" },
+  {
+    key: "Listing Check In Instructions",
+    value: "{listingCheckInInstructions}",
+  },
+  {
+    key: "Listing Check Out Instructions",
+    value: "{listingCheckOutInstructions}",
+  },
+  { key: "Listing Cancellation Policy", value: "{listingCancellationPolicy}" },
+  { key: "Listing House Rules", value: "{listingHouseRules}" },
+  { key: "Listing Guidebook Url", value: "{listingGuidebookUrl}" },
+  { key: "Reservation Channel Name", value: "{reservationChannelName}" },
+  { key: "Reservation Arrival Date", value: "{reservationArrivalDate}" },
+  { key: "Reservation Departure Date", value: "{reservationDepartureDate}" },
+  {
+    key: "Reservation Arrival Date Time",
+    value: "{reservationArrivalDateTime}",
+  },
+  {
+    key: "Reservation Departure Date Time",
+    value: "{reservationDepartureDateTime}",
+  },
+  { key: "Reservation Guest Full Name", value: "{reservationGuestFullName}" },
+  { key: "Reservation Guest First Name", value: "{reservationGuestFirstName}" },
+  { key: "Reservation Guest Email", value: "{reservationGuestEmail}" },
+  { key: "Reservation Guest Phone", value: "{reservationGuestPhone}" },
+  { key: "Reservation Guest Portal Url", value: "{reservationGuestPortalUrl}" },
+];

@@ -22,6 +22,7 @@ import {
 import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export const SavedReplyComponent = ({
   savedReply,
@@ -46,27 +47,37 @@ export const SavedReplyComponent = ({
   };
 
   return (
-    <div
-      key={savedReply.id}
-      className="flex items-start justify-between border border-secondary rounded-md p-5 gap-2"
-    >
-      <div className="flex flex-col">
-        <p className="text-subtitle-xs">{savedReply.name}</p>
-        <p className="text-body-2xs text-tertiary font-normal mt-1">
-          {savedReply.reply}
-        </p>
-      </div>
-      <div>
+    <div className="flex items-start justify-between border border-secondary rounded-md gap-2 hover:bg-hover active:bg-pressed">
+      <Link
+        key={savedReply.id}
+        href={`./saved-replies/${savedReply.id}`}
+        className="p-5"
+      >
+        <div className="flex flex-col">
+          <p className="text-subtitle-xs">{savedReply.name}</p>
+          <p className="text-body-2xs text-tertiary font-normal mt-1">
+            {savedReply.reply}
+          </p>
+        </div>
+      </Link>
+
+      <div className="p-5">
         <AlertDialog open={isDialogOpen}>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size={"icon"} className="h-8 w-8 px-0">
+              <Button
+                variant="ghost"
+                size={"icon"}
+                className="h-8 w-8 hover:bg-pressed z-10"
+              >
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal className="h-4 w-4 text-icon-tertiary" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="text-subtitle-xs">
-              <DropdownMenuItem>Edit</DropdownMenuItem>
+              <Link href={`./saved-replies/${savedReply.id}`}>
+                <DropdownMenuItem>Edit</DropdownMenuItem>
+              </Link>
               <AlertDialogTrigger
                 onClick={() => setIsDialogOpen(true)}
                 className="w-full"
