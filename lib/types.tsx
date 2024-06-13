@@ -22,7 +22,7 @@ import {
 } from "@/components/icons/CustomIcons";
 
 export type Member = {
-  id: number;
+  id?: number;
   name: string;
   email: string;
   image: string;

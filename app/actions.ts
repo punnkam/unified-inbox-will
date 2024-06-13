@@ -177,6 +177,33 @@ export const fetchListings = async (
   return listingsWithDeleteHandler;
 };
 
+export const saveMember = async (
+  member: Member
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  if (member.id) {
+    // Update the member
+    console.log("Updated member", member);
+
+    // This is where you would make an API call to update the member
+    return { success: true, message: "Saved" };
+  } else {
+    // if it is a new member - it will not have an id
+    // Save the member
+    console.log("Saved member", member);
+
+    // This is where you would make an API call to save the member
+    return { success: true, message: "Saved" };
+  }
+};
+
+/*
+ *   Integrations page actions
+ */
+
 export const fetchSlackConnections = async (
   workspaceId: string
 ): Promise<SlackConnection[]> => {
@@ -299,6 +326,10 @@ export const removeBreezewayConnection = async (
   return { success: true, message: "Removed" };
 };
 
+/*
+ *  Inbox configuration page actions
+ */
+
 export const fetchInboxGeneralSettings = async (
   workspaceId: string
 ): Promise<{ success: boolean; message: string; data?: Workspace }> => {
@@ -338,6 +369,10 @@ export const saveInboxGeneralSettings = async (
 
   return { success: true, message: "Saved" };
 };
+
+/*
+ * Saved replies page actions
+ */
 
 export const fetchSavedReplies = async (
   workspaceId: string
@@ -427,25 +462,9 @@ export const saveSavedReply = async (
   return { success: true, message: "Saved" };
 };
 
-export const getWorkspace = async (
-  workspaceId: string
-): Promise<{ success: boolean; message: string; data?: Workspace }> => {
-  "use server";
-
-  const workspace = fakeWorkspaceData.find(
-    (workspace) => workspace.slug === workspaceId
-  );
-
-  if (!workspace) {
-    return { success: false, message: "Workspace not found" };
-  }
-
-  return {
-    success: true,
-    message: "Fetched workspace",
-    data: workspace,
-  };
-};
+/*
+ * Conversation tags actions
+ */
 
 export const fetchConversationTags = async (
   workspaceId: string
@@ -537,4 +556,28 @@ export const saveConversationTag = async (
   // This is where you would make an API call to save the conversation tag
 
   return { success: true, message: "Saved" };
+};
+
+/*
+ * Misc Workspace actions
+ */
+
+export const getWorkspace = async (
+  workspaceId: string
+): Promise<{ success: boolean; message: string; data?: Workspace }> => {
+  "use server";
+
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  return {
+    success: true,
+    message: "Fetched workspace",
+    data: workspace,
+  };
 };
