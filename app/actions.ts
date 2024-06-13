@@ -91,6 +91,8 @@ export const fetchTeams = async (
     return [];
   }
 
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
   // Get teams in the current workspace
   const teams = fakeTeamsData.filter(
     (team) => team.workspaceId === workspace.id
