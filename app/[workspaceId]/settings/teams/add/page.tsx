@@ -22,6 +22,7 @@ import { ArrowNarrowLeft } from "@/components/icons/CustomIcons";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import { useRouter } from "next/navigation";
+import { IconComponent } from "@/components/icons/IconComponent";
 
 export default function EditTeamPage({
   params: { workspaceId, teamId },
@@ -190,8 +191,12 @@ export default function EditTeamPage({
                 size={"icon"}
                 className="w-10 h-10 px-0"
               >
-                {fakeIconsData.find((icon) => icon.id === data.iconId)?.icon ||
-                  fakeIconsData[0].icon}
+                <IconComponent
+                  icon={
+                    fakeIconsData.find((icon) => icon.id === data.iconId)
+                      ?.icon || fakeIconsData[0].icon
+                  }
+                />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="grid grid-cols-5">
@@ -205,7 +210,7 @@ export default function EditTeamPage({
                       handleChange("iconId", icon.id);
                     }}
                   >
-                    {icon.icon}
+                    <IconComponent icon={icon.icon} />
                   </Button>
                 </DropdownMenuItem>
               ))}

@@ -159,7 +159,7 @@ export const conversationTagTypes: ConversationTagType[] = [
 export type ConversationTag = {
   id?: number;
   workspaceId: number;
-  iconId: number;
+  iconId?: number;
   name: string;
   description: string;
   type: ConversationTagType;
@@ -416,102 +416,102 @@ export const fakeIconsData = [
   {
     id: 0,
     name: "Snowflake",
-    icon: <SnowflakeIcon />,
+    icon: SnowflakeIcon,
   },
   {
     id: 1,
     name: "Car",
-    icon: <CarIcon />,
+    icon: CarIcon,
   },
   {
     id: 2,
     name: "Moon",
-    icon: <MoonStarIcon />,
+    icon: MoonStarIcon,
   },
   {
     id: 3,
     name: "Anchor",
-    icon: <AnchorIcon />,
+    icon: AnchorIcon,
   },
   {
     id: 4,
     name: "Umbrella",
-    icon: <UmbrellaIcon />,
+    icon: UmbrellaIcon,
   },
   {
     id: 5,
     name: "Globe",
-    icon: <GlobeIcon />,
+    icon: GlobeIcon,
   },
   {
     id: 6,
     name: "FaceId",
-    icon: <FaceIdIcon />,
+    icon: FaceIdIcon,
   },
   {
     id: 7,
     name: "Wind",
-    icon: <WindIcon />,
+    icon: WindIcon,
   },
   {
     id: 8,
     name: "DiceOne",
-    icon: <Dice1Icon />,
+    icon: Dice1Icon,
   },
   {
     id: 9,
     name: "Hourglass",
-    icon: <HourGlassIcon />,
+    icon: HourGlassIcon,
   },
   {
     id: 10,
     name: "Mountain",
-    icon: <MountainIcon />,
+    icon: MountainIcon,
   },
   {
     id: 11,
     name: "Send",
-    icon: <SendIcon />,
+    icon: SendIcon,
   },
   {
     id: 12,
     name: "Stars",
-    icon: <StarsIcon />,
+    icon: StarsIcon,
   },
   {
     id: 13,
     name: "Menu",
-    icon: <Menu5Icon />,
+    icon: Menu5Icon,
   },
   {
     id: 14,
     name: "Hearts",
-    icon: <HeartsIcon />,
+    icon: HeartsIcon,
   },
   {
     id: 15,
     name: "ZapSquare",
-    icon: <ZapSquareIcon />,
+    icon: ZapSquareIcon,
   },
   {
     id: 16,
     name: "Star3",
-    icon: <Star3Icon />,
+    icon: Star3Icon,
   },
   {
     id: 17,
     name: "Trees",
-    icon: <TreesIcon />,
+    icon: TreesIcon,
   },
   {
     id: 18,
     name: "Stop",
-    icon: <StopIcon />,
+    icon: StopIcon,
   },
   {
     id: 19,
     name: "Shield",
-    icon: <ShieldIcon />,
+    icon: ShieldIcon,
   },
 ];
 

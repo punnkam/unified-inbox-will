@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table-accordion";
 import { EditIcon } from "@/components/icons/CustomIcons";
 import { fetchTeams } from "@/app/actions";
+import { IconComponent } from "@/components/icons/IconComponent";
 
 export default async function MembersPage({
   params: { workspaceId },
@@ -54,7 +55,9 @@ export default async function MembersPage({
                 <div className="flex items-center justify-between w-full">
                   <div className="flex gap-2 items-center">
                     <div className="h-8 w-8 border rounded-sm shadow-sm text-icon-primary flex justify-center items-center">
-                      {icon?.icon}
+                      <IconComponent
+                        icon={icon?.icon || fakeIconsData[0].icon}
+                      />
                     </div>
                     <div>
                       <p className="text-left">{team.name}</p>
