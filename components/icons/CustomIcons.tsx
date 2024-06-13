@@ -817,3 +817,97 @@ export const CodeSnippetIcon = (props: React.SVGProps<SVGSVGElement>) => (
     </defs>
   </svg>
 );
+
+export const CurrencyDollarIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={15}
+    height={22}
+    fill="none"
+    viewBox="0 0 15 22"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M1.48 15a4 4 0 0 0 4 4h4a4 4 0 0 0 0-8h-4a4 4 0 1 1 0-8h4a4 4 0 0 1 4 4m-6-6v20"
+    />
+  </svg>
+);
+
+export const BriefcaseIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={23}
+    height={20}
+    fill="none"
+    viewBox="0 0 23 20"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M15.48 5c0-.93 0-1.395-.102-1.776a3 3 0 0 0-2.122-2.122C12.875 1 12.41 1 11.48 1s-1.395 0-1.776.102a3 3 0 0 0-2.122 2.122C7.48 3.605 7.48 4.07 7.48 5m-2.8 14h13.6c1.12 0 1.68 0 2.108-.218a2 2 0 0 0 .874-.874c.218-.428.218-.988.218-2.108V8.2c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C19.96 5 19.4 5 18.28 5H4.68C3.56 5 3 5 2.572 5.218a2 2 0 0 0-.874.874C1.48 6.52 1.48 7.08 1.48 8.2v7.6c0 1.12 0 1.68.218 2.108a2 2 0 0 0 .874.874C3 19 3.56 19 4.68 19Z"
+    />
+  </svg>
+);
+
+export const ToolIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={22}
+    height={22}
+    fill="none"
+    viewBox="0 0 22 22"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M14.112 6.631c-.396-.396-.594-.594-.669-.822a1 1 0 0 1 0-.618c.075-.228.273-.426.669-.822L16.95 1.53a6 6 0 0 0-8.3 6.895c.12.49.18.734.169.888a.849.849 0 0 1-.11.392c-.071.138-.208.274-.481.547L1.98 16.5a2.121 2.121 0 1 0 3 3l6.248-6.248c.273-.273.41-.41.547-.48a.85.85 0 0 1 .392-.11c.154-.011.399.049.888.168a6 6 0 0 0 6.895-8.3L17.112 7.37c-.396.396-.594.594-.823.668a1 1 0 0 1-.618 0c-.228-.074-.426-.272-.822-.668l-.737-.738Z"
+    />
+  </svg>
+);
+
+export const KeyIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={21}
+    height={20}
+    fill="none"
+    viewBox="0 0 21 20"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M13.96 7h.01m-.01 6a6 6 0 1 0-5.946-5.193c.058.434.087.651.068.789a.853.853 0 0 1-.117.346c-.068.121-.187.24-.426.479l-5.11 5.11c-.173.173-.26.26-.322.36a1 1 0 0 0-.12.29c-.027.115-.027.237-.027.482V17.4c0 .56 0 .84.109 1.054a1 1 0 0 0 .437.437C2.72 19 3 19 3.56 19h1.737c.245 0 .367 0 .482-.028a.998.998 0 0 0 .29-.12c.1-.061.187-.148.36-.32l5.11-5.111c.239-.239.358-.358.48-.426a.852.852 0 0 1 .345-.117c.138-.02.355.01.789.068.264.036.533.054.807.054Z"
+    />
+  </svg>
+);
+
+export const GlassesIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={23}
+    height={16}
+    fill="none"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M9.96 10.535a4.007 4.007 0 0 1 4 0M1.96 11l.701-7.015c.027-.266.04-.399.06-.513A3 3 0 0 1 5.444 1.01C5.56 1 5.693 1 5.96 1m16 10-.701-7.015c-.027-.266-.04-.399-.06-.513a3 3 0 0 0-2.723-2.463C18.361 1 18.227 1 17.96 1M8.788 8.172a4 4 0 1 1-5.656 5.656 4 4 0 0 1 5.656-5.656Zm12 0a4 4 0 1 1-5.656 5.656 4 4 0 0 1 5.656-5.656Z"
+    />
+  </svg>
+);

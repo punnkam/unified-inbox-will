@@ -143,6 +143,68 @@ export type SavedReply = {
   reply: string;
 };
 
+export type ConversationTagType = {
+  id: number;
+  type: "Urgent" | "Money" | "Calendar" | "Other";
+  color: "error" | "success" | "active" | "tertiary";
+};
+
+export const conversationTagTypes: ConversationTagType[] = [
+  { id: 1, type: "Urgent", color: "error" },
+  { id: 2, type: "Money", color: "success" },
+  { id: 3, type: "Calendar", color: "active" },
+  { id: 4, type: "Other", color: "tertiary" },
+];
+
+export type ConversationTag = {
+  id?: number;
+  workspaceId: number;
+  iconId: number;
+  name: string;
+  description: string;
+  type: ConversationTagType;
+  actionItem: "Mark as done" | "Create task";
+};
+
+export const fakeConversationTags: ConversationTag[] = [
+  {
+    id: 1,
+    workspaceId: 1,
+    iconId: 0,
+    name: "Urgent thing",
+    description: "This conversation needs immediate attention",
+    type: conversationTagTypes[0],
+    actionItem: "Mark as done",
+  },
+  {
+    id: 2,
+    workspaceId: 1,
+    iconId: 1,
+    name: "Money thing",
+    description: "This conversation is about money",
+    type: conversationTagTypes[1],
+    actionItem: "Create task",
+  },
+  {
+    id: 3,
+    workspaceId: 1,
+    iconId: 2,
+    name: "Calendar thing",
+    description: "This conversation is about scheduling",
+    type: conversationTagTypes[2],
+    actionItem: "Create task",
+  },
+  {
+    id: 4,
+    workspaceId: 1,
+    iconId: 3,
+    name: "Other thing",
+    description: "This conversation is about something else",
+    type: conversationTagTypes[3],
+    actionItem: "Mark as done",
+  },
+];
+
 export const fakeMembersData: Member[] = [
   {
     id: 1,

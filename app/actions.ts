@@ -16,6 +16,8 @@ import {
   Workspace,
   fakeSavedRepliesData,
   SavedReply,
+  ConversationTag,
+  fakeConversationTags,
 } from "@/lib/types";
 
 // Action to handle fetching members and adding a delete handler to each member
@@ -443,4 +445,49 @@ export const getWorkspace = async (
     message: "Fetched workspace",
     data: workspace,
   };
+};
+
+export const fetchConversationTags = async (
+  workspaceId: string
+): Promise<{ success: boolean; message: string; data?: ConversationTag[] }> => {
+  "use server";
+
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // This is where you would make an API call to fetch the conversation tags
+
+  // get the conversation tags with the same workspaceId
+  const conversationTags = fakeConversationTags.filter(
+    (conversationTag) => conversationTag.workspaceId === workspace.id
+  );
+
+  return {
+    success: true,
+    message: "Fetched conversation tags",
+    data: conversationTags,
+  };
+};
+
+export const deleteConversationTag = async (
+  conversationTag: ConversationTag
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // Save the conversation tag
+  console.log("Deleted conversation tag", conversationTag);
+
+  // This is where you would make an API call to delete the conversation tag
+
+  return { success: true, message: "Deleted" };
 };
