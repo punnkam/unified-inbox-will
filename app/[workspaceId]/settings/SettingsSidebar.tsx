@@ -146,10 +146,9 @@ export const SettingsSidebar = () => {
             <SettingsSideBarOption
               path={`/${workspaceId}/settings/inbox-configuration/ai-settings`}
               name="AI Settings"
-              selected={
-                pathname ===
+              selected={pathname.startsWith(
                 `/${workspaceId}/settings/inbox-configuration/ai-settings`
-              }
+              )}
             />
             <SettingsSideBarOption
               path={`/${workspaceId}/settings/inbox-configuration/reservation-labels`}
