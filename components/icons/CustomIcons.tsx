@@ -8,6 +8,7 @@ export const ArrowCircleBrokenUpLeftIcon = (
     width={23}
     height={22}
     fill="none"
+    viewBox="0 0 23 22"
     {...props}
   >
     <path
@@ -26,6 +27,7 @@ export const ArrowNarrowLeft = (props: React.SVGProps<SVGSVGElement>) => (
     width={16}
     height={12}
     fill="none"
+    viewBox="0 0 16 12"
     {...props}
   >
     <path
@@ -44,6 +46,7 @@ export const BankNoteIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={23}
     height={16}
     fill="none"
+    viewBox="0 0 23 16"
     {...props}
   >
     <path
@@ -62,6 +65,7 @@ export const BookOpenIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={23}
     height={20}
     fill="none"
+    viewBox="0 0 23 20"
     {...props}
   >
     <path
@@ -80,6 +84,7 @@ export const CarIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={18}
     height={18}
     fill="none"
+    viewBox="0 0 18 18"
     {...props}
   >
     <path
@@ -98,6 +103,7 @@ export const EditIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={12}
     height={12}
     fill="none"
+    viewBox="0 0 12 12"
     {...props}
   >
     <path
@@ -116,6 +122,7 @@ export const HomeLineIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={21}
     height={21}
     fill="none"
+    viewBox="0 0 21 21"
     {...props}
   >
     <path
@@ -134,6 +141,7 @@ export const HostAiIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={33}
     height={32}
     fill="none"
+    viewBox="0 0 33 32"
     {...props}
   >
     <path
@@ -157,6 +165,7 @@ export const InboxIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={23}
     height={18}
     fill="none"
+    viewBox="0 0 23 18"
     {...props}
   >
     <path
@@ -175,6 +184,7 @@ export const LayersThreeIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={23}
     height={22}
     fill="none"
+    viewBox="0 0 23 22"
     {...props}
   >
     <path
@@ -193,6 +203,7 @@ export const LayoutAltIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={21}
     height={20}
     fill="none"
+    viewBox="0 0 21 20"
     {...props}
   >
     <path
@@ -211,6 +222,7 @@ export const SvgComponent = (props: React.SVGProps<SVGSVGElement>) => (
     width={23}
     height={18}
     fill="none"
+    viewBox="0 0 23 18"
     {...props}
   >
     <path
@@ -229,6 +241,7 @@ export const MountainIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={17}
     height={16}
     fill="none"
+    viewBox="0 0 17 16"
     {...props}
   >
     <g clipPath="url(#a)">
@@ -254,6 +267,7 @@ export const SettingsIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={21}
     height={22}
     fill="none"
+    viewBox="0 0 21 22"
     {...props}
   >
     <path
@@ -279,6 +293,7 @@ export const TreesIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={17}
     height={16}
     fill="none"
+    viewBox="0 0 17 16"
     {...props}
   >
     <path
@@ -303,6 +318,7 @@ export const TriangleIcon = (props: React.SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={11}
     height={10}
+    viewBox="0 0 11 10"
     fill="none"
     {...props}
   >
@@ -318,6 +334,7 @@ export const MailIcon = (props: React.SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={23}
     height={18}
+    viewBox="0 0 23 18"
     fill="none"
     {...props}
   >
@@ -336,6 +353,7 @@ export const SnowflakeIcon = (props: React.SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={18}
     height={18}
+    viewBox="0 0 18 18"
     fill="none"
     {...props}
   >
@@ -361,6 +379,7 @@ export const MoonStarIcon = (props: React.SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={18}
     height={18}
+    viewBox="0 0 18 18"
     fill="none"
     {...props}
   >
@@ -379,6 +398,7 @@ export const AnchorIcon = (props: React.SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={18}
     height={18}
+    viewBox="0 0 18 18"
     fill="none"
     {...props}
   >
@@ -397,6 +417,7 @@ export const UmbrellaIcon = (props: React.SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={18}
     height={18}
+    viewBox="0 0 18 18"
     fill="none"
     {...props}
   >
@@ -415,6 +436,7 @@ export const GlobeIcon = (props: React.SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={18}
     height={18}
+    viewBox="0 0 18 18"
     fill="none"
     {...props}
   >
@@ -434,6 +456,7 @@ export const FaceIdIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={16}
     height={16}
     fill="none"
+    viewBox="0 0 16 16"
     {...props}
   >
     <path
@@ -452,6 +475,7 @@ export const WindIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={18}
     height={14}
     fill="none"
+    viewBox="0 0 18 14"
     {...props}
   >
     <path
@@ -470,6 +494,7 @@ export const Dice1Icon = (props: React.SVGProps<SVGSVGElement>) => (
     width={16}
     height={16}
     fill="none"
+    viewBox="0 0 16 16"
     {...props}
   >
     <path
@@ -488,6 +513,7 @@ export const HourGlassIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={14}
     height={18}
     fill="none"
+    viewBox="0 0 14 18"
     {...props}
   >
     <path
@@ -506,6 +532,7 @@ export const SendIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={16}
     height={16}
     fill="none"
+    viewBox="0 0 16 16"
     {...props}
   >
     <path
@@ -524,6 +551,7 @@ export const StarsIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={18}
     height={18}
     fill="none"
+    viewBox="0 0 18 18"
     {...props}
   >
     <path
@@ -542,6 +570,7 @@ export const Menu5Icon = (props: React.SVGProps<SVGSVGElement>) => (
     width={16}
     height={8}
     fill="none"
+    viewBox="0 0 16 8"
     {...props}
   >
     <path
@@ -560,6 +589,7 @@ export const HeartsIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={18}
     height={18}
     fill="none"
+    viewBox="0 0 18 18"
     {...props}
   >
     <path
@@ -578,6 +608,7 @@ export const ZapSquareIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={16}
     height={16}
     fill="none"
+    viewBox="0 0 16 16"
     {...props}
   >
     <path
@@ -603,6 +634,7 @@ export const Star3Icon = (props: React.SVGProps<SVGSVGElement>) => (
     width={16}
     height={16}
     fill="none"
+    viewBox="0 0 16 16"
     {...props}
   >
     <path
@@ -621,6 +653,7 @@ export const StopIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={16}
     height={16}
     fill="none"
+    viewBox="0 0 16 16"
     {...props}
   >
     <path
@@ -638,6 +671,7 @@ export const ShieldIcon = (props: React.SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={14}
     height={17}
+    viewBox="0 0 14 17"
     fill="none"
     {...props}
   >
@@ -699,6 +733,7 @@ export const CopyIcon = (props: React.SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={23}
     height={22}
+    viewBox="0 0 23 22"
     fill="none"
     {...props}
   >
@@ -717,8 +752,8 @@ export const InfoCircleIcon = (props: React.SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={17}
     height={17}
-    fill="none"
     viewBox="0 0 17 17"
+    fill="none"
     {...props}
   >
     <g clipPath="url(#a)">
@@ -743,6 +778,7 @@ export const UploadCloudIcon = (props: React.SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={23}
     height={20}
+    viewBox="0 0 23 20"
     fill="none"
     {...props}
   >
@@ -761,6 +797,7 @@ export const DataFlowIcon = (props: React.SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={21}
     height={22}
+    viewBox="0 0 21 22"
     fill="none"
     {...props}
   >
@@ -779,6 +816,7 @@ export const ArchiveIcon = (props: React.SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={23}
     height={20}
+    viewBox="0 0 23 20"
     fill="none"
     {...props}
   >
@@ -900,6 +938,7 @@ export const GlassesIcon = (props: React.SVGProps<SVGSVGElement>) => (
     width={23}
     height={16}
     fill="none"
+    viewBox="0 0 23 16"
     {...props}
   >
     <path
@@ -908,6 +947,44 @@ export const GlassesIcon = (props: React.SVGProps<SVGSVGElement>) => (
       strokeLinejoin="round"
       strokeWidth={2}
       d="M9.96 10.535a4.007 4.007 0 0 1 4 0M1.96 11l.701-7.015c.027-.266.04-.399.06-.513A3 3 0 0 1 5.444 1.01C5.56 1 5.693 1 5.96 1m16 10-.701-7.015c-.027-.266-.04-.399-.06-.513a3 3 0 0 0-2.723-2.463C18.361 1 18.227 1 17.96 1M8.788 8.172a4 4 0 1 1-5.656 5.656 4 4 0 0 1 5.656-5.656Zm12 0a4 4 0 1 1-5.656 5.656 4 4 0 0 1 5.656-5.656Z"
+    />
+  </svg>
+);
+
+export const CheckCircleIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={16}
+    height={16}
+    fill="none"
+    viewBox="0 0 16 16"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="m4.96 8 2 2 4-4m3.666 2A6.667 6.667 0 1 1 1.293 8a6.667 6.667 0 0 1 13.333 0Z"
+    />
+  </svg>
+);
+
+export const FilePlusIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={12}
+    height={14}
+    fill="none"
+    viewBox="0 0 12 14"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M10.667 6.125V3.967c0-.98 0-1.47-.19-1.845a1.75 1.75 0 0 0-.766-.765c-.374-.19-.864-.19-1.844-.19H4.133c-.98 0-1.47 0-1.844.19a1.75 1.75 0 0 0-.765.765c-.19.375-.19.865-.19 1.845v6.066c0 .98 0 1.47.19 1.845.168.33.436.597.765.765.374.19.864.19 1.844.19H6m1.167-6.416h-3.5M4.834 8.75H3.667m4.667-4.667H3.667M9.5 12.25v-3.5M7.75 10.5h3.5"
     />
   </svg>
 );
