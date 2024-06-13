@@ -18,16 +18,16 @@ import { Member } from "@/lib/types";
 import { useState } from "react";
 
 export function AddMemberComboBox({
-  avaliableMembers,
+  availableMembers,
   onAdd,
 }: {
-  avaliableMembers: Member[];
+  availableMembers: Member[];
   onAdd: (member: Member) => void;
 }) {
   const [open, setOpen] = useState(false);
 
   const handleSelect = (id: number) => {
-    onAdd(avaliableMembers.find((m) => m.id === id)!);
+    onAdd(availableMembers.find((m) => m.id === id)!);
 
     setOpen(false);
   };
@@ -51,12 +51,12 @@ export function AddMemberComboBox({
             <CommandInput placeholder="Search Members" />
             <CommandEmpty>No avaliable members found.</CommandEmpty>
             <CommandGroup>
-              {avaliableMembers.map((member) => (
+              {availableMembers.map((member) => (
                 <CommandItem
                   key={member.id}
                   value={member.name}
                   onSelect={() => {
-                    handleSelect(member.id);
+                    handleSelect(member.id!);
                   }}
                   className="flex items-center gap-2"
                 >

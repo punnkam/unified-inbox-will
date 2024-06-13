@@ -69,7 +69,7 @@ export function DataTable<TData, TValue>({
           />
         </div>
         <AddMemberComboBox
-          avaliableMembers={availableMembers}
+          availableMembers={availableMembers}
           onAdd={onAddMemberToTeam}
         />
       </div>
