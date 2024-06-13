@@ -281,6 +281,62 @@ export const savePersonalNotifications = async (
 };
 
 /*
+ *  General page actions
+ */
+
+export const fetchGeneralSettings = async (
+  workspaceId: string
+): Promise<{ success: boolean; message: string; data?: Workspace }> => {
+  "use server";
+
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  // add a 2 second wait
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // This is where you would make an API call to fetch the general settings
+
+  return {
+    success: true,
+    message: "Fetched general settings",
+    data: workspace,
+  };
+};
+
+export const saveGeneralSettings = async (
+  workspaceId: string,
+  workspace: Workspace["generalSettings"]
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+
+  const workspaceData = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspaceData) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  // add a 2 second wait
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  console.log(
+    "Saved workspace: " + workspaceData.id + " general settings",
+    workspace
+  );
+
+  // This is where you would make an API call to save the general settings
+
+  return { success: true, message: "Saved" };
+};
+
+/*
  *   Members page actions
  */
 

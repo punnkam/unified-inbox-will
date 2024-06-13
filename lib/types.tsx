@@ -51,6 +51,10 @@ export type Workspace = {
     autoArchive: boolean;
   };
   signature: string;
+  generalSettings: {
+    name?: string;
+    logo?: string;
+  };
 };
 
 export type Listing = {
@@ -344,6 +348,9 @@ export const fakeWorkspaceData: Workspace[] = [
       autoArchive: true,
     },
     signature: "hi there",
+    generalSettings: {
+      name: "Will's Workspace",
+    },
   },
 ];
 
