@@ -477,6 +477,32 @@ export const fetchConversationTags = async (
   };
 };
 
+export const fetchConversationTag = async (
+  conversationTagId: string
+): Promise<{ success: boolean; message: string; data?: ConversationTag }> => {
+  "use server";
+
+  // add a 2 second wait
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // This is where you would make an API call to fetch the conversation tag
+
+  // get the conversation tag with the same id
+  const conversationTag = fakeConversationTags.find(
+    (conversationTag) => conversationTag.id === parseInt(conversationTagId)
+  );
+
+  if (!conversationTag) {
+    return { success: false, message: "Conversation tag not found" };
+  }
+
+  return {
+    success: true,
+    message: "Fetched conversation tag",
+    data: conversationTag,
+  };
+};
+
 export const deleteConversationTag = async (
   conversationTag: ConversationTag
 ): Promise<{ success: boolean; message: string }> => {
