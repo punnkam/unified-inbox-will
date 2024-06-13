@@ -121,6 +121,8 @@ export type BreezewayConnection = {
   name: string;
   image: string;
   connectionDate: string;
+  clientId: string;
+  clientSecret: string;
   options?: {
     labelledMaintenance: BreezewayLabel;
     labelledCleaning: BreezewayLabel;
@@ -286,11 +288,13 @@ export const fakeBreezewayConnectionsData: BreezewayConnection[] = [
   {
     id: 1,
     workspaceId: 1,
-    connected: true,
+    connected: false,
     name: "Canbnb",
     image:
       "https://images.unsplash.com/photo-1516876437184-593fda40c7ce?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     connectionDate: "2024-02-01",
+    clientId: "12345",
+    clientSecret: "67890",
     options: {
       labelledMaintenance: "Maintenance",
       labelledCleaning: "Cleaning",
