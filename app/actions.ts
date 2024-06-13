@@ -177,6 +177,56 @@ export const fetchListings = async (
   return listingsWithDeleteHandler;
 };
 
+/*
+ *  Signature page actions
+ */
+
+export const fetchSignature = async (
+  workspaceId: number
+): Promise<{ success: boolean; message: string; data?: string }> => {
+  "use server";
+
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.id === workspaceId
+  );
+
+  if (!workspace) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  // add a 2 second wait
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // This is where you would make an API call to fetch the signature
+
+  return {
+    success: true,
+    message: "Fetched signature",
+    data: workspace.signature,
+  };
+};
+
+export const saveSignature = async (
+  workspaceId: number,
+  signature: string
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+
+  // add a 2 second wait
+
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  console.log("Saved signature", signature + " for workspace " + workspaceId);
+
+  // This is where you would make an API call to save the signature
+
+  return { success: true, message: "Saved" };
+};
+
+/*
+ *   Members page actions
+ */
+
 export const saveMember = async (
   member: Member
 ): Promise<{ success: boolean; message: string }> => {

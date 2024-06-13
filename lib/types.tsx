@@ -49,6 +49,7 @@ export type Workspace = {
     asignConversations: "Members" | "Teams";
     autoArchive: boolean;
   };
+  signature: string;
 };
 
 export type Listing = {
@@ -314,6 +315,7 @@ export const fakeWorkspaceData: Workspace[] = [
       asignConversations: "Members",
       autoArchive: true,
     },
+    signature: "hi there",
   },
 ];
 
