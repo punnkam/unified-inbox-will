@@ -5,6 +5,7 @@ import { BreezewayIcon } from "@/components/icons/CustomIcons";
 import { fetchBreezewayConnections } from "@/app/actions";
 import Link from "next/link";
 import moment from "moment";
+import { BreezewayDialog } from "./breezewayDialog";
 
 export const BreezewayIntegration = async ({
   workspaceId,
@@ -56,12 +57,7 @@ export const BreezewayIntegration = async ({
         </p>
       </div>
       <div>
-        <Button variant={"outline"}>
-          <div className="flex gap-2 items-center">
-            <BreezewayIcon />
-            Connect Breezeway account
-          </div>
-        </Button>
+        <BreezewayDialog />
       </div>
     </div>
   );

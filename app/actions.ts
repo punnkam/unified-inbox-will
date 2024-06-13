@@ -251,6 +251,52 @@ export const removeSlackConnection = async (
   return { success: true, message: "Removed" };
 };
 
+export const createBreezewayConnection = async (
+  clientId: string,
+  clientSecret: string
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // Save the slack connection
+  console.log("Created breezeway connection", clientId, clientSecret);
+
+  // This is where you would make an API call to save the slack connection
+
+  return { success: true, message: "Created" };
+};
+
+export const saveBreezewayConnection = async (
+  connection: BreezewayConnection
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // Save the slack connection
+  console.log("Saved breezeway connection", connection);
+
+  // This is where you would make an API call to save the slack connection
+
+  return { success: true, message: "Saved" };
+};
+
+export const removeBreezewayConnection = async (
+  connection: BreezewayConnection
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // Save the slack connection
+  console.log("Removed breezeway connection", connection);
+
+  // This is where you would make an API call to save the slack connection
+
+  return { success: true, message: "Removed" };
+};
+
 export const fetchInboxGeneralSettings = async (
   workspaceId: string
 ): Promise<{ success: boolean; message: string; data?: Workspace }> => {

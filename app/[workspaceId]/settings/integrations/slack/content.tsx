@@ -8,6 +8,14 @@ import { useState } from "react";
 import { saveSlackConnection, removeSlackConnection } from "@/app/actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export default function EditSlackContent({
   connection,
@@ -17,6 +25,7 @@ export default function EditSlackContent({
   const [data, setData] = useState<SlackConnection["options"]>(
     connection.options
   );
+  const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState({
     save: false,
     remove: false,
@@ -80,17 +89,14 @@ export default function EditSlackContent({
 
   return (
     <div className="flex flex-col gap-[28px]">
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-col gap-3">
-          <div>
-            <p className="text-subtitle-sm">Slack channels</p>
-            <p className="text-body-xs text-tertiary font-normal mt-1">
-              Detected upsells and tasks will be sent to the Guest Messages
-              channel by default.
-            </p>
-          </div>
+      <div className="flex flex-col gap-3">
+        <div>
+          <p className="text-subtitle-sm">Slack channels</p>
+          <p className="text-body-xs text-tertiary font-normal mt-1">
+            Detected upsells and tasks will be sent to the Guest Messages
+            channel by default.
+          </p>
         </div>
-
         <div className="flex flex-col gap-3 border border-secondary rounded-md p-4">
           <div className="flex items-start justify-between gap-2">
             <div>
@@ -134,16 +140,13 @@ export default function EditSlackContent({
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-col gap-3">
-          <div>
-            <p className="text-subtitle-sm">Listing groups</p>
-            <p className="text-body-xs text-tertiary font-normal mt-1">
-              This is only relevant if you create listing groups
-            </p>
-          </div>
+      <div className="flex flex-col gap-3">
+        <div>
+          <p className="text-subtitle-sm">Listing groups</p>
+          <p className="text-body-xs text-tertiary font-normal mt-1">
+            This is only relevant if you create listing groups
+          </p>
         </div>
-
         <div className="flex justify-between items-start border border-secondary rounded-md p-4">
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 flex justify-center items-center">
@@ -172,17 +175,51 @@ export default function EditSlackContent({
           </div>
         </div>
       </div>
+
       <div className="flex justify-between items-center">
-        <Button
-          variant={"outline"}
-          disabled={loading.remove || loading.save}
-          onClick={() => handleRemoveConnection()}
-        >
-          <div className="flex gap-2 items-center">
-            <SlackIcon className="w-4 h-4" />
-            {loading.remove ? "Removing..." : "Remove Slack integration"}
-          </div>
-        </Button>
+        <AlertDialog open={isOpen}>
+          <Button
+            variant="outline"
+            onClick={() => setIsOpen(true)}
+            disabled={loading.remove}
+          >
+            <div className="flex gap-2 items-center">
+              <SlackIcon className="w-4 h-4" />
+              {loading.remove ? "Removing..." : "Remove Slack integration"}
+            </div>
+          </Button>
+
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                Are you sure you want to remove Slack?
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                This action will disconnect your Slack from HostAI and cannot be
+                undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <Button
+                variant={"secondary"}
+                size={"sm"}
+                onClick={() => setIsOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={() => {
+                  handleRemoveConnection();
+                  setIsOpen(false);
+                }}
+              >
+                Remove Slack
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
         <Button
           size={"sm"}
           disabled={loading.save || loading.remove}
