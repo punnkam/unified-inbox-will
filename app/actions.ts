@@ -117,7 +117,7 @@ export const fetchTeams = async (
       onDelete: () => {
         "use server";
         // Handle remove here
-        //   console.log("Remove member", member);
+        console.log("Remove member", member, " from team", team.id!);
 
         // console.log("from team: ", team);
 
@@ -217,7 +217,7 @@ export const fetchTeam = async (
 };
 
 export const saveTeam = async (team: {
-  id: number | undefined;
+  id?: number;
   workspaceId: number;
   name: string;
   iconId: number;
@@ -237,11 +237,11 @@ export const saveTeam = async (team: {
   } else {
     // if it is a new team - it will not have an id
     // Save the team
-    console.log("Saved team", team);
+    console.log("Added team", team);
 
     // This is where you would make an API call to save the team
 
-    return { success: true, message: "Saved" };
+    return { success: true, message: "Added" };
   }
 };
 
@@ -258,6 +258,20 @@ export const deleteTeam = async (
   // This is where you would make an API call to delete the team
 
   return { success: true, message: "Deleted" };
+};
+
+export const fetchAvailableMembers = async (
+  workspaceId: number
+): Promise<Member[]> => {
+  // Get all members in the current workspace
+  const members = fakeMembersData.filter((member) =>
+    member.workspaces?.some(
+      (workspace) =>
+        workspace.id === workspaceId && workspace.status === "Active"
+    )
+  );
+
+  return members;
 };
 
 /*
