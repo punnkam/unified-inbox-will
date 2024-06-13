@@ -2,13 +2,14 @@
 
 import { BreezewayIcon } from "@/components/icons/CustomIcons";
 import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { createBreezewayConnection } from "@/app/actions";
@@ -47,7 +48,7 @@ export const BreezewayDialog = () => {
   };
 
   return (
-    <AlertDialog open={isOpen}>
+    <Dialog open={isOpen} onOpenChange={() => setIsOpen(!isOpen)}>
       <Button
         variant="outline"
         onClick={() => setIsOpen(true)}
@@ -59,14 +60,14 @@ export const BreezewayDialog = () => {
         </div>
       </Button>
 
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Connect your Breezeway account</AlertDialogTitle>
-          <AlertDialogDescription>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Connect your Breezeway account</DialogTitle>
+          <DialogDescription>
             Please contact your Breezeway rep to get this information.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogDescription className="flex flex-col gap-3">
+          </DialogDescription>
+        </DialogHeader>
+        <DialogDescription className="flex flex-col gap-3">
           <label
             htmlFor="breezeway-client-id"
             className="text-subtitle-sm text-primary font-medium"
@@ -90,8 +91,8 @@ export const BreezewayDialog = () => {
             placeholder="9496125101"
             onChange={(e) => setData({ ...data, clientSecret: e.target.value })}
           />
-        </AlertDialogDescription>
-        <AlertDialogFooter>
+        </DialogDescription>
+        <DialogFooter>
           <Button
             variant={"outline"}
             size={"sm"}
@@ -104,12 +105,14 @@ export const BreezewayDialog = () => {
             onClick={() => {
               handleConnectBreezeway();
             }}
-            disabled={loading || !data.clientID || !data.clientSecret}
+            disabled={
+              loading || data.clientID === "" || data.clientSecret === ""
+            }
           >
             {loading ? "Connecting..." : "Connect"}
           </Button>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
