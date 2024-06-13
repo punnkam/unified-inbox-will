@@ -18,6 +18,7 @@ import {
   SavedReply,
   ConversationTag,
   fakeConversationTags,
+  PersonalNotifications,
 } from "@/lib/types";
 
 // Action to handle fetching members and adding a delete handler to each member
@@ -219,6 +220,62 @@ export const saveSignature = async (
   console.log("Saved signature", signature + " for workspace " + workspaceId);
 
   // This is where you would make an API call to save the signature
+
+  return { success: true, message: "Saved" };
+};
+
+/*
+ *  Personal Notifications actions
+ */
+
+export const fetchPersonalNotifications = async (
+  workspaceId: string,
+  memberId: number
+): Promise<{ success: boolean; message: string; data?: Member }> => {
+  "use server";
+
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  // add a 2 second wait
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // This is where you would make an API call to fetch the personal notifications
+
+  // get the member with the same id
+  const member = fakeMembersData.find((member) => member.id === memberId);
+
+  if (!member) {
+    return { success: false, message: "Member not found" };
+  }
+
+  return {
+    success: true,
+    message: "Fetched personal notifications",
+    data: member,
+  };
+};
+
+export const savePersonalNotifications = async (
+  memberId: number,
+  personalNotifications: PersonalNotifications
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+
+  // add a 2 second fake delay
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  console.log(
+    "Member: " + memberId + " - Saved personal notifications",
+    personalNotifications
+  );
+
+  // This is where you would make an API call to save the personal notifications
 
   return { success: true, message: "Saved" };
 };

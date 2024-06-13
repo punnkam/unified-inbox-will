@@ -32,6 +32,7 @@ export type Member = {
     role: "Admin" | "Member" | "External Team";
   }[];
   teamIds?: number[];
+  personalNotifications?: PersonalNotifications;
 };
 
 export type Team = {
@@ -100,6 +101,20 @@ export type ListingWithDeleteHandler = Listing & {
     success: boolean;
     listing: Listing;
   };
+};
+
+export type PersonalNotifications = {
+  pushNotifications: boolean;
+  email: boolean;
+  newGuestMessages: boolean;
+  conversationTag: boolean;
+  assignedToGuestConversation: boolean;
+  mentionedInConversationNote: boolean;
+  newDetectedUpsells: boolean;
+  expiringUpsells: boolean;
+  newTasks: boolean;
+  assignedTask: boolean;
+  taskMarkedAsDone: boolean;
 };
 
 export type SlackConnection = {
@@ -222,6 +237,19 @@ export const fakeMembersData: Member[] = [
     email: "m@example.com",
     image:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    personalNotifications: {
+      pushNotifications: true,
+      email: false,
+      newGuestMessages: true,
+      conversationTag: false,
+      assignedToGuestConversation: true,
+      mentionedInConversationNote: false,
+      newDetectedUpsells: true,
+      expiringUpsells: true,
+      newTasks: false,
+      assignedTask: true,
+      taskMarkedAsDone: false,
+    },
   },
   {
     id: 2,
