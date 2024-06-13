@@ -25,7 +25,7 @@ import { ConvoTag } from "../convoTag";
 import { IconComponent } from "@/components/icons/IconComponent";
 import { X } from "lucide-react";
 
-export default function SavedReplyContent({
+export default function AddConversationTagContent({
   workspaceId,
 }: {
   workspaceId: number;

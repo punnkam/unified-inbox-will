@@ -1,7 +1,7 @@
 "use server";
 
 import { getWorkspace } from "@/app/actions";
-import SavedReplyContent from "./content";
+import AddConversationTagContent from "./content";
 
 export default async function EditSavedReplyPage({
   params: { workspaceId },
@@ -14,5 +14,5 @@ export default async function EditSavedReplyPage({
     return null;
   }
 
-  return <SavedReplyContent workspaceId={workspace.data?.id} />;
+  return <AddConversationTagContent workspaceId={workspace.data?.id} />;
 }
