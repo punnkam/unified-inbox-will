@@ -80,17 +80,14 @@ export default function EditSlackContent({
 
   return (
     <div className="flex flex-col gap-[28px]">
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-col gap-3">
-          <div>
-            <p className="text-subtitle-sm">Slack channels</p>
-            <p className="text-body-xs text-tertiary font-normal mt-1">
-              Detected upsells and tasks will be sent to the Guest Messages
-              channel by default.
-            </p>
-          </div>
+      <div className="flex flex-col gap-3">
+        <div>
+          <p className="text-subtitle-sm">Slack channels</p>
+          <p className="text-body-xs text-tertiary font-normal mt-1">
+            Detected upsells and tasks will be sent to the Guest Messages
+            channel by default.
+          </p>
         </div>
-
         <div className="flex flex-col gap-3 border border-secondary rounded-md p-4">
           <div className="flex items-start justify-between gap-2">
             <div>
@@ -134,16 +131,13 @@ export default function EditSlackContent({
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-col gap-3">
-          <div>
-            <p className="text-subtitle-sm">Listing groups</p>
-            <p className="text-body-xs text-tertiary font-normal mt-1">
-              This is only relevant if you create listing groups
-            </p>
-          </div>
+      <div className="flex flex-col gap-3">
+        <div>
+          <p className="text-subtitle-sm">Listing groups</p>
+          <p className="text-body-xs text-tertiary font-normal mt-1">
+            This is only relevant if you create listing groups
+          </p>
         </div>
-
         <div className="flex justify-between items-start border border-secondary rounded-md p-4">
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 flex justify-center items-center">
@@ -172,6 +166,7 @@ export default function EditSlackContent({
           </div>
         </div>
       </div>
+
       <div className="flex justify-between items-center">
         <Button
           variant={"outline"}
