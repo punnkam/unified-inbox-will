@@ -65,7 +65,7 @@ export default function GeneralContent({
             <div className="w-10 h-10 flex justify-center items-center">
               <StarsIcon className="text-icon-tertiary" />
             </div>
-            <div>
+            <div className="flex flex-col gap-1">
               <p className="text-subtitle-xs">
                 Let HostAI summarize your conversations
               </p>
@@ -97,7 +97,7 @@ export default function GeneralContent({
             <div className="w-10 h-10 flex justify-center items-center">
               <TranslateIcon className="text-icon-tertiary" />
             </div>
-            <div>
+            <div className="flex flex-col gap-1">
               <p className="text-subtitle-xs">
                 How HostAI should respond to non-English messages
               </p>
@@ -143,19 +143,28 @@ export default function GeneralContent({
             <div className="w-10 h-10 flex justify-center items-center">
               <AtomIcon className="text-icon-tertiary" />
             </div>
-            <div>
+            <div className="flex flex-col gap-1">
               <p className="text-subtitle-xs">
                 Have HostAI respond to guests automatically
               </p>
-              <p className="text-body-2xs font-normal text-tertiary">
-                Click turn on to configure
-              </p>
+              {data?.autoPilot ? (
+                <div className="flex gap-1 items-center">
+                  <div className="h-[6px] w-[6px] rounded-full bg-icon-success"></div>
+                  <p className="text-body-2xs font-normal text-success">
+                    Autopilot is currently activated
+                  </p>
+                </div>
+              ) : (
+                <p className="text-body-2xs font-normal text-tertiary">
+                  Click turn on to configure
+                </p>
+              )}
             </div>
           </div>
           <div>
             <Link href={"./ai-settings/autopilot"}>
               <Button variant={"outline"} size={"sm"}>
-                Turn on
+                {data?.autoPilot ? "Edit" : "Turn on"}
               </Button>
             </Link>
           </div>

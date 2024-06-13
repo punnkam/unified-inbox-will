@@ -364,7 +364,15 @@ export const fakeWorkspaceData: Workspace[] = [
         summarizeConversations: true,
         responseLanguage: "English",
         aiSignature: "hi there from AI",
-        autoPilot: false,
+        autoPilot: true,
+        autoPilotSettings: {
+          messageType: "All",
+          gaurdrails: {
+            notEnoughInformation: true,
+            isManaullyAnswered: false,
+            taggedWithConversationTag: false,
+          },
+        },
       },
     },
     signature: "hi there",
