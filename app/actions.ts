@@ -200,6 +200,29 @@ export const saveMember = async (
   }
 };
 
+export const fetchMember = async (
+  memberId: number
+): Promise<{ success: boolean; message: string; data?: Member }> => {
+  "use server";
+  // add a 2 second wait
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // This is where you would make an API call to fetch the member
+
+  // get the member with the same id
+  const member = fakeMembersData.find((member) => member.id === memberId);
+
+  if (!member) {
+    return { success: false, message: "Member not found" };
+  }
+
+  return {
+    success: true,
+    message: "Fetched member",
+    data: member,
+  };
+};
+
 /*
  *   Integrations page actions
  */
