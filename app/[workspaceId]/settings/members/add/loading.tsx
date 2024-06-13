@@ -15,7 +15,7 @@ export default function Loading() {
             All Members
           </Button>
         </Link>
-        <h1 className="text-title-2xl">Add Member</h1>
+        <h1 className="text-title-2xl">Add member</h1>
       </div>
 
       <div className="border-b border-primary"></div>
