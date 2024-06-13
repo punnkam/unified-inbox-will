@@ -707,6 +707,63 @@ export const saveInboxGeneralSettings = async (
 };
 
 /*
+ * AI settings page actions
+ */
+
+export const fetchAiSettings = async (
+  workspaceId: string
+): Promise<{
+  success: boolean;
+  message: string;
+  data?: Workspace["inboxConfiguration"]["aiSettings"];
+}> => {
+  "use server";
+
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // This is where you would make an API call to fetch the AI settings
+
+  return {
+    success: true,
+    message: "Fetched AI settings",
+    data: workspace.inboxConfiguration.aiSettings,
+  };
+};
+
+export const saveAiSettings = async (
+  workspaceId: string,
+  aiSettings: Workspace["inboxConfiguration"]["aiSettings"]
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  const workspace = await getWorkspace(workspaceId);
+
+  if (!workspace || !workspace.success || !workspace.data) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  console.log("workspace", workspace.data.id);
+
+  // Save the AI settings
+  console.log("Saved AI settings", aiSettings);
+
+  // This is where you would make an API call to save the AI settings
+
+  return { success: true, message: "Saved" };
+};
+
+/*
  * Saved replies page actions
  */
 

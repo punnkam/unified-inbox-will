@@ -49,6 +49,20 @@ export type Workspace = {
   inboxConfiguration: {
     asignConversations: "Members" | "Teams";
     autoArchive: boolean;
+    aiSettings: {
+      summarizeConversations: boolean;
+      responseLanguage: "English" | "Guest Language";
+      aiSignature: string;
+      autoPilot: boolean;
+      autoPilotSettings?: {
+        messageType: "All" | "Inquiries";
+        gaurdrails: {
+          notEnoughInformation: boolean;
+          isManaullyAnswered: boolean;
+          taggedWithConversationTag: boolean;
+        };
+      };
+    };
   };
   signature: string;
   generalSettings: {
@@ -346,6 +360,12 @@ export const fakeWorkspaceData: Workspace[] = [
     inboxConfiguration: {
       asignConversations: "Members",
       autoArchive: true,
+      aiSettings: {
+        summarizeConversations: true,
+        responseLanguage: "English",
+        aiSignature: "hi there from AI",
+        autoPilot: false,
+      },
     },
     signature: "hi there",
     generalSettings: {
