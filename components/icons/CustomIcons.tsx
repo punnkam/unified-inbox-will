@@ -737,3 +737,21 @@ export const InfoCircleIcon = (props: React.SVGProps<SVGSVGElement>) => (
     </defs>
   </svg>
 );
+
+export const UploadCloudIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={23}
+    height={20}
+    fill="none"
+    {...props}
+  >
+    <path
+      stroke="#6B7280"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="m7.96 14 4-4m0 0 4 4m-4-4v9m8-4.257A5.5 5.5 0 0 0 16.46 5a.62.62 0 0 1-.534-.302 7.5 7.5 0 1 0-11.78 9.096"
+    />
+  </svg>
+);

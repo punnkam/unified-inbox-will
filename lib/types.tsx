@@ -112,6 +112,8 @@ export type SlackConnection = {
   };
 };
 
+export type BreezewayLabel = "Cleaning" | "Maintenance" | "Inspections";
+
 export type BreezewayConnection = {
   id: number;
   workspaceId: number;
@@ -120,10 +122,11 @@ export type BreezewayConnection = {
   image: string;
   connectionDate: string;
   options?: {
-    guestMessaging: boolean;
-    upsells: boolean;
-    tasks: boolean;
-    copySetupToListingGroups: boolean;
+    labelledMaintenance: BreezewayLabel;
+    labelledCleaning: BreezewayLabel;
+    labelledSafety: BreezewayLabel;
+    labelledSupplies: BreezewayLabel;
+    labelledOther: BreezewayLabel;
   };
 };
 
@@ -266,7 +269,7 @@ export const fakeSlackConnectionsData: SlackConnection[] = [
     id: 1,
     workspaceId: 1,
     connected: true,
-    name: "Canbnb Slack",
+    name: "Canbnb",
     image:
       "https://images.unsplash.com/photo-1516876437184-593fda40c7ce?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     connectionDate: "2024-06-01",
@@ -284,15 +287,16 @@ export const fakeBreezewayConnectionsData: BreezewayConnection[] = [
     id: 1,
     workspaceId: 1,
     connected: true,
-    name: "Canbnb Breezeway",
+    name: "Canbnb",
     image:
       "https://images.unsplash.com/photo-1516876437184-593fda40c7ce?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     connectionDate: "2024-02-01",
     options: {
-      guestMessaging: true,
-      upsells: true,
-      tasks: false,
-      copySetupToListingGroups: false,
+      labelledMaintenance: "Maintenance",
+      labelledCleaning: "Cleaning",
+      labelledSafety: "Inspections",
+      labelledSupplies: "Maintenance",
+      labelledOther: "Cleaning",
     },
   },
 ];
