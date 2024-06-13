@@ -78,17 +78,25 @@ export const fetchMembers = async (
   return membersWithDeleteHandler;
 };
 
+/*
+ *  Teams page actions
+ */
+
 // Action to handle fetching teams and adding a delete handler to each member
 export const fetchTeams = async (
   workspaceId: string
-): Promise<TeamWithMemberDeleteHandler[]> => {
+): Promise<{
+  success: boolean;
+  message: string;
+  data?: TeamWithMemberDeleteHandler[];
+}> => {
   // Get the current workspace data
   const workspace = fakeWorkspaceData.find(
     (workspace) => workspace.slug === workspaceId
   );
 
   if (!workspace) {
-    return [];
+    return { success: false, message: "Workspace not found" };
   }
 
   // await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -123,61 +131,133 @@ export const fetchTeams = async (
     })),
   }));
 
-  return teamsWithDeleteHandler;
+  return {
+    success: true,
+    message: "Fetched teams",
+    data: teamsWithDeleteHandler,
+  };
 };
 
-// Action to handle fetching all listings in a workspace
-export const fetchListings = async (
-  workspaceId: string
-): Promise<ListingWithDeleteHandler[]> => {
-  // Get the current workspace data
-  const workspace = fakeWorkspaceData.find(
-    (workspace) => workspace.slug === workspaceId
-  );
+export const fetchTeam = async (
+  teamId: string
+): Promise<{
+  success: boolean;
+  message: string;
+  data?: { team: TeamWithMemberDeleteHandler; availableMembers: Member[] };
+}> => {
+  "use server";
 
-  if (!workspace) {
-    return [];
+  // Get the current team data
+  const team = fakeTeamsData.find((team) => team.id === parseInt(teamId));
+
+  if (!team) {
+    return { success: false, message: "Team not found" };
   }
 
-  // Get all listings in the current workspace
-  const listings = fakeListingsData.filter(
-    (listing) => listing.workspaceId === workspace.id
+  const currentWorkspace = await getWorkspace(team.workspaceId);
+
+  if (
+    !currentWorkspace ||
+    !currentWorkspace.success ||
+    !currentWorkspace.data
+  ) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  // add a 2 second wait
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // This is where you would make an API call to fetch the team
+
+  // Add a rmove member handler to each member on the team
+  const teamWithDeleteHandler = {
+    ...team,
+    members: team.members.map((member) => ({
+      ...member,
+      teamId: parseInt(teamId),
+      currentWorkspace: member.workspaces?.find(
+        (workspace) => workspace.id === team.workspaceId
+      ),
+      onDelete: () => {
+        "use server";
+        // Handle remove here
+        console.log("Remove member", member);
+
+        // remove member from the team
+        // This is where you would make an API call to delete the member from the team
+
+        // Return true if the delete was successful
+        // Return false if the delete failed
+        return { success: true, member: member };
+      },
+    })),
+  };
+
+  // get all active members not in the team
+  const availableMembers = fakeMembersData.filter(
+    (member) =>
+      // Check member is not in the specified team
+      !member.teamIds?.includes(parseInt(teamId)) &&
+      // Check member is in the current workspace and active
+      member.workspaces?.some(
+        (workspace) =>
+          currentWorkspace.data?.id === workspace.id &&
+          workspace.status === "Active"
+      )
   );
 
-  // Add a delete handler to each listing
-  const listingsWithDeleteHandler = listings.map((listing) => ({
-    ...listing,
-    onDelete: () => {
-      "use server";
-      // Handle delete here
-      console.log("Delete listing", listing);
-
-      // This is where you would make an API call to delete the listing
-
-      // Return true if the delete was successful
-      // Return false if the delete failed
-      return { success: true, listing: listing };
+  return {
+    success: true,
+    message: "Fetched team",
+    data: {
+      team: teamWithDeleteHandler,
+      availableMembers: availableMembers,
     },
-    onActiveChange: () => {
-      "use server";
-      // Handle active change here
-      console.log("Change active", listing);
+  };
+};
 
-      const currentActiveState = listing.active;
+export const saveTeam = async (team: {
+  id: number | undefined;
+  workspaceId: number;
+  name: string;
+  iconId: number;
+  members: number[];
+}): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // This is where you would make an API call to change the active state of the listing
-      // Change the active state of the listing
-      listing.active = !currentActiveState;
+  if (team.id) {
+    // Update the team
+    console.log("Updated team", team);
 
-      console.log("Changed active to", listing.active);
+    // This is where you would make an API call to update the team
 
-      // Return true if the change was successful
-      // Return false if the change failed
-      return { success: true, listing: listing };
-    },
-  }));
+    return { success: true, message: "Saved" };
+  } else {
+    // if it is a new team - it will not have an id
+    // Save the team
+    console.log("Saved team", team);
 
-  return listingsWithDeleteHandler;
+    // This is where you would make an API call to save the team
+
+    return { success: true, message: "Saved" };
+  }
+};
+
+export const deleteTeam = async (
+  teamId: number
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // Save the team
+  console.log("Deleted team", teamId);
+
+  // This is where you would make an API call to delete the team
+
+  return { success: true, message: "Deleted" };
 };
 
 /*
@@ -336,6 +416,60 @@ export const saveGeneralSettings = async (
   // This is where you would make an API call to save the general settings
 
   return { success: true, message: "Saved" };
+};
+
+// Action to handle fetching all listings in a workspace
+export const fetchListings = async (
+  workspaceId: string
+): Promise<ListingWithDeleteHandler[]> => {
+  // Get the current workspace data
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return [];
+  }
+
+  // Get all listings in the current workspace
+  const listings = fakeListingsData.filter(
+    (listing) => listing.workspaceId === workspace.id
+  );
+
+  // Add a delete handler to each listing
+  const listingsWithDeleteHandler = listings.map((listing) => ({
+    ...listing,
+    onDelete: () => {
+      "use server";
+      // Handle delete here
+      console.log("Delete listing", listing);
+
+      // This is where you would make an API call to delete the listing
+
+      // Return true if the delete was successful
+      // Return false if the delete failed
+      return { success: true, listing: listing };
+    },
+    onActiveChange: () => {
+      "use server";
+      // Handle active change here
+      console.log("Change active", listing);
+
+      const currentActiveState = listing.active;
+
+      // This is where you would make an API call to change the active state of the listing
+      // Change the active state of the listing
+      listing.active = !currentActiveState;
+
+      console.log("Changed active to", listing.active);
+
+      // Return true if the change was successful
+      // Return false if the change failed
+      return { success: true, listing: listing };
+    },
+  }));
+
+  return listingsWithDeleteHandler;
 };
 
 /*
@@ -751,12 +885,13 @@ export const saveConversationTag = async (
  */
 
 export const getWorkspace = async (
-  workspaceId: string
+  workspaceId: string | number
 ): Promise<{ success: boolean; message: string; data?: Workspace }> => {
   "use server";
 
   const workspace = fakeWorkspaceData.find(
-    (workspace) => workspace.slug === workspaceId
+    (workspace) =>
+      workspace.slug === workspaceId || workspace.id === workspaceId
   );
 
   if (!workspace) {

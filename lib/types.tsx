@@ -36,8 +36,8 @@ export type Member = {
 };
 
 export type Team = {
-  id: number;
-  workspaceId?: number;
+  id?: number;
+  workspaceId: number;
   name: string;
   iconId: number;
   members: Member[];

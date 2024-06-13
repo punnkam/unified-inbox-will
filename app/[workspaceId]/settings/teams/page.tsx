@@ -21,6 +21,10 @@ export default async function MembersPage({
 }) {
   const data = await fetchTeams(workspaceId);
 
+  if (!data || !data.success || !data.data) {
+    return null;
+  }
+
   return (
     <div className="flex flex-col gap-[28px]">
       <div className="flex justify-between items-center">
@@ -41,7 +45,7 @@ export default async function MembersPage({
       <div className="border-b border-primary"></div>
 
       <Accordion type="single" collapsible className="flex flex-col gap-4">
-        {data.map((team) => {
+        {data.data.map((team) => {
           // get the icon for the team
           const icon = fakeIconsData.find((icon) => icon.id === team.iconId);
 
