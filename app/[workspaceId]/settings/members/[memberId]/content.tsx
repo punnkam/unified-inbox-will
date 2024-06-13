@@ -61,7 +61,7 @@ export default function EditMemberContent({
             All Members
           </Button>
         </Link>
-        <h1 className="text-title-2xl">Add member</h1>
+        <h1 className="text-title-2xl">Edit member</h1>
       </div>
 
       <div className="border-b border-primary"></div>
