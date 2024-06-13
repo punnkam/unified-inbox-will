@@ -491,3 +491,24 @@ export const deleteConversationTag = async (
 
   return { success: true, message: "Deleted" };
 };
+
+export const saveConversationTag = async (
+  conversationTag: ConversationTag
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  if (conversationTag.id) {
+    // Update the conversation tag
+    console.log("Updated conversation tag", conversationTag);
+  } else {
+    // if it is a new tag - it will not have an id
+    // Save the conversation tag
+    console.log("Saved new tag", conversationTag);
+  }
+
+  // This is where you would make an API call to save the conversation tag
+
+  return { success: true, message: "Saved" };
+};

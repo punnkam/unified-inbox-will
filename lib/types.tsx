@@ -164,6 +164,7 @@ export type ConversationTag = {
   description: string;
   type: ConversationTagType;
   actionItem: "Mark as done" | "Create task";
+  inboxDashboard?: boolean;
 };
 
 export const fakeConversationTags: ConversationTag[] = [
@@ -175,6 +176,7 @@ export const fakeConversationTags: ConversationTag[] = [
     description: "This conversation needs immediate attention",
     type: conversationTagTypes[0],
     actionItem: "Mark as done",
+    inboxDashboard: true,
   },
   {
     id: 2,
@@ -184,6 +186,7 @@ export const fakeConversationTags: ConversationTag[] = [
     description: "This conversation is about money",
     type: conversationTagTypes[1],
     actionItem: "Create task",
+    inboxDashboard: true,
   },
   {
     id: 3,
@@ -193,6 +196,7 @@ export const fakeConversationTags: ConversationTag[] = [
     description: "This conversation is about scheduling",
     type: conversationTagTypes[2],
     actionItem: "Create task",
+    inboxDashboard: true,
   },
   {
     id: 4,

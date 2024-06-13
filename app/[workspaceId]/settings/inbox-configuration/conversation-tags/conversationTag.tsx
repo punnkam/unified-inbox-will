@@ -25,6 +25,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import clsx from "clsx";
 import { fakeIconsData } from "@/lib/types";
+import { IconComponent } from "@/components/icons/IconComponent";
 
 export const ConversationTagComponent = ({
   conversationTag,
@@ -69,7 +70,7 @@ export const ConversationTagComponent = ({
             boxShadow: "0px 4px 4px 0px rgba(196, 217, 255, 0.25) inset",
           }}
         >
-          {icon?.icon}
+          <IconComponent icon={icon?.icon || fakeIconsData[0].icon} />
         </div>
         <div className="flex flex-col">
           <p className="text-subtitle-xs">{conversationTag.name}</p>
