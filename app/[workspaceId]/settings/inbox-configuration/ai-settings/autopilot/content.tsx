@@ -16,30 +16,27 @@ export default function AutopilotContent({
   aiSettings,
   workspaceId,
 }: {
-  aiSettings: Workspace["inboxConfiguration"]["aiSettings"];
+  aiSettings: Workspace["aiSettings"];
   workspaceId: string;
 }) {
-  const initialData: Workspace["inboxConfiguration"]["aiSettings"] =
-    aiSettings || {
-      autoPilot: false,
-      autoPilotSettings: {
-        messageType: "All",
-        gaurdrails: {
-          notEnoughInformation: true,
-          isManaullyAnswered: true,
-          taggedWithConversationTag: false,
-        },
+  const initialData: Workspace["aiSettings"] = aiSettings || {
+    autoPilot: false,
+    autoPilotSettings: {
+      messageType: "All",
+      gaurdrails: {
+        notEnoughInformation: true,
+        isManaullyAnswered: true,
+        taggedWithConversationTag: false,
       },
-    };
+    },
+  };
 
   // Load data or set default values
   const [optionsData, setOptionsData] =
-    useState<Workspace["inboxConfiguration"]["aiSettings"]>(initialData);
+    useState<Workspace["aiSettings"]>(initialData);
   const [loading, setLoading] = useState(false);
 
-  const saveData = async (
-    data: Workspace["inboxConfiguration"]["aiSettings"]
-  ) => {
+  const saveData = async (data: Workspace["aiSettings"]) => {
     setLoading(true);
     // Call API to save the data
     console.log("Saving data", data);
@@ -57,7 +54,7 @@ export default function AutopilotContent({
 
   // Using the debounce to save if the autopilot is turned off
   const { data, handleChange, setData } = useDebouncedSave<
-    Workspace["inboxConfiguration"]["aiSettings"]
+    Workspace["aiSettings"]
   >({
     initialData,
     saveData,

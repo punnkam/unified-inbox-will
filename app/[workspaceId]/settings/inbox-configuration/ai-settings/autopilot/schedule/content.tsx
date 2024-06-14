@@ -12,16 +12,13 @@ export default function ScheduleContent({
   aiSettings,
   workspaceId,
 }: {
-  aiSettings: Workspace["inboxConfiguration"]["aiSettings"];
+  aiSettings: Workspace["aiSettings"];
   workspaceId: string;
 }) {
-  const [data, setData] =
-    useState<Workspace["inboxConfiguration"]["aiSettings"]>(aiSettings);
+  const [data, setData] = useState<Workspace["aiSettings"]>(aiSettings);
   const [loading, setLoading] = useState(false);
 
-  const saveData = async (
-    data: Workspace["inboxConfiguration"]["aiSettings"]
-  ) => {
+  const saveData = async (data: Workspace["aiSettings"]) => {
     setLoading(true);
     // Call API to save the data
     // console.log("Saving data", data);

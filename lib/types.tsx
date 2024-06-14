@@ -49,72 +49,74 @@ export type Workspace = {
   inboxConfiguration: {
     asignConversations: "Members" | "Teams";
     autoArchive: boolean;
-    aiSettings: {
-      summarizeConversations: boolean;
-      responseLanguage: "English" | "Guest Language";
-      aiSignature: string;
-      autoPilot: boolean;
-      autoPilotSettings?: {
-        messageType: "All" | "Inquiries";
-        gaurdrails: {
-          notEnoughInformation: boolean;
-          isManaullyAnswered: boolean;
-          taggedWithConversationTag: boolean;
-        };
-        schedule?: {
-          day: {
-            monday: {
-              active: boolean;
-              time: {
-                start: string;
-                end: string;
-              };
-            };
-            tuesday: {
-              active: boolean;
-              time: {
-                start: string;
-                end: string;
-              };
-            };
-            wednesday: {
-              active: boolean;
-              time: {
-                start: string;
-                end: string;
-              };
-            };
-            thursday: {
-              active: boolean;
-              time: {
-                start: string;
-                end: string;
-              };
-            };
-            friday: {
-              active: boolean;
-              time: {
-                start: string;
-                end: string;
-              };
-            };
-            saturday: {
-              active: boolean;
-              time: {
-                start: string;
-                end: string;
-              };
-            };
-            sunday: {
-              active: boolean;
-              time: {
-                start: string;
-                end: string;
-              };
+    roundRobin: boolean;
+    firstResponder: boolean;
+  };
+  aiSettings: {
+    summarizeConversations: boolean;
+    responseLanguage: "English" | "Guest Language";
+    aiSignature: string;
+    autoPilot: boolean;
+    autoPilotSettings?: {
+      messageType: "All" | "Inquiries";
+      gaurdrails: {
+        notEnoughInformation: boolean;
+        isManaullyAnswered: boolean;
+        taggedWithConversationTag: boolean;
+      };
+      schedule?: {
+        day: {
+          monday: {
+            active: boolean;
+            time: {
+              start: string;
+              end: string;
             };
           };
-          timezone: string;
+          tuesday: {
+            active: boolean;
+            time: {
+              start: string;
+              end: string;
+            };
+          };
+          wednesday: {
+            active: boolean;
+            time: {
+              start: string;
+              end: string;
+            };
+          };
+          thursday: {
+            active: boolean;
+            time: {
+              start: string;
+              end: string;
+            };
+          };
+          friday: {
+            active: boolean;
+            time: {
+              start: string;
+              end: string;
+            };
+          };
+          saturday: {
+            active: boolean;
+            time: {
+              start: string;
+              end: string;
+            };
+          };
+          sunday: {
+            active: boolean;
+            time: {
+              start: string;
+              end: string;
+            };
+          };
         };
+        timezone: string;
       };
     };
   };
@@ -414,72 +416,74 @@ export const fakeWorkspaceData: Workspace[] = [
     inboxConfiguration: {
       asignConversations: "Members",
       autoArchive: true,
-      aiSettings: {
-        summarizeConversations: true,
-        responseLanguage: "English",
-        aiSignature: "hi there from AI",
-        autoPilot: false,
-        autoPilotSettings: {
-          messageType: "All",
-          gaurdrails: {
-            notEnoughInformation: true,
-            isManaullyAnswered: false,
-            taggedWithConversationTag: false,
-          },
-          schedule: {
-            day: {
-              monday: {
-                active: true,
-                time: {
-                  start: "09:00",
-                  end: "17:00",
-                },
-              },
-              tuesday: {
-                active: true,
-                time: {
-                  start: "09:00",
-                  end: "17:00",
-                },
-              },
-              wednesday: {
-                active: true,
-                time: {
-                  start: "09:00",
-                  end: "17:00",
-                },
-              },
-              thursday: {
-                active: true,
-                time: {
-                  start: "09:00",
-                  end: "17:00",
-                },
-              },
-              friday: {
-                active: true,
-                time: {
-                  start: "09:00",
-                  end: "17:00",
-                },
-              },
-              saturday: {
-                active: false,
-                time: {
-                  start: "09:00",
-                  end: "17:00",
-                },
-              },
-              sunday: {
-                active: false,
-                time: {
-                  start: "09:00",
-                  end: "17:00",
-                },
+      roundRobin: true,
+      firstResponder: true,
+    },
+    aiSettings: {
+      summarizeConversations: true,
+      responseLanguage: "English",
+      aiSignature: "hi there from AI",
+      autoPilot: false,
+      autoPilotSettings: {
+        messageType: "All",
+        gaurdrails: {
+          notEnoughInformation: true,
+          isManaullyAnswered: false,
+          taggedWithConversationTag: false,
+        },
+        schedule: {
+          day: {
+            monday: {
+              active: true,
+              time: {
+                start: "09:00",
+                end: "17:00",
               },
             },
-            timezone: "America/New_York",
+            tuesday: {
+              active: true,
+              time: {
+                start: "09:00",
+                end: "17:00",
+              },
+            },
+            wednesday: {
+              active: true,
+              time: {
+                start: "09:00",
+                end: "17:00",
+              },
+            },
+            thursday: {
+              active: true,
+              time: {
+                start: "09:00",
+                end: "17:00",
+              },
+            },
+            friday: {
+              active: true,
+              time: {
+                start: "09:00",
+                end: "17:00",
+              },
+            },
+            saturday: {
+              active: false,
+              time: {
+                start: "09:00",
+                end: "17:00",
+              },
+            },
+            sunday: {
+              active: false,
+              time: {
+                start: "09:00",
+                end: "17:00",
+              },
+            },
           },
+          timezone: "America/New_York",
         },
       },
     },

@@ -16,10 +16,8 @@ const DaySchedule = ({
   dayLabel,
 }: {
   day: DayOfWeek;
-  data: Workspace["inboxConfiguration"]["aiSettings"];
-  setData: React.Dispatch<
-    React.SetStateAction<Workspace["inboxConfiguration"]["aiSettings"]>
-  >;
+  data: Workspace["aiSettings"];
+  setData: React.Dispatch<React.SetStateAction<Workspace["aiSettings"]>>;
   dayLabel: string;
 }) => {
   const daySettings = data.autoPilotSettings?.schedule?.day?.[day];

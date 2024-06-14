@@ -26,19 +26,16 @@ export default function GeneralContent({
   aiSettings,
 }: {
   workspaceId: string;
-  aiSettings: Workspace["inboxConfiguration"]["aiSettings"];
+  aiSettings: Workspace["aiSettings"];
 }) {
-  const initialData: Workspace["inboxConfiguration"]["aiSettings"] =
-    aiSettings || {
-      summarizeConversations: true,
-      responseLanguage: "Guest Language",
-      autoPilot: false,
-      aiSignature: "",
-    };
+  const initialData: Workspace["aiSettings"] = aiSettings || {
+    summarizeConversations: true,
+    responseLanguage: "Guest Language",
+    autoPilot: false,
+    aiSignature: "",
+  };
 
-  const saveData = async (
-    data: Workspace["inboxConfiguration"]["aiSettings"]
-  ) => {
+  const saveData = async (data: Workspace["aiSettings"]) => {
     const response = await saveAiSettings(workspaceId, data);
 
     if (response.success) {
@@ -49,7 +46,7 @@ export default function GeneralContent({
   };
 
   const { data, handleChange, setData } = useDebouncedSave<
-    Workspace["inboxConfiguration"]["aiSettings"]
+    Workspace["aiSettings"]
   >({
     initialData,
     saveData,

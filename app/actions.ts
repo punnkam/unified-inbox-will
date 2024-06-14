@@ -715,7 +715,7 @@ export const fetchAiSettings = async (
 ): Promise<{
   success: boolean;
   message: string;
-  data?: Workspace["inboxConfiguration"]["aiSettings"];
+  data?: Workspace["aiSettings"];
 }> => {
   "use server";
 
@@ -735,13 +735,13 @@ export const fetchAiSettings = async (
   return {
     success: true,
     message: "Fetched AI settings",
-    data: workspace.inboxConfiguration.aiSettings,
+    data: workspace.aiSettings,
   };
 };
 
 export const saveAiSettings = async (
   workspaceId: string,
-  aiSettings: Workspace["inboxConfiguration"]["aiSettings"]
+  aiSettings: Workspace["aiSettings"]
 ): Promise<{ success: boolean; message: string }> => {
   "use server";
   // add a 2 second wait

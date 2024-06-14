@@ -23,7 +23,7 @@ export default async function GeneralPage({
 
       <div className="border-b border-primary"></div>
       <GeneralContent
-        aiSettings={inboxGeneralSettings.data.inboxConfiguration.aiSettings}
+        aiSettings={inboxGeneralSettings.data.aiSettings}
         workspaceId={workspaceId}
       />
     </div>
