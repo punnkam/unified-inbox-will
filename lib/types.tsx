@@ -61,6 +61,60 @@ export type Workspace = {
           isManaullyAnswered: boolean;
           taggedWithConversationTag: boolean;
         };
+        schedule?: {
+          day: {
+            monday: {
+              active: boolean;
+              time: {
+                start: string;
+                end: string;
+              };
+            };
+            tuesday: {
+              active: boolean;
+              time: {
+                start: string;
+                end: string;
+              };
+            };
+            wednesday: {
+              active: boolean;
+              time: {
+                start: string;
+                end: string;
+              };
+            };
+            thursday: {
+              active: boolean;
+              time: {
+                start: string;
+                end: string;
+              };
+            };
+            friday: {
+              active: boolean;
+              time: {
+                start: string;
+                end: string;
+              };
+            };
+            saturday: {
+              active: boolean;
+              time: {
+                start: string;
+                end: string;
+              };
+            };
+            sunday: {
+              active: boolean;
+              time: {
+                start: string;
+                end: string;
+              };
+            };
+          };
+          timezone: string;
+        };
       };
     };
   };
@@ -364,13 +418,67 @@ export const fakeWorkspaceData: Workspace[] = [
         summarizeConversations: true,
         responseLanguage: "English",
         aiSignature: "hi there from AI",
-        autoPilot: true,
+        autoPilot: false,
         autoPilotSettings: {
           messageType: "All",
           gaurdrails: {
             notEnoughInformation: true,
             isManaullyAnswered: false,
             taggedWithConversationTag: false,
+          },
+          schedule: {
+            day: {
+              monday: {
+                active: true,
+                time: {
+                  start: "09:00",
+                  end: "17:00",
+                },
+              },
+              tuesday: {
+                active: true,
+                time: {
+                  start: "09:00",
+                  end: "17:00",
+                },
+              },
+              wednesday: {
+                active: true,
+                time: {
+                  start: "09:00",
+                  end: "17:00",
+                },
+              },
+              thursday: {
+                active: true,
+                time: {
+                  start: "09:00",
+                  end: "17:00",
+                },
+              },
+              friday: {
+                active: true,
+                time: {
+                  start: "09:00",
+                  end: "17:00",
+                },
+              },
+              saturday: {
+                active: false,
+                time: {
+                  start: "09:00",
+                  end: "17:00",
+                },
+              },
+              sunday: {
+                active: false,
+                time: {
+                  start: "09:00",
+                  end: "17:00",
+                },
+              },
+            },
+            timezone: "America/New_York",
           },
         },
       },
@@ -618,4 +726,133 @@ export const variablesList = [
   { key: "Reservation Guest Email", value: "{reservationGuestEmail}" },
   { key: "Reservation Guest Phone", value: "{reservationGuestPhone}" },
   { key: "Reservation Guest Portal Url", value: "{reservationGuestPortalUrl}" },
+];
+
+export const timezones = [
+  {
+    id: 1,
+    name: "Europe/London (UTC +01:00)",
+    value: "Europe/London",
+  },
+  {
+    id: 2,
+    name: "Europe/Paris (UTC +02:00)",
+    value: "Europe/Paris",
+  },
+  {
+    id: 3,
+    name: "Europe/Moscow (UTC +03:00)",
+    value: "Europe/Moscow",
+  },
+  {
+    id: 4,
+    name: "Asia/Dubai (UTC +04:00)",
+    value: "Asia/Dubai",
+  },
+  {
+    id: 5,
+    name: "Asia/Kolkata (UTC +05:30)",
+    value: "Asia/Kolkata",
+  },
+  {
+    id: 6,
+    name: "Asia/Bangkok (UTC +07:00)",
+    value: "Asia/Bangkok",
+  },
+  {
+    id: 7,
+    name: "Asia/Shanghai (UTC +08:00)",
+    value: "Asia/Shanghai",
+  },
+  {
+    id: 8,
+    name: "Asia/Tokyo (UTC +09:00)",
+    value: "Asia/Tokyo",
+  },
+  {
+    id: 9,
+    name: "Australia/Sydney (UTC +10:00)",
+    value: "Australia/Sydney",
+  },
+  {
+    id: 10,
+    name: "Pacific/Auckland (UTC +12:00)",
+    value: "Pacific/Auckland",
+  },
+  {
+    id: 11,
+    name: "America/New_York (UTC -04:00)",
+    value: "America/New_York",
+  },
+  {
+    id: 12,
+    name: "America/Chicago (UTC -05:00)",
+    value: "America/Chicago",
+  },
+  {
+    id: 13,
+    name: "America/Denver (UTC -06:00)",
+    value: "America/Denver",
+  },
+  {
+    id: 14,
+    name: "America/Los_Angeles (UTC -07:00)",
+    value: "America/Los_Angeles",
+  },
+  {
+    id: 15,
+    name: "America/Anchorage (UTC -08:00)",
+    value: "America/Anchorage",
+  },
+  {
+    id: 16,
+    name: "Pacific/Honolulu (UTC -10:00)",
+    value: "Pacific/Honolulu",
+  },
+];
+
+export const timeOptions = [
+  { id: 1, name: "12:00 AM", value: "00:00" },
+  { id: 2, name: "1:00 AM", value: "01:00" },
+  { id: 3, name: "2:00 AM", value: "02:00" },
+  { id: 4, name: "3:00 AM", value: "03:00" },
+  { id: 5, name: "4:00 AM", value: "04:00" },
+  { id: 6, name: "5:00 AM", value: "05:00" },
+  { id: 7, name: "6:00 AM", value: "06:00" },
+  { id: 8, name: "7:00 AM", value: "07:00" },
+  { id: 9, name: "8:00 AM", value: "08:00" },
+  { id: 10, name: "9:00 AM", value: "09:00" },
+  { id: 11, name: "10:00 AM", value: "10:00" },
+  { id: 12, name: "11:00 AM", value: "11:00" },
+  { id: 13, name: "12:00 PM", value: "12:00" },
+  { id: 14, name: "1:00 PM", value: "13:00" },
+  { id: 15, name: "2:00 PM", value: "14:00" },
+  { id: 16, name: "3:00 PM", value: "15:00" },
+  { id: 17, name: "4:00 PM", value: "16:00" },
+  { id: 18, name: "5:00 PM", value: "17:00" },
+  { id: 19, name: "6:00 PM", value: "18:00" },
+  { id: 20, name: "7:00 PM", value: "19:00" },
+  { id: 21, name: "8:00 PM", value: "20:00" },
+  { id: 22, name: "9:00 PM", value: "21:00" },
+  { id: 23, name: "10:00 PM", value: "22:00" },
+  { id: 24, name: "11:00 PM", value: "23:00" },
+];
+
+export type DayOfWeek =
+  | "monday"
+  | "tuesday"
+  | "wednesday"
+  | "thursday"
+  | "friday"
+  | "saturday"
+  | "sunday";
+
+export const daysOfWeek: { key: DayOfWeek; label: string }[] = [
+  { key: "monday", label: "Monday" },
+  { key: "tuesday", label: "Tuesday" },
+  { key: "wednesday", label: "Wednesday" },
+  { key: "thursday", label: "Thursday" },
+  { key: "friday", label: "Friday" },
+  { key: "saturday", label: "Saturday" },
+  { key: "sunday", label: "Sunday" },
 ];
