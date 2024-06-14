@@ -1067,3 +1067,38 @@ export const CalendarIcon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const UserLeftIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={23}
+    height={20}
+    fill="none"
+    viewBox="0 0 23 20"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="m18.96 7-3-3m0 0 3-3m-3 3h6m-6 15v-1.2c0-1.68 0-2.52-.327-3.162a3 3 0 0 0-1.311-1.311C13.68 13 12.84 13 11.16 13h-4.4c-1.68 0-2.52 0-3.162.327a3 3 0 0 0-1.311 1.311c-.327.642-.327 1.482-.327 3.162V19m10.5-13.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+    />
+  </svg>
+);
+
+export const ArrowsRightIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={19}
+    height={20}
+    fill="none"
+    viewBox="0 0 19 20"
+    {...props}
+  >
+    <path
+      fill="currentColor"
+      d="M9.667.293a1 1 0 0 0-1.414 1.414L10.546 4H1.96a1 1 0 0 0 0 2h8.586L8.253 8.293a1 1 0 0 0 1.414 1.414l4-4a1 1 0 0 0 0-1.414l-4-4ZM.96 15a1 1 0 0 1 1-1h13.586l-2.293-2.293a1 1 0 1 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L15.546 16H1.96a1 1 0 0 1-1-1Z"
+    />
+  </svg>
+);

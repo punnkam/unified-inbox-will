@@ -48,7 +48,7 @@ export type Workspace = {
   slug: string;
   inboxConfiguration: {
     asignConversations: "Members" | "Teams";
-    autoArchive: boolean;
+    autoMarkAsDone: boolean;
     roundRobin: boolean;
     firstResponder: boolean;
   };
@@ -415,7 +415,7 @@ export const fakeWorkspaceData: Workspace[] = [
     slug: "will",
     inboxConfiguration: {
       asignConversations: "Members",
-      autoArchive: true,
+      autoMarkAsDone: true,
       roundRobin: true,
       firstResponder: true,
     },
