@@ -56,7 +56,7 @@ export const ConversationTagComponent = ({
       <Link
         key={conversationTag.id}
         href={`./conversation-tags/${conversationTag.id}`}
-        className="p-5 flex gap-2 items-center"
+        className="p-5 flex gap-2 items-center  w-full"
       >
         <div
           className={clsx(

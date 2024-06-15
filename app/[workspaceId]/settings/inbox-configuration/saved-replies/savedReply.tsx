@@ -51,7 +51,7 @@ export const SavedReplyComponent = ({
       <Link
         key={savedReply.id}
         href={`./saved-replies/${savedReply.id}`}
-        className="p-5"
+        className="p-5  w-full"
       >
         <div className="flex flex-col">
           <p className="text-subtitle-xs">{savedReply.name}</p>

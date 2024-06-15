@@ -56,7 +56,7 @@ export const ReservationLabelComponent = ({
       <Link
         key={reservationLabel.id}
         href={`./reservation-labels/${reservationLabel.id}`}
-        className="p-5"
+        className="p-5 w-full"
       >
         <div className="flex items-center gap-2">
           <div className="flex items-center justify-center">
