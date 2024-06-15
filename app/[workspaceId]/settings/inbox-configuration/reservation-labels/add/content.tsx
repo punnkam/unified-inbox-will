@@ -21,6 +21,7 @@ export default function ReservationLabelContent({
     name: "",
     description: "",
     emojiId: "1f600",
+    autoLabel: false,
   });
   const [loading, setLoading] = useState({
     save: false,
@@ -29,7 +30,10 @@ export default function ReservationLabelContent({
 
   const router = useRouter();
 
-  const handleChange = (key: keyof typeof data, value: string) => {
+  const handleChange = (
+    key: keyof typeof data,
+    value: (typeof data)[keyof typeof data]
+  ) => {
     setData((prev) => ({
       ...prev,
       [key]: value,
@@ -97,20 +101,12 @@ export default function ReservationLabelContent({
         </div>
       </div>
 
-      <div className="flex flex-col gap-3">
-        <div>
-          <label className="text-subtitle-sm text-primary">Description</label>
-          <p className="text-tertiary text-body-xs font-normal">
-            Used to identify when this label is applied
-          </p>
-        </div>
-        <div>
-          <VariableTextarea
-            value={data.description}
-            setValue={(e) => handleChange("description", e)}
-          />
-        </div>
-      </div>
+      <VariableTextarea
+        value={data.description}
+        setValue={(e) => handleChange("description", e)}
+        autoLabel={data.autoLabel}
+        setAutoLabel={() => handleChange("autoLabel", !data.autoLabel)}
+      />
 
       <div className="flex items-center justify-end">
         <Button

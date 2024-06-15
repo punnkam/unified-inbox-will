@@ -27,6 +27,7 @@ const buttonVariants = cva(
         lg: "text-subtitle-sm h-11 px-8",
         xl: "text-subtitle-sm h-12 px-10",
         icon: "h-10 w-10",
+        iconXs: "h-6 w-6",
       },
     },
     defaultVariants: {
