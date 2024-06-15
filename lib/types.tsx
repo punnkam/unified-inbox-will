@@ -303,6 +303,38 @@ export const fakeConversationTags: ConversationTag[] = [
   },
 ];
 
+export type ReservationLabel = {
+  id?: number;
+  workspaceId: number;
+  name: string;
+  description: string;
+  emojiId: string;
+};
+
+export const fakeReservationLabels: ReservationLabel[] = [
+  {
+    id: 1,
+    workspaceId: 1,
+    name: "Cleaning",
+    description: "This reservation is for cleaning",
+    emojiId: "1f91b",
+  },
+  {
+    id: 2,
+    workspaceId: 1,
+    name: "Maintenance",
+    description: "This reservation is for maintenance",
+    emojiId: "1f9d1-200d-1f9b1",
+  },
+  {
+    id: 3,
+    workspaceId: 1,
+    name: "Inspections",
+    description: "This reservation is for inspections",
+    emojiId: "1faf4",
+  },
+];
+
 export const fakeMembersData: Member[] = [
   {
     id: 1,

@@ -20,6 +20,8 @@ import {
   fakeConversationTags,
   PersonalNotifications,
   Listing,
+  ReservationLabel,
+  fakeReservationLabels,
 } from "@/lib/types";
 
 // Action to handle fetching members and adding a delete handler to each member
@@ -968,6 +970,106 @@ export const saveConversationTag = async (
   }
 
   // This is where you would make an API call to save the conversation tag
+
+  return { success: true, message: "Saved" };
+};
+
+/*
+ * Reservation Label page actions
+ */
+
+export const fetchReservationLabels = async (
+  workspaceId: string
+): Promise<{
+  success: boolean;
+  message: string;
+  data?: ReservationLabel[];
+}> => {
+  "use server";
+
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // This is where you would make an API call to fetch the reservation labels
+
+  // get the reservation labels with the same workspaceId
+  const reservationLabels = fakeReservationLabels.filter(
+    (reservationLabel) => reservationLabel.workspaceId === workspace.id
+  );
+
+  return {
+    success: true,
+    message: "Fetched reservation labels",
+    data: reservationLabels,
+  };
+};
+
+export const fetchReservationLabel = async (
+  reservationLabelId: string
+): Promise<{ success: boolean; message: string; data?: ReservationLabel }> => {
+  "use server";
+
+  // add a 2 second wait
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // This is where you would make an API call to fetch the reservation label
+
+  // get the reservation label with the same id
+  const reservationLabel = fakeReservationLabels.find(
+    (reservationLabel) => reservationLabel.id === parseInt(reservationLabelId)
+  );
+
+  if (!reservationLabel) {
+    return { success: false, message: "Reservation label not found" };
+  }
+
+  return {
+    success: true,
+    message: "Fetched reservation label",
+    data: reservationLabel,
+  };
+};
+
+export const deleteReservationLabel = async (
+  reservationLabel: ReservationLabel
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // Save the reservation label
+  console.log("Deleted reservation label", reservationLabel);
+
+  // This is where you would make an API call to delete the reservation label
+
+  return { success: true, message: "Deleted" };
+};
+
+export const saveReservationLabel = async (
+  reservationLabel: ReservationLabel
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  if (reservationLabel.id) {
+    // Update the reservation label
+    console.log("Updated reservation label", reservationLabel);
+  } else {
+    // if it is a new label - it will not have an id
+    // Save the reservation label
+    console.log("Saved new label", reservationLabel);
+  }
+
+  // This is where you would make an API call to save the reservation label
 
   return { success: true, message: "Saved" };
 };
