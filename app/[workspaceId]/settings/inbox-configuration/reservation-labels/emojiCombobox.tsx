@@ -61,13 +61,15 @@ export function EmojiComboBox({
               {emojis.smileys_people.map((emoji, i) => (
                 <CommandItem
                   key={emoji.u}
-                  value={emoji.a}
+                  value={emoji.n.join(" ")}
                   onSelect={() => {
                     handleSelect(emoji.u);
                   }}
                   className="flex items-center gap-2 text-2xl size-10 min-h-10"
                 >
-                  {String.fromCodePoint(parseInt(emoji.u, 16))}
+                  <span role="img" className="text-lg">
+                    {String.fromCodePoint(parseInt(emoji.u, 16))}
+                  </span>
                 </CommandItem>
               ))}
             </div>
