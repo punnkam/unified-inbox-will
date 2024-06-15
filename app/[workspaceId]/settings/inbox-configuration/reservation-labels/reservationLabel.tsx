@@ -111,7 +111,7 @@ export const ReservationLabelComponent = ({
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>
-                Are you sure you want to delete reservation label?
+                Are you sure you want to delete label?
               </AlertDialogTitle>
               <AlertDialogDescription>
                 This action cannot be undone.
