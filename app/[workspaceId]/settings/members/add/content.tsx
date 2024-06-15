@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { Member } from "@/lib/types";
 import { saveMember } from "@/app/actions";
 import { useRouter } from "next/navigation";
+import { ContactDialog } from "./ContactDialog";
 
 export default function AddMemberContent({
   workspaceId,
@@ -26,6 +27,8 @@ export default function AddMemberContent({
     ],
     email: "",
     name: "",
+    whatsapp: "",
+    phone: "",
     image: "",
   });
   const [loading, setLoading] = useState(false);
@@ -170,28 +173,109 @@ export default function AddMemberContent({
         </RadioGroup>
       </div>
 
-      <div className="flex flex-col gap-3">
-        <div>
-          <label htmlFor="member-email" className="text-subtitle-sm">
-            Email
-          </label>
-          <p className="text-tertiary text-body-xs font-normal">
-            The name of the member
-          </p>
+      {data.workspaces?.[0]?.role === "External Team" ? (
+        <div className="flex flex-col gap-3">
+          <div>
+            <label
+              htmlFor="role-input"
+              className="text-subtitle-sm text-primary"
+            >
+              Contact info
+            </label>
+            <p className="text-tertiary text-body-xs font-normal">
+              Add the relevant info you want for this contact
+            </p>
+          </div>
+
+          <div className="border border-secondary rounded-md ">
+            <div className="flex justify-between items-start p-5 border-b border-secondary">
+              <div className="flex flex-col gap-1">
+                <p className="text-subtitle-xs">Name</p>
+                <p className="text-body-2xs font-normal text-tertiary">
+                  {data.name || "Name"}
+                </p>
+              </div>
+              <div>
+                <ContactDialog
+                  value={data.name || ""}
+                  setValue={(value: string) => handleChange("name", value)}
+                  contact={"Name"}
+                />
+              </div>
+            </div>
+            <div className="flex justify-between items-start p-5 border-b border-secondary">
+              <div className="flex flex-col gap-1">
+                <p className="text-subtitle-xs">Email</p>
+                <p className="text-body-2xs font-normal text-tertiary">
+                  {data.email || "Email"}
+                </p>
+              </div>
+              <div>
+                <ContactDialog
+                  value={data.email || ""}
+                  setValue={(value: string) => handleChange("email", value)}
+                  contact={"Email"}
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-between items-start p-5 border-b border-secondary">
+              <div className="flex flex-col gap-1">
+                <p className="text-subtitle-xs">Phone Number</p>
+                <p className="text-body-2xs font-normal text-tertiary">
+                  {data.phone || "Phone"}
+                </p>
+              </div>
+              <div>
+                <ContactDialog
+                  value={data.phone || ""}
+                  setValue={(value: string) => handleChange("phone", value)}
+                  contact={"Phone"}
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-between items-start p-5">
+              <div className="flex flex-col gap-1">
+                <p className="text-subtitle-xs">Whatsapp</p>
+                <p className="text-body-2xs font-normal text-tertiary">
+                  {data.whatsapp || "Whatsapp"}
+                </p>
+              </div>
+              <div>
+                <ContactDialog
+                  value={data.whatsapp || ""}
+                  setValue={(value: string) => handleChange("whatsapp", value)}
+                  contact={"WhatsApp"}
+                />
+              </div>
+            </div>
+          </div>
         </div>
-        <Input
-          id="member-email"
-          placeholder="jared@hostai.app"
-          value={data.email}
-          onChange={(e) => handleChange("email", e.target.value)}
-        />
-      </div>
+      ) : (
+        <div className="flex flex-col gap-3">
+          <div>
+            <label htmlFor="member-email" className="text-subtitle-sm">
+              Email
+            </label>
+            <p className="text-tertiary text-body-xs font-normal">
+              The name of the member
+            </p>
+          </div>
+          <Input
+            id="member-email"
+            placeholder="jared@hostai.app"
+            value={data.email}
+            onChange={(e) => handleChange("email", e.target.value)}
+          />
+        </div>
+      )}
 
       <div className="w-full flex justify-end items-center py-5">
         <Button
           variant="default"
           onClick={handleSave}
-          disabled={!data.email || loading}
+          disabled={data.email == "" || loading}
         >
           {loading ? "Sending..." : "Send invite"}
         </Button>

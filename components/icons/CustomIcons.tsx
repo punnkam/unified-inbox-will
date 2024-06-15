@@ -1159,3 +1159,22 @@ export const BellIcon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const Pencil02ICon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={16}
+    height={15}
+    fill="none"
+    viewBox="0 0 16 15"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M12 .833 14.667 3.5M1.333 14.167l.851-3.12c.056-.204.084-.306.126-.4.038-.085.085-.165.139-.24.061-.084.136-.159.285-.308L9.623 3.21c.132-.132.198-.198.274-.222a.333.333 0 0 1 .206 0c.076.024.142.09.274.222l1.913 1.913c.132.132.198.198.222.274a.333.333 0 0 1 0 .206c-.024.076-.09.142-.222.274L5.4 12.766a2.78 2.78 0 0 1-.307.285c-.075.054-.155.1-.24.139-.094.042-.196.07-.4.126l-3.12.85Z"
+    />
+  </svg>
+);
