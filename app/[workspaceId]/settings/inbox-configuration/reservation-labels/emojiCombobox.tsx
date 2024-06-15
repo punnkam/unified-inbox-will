@@ -57,22 +57,24 @@ export function EmojiComboBox({
           <CommandList>
             <CommandInput placeholder="Search emojis" />
             <CommandEmpty>No emojis found.</CommandEmpty>
-            <div className="grid grid-cols-5">
-              {emojis.smileys_people.map((emoji, i) => (
-                <CommandItem
-                  key={emoji.u}
-                  value={emoji.n.join(" ")}
-                  onSelect={() => {
-                    handleSelect(emoji.u);
-                  }}
-                  className="flex items-center gap-2 text-2xl size-10 min-h-10"
-                >
-                  <span role="img" className="text-lg">
-                    {String.fromCodePoint(parseInt(emoji.u, 16))}
-                  </span>
-                </CommandItem>
-              ))}
-            </div>
+            <CommandGroup>
+              <div className="grid grid-cols-5">
+                {emojis.smileys_people.map((emoji, i) => (
+                  <CommandItem
+                    key={emoji.u}
+                    value={emoji.n.join(" ")}
+                    onSelect={() => {
+                      handleSelect(emoji.u);
+                    }}
+                    className="flex items-center gap-2 text-2xl size-10 min-h-10"
+                  >
+                    <span role="img" className="text-lg">
+                      {String.fromCodePoint(parseInt(emoji.u, 16))}
+                    </span>
+                  </CommandItem>
+                ))}
+              </div>
+            </CommandGroup>
           </CommandList>
         </Command>
       </PopoverContent>
