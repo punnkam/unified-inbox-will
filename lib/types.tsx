@@ -309,6 +309,7 @@ export type ReservationLabel = {
   name: string;
   description: string;
   emojiId: string;
+  autoLabel: boolean;
 };
 
 export const fakeReservationLabels: ReservationLabel[] = [
@@ -318,6 +319,7 @@ export const fakeReservationLabels: ReservationLabel[] = [
     name: "Cleaning",
     description: "This reservation is for cleaning",
     emojiId: "1f91b",
+    autoLabel: true,
   },
   {
     id: 2,
@@ -325,6 +327,7 @@ export const fakeReservationLabels: ReservationLabel[] = [
     name: "Maintenance",
     description: "This reservation is for maintenance",
     emojiId: "1f9d1-200d-1f9b1",
+    autoLabel: false,
   },
   {
     id: 3,
@@ -332,6 +335,7 @@ export const fakeReservationLabels: ReservationLabel[] = [
     name: "Inspections",
     description: "This reservation is for inspections",
     emojiId: "1faf4",
+    autoLabel: true,
   },
 ];
 
