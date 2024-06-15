@@ -19,6 +19,7 @@ import {
   ConversationTag,
   fakeConversationTags,
   PersonalNotifications,
+  Listing,
 } from "@/lib/types";
 
 // Action to handle fetching members and adding a delete handler to each member
@@ -759,6 +760,26 @@ export const saveAiSettings = async (
   console.log("Saved AI settings", aiSettings);
 
   // This is where you would make an API call to save the AI settings
+
+  return { success: true, message: "Saved" };
+};
+
+export const saveAutopilotListings = async (
+  listings: Listing[]
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  // Save the autopilot listings
+  console.log("Saved autopilot listings", listings);
+
+  listings.forEach((listing) => {
+    console.log("Listing id: ", listing.id);
+    console.log("Autopilot: ", listing.autopilot);
+  });
+
+  // This is where you would make an API call to save the autopilot listings
 
   return { success: true, message: "Saved" };
 };

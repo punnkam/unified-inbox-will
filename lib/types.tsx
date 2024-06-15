@@ -134,6 +134,8 @@ export type Listing = {
   title: string;
   address: string;
   image: string;
+  autopilot: boolean;
+  group?: number;
 };
 
 export type MemberWithTeamId = Member & { teamId: number };
@@ -503,6 +505,8 @@ export const fakeListingsData: Listing[] = [
     address: "1234 Elm Street",
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    autopilot: true,
+    group: 3,
   },
   {
     id: 2,
@@ -512,6 +516,7 @@ export const fakeListingsData: Listing[] = [
     address: "5678 Oak Street",
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    autopilot: false,
   },
   {
     id: 3,
@@ -521,6 +526,41 @@ export const fakeListingsData: Listing[] = [
     address: "91011 Pine Street",
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    autopilot: true,
+    group: 2,
+  },
+  {
+    id: 4,
+    workspaceId: 1,
+    active: false,
+    title: "Spacious 3 Bedroom House",
+    address: "91011 Pine Street",
+    image:
+      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    autopilot: true,
+    group: 1,
+  },
+  {
+    id: 5,
+    workspaceId: 1,
+    active: false,
+    title: "Spacious 3 Bedroom House",
+    address: "91011 Pine Street",
+    image:
+      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    autopilot: false,
+    group: 2,
+  },
+  {
+    id: 6,
+    workspaceId: 1,
+    active: false,
+    title: "Spacious 3 Bedroom House",
+    address: "91011 Pine Street",
+    image:
+      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    autopilot: true,
+    group: 3,
   },
 ];
 
