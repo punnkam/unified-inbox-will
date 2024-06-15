@@ -23,15 +23,17 @@ import {
 
 export type Member = {
   id?: number;
-  name: string;
-  email: string;
-  image: string;
+  teamIds?: number[];
+  name?: string;
+  email?: string;
+  phone?: string;
+  whatsapp?: string;
+  image?: string;
   workspaces?: {
     id: number;
     status: "Active" | "Pending";
     role: "Admin" | "Member" | "External Team";
   }[];
-  teamIds?: number[];
   personalNotifications?: PersonalNotifications;
 };
 
