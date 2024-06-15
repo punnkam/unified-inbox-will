@@ -1102,3 +1102,41 @@ export const ArrowsRightIcon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const PuzzlePieceIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={18}
+    height={18}
+    fill="none"
+    viewBox="0 0 18 18"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M5.585 3.375a1.875 1.875 0 0 1 3.75 0V4.5h.75c1.048 0 1.572 0 1.986.171.551.229.99.667 1.218 1.218.171.413.171.938.171 1.986h1.125a1.875 1.875 0 0 1 0 3.75H13.46V12.9c0 1.26 0 1.89-.245 2.371a2.25 2.25 0 0 1-.984.984c-.48.245-1.11.245-2.371.245h-.525v-1.313a1.687 1.687 0 1 0-3.375 0V16.5h-.9c-1.26 0-1.89 0-2.372-.245a2.25 2.25 0 0 1-.983-.983C1.46 14.79 1.46 14.16 1.46 12.9v-1.275h1.125a1.875 1.875 0 0 0 0-3.75H1.46c0-1.048 0-1.573.171-1.986A2.25 2.25 0 0 1 2.85 4.671c.413-.171.938-.171 1.986-.171h.75V3.375Z"
+    />
+  </svg>
+);
+
+export const Settings04Icon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={16}
+    height={12}
+    fill="none"
+    viewBox="0 0 16 12"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M1.21 3h9m0 0a2.25 2.25 0 1 0 4.5 0 2.25 2.25 0 0 0-4.5 0Zm-4.5 6h9m-9 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
+    />
+  </svg>
+);

@@ -8,6 +8,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  PuzzlePieceIcon,
+  Settings04Icon,
+} from "@/components/icons/CustomIcons";
 
 export const SettingsSidebar = () => {
   const pathname = usePathname();
@@ -80,11 +84,11 @@ export const SettingsSidebar = () => {
         selected={pathname === `/${workspaceId}/settings/integrations`}
       />
 
-      {/* Connected Channels */}
+      {/* channel connector */}
       <Accordion type="single" collapsible defaultValue="connected-channels">
         <AccordionItem value="connected-channels">
           <AccordionTrigger className="px-4 mt-8 rounded-md py-0.5">
-            Connected Channels
+            <PuzzlePieceIcon /> Channel Connector
           </AccordionTrigger>
           <AccordionContent className="pb-0 pt-2">
             <SettingsSideBarOption
@@ -132,7 +136,7 @@ export const SettingsSidebar = () => {
       <Accordion type="single" collapsible defaultValue="inbox-configuration">
         <AccordionItem value="inbox-configuration">
           <AccordionTrigger className="px-4 mt-[28px] rounded-md py-0.5">
-            Inbox Configuration
+            <Settings04Icon /> Inbox Configuration
           </AccordionTrigger>
           <AccordionContent className="pb-0 pt-2">
             <SettingsSideBarOption
