@@ -10,6 +10,7 @@ import {
   LayersThreeIcon,
   LayoutAltIcon,
   SettingsIcon,
+  BellIcon,
 } from "@/components/icons/CustomIcons";
 import { SideBarIcon } from "./SideBarOption";
 import { usePathname } from "next/navigation";
@@ -45,7 +46,7 @@ export const SideBar = () => {
           />
           <SideBarIcon
             path={`/${workspace}/money`}
-            icon={<BankNoteIcon />}
+            icon={<BellIcon />}
             selected={path == "money"}
           />
           <SideBarIcon
