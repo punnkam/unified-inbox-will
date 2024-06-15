@@ -51,7 +51,7 @@ export const VariableTextarea = ({
                       key={variable.key}
                       value={variable.value}
                       onSelect={() => {
-                        setValue(`${value}${variable.value}`);
+                        setValue(`${value}${variable.value} `);
                         setOpen(false);
                       }}
                       className="flex flex-col items-start gap-1 cursor-pointer"
