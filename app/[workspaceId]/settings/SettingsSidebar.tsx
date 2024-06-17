@@ -13,8 +13,6 @@ export const SettingsSidebar = () => {
 
   const workspaceId = pathname.split("/")[1];
 
-  console.log(workspaceId);
-
   return (
     <div className="h-screen bg-primary-subtle w-[280px] min-w-[280px] border-e border-primary overflow-y-auto px-2 py-8">
       <h2 className="pb-8 px-4 text-title-md">Settings</h2>

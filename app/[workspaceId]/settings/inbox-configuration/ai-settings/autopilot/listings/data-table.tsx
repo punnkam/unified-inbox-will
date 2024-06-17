@@ -125,6 +125,7 @@ export function DataTable<TData, TValue>({
               </TabsTrigger>
               {groups.map((group) => (
                 <TabsTrigger
+                  key={group.toString()}
                   value={group.toString()}
                   onClick={() => handleTabChange(group)}
                 >
