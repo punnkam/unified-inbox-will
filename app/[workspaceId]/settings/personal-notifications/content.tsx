@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { useDebouncedSave } from "@/lib/hooks/useDebouncedSave";
 import { PersonalNotifications } from "@/lib/types";
 import { savePersonalNotifications } from "@/app/actions";
+import { SettingsContainer } from "@/components/custom/SettingsContainer";
 
 export default function PersonalNotificationsContent({
   memberId,
@@ -64,49 +65,31 @@ export default function PersonalNotificationsContent({
       <div className="flex flex-col gap-5">
         <p className="text-title-lg text-tertiary">Notification methods</p>
 
-        <div className="flex justify-between items-start border border-secondary rounded-md p-4">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 flex justify-center items-center">
-              <ArrowCircleBrokenUpLeftIcon className="text-icon-tertiary" />
-            </div>
-            <div>
-              <p className="text-subtitle-xs">Push Notifications</p>
-              <p className="text-body-2xs font-normal text-tertiary">
-                Receive personal notifications on desktop for any selected
-                notification types.
-              </p>
-            </div>
-          </div>
-          <div>
+        <SettingsContainer
+          title="Push Notifications"
+          description="Receive personal notifications on desktop for any selected notification types"
+          icon={<ArrowCircleBrokenUpLeftIcon className="text-icon-tertiary" />}
+          action={
             <Switch
               checked={data.pushNotifications}
               onCheckedChange={() =>
                 handleChange("pushNotifications", !data.pushNotifications)
               }
             />
-          </div>
-        </div>
+          }
+        />
 
-        <div className="flex justify-between items-start border border-secondary rounded-md p-4">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 flex justify-center items-center">
-              <MailIcon className="text-icon-tertiary" />
-            </div>
-            <div>
-              <p className="text-subtitle-xs">Email</p>
-              <p className="text-body-2xs font-normal text-tertiary">
-                With personal email notifications, we'll send an email to you
-                for any selected notification types.
-              </p>
-            </div>
-          </div>
-          <div>
+        <SettingsContainer
+          title="Email"
+          description="With personal email notifications, we'll send an email to you for any selected notification types."
+          icon={<MailIcon className="text-icon-tertiary" />}
+          action={
             <Switch
               checked={data.email}
               onCheckedChange={() => handleChange("email", !data.email)}
             />
-          </div>
-        </div>
+          }
+        />
       </div>
 
       <div className="border-b border-primary"></div>

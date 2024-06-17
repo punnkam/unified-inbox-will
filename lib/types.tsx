@@ -654,7 +654,7 @@ export const fakeBreezewayConnectionsData: BreezewayConnection[] = [
   {
     id: 1,
     workspaceId: 1,
-    connected: false,
+    connected: true,
     name: "Canbnb",
     image:
       "https://images.unsplash.com/photo-1516876437184-593fda40c7ce?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
