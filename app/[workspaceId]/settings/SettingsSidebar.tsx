@@ -16,8 +16,8 @@ export const SettingsSidebar = () => {
   console.log(workspaceId);
 
   return (
-    <div className="h-screen bg-primary-subtle w-[280px] min-w-[280px] border-e border-primary overflow-y-auto px-2">
-      <h2 className="py-8 px-4 text-title-md">Settings</h2>
+    <div className="h-screen bg-primary-subtle w-[280px] min-w-[280px] border-e border-primary overflow-y-auto px-2 py-8">
+      <h2 className="pb-8 px-4 text-title-md">Settings</h2>
       {/* User Card */}
       <div className="flex px-4 pb-2 gap-2 mb-1">
         <img
