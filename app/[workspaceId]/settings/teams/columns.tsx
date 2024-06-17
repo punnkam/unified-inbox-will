@@ -37,7 +37,7 @@ export const columns: ColumnDef<MemberWithDeleteHandler>[] = [
             alt={row.original.name}
             className="w-10 h-10 rounded-full object-cover"
           />
-          <div>
+          <div className="flex flex-col gap-1">
             <p className="text-subtitle-xs">{row.original.name}</p>
             <p className="text-tertiary text-body-2xs font-normal">
               {row.original.email}
