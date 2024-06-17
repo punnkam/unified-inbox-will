@@ -3,15 +3,10 @@
 import { usePathname } from "next/navigation";
 import { SettingsSideBarOption } from "./SettingsSideBarOption";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
   PuzzlePieceIcon,
   Settings04Icon,
 } from "@/components/icons/CustomIcons";
+import { SettingsSidebarHeader } from "@/components/custom/SettingsSidebarHeader";
 
 export const SettingsSidebar = () => {
   const pathname = usePathname();
@@ -23,7 +18,6 @@ export const SettingsSidebar = () => {
   return (
     <div className="h-screen bg-primary-subtle w-[280px] min-w-[280px] border-e border-primary overflow-y-auto px-2">
       <h2 className="py-8 px-4 text-title-md">Settings</h2>
-
       {/* User Card */}
       <div className="flex px-4 pb-2 gap-2 mb-1">
         <img
@@ -36,7 +30,6 @@ export const SettingsSidebar = () => {
           <p className="text-subtitle-3xs text-tertiary">Account</p>
         </div>
       </div>
-
       <SettingsSideBarOption
         path={`/${workspaceId}/settings/personal-notifications`}
         name="Personal notifications"
@@ -49,7 +42,6 @@ export const SettingsSidebar = () => {
         name="Signature"
         selected={pathname.startsWith(`/${workspaceId}/settings/signature`)}
       />
-
       {/* Workspace Card */}
       <div className="flex px-4 pb-2 gap-2 mt-6 mb-1">
         <img
@@ -62,7 +54,6 @@ export const SettingsSidebar = () => {
           <p className="text-subtitle-3xs text-tertiary">Workspace</p>
         </div>
       </div>
-
       <SettingsSideBarOption
         path={`/${workspaceId}/settings/general`}
         name="General"
@@ -84,107 +75,101 @@ export const SettingsSidebar = () => {
         selected={pathname.startsWith(`/${workspaceId}/settings/integrations`)}
       />
 
-      {/* channel connector */}
-      <Accordion type="single" collapsible defaultValue="connected-channels">
-        <AccordionItem value="connected-channels">
-          <AccordionTrigger className="px-4 mt-8 rounded-md py-0.5">
-            <PuzzlePieceIcon /> Channel Connector
-          </AccordionTrigger>
-          <AccordionContent className="pb-0 pt-2">
-            <SettingsSideBarOption
-              path={`/${workspaceId}/settings/connected-channels/airbnb`}
-              name="Airbnb"
-              selected={pathname.startsWith(
-                `/${workspaceId}/settings/connected-channels/airbnb`
-              )}
-            />
-            <SettingsSideBarOption
-              path={`/${workspaceId}/settings/connected-channels/pms`}
-              name="PMS"
-              selected={pathname.startsWith(
-                `/${workspaceId}/settings/connected-channels/pms`
-              )}
-            />
-            <SettingsSideBarOption
-              path={`/${workspaceId}/settings/connected-channels/email`}
-              name="Email"
-              selected={pathname.startsWith(
-                `/${workspaceId}/settings/connected-channels/email`
-              )}
-            />
-            <SettingsSideBarOption
-              path={`/${workspaceId}/settings/connected-channels/whatsapp`}
-              name="WhatsApp"
-              selected={pathname.startsWith(
-                `/${workspaceId}/settings/connected-channels/whatsapp`
-              )}
-            />
-            <SettingsSideBarOption
-              path={`/${workspaceId}/settings/connected-channels/sms`}
-              name="SMS"
-              selected={pathname.startsWith(
-                `/${workspaceId}/settings/connected-channels/sms`
-              )}
-            />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+      <div className="flex flex-col gap-[28px] mt-[32px]">
+        <div>
+          {/* channel connector */}
+          <SettingsSidebarHeader
+            title="Channel Connector"
+            icon={<PuzzlePieceIcon />}
+          />
 
-      {/* Inbox Configuration */}
-      <Accordion type="single" collapsible defaultValue="inbox-configuration">
-        <AccordionItem value="inbox-configuration">
-          <AccordionTrigger className="px-4 mt-[28px] rounded-md py-0.5">
-            <Settings04Icon /> Inbox Configuration
-          </AccordionTrigger>
-          <AccordionContent className="pb-0 pt-2">
-            <SettingsSideBarOption
-              path={`/${workspaceId}/settings/inbox-configuration/general`}
-              name="General"
-              selected={pathname.startsWith(
-                `/${workspaceId}/settings/inbox-configuration/general`
-              )}
-            />
-            <SettingsSideBarOption
-              path={`/${workspaceId}/settings/inbox-configuration/ai-settings`}
-              name="AI Settings"
-              selected={pathname.startsWith(
-                `/${workspaceId}/settings/inbox-configuration/ai-settings`
-              )}
-            />
-            <SettingsSideBarOption
-              path={`/${workspaceId}/settings/inbox-configuration/reservation-labels`}
-              name="Reservation Labels"
-              selected={pathname.startsWith(
-                `/${workspaceId}/settings/inbox-configuration/reservation-labels`
-              )}
-            />
-            <SettingsSideBarOption
-              path={`/${workspaceId}/settings/inbox-configuration/conversation-tags`}
-              name="Conversation Tags"
-              selected={pathname.startsWith(
-                `/${workspaceId}/settings/inbox-configuration/conversation-tags`
-              )}
-            />
-            <SettingsSideBarOption
-              path={`/${workspaceId}/settings/inbox-configuration/saved-replies`}
-              name="Saved Replies"
-              selected={pathname.startsWith(
-                `/${workspaceId}/settings/inbox-configuration/saved-replies`
-              )}
-            />
-            <SettingsSideBarOption
-              path={`/${workspaceId}/settings/inbox-configuration/sla`}
-              name="SLA"
-              selected={pathname.startsWith(
-                `/${workspaceId}/settings/inbox-configuration/sla`
-              )}
-            />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+          <SettingsSideBarOption
+            path={`/${workspaceId}/settings/connected-channels/airbnb`}
+            name="Airbnb"
+            selected={pathname.startsWith(
+              `/${workspaceId}/settings/connected-channels/airbnb`
+            )}
+          />
+          <SettingsSideBarOption
+            path={`/${workspaceId}/settings/connected-channels/pms`}
+            name="PMS"
+            selected={pathname.startsWith(
+              `/${workspaceId}/settings/connected-channels/pms`
+            )}
+          />
+          <SettingsSideBarOption
+            path={`/${workspaceId}/settings/connected-channels/email`}
+            name="Email"
+            selected={pathname.startsWith(
+              `/${workspaceId}/settings/connected-channels/email`
+            )}
+          />
+          <SettingsSideBarOption
+            path={`/${workspaceId}/settings/connected-channels/whatsapp`}
+            name="WhatsApp"
+            selected={pathname.startsWith(
+              `/${workspaceId}/settings/connected-channels/whatsapp`
+            )}
+          />
+          <SettingsSideBarOption
+            path={`/${workspaceId}/settings/connected-channels/sms`}
+            name="SMS"
+            selected={pathname.startsWith(
+              `/${workspaceId}/settings/connected-channels/sms`
+            )}
+          />
+        </div>
 
-      {/* Add accordian */}
-      <div></div>
+        <div>
+          {/* Inbox Configuration */}
+          <SettingsSidebarHeader
+            title="Inbox Configuration"
+            icon={<Settings04Icon />}
+          />
+          <SettingsSideBarOption
+            path={`/${workspaceId}/settings/inbox-configuration/general`}
+            name="General"
+            selected={pathname.startsWith(
+              `/${workspaceId}/settings/inbox-configuration/general`
+            )}
+          />
+          <SettingsSideBarOption
+            path={`/${workspaceId}/settings/inbox-configuration/ai-settings`}
+            name="AI Settings"
+            selected={pathname.startsWith(
+              `/${workspaceId}/settings/inbox-configuration/ai-settings`
+            )}
+          />
+          <SettingsSideBarOption
+            path={`/${workspaceId}/settings/inbox-configuration/reservation-labels`}
+            name="Reservation Labels"
+            selected={pathname.startsWith(
+              `/${workspaceId}/settings/inbox-configuration/reservation-labels`
+            )}
+          />
+          <SettingsSideBarOption
+            path={`/${workspaceId}/settings/inbox-configuration/conversation-tags`}
+            name="Conversation Tags"
+            selected={pathname.startsWith(
+              `/${workspaceId}/settings/inbox-configuration/conversation-tags`
+            )}
+          />
+          <SettingsSideBarOption
+            path={`/${workspaceId}/settings/inbox-configuration/saved-replies`}
+            name="Saved Replies"
+            selected={pathname.startsWith(
+              `/${workspaceId}/settings/inbox-configuration/saved-replies`
+            )}
+          />
+          <SettingsSideBarOption
+            path={`/${workspaceId}/settings/inbox-configuration/sla`}
+            name="SLA"
+            selected={pathname.startsWith(
+              `/${workspaceId}/settings/inbox-configuration/sla`
+            )}
+          />
+        </div>
+      </div>
     </div>
   );
 };
