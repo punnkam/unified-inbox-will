@@ -41,13 +41,13 @@ export default async function AiListingsPage({
   return (
     <div className="flex flex-col gap-[28px]">
       <div className="flex flex-col gap-4">
-        <Link href="../ai-settings">
+        <Link href="./">
           <Button
             variant="link"
             className="text-tertiary flex items-center gap-2 p-2"
           >
             <ArrowNarrowLeft />
-            AI settings
+            Autopilot
           </Button>
         </Link>
         <h1 className="text-title-2xl">Listings on autopilot</h1>

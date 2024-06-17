@@ -103,8 +103,37 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="flex flex-col gap-[28px]">
-      <div className="w-full flex justify-between items-center">
-        <div className="flex items-center gap-2">
+      <div className="flex items-center relative">
+        <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
+          <SearchIcon className="h-5 w-5 text-gray-400" />
+        </span>
+        <Input
+          placeholder="Search"
+          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("title")?.setFilterValue(event.target.value)
+          }
+          className="pl-10 max-w-sm w-[300px]"
+        />
+      </div>
+      <div className="flex flex-col gap-3">
+        <div className="w-full flex justify-between items-center">
+          <Tabs defaultValue="all" className="w-[400px]">
+            <TabsList>
+              <TabsTrigger value={"all"} onClick={() => handleTabChange(-1)}>
+                All
+              </TabsTrigger>
+              {groups.map((group) => (
+                <TabsTrigger
+                  value={group.toString()}
+                  onClick={() => handleTabChange(group)}
+                >
+                  Group {group}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
+
           {/* Select/Unselect all rows */}
           <Checkbox
             variant={
@@ -138,113 +167,89 @@ export function DataTable<TData, TValue>({
               }
             }}
           />
-
-          <Tabs defaultValue="all" className="w-[400px]">
-            <TabsList>
-              <TabsTrigger value={"all"} onClick={() => handleTabChange(-1)}>
-                All
-              </TabsTrigger>
-              {groups.map((group) => (
-                <TabsTrigger
-                  value={group.toString()}
-                  onClick={() => handleTabChange(group)}
-                >
-                  Group {group}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
         </div>
-        <div className="flex items-center relative">
-          <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
-            <SearchIcon className="h-5 w-5 text-gray-400" />
-          </span>
-          <Input
-            placeholder="Search"
-            value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("title")?.setFilterValue(event.target.value)
-            }
-            className="pl-10 max-w-sm w-[300px]"
-          />
-        </div>
-      </div>
-      <div>
-        <Table>
-          <TableHeader hidden>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell, index) => (
-                    <TableCell
-                      key={cell.id}
-                      className={`${index === 0 ? "pl-0" : ""}`}
-                      style={{
-                        textAlign:
-                          index === row.getVisibleCells().length - 1
-                            ? "right"
-                            : "left",
-                      }}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+        <div>
+          <Table>
+            <TableHeader hidden>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              ))}
+            </TableHeader>
+            <TableBody className="border-b-0">
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                    className="border-b-0"
+                  >
+                    {row.getVisibleCells().map((cell, index) => (
+                      <TableCell
+                        key={cell.id}
+                        className={`${
+                          index === row.getVisibleCells().length - 1
+                            ? "border-b-0 w-6 pl-2"
+                            : "border-b w-full"
+                        }`}
+                        style={{
+                          textAlign:
+                            index === row.getVisibleCells().length - 1
+                              ? "right"
+                              : "left",
+                        }}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
 
-      <div className="w-full flex justify-end">
-        <Button
-          onClick={() => {
-            handleSaveChanges(
-              // get the original data and update the autopilot status
-              table.getRowModel().rows.map((row) => ({
-                ...row.original,
-                autopilot: row.getIsSelected(),
-              }))
-            );
-          }}
-          size="sm"
-          disabled={loading}
-        >
-          {loading ? "Saving..." : "Save changes"}
-        </Button>
+        <div className="w-full flex justify-end">
+          <Button
+            onClick={() => {
+              handleSaveChanges(
+                // get the original data and update the autopilot status
+                table.getRowModel().rows.map((row) => ({
+                  ...row.original,
+                  autopilot: row.getIsSelected(),
+                }))
+              );
+            }}
+            size="sm"
+            disabled={loading}
+          >
+            {loading ? "Saving..." : "Save changes"}
+          </Button>
+        </div>
       </div>
     </div>
   );

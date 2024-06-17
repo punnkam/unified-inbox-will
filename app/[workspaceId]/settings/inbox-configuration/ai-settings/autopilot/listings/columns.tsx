@@ -13,17 +13,6 @@ const exactMatchFilter: FilterFn<Listing> = (row, columnId, filterValue) => {
 
 export const columns: ColumnDef<Listing>[] = [
   {
-    accessorKey: "actions",
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-        className="p-0"
-      />
-    ),
-  },
-  {
     accessorKey: "title",
     header: "Title",
     cell: ({ row }) => {
@@ -52,10 +41,21 @@ export const columns: ColumnDef<Listing>[] = [
       const listing = row.original;
 
       return (
-        <p className="text-body-2xs text-tertiary font-normal">
+        <p className="text-body-2xs text-tertiary font-normal text-nowrap">
           {listing.autopilot ? "Autopilot on" : "Autopilot off"}
         </p>
       );
     },
+  },
+  {
+    accessorKey: "actions",
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+        className="p-0"
+      />
+    ),
   },
 ];
