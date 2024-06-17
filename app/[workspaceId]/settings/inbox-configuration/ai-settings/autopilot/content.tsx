@@ -11,6 +11,7 @@ import { BuildingIcon, CalendarIcon } from "@/components/icons/CustomIcons";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { saveAiSettings } from "@/app/actions";
+import { SettingsContainer } from "@/components/custom/SettingsContainer";
 
 export default function AutopilotContent({
   aiSettings,
@@ -39,7 +40,6 @@ export default function AutopilotContent({
   const saveData = async (data: Workspace["aiSettings"]) => {
     setLoading(true);
     // Call API to save the data
-    console.log("Saving data", data);
 
     const repsonse = await saveAiSettings(workspaceId, data);
 
@@ -82,57 +82,36 @@ export default function AutopilotContent({
           <div className="flex flex-col gap-5">
             <p className="text-title-lg text-tertiary">Schedule</p>
 
-            <div className="flex justify-between items-start border border-secondary rounded-md p-4">
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 flex justify-center items-center">
-                  <CalendarIcon className="text-icon-tertiary" />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <p className="text-subtitle-xs">
-                    Select when HostAI should respond automatically
-                  </p>
-                  <p className="text-body-2xs font-normal text-tertiary">
-                    Autopilot is on 24/7
-                  </p>
-                </div>
-              </div>
-              <div>
+            <SettingsContainer
+              title="Select when HostAI should respond automatically"
+              description="Autopilot is on 24/7"
+              icon={<CalendarIcon className="text-icon-tertiary" />}
+              action={
                 <Link href={"./autopilot/schedule"}>
                   <Button variant={"outline"} size={"sm"}>
                     Edit
                   </Button>
                 </Link>
-              </div>
-            </div>
+              }
+            />
           </div>
 
           <div className="border-b border-primary"></div>
 
           <div className="flex flex-col gap-5">
             <p className="text-title-lg text-tertiary">Listings</p>
-
-            <div className="flex justify-between items-start border border-secondary rounded-md p-4">
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 flex justify-center items-center">
-                  <BuildingIcon className="text-icon-tertiary" />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <p className="text-subtitle-xs">
-                    Select listings to be on autopilot
-                  </p>
-                  <p className="text-body-2xs font-normal text-tertiary">
-                    Autopilot is on for all listings
-                  </p>
-                </div>
-              </div>
-              <div>
+            <SettingsContainer
+              title="Select listings to be on autopilot"
+              description="Autopilot is on for all listings"
+              icon={<BuildingIcon className="text-icon-tertiary" />}
+              action={
                 <Link href={"./autopilot/listings"}>
                   <Button variant={"outline"} size={"sm"}>
                     Edit
                   </Button>
                 </Link>
-              </div>
-            </div>
+              }
+            />
           </div>
 
           <div className="border-b border-primary"></div>

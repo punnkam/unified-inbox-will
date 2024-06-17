@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ChevronDownIcon } from "lucide-react";
+import { SettingsContainer } from "@/components/custom/SettingsContainer";
 
 export default function GeneralContent({
   workspace,
@@ -62,19 +63,11 @@ export default function GeneralContent({
       <div className="flex flex-col gap-5">
         <p className="text-title-lg text-tertiary">Assignments</p>
 
-        <div className="flex justify-between items-start border border-secondary rounded-md p-4">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 flex justify-center items-center">
-              <DataFlowIcon className="text-icon-tertiary" />
-            </div>
-            <div>
-              <p className="text-subtitle-xs">Assign conversations to...</p>
-              <p className="text-body-2xs font-normal text-tertiary">
-                Hand off conversations to workspace members or teams
-              </p>
-            </div>
-          </div>
-          <div>
+        <SettingsContainer
+          title="Assign conversations to..."
+          description="Hand off conversations to workspace members or teams"
+          icon={<DataFlowIcon className="text-icon-tertiary" />}
+          action={
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size={"sm"}>
@@ -95,85 +88,55 @@ export default function GeneralContent({
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </div>
-        </div>
+          }
+        />
 
-        <div className="flex justify-between items-start border border-secondary rounded-md p-4">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 flex justify-center items-center">
-              <UserLeftIcon className="text-icon-tertiary" />
-            </div>
-            <div>
-              <p className="text-subtitle-xs">
-                Auto-assign conversations via round robin
-              </p>
-              <p className="text-body-2xs font-normal text-tertiary">
-                New conversations will be assigned to members with fewest amount
-                of assignments
-              </p>
-            </div>
-          </div>
-          <div>
+        <SettingsContainer
+          title="Auto-assign conversations via round robin"
+          description="New conversations will be assigned to members with fewest amount of assignments"
+          icon={<UserLeftIcon className="text-icon-tertiary" />}
+          action={
             <Switch
               checked={data?.roundRobin}
               onCheckedChange={() =>
                 handleChange("roundRobin", !data?.roundRobin)
               }
             />
-          </div>
-        </div>
+          }
+        />
 
-        <div className="flex justify-between items-start border border-secondary rounded-md p-4">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 flex justify-center items-center">
-              <ArrowsRightIcon className="text-icon-tertiary" />
-            </div>
-            <div>
-              <p className="text-subtitle-xs">
-                Auto-assign conversations to first responder
-              </p>
-              <p className="text-body-2xs font-normal text-tertiary">
-                Assign conversations to member who responds first
-              </p>
-            </div>
-          </div>
-          <div>
+        <SettingsContainer
+          title="Auto-assign conversations to first responder"
+          description="Assign conversations to member who responds first"
+          icon={<ArrowsRightIcon className="text-icon-tertiary" />}
+          action={
             <Switch
               checked={data?.firstResponder}
               onCheckedChange={() =>
                 handleChange("firstResponder", !data?.firstResponder)
               }
             />
-          </div>
-        </div>
+          }
+        />
       </div>
       <div className="border-b border-primary"></div>
 
       <div className="flex flex-col gap-5">
         <p className="text-title-lg text-tertiary">Mark as Done</p>
 
-        <div className="flex justify-between items-start border border-secondary rounded-md p-4">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 flex justify-center items-center">
-              <CheckCircleIcon className="text-icon-tertiary" />
-            </div>
-            <div>
-              <p className="text-subtitle-xs">Auto-Mark as Done</p>
-              <p className="text-body-2xs font-normal text-tertiary">
-                When you answer a message, the conversation will be marked as
-                done automatically.
-              </p>
-            </div>
-          </div>
-          <div>
+        <SettingsContainer
+          title="Auto-Mark as Done"
+          description="When you answer a message, the conversation will be marked as done automatically."
+          icon={<CheckCircleIcon className="text-icon-tertiary size-5" />}
+          action={
             <Switch
               checked={data?.autoMarkAsDone}
               onCheckedChange={() =>
                 handleChange("autoMarkAsDone", !data?.autoMarkAsDone)
               }
             />
-          </div>
-        </div>
+          }
+        />
       </div>
     </div>
   );

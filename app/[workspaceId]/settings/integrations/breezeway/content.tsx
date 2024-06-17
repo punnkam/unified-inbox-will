@@ -19,6 +19,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { MapToDropdown } from "./mapToDropdown";
+import { SettingsContainer } from "@/components/custom/SettingsContainer";
 
 const options: { label: string; value: BreezewayLabel }[] = [
   { label: "Map to Cleaning in Breezeway", value: "Cleaning" },
@@ -185,27 +186,20 @@ export default function EditBreezewayContent({
             Assign tasks to Breezeway members from HostAI
           </p>
         </div>
-        <div className="flex justify-between items-start border border-secondary rounded-md p-4">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 flex justify-center items-center">
-              <UploadCloudIcon className="text-icon-tertiary" />
-            </div>
-            <div>
-              <p className="text-subtitle-xs">Import people from Breezeway</p>
-              <p className="text-body-2xs font-normal text-tertiary">
-                Imported people will be marked with the Breezeway "B"
-              </p>
-            </div>
-          </div>
-          <div>
+
+        <SettingsContainer
+          title="Import people from Breezeway"
+          description="Import people from Breezeway to assign tasks to them in HostAI"
+          icon={<UploadCloudIcon className="text-icon-tertiary" />}
+          action={
             <Button variant={"outline"}>
               <div className="flex gap-2 items-center">
                 <BreezewayIcon />
                 Import people
               </div>
             </Button>
-          </div>
-        </div>
+          }
+        />
       </div>
       <div className="flex justify-between items-center">
         <AlertDialog open={isOpen}>

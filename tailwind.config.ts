@@ -228,6 +228,11 @@ const config = {
       },
     },
   },
+  variants: {
+    extend: {
+      scrollbar: ["rounded"],
+    },
+  },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
 

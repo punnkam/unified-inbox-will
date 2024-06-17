@@ -16,6 +16,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { SettingsContainer } from "@/components/custom/SettingsContainer";
 
 export default function EditSlackContent({
   connection,
@@ -147,22 +148,11 @@ export default function EditSlackContent({
             This is only relevant if you create listing groups
           </p>
         </div>
-        <div className="flex justify-between items-start border border-secondary rounded-md p-4">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 flex justify-center items-center">
-              <CopyIcon className="text-icon-tertiary" />
-            </div>
-            <div>
-              <p className="text-subtitle-xs">
-                Copy setup and apply it to each listing group
-              </p>
-              <p className="text-body-2xs font-normal text-tertiary">
-                Each listing group will have this channel set up. For example
-                #joshuatree-hostai-tasks
-              </p>
-            </div>
-          </div>
-          <div>
+        <SettingsContainer
+          title="Copy setup and apply it to each listing group"
+          description="Each listing group will have this channel set up. For example #joshuatree-hostai-tasks"
+          icon={<CopyIcon className="text-icon-tertiary" />}
+          action={
             <Switch
               checked={data?.copySetupToListingGroups}
               onCheckedChange={() =>
@@ -172,8 +162,8 @@ export default function EditSlackContent({
                 )
               }
             />
-          </div>
-        </div>
+          }
+        />
       </div>
 
       <div className="flex justify-between items-center">

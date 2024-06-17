@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDownIcon } from "lucide-react";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
+import { SettingsContainer } from "@/components/custom/SettingsContainer";
 
 export default function GeneralContent({
   workspaceId,
@@ -56,22 +57,11 @@ export default function GeneralContent({
     <div className="flex flex-col gap-[28px]">
       <div className="flex flex-col gap-5">
         <p className="text-title-lg text-tertiary">Conversation summaries</p>
-
-        <div className="flex justify-between items-start border border-secondary rounded-md p-4">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 flex justify-center items-center">
-              <StarsIcon className="text-icon-tertiary" />
-            </div>
-            <div className="flex flex-col gap-1">
-              <p className="text-subtitle-xs">
-                Let HostAI summarize your conversations
-              </p>
-              <p className="text-body-2xs font-normal text-tertiary">
-                We'll summarize the conversation with each guest
-              </p>
-            </div>
-          </div>
-          <div>
+        <SettingsContainer
+          title="Let HostAI summarize your conversations"
+          description="We'll summarize the conversation with each guest"
+          icon={<StarsIcon className="text-icon-tertiary" />}
+          action={
             <Switch
               checked={data?.summarizeConversations}
               onCheckedChange={() =>
@@ -81,29 +71,19 @@ export default function GeneralContent({
                 )
               }
             />
-          </div>
-        </div>
+          }
+        />
       </div>
       <div className="border-b border-primary"></div>
 
       <div className="flex flex-col gap-5">
         <p className="text-title-lg text-tertiary">Language </p>
 
-        <div className="flex justify-between items-start border border-secondary rounded-md p-4">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 flex justify-center items-center">
-              <TranslateIcon className="text-icon-tertiary" />
-            </div>
-            <div className="flex flex-col gap-1">
-              <p className="text-subtitle-xs">
-                How HostAI should respond to non-English messages
-              </p>
-              <p className="text-body-2xs font-normal text-tertiary">
-                Choose your preference
-              </p>
-            </div>
-          </div>
-          <div>
+        <SettingsContainer
+          title="How HostAI should respond to non-English messages"
+          description="Choose your preference"
+          icon={<TranslateIcon className="text-icon-tertiary" />}
+          action={
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size={"sm"}>
@@ -126,8 +106,8 @@ export default function GeneralContent({
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </div>
-        </div>
+          }
+        />
       </div>
 
       <div className="border-b border-primary"></div>
