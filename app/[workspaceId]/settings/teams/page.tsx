@@ -63,7 +63,7 @@ export default async function MembersPage({
                         icon={icon?.icon || fakeIconsData[0].icon}
                       />
                     </div>
-                    <div>
+                    <div className="flex flex-col gap-1">
                       <p className="text-left">{team.name}</p>
                       <p className="text-tertiary text-body-xs font-normal">
                         {team.members.length} members
