@@ -1052,6 +1052,36 @@ export const fakeConversationData: Conversation[] = [
     tripStartDate: "2024-01-01",
     tripEndDate: "2024-01-08",
   },
+  {
+    id: 3,
+    workspaceId: 1,
+    name: "Wifi password",
+    messages: [
+      {
+        from: "Guest",
+        message: "What's the wifi password?",
+        date: "2024-01-01",
+      },
+      {
+        from: "Host",
+        message:
+          "The wifi password is 123456 Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+        date: "2024-01-01",
+      },
+    ],
+    guestImage:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    guestName: "Jack Doe",
+    messageStatus: "Done",
+    channel: "WhatsApp",
+    reservationLabelIds: [3],
+    conversationTagIds: [2],
+    replyStatus: "replied",
+    tripListingId: 3,
+    tripStatus: "Completed",
+    tripStartDate: "2024-01-01",
+    tripEndDate: "2024-01-08",
+  },
 ];
 
 export type ConversationWithAllData = Conversation & {

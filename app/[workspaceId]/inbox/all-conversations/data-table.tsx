@@ -23,7 +23,9 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { SearchIcon } from "lucide-react";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs-inbox";
+import { SidebarTrigger } from "../SidebarTrigger";
+import { cn } from "@/lib/utils";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -36,8 +38,8 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
     {
-      id: "active",
-      value: true,
+      id: "messageStatus",
+      value: "Todo",
     },
   ]);
 
@@ -58,46 +60,69 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  const handleTabChange = (tab: "active" | "inactive") => {
-    table.getColumn("active")?.setFilterValue(tab === "active" ? true : false);
+  const handleTabChange = (tab: "Todo" | "Done") => {
+    table.getColumn("messageStatus")?.setFilterValue(tab);
   };
 
   return (
-    <div className="flex flex-col">
-      <div className="w-full flex justify-between items-center mb-[28px]">
-        <div>
-          <Tabs defaultValue="active" className="w-[400px]">
-            <TabsList>
-              <TabsTrigger
-                value="active"
-                onClick={() => handleTabChange("active")}
-              >
-                Active listings
-              </TabsTrigger>
-              <TabsTrigger
-                value="pending"
-                onClick={() => handleTabChange("inactive")}
-              >
-                Inactive listings
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
+    <div className="flex flex-col bg-primary-subtle">
+      <div className="flex flex-col gap-[28px] px-8 pt-8 pb-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <SidebarTrigger />
+            <p className="text-title-3xl">All conversations</p>
+          </div>
+          <div className="flex items-center relative">
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
+              <SearchIcon className="h-5 w-5 text-gray-400" />
+            </span>
+            <Input
+              placeholder="Search"
+              value={
+                (table.getColumn("title")?.getFilterValue() as string) ?? ""
+              }
+              onChange={(event) =>
+                table.getColumn("title")?.setFilterValue(event.target.value)
+              }
+              className="pl-10 max-w-sm w-[300px]"
+            />
+          </div>
         </div>
-        <div className="flex items-center relative">
-          <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
-            <SearchIcon className="h-5 w-5 text-gray-400" />
-          </span>
-          <Input
-            placeholder="Search"
-            value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("title")?.setFilterValue(event.target.value)
-            }
-            className="pl-10 max-w-sm w-[300px]"
-          />
-        </div>
+        <Tabs defaultValue="Todo" className="w-[400px]">
+          <TabsList>
+            <TabsTrigger value="Todo" onClick={() => handleTabChange("Todo")}>
+              <div className="relative">
+                <p className="flex items-center gap-2">
+                  Todo
+                  <span
+                    className={cn(
+                      "bg-hover size-6 rounded-lg flex items-center justify-center text-tertiary text-subtitle-2xs",
+                      table.getColumn("messageStatus")?.getFilterValue() ===
+                        "Todo" && "text-brand text-subtitle-2xs"
+                    )}
+                  >
+                    17
+                  </span>
+                </p>
+                {table.getColumn("messageStatus")?.getFilterValue() ===
+                  "Todo" && (
+                  <div className="h-[3px] mt-[9px] right-0 left-0 w-full bg-brand absolute" />
+                )}
+              </div>
+            </TabsTrigger>
+            <TabsTrigger value="done" onClick={() => handleTabChange("Done")}>
+              <div className="relative">
+                <p>Done</p>
+                {table.getColumn("messageStatus")?.getFilterValue() ===
+                  "Done" && (
+                  <div className="h-[3px] mt-3 right-0 left-0 w-full bg-brand absolute" />
+                )}
+              </div>
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
-      <div>
+      <div className="bg-primary">
         <Table>
           <TableHeader hidden>
             {table.getHeaderGroups().map((headerGroup) => (
