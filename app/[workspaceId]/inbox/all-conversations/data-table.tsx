@@ -102,6 +102,7 @@ export function DataTable<TData, TValue>({
             return (
               <Badge
                 key={index}
+                id={item.id!}
                 title={item.name}
                 number={item.numberOfUses}
                 subscipton="Outstanding requests"

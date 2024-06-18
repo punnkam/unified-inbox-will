@@ -978,6 +978,21 @@ export const saveConversationTag = async (
   return { success: true, message: "Saved" };
 };
 
+export const updateConversationTagVisaibility = async (
+  id: number,
+  visible: boolean
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // This is where you would make an API call to update the conversation tag visibility
+
+  console.log("Updated conversation tag visibility", id, visible);
+
+  return { success: true, message: "Updated" };
+};
+
 /*
  * Reservation Label page actions
  */
