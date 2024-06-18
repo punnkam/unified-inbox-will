@@ -22,6 +22,10 @@ import {
   Listing,
   ReservationLabel,
   fakeReservationLabels,
+  Conversation,
+  fakeConversationData,
+  apiConversationData,
+  ConversationWithAllData,
 } from "@/lib/types";
 
 // Action to handle fetching members and adding a delete handler to each member
@@ -1096,5 +1100,61 @@ export const getWorkspace = async (
     success: true,
     message: "Fetched workspace",
     data: workspace,
+  };
+};
+
+/*
+ * Inbox page actions
+ */
+
+export const fetchAllConversations = async (
+  workspaceId: string
+): Promise<{
+  success: boolean;
+  message: string;
+  data?: ConversationWithAllData[];
+}> => {
+  "use server";
+
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  // add a 2 second wait
+
+  const allConversations = apiConversationData;
+
+  return {
+    success: true,
+    message: "Fetched all conversations",
+    data: allConversations,
+  };
+};
+
+export const fetchConversation = async (
+  conversationId: string
+): Promise<{ success: boolean; message: string; data?: Conversation }> => {
+  "use server";
+
+  // add a 2 second wait
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // get the conversation with the same id
+  const conversation = fakeConversationData.find(
+    (conversation) => conversation.id === parseInt(conversationId)
+  );
+
+  if (!conversation) {
+    return { success: false, message: "Conversation not found" };
+  }
+
+  return {
+    success: true,
+    message: "Fetched conversation",
+    data: conversation,
   };
 };

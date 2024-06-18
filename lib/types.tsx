@@ -938,3 +938,146 @@ export const daysOfWeek: { key: DayOfWeek; label: string }[] = [
   { key: "saturday", label: "Saturday" },
   { key: "sunday", label: "Sunday" },
 ];
+
+export type Conversation = {
+  id: number;
+  workspaceId: number;
+  name: string;
+  messages: {
+    from: "Guest" | "Host" | "AI";
+    message: string;
+    date: string;
+  }[];
+  guestImage?: string;
+  guestName?: string;
+  messageStatus: "Todo" | "Done";
+  channel: "Slack" | "Gmail" | "WhatsApp";
+  reservationLabelIds?: number[];
+  conversationTagIds?: number[];
+  replyStatus: "replied" | "not replied" | "ai available";
+  tripListingId: number;
+  tripStatus: "Upcoming" | "Ongoing" | "Completed" | "Cancelled";
+  tripStartDate: string;
+  tripEndDate: string;
+};
+
+export const fakeConversationData: Conversation[] = [
+  {
+    id: 1,
+    workspaceId: 1,
+    name: "Check-in instructions",
+    messages: [
+      {
+        from: "Guest",
+        message: "What time is check-in?",
+        date: "2024-01-01",
+      },
+      {
+        from: "Host",
+        message:
+          "Check-in is at 3pm Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+        date: "2024-01-01",
+      },
+    ],
+    guestImage:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    guestName: "John Doe",
+    messageStatus: "Todo",
+    channel: "Slack",
+    reservationLabelIds: [1],
+    conversationTagIds: [3],
+    replyStatus: "replied",
+    tripListingId: 1,
+    tripStatus: "Upcoming",
+    tripStartDate: "2024-01-01",
+    tripEndDate: "2024-01-08",
+  },
+  {
+    id: 2,
+    workspaceId: 1,
+    name: "Check-out instructions",
+    messages: [
+      {
+        from: "Guest",
+        message: "What time is check-out?",
+        date: "2024-01-08",
+      },
+      {
+        from: "Host",
+        message:
+          "Check-out is at 11am Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+        date: "2024-01-08",
+      },
+    ],
+    guestImage:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    guestName: "Jane Doe",
+    messageStatus: "Todo",
+    channel: "Gmail",
+    reservationLabelIds: [2, 1],
+    conversationTagIds: [1],
+    replyStatus: "replied",
+    tripListingId: 2,
+    tripStatus: "Ongoing",
+    tripStartDate: "2024-01-01",
+    tripEndDate: "2024-01-08",
+  },
+  {
+    id: 3,
+    workspaceId: 1,
+    name: "Wifi password",
+    messages: [
+      {
+        from: "Guest",
+        message: "What's the wifi password?",
+        date: "2024-01-01",
+      },
+      {
+        from: "Host",
+        message:
+          "The wifi password is 123456 Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+        date: "2024-01-01",
+      },
+    ],
+    guestImage:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    guestName: "Jack Doe",
+    messageStatus: "Todo",
+    channel: "WhatsApp",
+    reservationLabelIds: [3],
+    conversationTagIds: [2],
+    replyStatus: "replied",
+    tripListingId: 3,
+    tripStatus: "Completed",
+    tripStartDate: "2024-01-01",
+    tripEndDate: "2024-01-08",
+  },
+];
+
+export type ConversationWithAllData = Conversation & {
+  tripListing: Listing;
+  reservationLabels?: (ReservationLabel | undefined)[];
+  conversationTags?: (ConversationTag | undefined)[];
+};
+
+export const apiConversationData: ConversationWithAllData[] =
+  fakeConversationData.map((conversation) => {
+    const tripListing = fakeListingsData.find(
+      (listing) => listing.id === conversation.tripListingId
+    ) as Listing;
+
+    const reservationLabels = conversation.reservationLabelIds?.map((labelId) =>
+      fakeReservationLabels.find((label) => label.id === labelId)
+    );
+
+    const conversationTags = conversation.conversationTagIds?.map((tagId) =>
+      fakeConversationTags.find((tag) => tag.id === tagId)
+    );
+
+    return {
+      ...conversation,
+      tripListing,
+      reservationLabels,
+      conversationTags,
+    };
+  });
