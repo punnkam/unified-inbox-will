@@ -179,6 +179,7 @@ const config = {
         "subtitle-2xs": ["12px", "14.4px"],
         "subtitle-3xs": ["10px", "12px"],
 
+        "body-5xl": ["40px", "48px"],
         "body-sm": ["16px", "19.2px"],
         "body-xs": ["14px", "16.8px"],
         "body-2xs": ["12px", "14.4px"],

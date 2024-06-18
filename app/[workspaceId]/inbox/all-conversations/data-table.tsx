@@ -10,6 +10,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { Badge } from "./badge";
 
 import { Input } from "@/components/ui/input";
 
@@ -26,15 +27,20 @@ import { SearchIcon } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs-inbox";
 import { SidebarTrigger } from "../SidebarTrigger";
 import { cn } from "@/lib/utils";
+import { ConversationTag, ReservationLabel } from "@/lib/types";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  conversationLabels: (ConversationTag & {
+    numberOfUses: number;
+  })[];
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  conversationLabels,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
     {
@@ -88,6 +94,23 @@ export function DataTable<TData, TValue>({
             />
           </div>
         </div>
+
+        {/* badges */}
+        <div className="flex items-center gap-4">
+          {conversationLabels.map((item, index) => {
+            return (
+              <Badge
+                key={index}
+                title={item.name}
+                number={item.numberOfUses}
+                subscipton="Outstanding requests"
+                icon={item.iconId}
+                iconType={item.type.color}
+              />
+            );
+          })}
+        </div>
+
         <Tabs defaultValue="Todo" className="w-[400px]">
           <TabsList>
             <TabsTrigger value="Todo" onClick={() => handleTabChange("Todo")}>
