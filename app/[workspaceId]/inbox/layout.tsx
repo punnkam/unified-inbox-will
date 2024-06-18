@@ -7,8 +7,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { LayoutLeftIcon } from "@/components/icons/CustomIcons";
 
 export default function InboxLayout({
   children,
@@ -27,14 +26,14 @@ export default function InboxLayout({
         </CollapsibleContent>
 
         {/* Page Content */}
-        <div className="h-screen flex-grow bg-primary w-full px-[120px] pt-[100px] pb-[40px] overflow-y-auto">
+        <div className="h-screen flex-grow bg-primary w-full px-[120px] pt-[100px] pb-[40px] overflow-y-auto flex items-center">
           <CollapsibleTrigger asChild>
-            <Button variant="ghost" size="sm" className="w-9 p-0">
-              <Plus className="h-4 w-4" />
+            <div className="inline-flex items-center justify-center rounded-xl p-2 h-10 w-10 border border-primary hover:cursor-pointer hover:bg-hover">
+              <LayoutLeftIcon className=" text-icon-secondary size-[18px]" />
               <span className="sr-only">Toggle</span>
-            </Button>
+            </div>
           </CollapsibleTrigger>
-          <div className="z-10">{children}</div>
+          <div>{children}</div>
         </div>
       </div>
     </Collapsible>
