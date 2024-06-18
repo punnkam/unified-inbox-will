@@ -12,9 +12,11 @@ export default function ProtectedPathsLayout({
   const pathname = usePathname();
   const router = useRouter();
 
+  const workspaceId = pathname.split("/")[1];
+
   // If the user dosnt have a settings path, redirect to the first one
-  if (pathname == "/settings") {
-    router.replace("/settings/personal-notifications");
+  if (pathname == `/${workspaceId}/settings`) {
+    router.replace(`/${workspaceId}/settings/personal-notifications`);
     return;
   }
 
