@@ -1292,3 +1292,22 @@ export const MessageChatCircleIcon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const LayoutLeftIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={21}
+    height={20}
+    fill="none"
+    viewBox="0 0 21 20"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M7.96 1v18M6.76 1h8.4c1.68 0 2.52 0 3.162.327a3 3 0 0 1 1.311 1.311c.327.642.327 1.482.327 3.162v8.4c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311C17.68 19 16.84 19 15.16 19h-8.4c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311C1.96 16.72 1.96 15.88 1.96 14.2V5.8c0-1.68 0-2.52.327-3.162a3 3 0 0 1 1.311-1.311C4.24 1 5.08 1 6.76 1Z"
+    />
+  </svg>
+);

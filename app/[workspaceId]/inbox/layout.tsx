@@ -1,39 +1,40 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { InboxSidebar } from "./InboxSidebar";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { LayoutLeftIcon } from "@/components/icons/CustomIcons";
+import { SidebarProvider, useSidebar } from "./SidebarContext";
 
 export default function InboxLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isOpen, setIsOpen] = useState(true);
+  return (
+    <SidebarProvider>
+      <InboxLayoutContent>{children}</InboxLayoutContent>
+    </SidebarProvider>
+  );
+}
+
+function InboxLayoutContent({ children }: { children: React.ReactNode }) {
+  const { isOpen } = useSidebar();
 
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-2">
+    <Collapsible open={isOpen} className="space-y-2">
       <div className="flex">
         {/* Side bar */}
-
         <CollapsibleContent className="CollapsibleContent space-y-2">
           <InboxSidebar />
         </CollapsibleContent>
 
         {/* Page Content */}
-        <div className="h-screen flex-grow bg-primary w-full px-[120px] pt-[100px] pb-[40px] overflow-y-auto flex items-center">
-          <CollapsibleTrigger asChild>
-            <div className="inline-flex items-center justify-center rounded-xl p-2 h-10 w-10 border border-primary hover:cursor-pointer hover:bg-hover">
-              <LayoutLeftIcon className=" text-icon-secondary size-[18px]" />
-              <span className="sr-only">Toggle</span>
-            </div>
-          </CollapsibleTrigger>
-          <div>{children}</div>
+        <div className="h-screen flex-grow bg-primary w-full px-[120px] pt-[100px] pb-[40px] overflow-y-auto">
+          {children}
         </div>
       </div>
     </Collapsible>
