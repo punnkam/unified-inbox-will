@@ -28,6 +28,10 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
     },
   },
   {
+    accessorKey: "guestName",
+    header: "Guest Name",
+  },
+  {
     accessorKey: "messageStatus",
     header: "Message Status",
   },

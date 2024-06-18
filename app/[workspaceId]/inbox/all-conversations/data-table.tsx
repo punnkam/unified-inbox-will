@@ -62,6 +62,7 @@ export function DataTable<TData, TValue>({
       // hide active column - so we can filter by active without showing the column
       columnVisibility: {
         messageStatus: false,
+        guestName: false,
       },
     },
   });
@@ -85,10 +86,10 @@ export function DataTable<TData, TValue>({
             <Input
               placeholder="Search"
               value={
-                (table.getColumn("title")?.getFilterValue() as string) ?? ""
+                (table.getColumn("guestName")?.getFilterValue() as string) ?? ""
               }
               onChange={(event) =>
-                table.getColumn("title")?.setFilterValue(event.target.value)
+                table.getColumn("guestName")?.setFilterValue(event.target.value)
               }
               className="pl-10 max-w-sm w-[300px]"
             />
