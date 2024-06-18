@@ -64,6 +64,7 @@ const config = {
           error: "#EF4444",
           success: "#10B981",
           active: "#3B82F6",
+          "primary-inverse": "#FFFFFF",
         },
         brand: {
           50: "#CFD4DE",

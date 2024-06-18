@@ -26,6 +26,7 @@ const buttonVariants = cva(
         md: "text-subtitle-xs h-10 px-4",
         lg: "text-subtitle-sm h-11 px-8",
         xl: "text-subtitle-sm h-12 px-10",
+        iconSm: "h-8 w-8",
         icon: "h-10 w-10",
         iconXs: "h-6 w-6",
       },

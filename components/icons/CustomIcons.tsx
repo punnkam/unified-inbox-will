@@ -1178,3 +1178,117 @@ export const Pencil02ICon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const ChevronSelectorVertical = (
+  props: React.SVGProps<SVGSVGElement>
+) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={10}
+    height={14}
+    fill="none"
+    viewBox="0 0 10 14"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M1.21 9.25 4.96 13l3.75-3.75m-7.5-4.5L4.96 1l3.75 3.75"
+    />
+  </svg>
+);
+
+export const Edit05Icon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={18}
+    height={18}
+    fill="none"
+    viewBox="0 0 18 18"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M8.21 3H5.06c-1.26 0-1.89 0-2.372.245a2.25 2.25 0 0 0-.983.983C1.46 4.71 1.46 5.34 1.46 6.6v6.3c0 1.26 0 1.89.245 2.371.216.424.56.768.983.984.482.245 1.112.245 2.372.245h6.3c1.26 0 1.89 0 2.371-.245a2.25 2.25 0 0 0 .984-.984c.245-.48.245-1.111.245-2.371V9.75m-9 2.25h1.256c.367 0 .55 0 .723-.041.153-.037.3-.098.433-.18.152-.093.281-.223.54-.482l7.173-7.172a1.591 1.591 0 0 0-2.25-2.25L6.663 9.047c-.26.26-.39.39-.482.54a1.5 1.5 0 0 0-.18.434c-.041.173-.041.356-.041.723V12Z"
+    />
+  </svg>
+);
+
+export const LugageIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={14}
+    height={12}
+    fill="none"
+    viewBox="0 0 14 12"
+    {...props}
+  >
+    <path
+      stroke="#fff"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M4.626 11.25V3.083c0-.542 0-.813.06-1.036A1.75 1.75 0 0 1 5.924.81C6.146.75 6.417.75 6.96.75c.542 0 .814 0 1.036.06a1.75 1.75 0 0 1 1.237 1.237c.06.223.06.494.06 1.036v3.792m0 2.333v2.042m-5.367 0h6.067c.98 0 1.47 0 1.845-.19a1.75 1.75 0 0 0 .764-.766c.191-.374.191-.864.191-1.844V5.883c0-.98 0-1.47-.19-1.844a1.75 1.75 0 0 0-.765-.765c-.375-.19-.865-.19-1.845-.19H3.926c-.98 0-1.47 0-1.844.19a1.75 1.75 0 0 0-.765.765c-.19.374-.19.864-.19 1.844V8.45c0 .98 0 1.47.19 1.845.168.329.436.597.765.764.374.191.864.191 1.844.191Zm3.5-2.042h2.859c.163 0 .245 0 .307-.031a.292.292 0 0 0 .128-.128c.031-.062.031-.144.031-.307v-1.4c0-.164 0-.245-.031-.308a.292.292 0 0 0-.128-.127c-.062-.032-.144-.032-.307-.032H7.426c-.163 0-.245 0-.307.032a.292.292 0 0 0-.127.127c-.032.063-.032.144-.032.308v1.4c0 .163 0 .245.032.307.028.055.072.1.127.128.062.031.144.031.307.031Z"
+    />
+  </svg>
+);
+
+export const User03Icon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={16}
+    height={15}
+    fill="none"
+    viewBox="0 0 16 15"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M1.21 14c1.752-1.858 4.13-3 6.75-3s4.998 1.142 6.75 3m-3.375-9.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Z"
+    />
+  </svg>
+);
+
+export const AtSignIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={18}
+    height={18}
+    fill="none"
+    viewBox="0 0 18 18"
+    {...props}
+  >
+    <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M10.835.966a8.25 8.25 0 1 0 3.141 14.585.75.75 0 0 0-.912-1.191A6.75 6.75 0 1 1 15.71 9v.75a1.5 1.5 0 0 1-3 0V6a.75.75 0 0 0-1.5 0 3.75 3.75 0 1 0 .555 5.489 2.994 2.994 0 0 0 2.445 1.261 3 3 0 0 0 3-3V9A8.25 8.25 0 0 0 10.835.966Zm.375 8.03v.007a2.25 2.25 0 1 1 0-.006Z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
+
+export const MessageChatCircleIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={18}
+    height={18}
+    fill="none"
+    viewBox="0 0 18 18"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M4.53 8.422c-.046-.3-.07-.609-.07-.922 0-3.314 2.704-6 6.04-6 3.335 0 6.039 2.686 6.039 6 0 .749-.138 1.465-.39 2.126-.053.137-.079.206-.09.26a.672.672 0 0 0-.018.144c-.002.055.006.115.02.236l.303 2.453c.032.265.049.398.005.495a.375.375 0 0 1-.193.188c-.098.042-.23.023-.495-.016l-2.389-.35a1.747 1.747 0 0 0-.244-.027.67.67 0 0 0-.15.016c-.055.011-.126.038-.268.091a6.062 6.062 0 0 1-3.053.315M5.684 16.5c2.223 0 4.026-1.847 4.026-4.125S7.907 8.25 5.684 8.25c-2.224 0-4.027 1.847-4.027 4.125 0 .458.073.899.208 1.31.056.174.085.261.094.32.01.063.012.097.008.16-.003.06-.018.128-.049.264L1.46 16.5l2.246-.307c.123-.017.184-.025.237-.024a.63.63 0 0 1 .142.014c.053.01.13.038.287.093.41.145.852.224 1.312.224Z"
+    />
+  </svg>
+);
