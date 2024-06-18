@@ -954,7 +954,7 @@ export type Conversation = {
   channel: "Slack" | "Gmail" | "WhatsApp";
   reservationLabelIds?: number[];
   conversationTagIds?: number[];
-  replyStatus: "replied" | "not replied" | "ai available";
+  replyStatus: "Needs Reply" | "Response Available" | "Default" | "Done";
   tripListingId: number;
   tripStatus: "Upcoming" | "Ongoing" | "Completed" | "Cancelled";
   tripStartDate: string;
@@ -986,7 +986,7 @@ export const fakeConversationData: Conversation[] = [
     channel: "Slack",
     reservationLabelIds: [1],
     conversationTagIds: [3],
-    replyStatus: "replied",
+    replyStatus: "Response Available",
     tripListingId: 1,
     tripStatus: "Upcoming",
     tripStartDate: "2024-01-01",
@@ -1016,7 +1016,7 @@ export const fakeConversationData: Conversation[] = [
     channel: "Gmail",
     reservationLabelIds: [2, 1],
     conversationTagIds: [1],
-    replyStatus: "replied",
+    replyStatus: "Default",
     tripListingId: 2,
     tripStatus: "Ongoing",
     tripStartDate: "2024-01-01",
@@ -1046,7 +1046,7 @@ export const fakeConversationData: Conversation[] = [
     channel: "WhatsApp",
     reservationLabelIds: [3],
     conversationTagIds: [2],
-    replyStatus: "replied",
+    replyStatus: "Needs Reply",
     tripListingId: 3,
     tripStatus: "Completed",
     tripStartDate: "2024-01-01",
@@ -1076,7 +1076,7 @@ export const fakeConversationData: Conversation[] = [
     channel: "WhatsApp",
     reservationLabelIds: [3],
     conversationTagIds: [2],
-    replyStatus: "replied",
+    replyStatus: "Done",
     tripListingId: 3,
     tripStatus: "Completed",
     tripStartDate: "2024-01-01",

@@ -6,6 +6,11 @@ import { ColumnDef } from "@tanstack/react-table";
 import { LabelsTagsGroups } from "./LabelsTagsGroups";
 import { ConversationWithAllData, fakeIconsData } from "@/lib/types";
 import { IconComponent } from "@/components/icons/IconComponent";
+import { ResponseStatus } from "./ResponseStatus";
+import {
+  CheckCircleIcon,
+  CornerUpLeftIcon,
+} from "@/components/icons/CustomIcons";
 
 export const columns: ColumnDef<ConversationWithAllData>[] = [
   {
@@ -39,12 +44,39 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
     accessorKey: "messages",
     header: "Messages",
     cell: ({ row }) => {
+      const replyStatus = row.original.replyStatus;
       return (
         <div className="flex flex-col gap-2 pl-10">
           <p className="text-secondary text-subtitle-xs truncate max-w-[80%]">
             {row.original.messages[row.original.messages.length - 1].message}
           </p>
           <div className="flex gap-1 items-center">
+            {/* message status */}
+            {replyStatus && (
+              <ResponseStatus
+                type={replyStatus}
+                showHosty={replyStatus === "Response Available"}
+                icon={
+                  (replyStatus === "Done" && (
+                    <CheckCircleIcon className="text-success w-3 h-3" />
+                  )) ||
+                  ((replyStatus == "Needs Reply" ||
+                    replyStatus == "Default") && (
+                    <CornerUpLeftIcon className="text-tertiary w-3 h-3" />
+                  ))
+                }
+                text={
+                  replyStatus === "Response Available"
+                    ? "Response available"
+                    : replyStatus == "Needs Reply"
+                    ? "Needs reply"
+                    : replyStatus == "Done"
+                    ? "Done"
+                    : "Replied to"
+                }
+              />
+            )}
+
             {/* List the listing */}
             {row.original.tripListing && (
               <LabelsTagsGroups

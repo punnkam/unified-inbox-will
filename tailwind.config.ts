@@ -125,6 +125,7 @@ const config = {
         "success-subtle": "#D1FAE5",
         error: "#EF4444",
         "error-subtle": "#FEE2E2",
+        "error-alt": "#FFE4E6",
         "error-hover": "#DC2626",
         brand: "#10275B",
         "brand-hover": "#40527C",
@@ -156,6 +157,8 @@ const config = {
         info: "#BFDBFE",
         active: "#2563EB",
         inverse: "#191919",
+        "error-alt": "#FB7185",
+        success: "#10B981",
       },
       fontFamily: {
         satoshi: ["Satoshi-Variable", "sans-serif"],
