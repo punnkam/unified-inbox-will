@@ -1,15 +1,60 @@
 import type { Config } from "tailwindcss";
 
-const config: Config = {
+const config = {
+  darkMode: ["class"],
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
+  prefix: "",
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
       colors: {
-        // Icon colors
+        // Shadcn colors
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+
+        // Custom colors
         icon: {
           primary: "#191919",
           secondary: "#4B5563",
@@ -69,7 +114,8 @@ const config: Config = {
       backgroundColor: {
         primary: "#FFFFFF",
         "primary-subtle": "#F9FAFB",
-        secondary: "#F8F9FA",
+        secondary: "#F3F4F6",
+        "secondary-hover": "#E4E4E7",
         hover: "#F4F4F5",
         pressed: "#E4E4E7",
         selected: "#E5ECFD",
@@ -78,9 +124,12 @@ const config: Config = {
         "success-subtle": "#D1FAE5",
         error: "#EF4444",
         "error-subtle": "#FEE2E2",
+        "error-hover": "#DC2626",
         brand: "#10275B",
+        "brand-hover": "#40527C",
         inverse: "#191919",
         "inverse-subtle": "#030812",
+        disabled: "#F8F9FA",
       },
       textColor: {
         primary: "#191919",
@@ -97,9 +146,11 @@ const config: Config = {
         "link-bold": "#2563EB",
         "primary-inverse": "#FFFFFF",
       },
-      stroke: {
+      borderColor: {
         primary: "#F0F0F0",
         secondary: "#E4E4E7",
+        "secondary-hover": "#D4D4D8",
+        "secondary-disabled": "#E5E7EB",
         tertiary: "#F9FAFB",
         info: "#BFDBFE",
         active: "#2563EB",
@@ -153,13 +204,36 @@ const config: Config = {
         "5xl": "40px",
         "6xl": "48px",
       },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      outlineColor: {
+        active: "#2563EB",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
-  plugins: [],
-};
+  variants: {
+    extend: {
+      scrollbar: ["rounded"],
+    },
+  },
+  plugins: [require("tailwindcss-animate")],
+} satisfies Config;
+
 export default config;
