@@ -151,9 +151,10 @@ export function DataTable<TData, TValue>({
                     Todo
                     <span
                       className={cn(
-                        "bg-hover size-6 rounded-lg flex items-center justify-center text-tertiary text-subtitle-xs",
+                        "h-6 w-[28px] rounded-lg flex items-center justify-center text-tertiary text-subtitle-xs",
                         table.getColumn("messageStatus")?.getFilterValue() ===
-                          "Todo" && "text-brand text-subtitle-xs"
+                          "Todo" &&
+                          "text-brand text-subtitle-xs bg-primary border border-primary"
                       )}
                     >
                       17
