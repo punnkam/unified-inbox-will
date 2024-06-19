@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import { Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
@@ -20,7 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-satoshi font-medium bg-primary h-screen text-primary">
+      <body
+        className={cn(
+          "font-medium bg-primary h-screen text-primary",
+          inter.className
+        )}
+      >
         {children}
       </body>
       <Toaster />

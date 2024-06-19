@@ -43,12 +43,6 @@ export const InboxSidebar = () => {
       <div className="flex flex-col gap-[32px]">
         <div>
           <InboxSideBarOption
-            path={`/${workspaceId}/inbox/mentions`}
-            name="Mentions"
-            selected={pathname.startsWith(`/${workspaceId}/inbox/mentions`)}
-            icon={<AtSignIcon />}
-          />
-          <InboxSideBarOption
             path={`/${workspaceId}/inbox/all-conversations`}
             name="All conversations"
             selected={pathname.startsWith(

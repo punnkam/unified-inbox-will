@@ -160,40 +160,41 @@ const config = {
         "error-alt": "#FB7185",
         success: "#10B981",
       },
-      fontFamily: {
-        satoshi: ["Satoshi-Variable", "sans-serif"],
-      },
       fontSize: {
-        "title-6xl": ["48px", "57.6px"],
-        "title-5xl": ["40px", "48px"],
-        "title-4xl": ["36px", "43.2px"],
-        "title-3xl": ["30px", "38.4px"],
-        "title-2xl": ["24px", "33.6px"],
-        "title-xl": ["22px", "28.8px"],
-        "title-lg": ["18px", "24px"],
-        "title-md": ["16px", "21.6px"],
-        "title-sm": ["14px", "19.2px"],
+        // Title - semibold weight
+        "title-6xl": ["48px", { lineHeight: "57.6px", fontWeight: 600 }],
+        "title-5xl": ["40px", { lineHeight: "48px", fontWeight: 600 }],
+        "title-4xl": ["36px", { lineHeight: "43.2px", fontWeight: 600 }],
+        "title-3xl": ["30px", { lineHeight: "38.4px", fontWeight: 600 }],
+        "title-2xl": ["24px", { lineHeight: "33.6px", fontWeight: 600 }],
+        "title-xl": ["22px", { lineHeight: "28.8px", fontWeight: 600 }],
+        "title-lg": ["18px", { lineHeight: "24px", fontWeight: 600 }],
+        "title-md": ["16px", { lineHeight: "21.6px", fontWeight: 600 }],
+        "title-sm": ["14px", { lineHeight: "19.2px", fontWeight: 600 }],
 
-        "subtitle-xl": ["22px", "28.8px"],
-        "subtitle-lg": ["18px", "24px"],
-        "subtitle-md": ["16px", "21.6px"],
-        "subtitle-sm": ["14px", "19.2px"],
-        "subtitle-xs": ["12px", "16.8px"],
-        "subtitle-2xs": ["10px", "14.4px"],
-        "subtitle-3xs": ["10px", "12px"],
+        // Subtitle - medium weight
+        "subtitle-xl": ["22px", { lineHeight: "28.8px", fontWeight: 500 }],
+        "subtitle-lg": ["18px", { lineHeight: "24px", fontWeight: 500 }],
+        "subtitle-md": ["16px", { lineHeight: "21.6px", fontWeight: 500 }],
+        "subtitle-sm": ["14px", { lineHeight: "19.2px", fontWeight: 500 }],
+        "subtitle-xs": ["12px", { lineHeight: "16.8px", fontWeight: 500 }],
+        "subtitle-2xs": ["10px", { lineHeight: "14.4px", fontWeight: 500 }],
+        "subtitle-3xs": ["10px", { lineHeight: "12px", fontWeight: 500 }],
 
-        "body-5xl": ["40px", "48px"],
-        "body-sm": ["14px", "19.2px"],
-        "body-xs": ["12px", "16.8px"],
-        "body-2xs": ["10px", "14.4px"],
-        "body-3xs": ["10px", "12px"],
+        // Body - regular weight
+        "body-5xl": ["40px", { lineHeight: "48px", fontWeight: 400 }],
+        "body-sm": ["14px", { lineHeight: "19.2px", fontWeight: 400 }],
+        "body-xs": ["12px", { lineHeight: "16.8px", fontWeight: 400 }],
+        "body-2xs": ["10px", { lineHeight: "14.4px", fontWeight: 400 }],
+        "body-3xs": ["10px", { lineHeight: "12px", fontWeight: 400 }],
 
-        "bold-sm": ["14px", "19.2px"],
-        "bold-xs": ["12px", "16.8px"],
-        "bold-2xs": ["10px", "14.4px"],
-        "bold-2.5xs": ["11px", "13.2px"],
-        "bold-3xs": ["10px", "12px"],
-        "bold-section": ["10px", "13.2px"],
+        // Bold - bold weight
+        "bold-sm": ["14px", { lineHeight: "19.2px", fontWeight: 900 }],
+        "bold-xs": ["12px", { lineHeight: "16.8px", fontWeight: 900 }],
+        "bold-2xs": ["10px", { lineHeight: "14.4px", fontWeight: 900 }],
+        "bold-2.5xs": ["11px", { lineHeight: "13.2px", fontWeight: 900 }],
+        "bold-3xs": ["10px", { lineHeight: "12px", fontWeight: 900 }],
+        "bold-section": ["10px", { lineHeight: "13.2px", fontWeight: 900 }],
       },
       lineHeight: {
         "3xs": "10px",
@@ -231,6 +232,154 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      typography: () => ({
+        DEFAULT: {
+          css: {
+            // Title Styles
+            ".text-title-6xl": {
+              fontSize: "48px",
+              lineHeight: "57.6px",
+              fontWeight: "700",
+            },
+            ".text-title-5xl": {
+              fontSize: "40px",
+              lineHeight: "48px",
+              fontWeight: "700",
+            },
+            ".text-title-4xl": {
+              fontSize: "36px",
+              lineHeight: "43.2px",
+              fontWeight: "700",
+            },
+            ".text-title-3xl": {
+              fontSize: "30px",
+              lineHeight: "38.4px",
+              fontWeight: "700",
+            },
+            ".text-title-2xl": {
+              fontSize: "24px",
+              lineHeight: "33.6px",
+              fontWeight: "700",
+            },
+            ".text-title-xl": {
+              fontSize: "22px",
+              lineHeight: "28.8px",
+              fontWeight: "700",
+            },
+            ".text-title-lg": {
+              fontSize: "18px",
+              lineHeight: "24px",
+              fontWeight: "700",
+            },
+            ".text-title-md": {
+              fontSize: "16px",
+              lineHeight: "21.6px",
+              fontWeight: "700",
+            },
+            ".text-title-sm": {
+              fontSize: "14px",
+              lineHeight: "19.2px",
+              fontWeight: "700",
+            },
+
+            // Subtitle Styles
+            ".text-subtitle-xl": {
+              fontSize: "22px",
+              lineHeight: "28.8px",
+              fontWeight: "500",
+            },
+            ".text-subtitle-lg": {
+              fontSize: "18px",
+              lineHeight: "24px",
+              fontWeight: "500",
+            },
+            ".text-subtitle-md": {
+              fontSize: "16px",
+              lineHeight: "21.6px",
+              fontWeight: "500",
+            },
+            ".text-subtitle-sm": {
+              fontSize: "14px",
+              lineHeight: "19.2px",
+              fontWeight: "500",
+            },
+            ".text-subtitle-xs": {
+              fontSize: "12px",
+              lineHeight: "16.8px",
+              fontWeight: "500",
+            },
+            ".text-subtitle-2xs": {
+              fontSize: "10px",
+              lineHeight: "14.4px",
+              fontWeight: "500",
+            },
+            ".text-subtitle-3xs": {
+              fontSize: "10px",
+              lineHeight: "12px",
+              fontWeight: "500",
+            },
+
+            // Body Styles
+            ".text-body-5xl": {
+              fontSize: "40px",
+              lineHeight: "48px",
+              fontWeight: "400",
+            },
+            ".text-body-sm": {
+              fontSize: "14px",
+              lineHeight: "19.2px",
+              fontWeight: "400",
+            },
+            ".text-body-xs": {
+              fontSize: "12px",
+              lineHeight: "16.8px",
+              fontWeight: "400",
+            },
+            ".text-body-2xs": {
+              fontSize: "10px",
+              lineHeight: "14.4px",
+              fontWeight: "400",
+            },
+            ".text-body-3xs": {
+              fontSize: "10px",
+              lineHeight: "12px",
+              fontWeight: "400",
+            },
+
+            // Bold Styles
+            ".text-bold-sm": {
+              fontSize: "14px",
+              lineHeight: "19.2px",
+              fontWeight: "700",
+            },
+            ".text-bold-xs": {
+              fontSize: "12px",
+              lineHeight: "16.8px",
+              fontWeight: "700",
+            },
+            ".text-bold-2xs": {
+              fontSize: "10px",
+              lineHeight: "14.4px",
+              fontWeight: "700",
+            },
+            ".text-bold-2.5xs": {
+              fontSize: "11px",
+              lineHeight: "13.2px",
+              fontWeight: "700",
+            },
+            ".text-bold-3xs": {
+              fontSize: "10px",
+              lineHeight: "12px",
+              fontWeight: "700",
+            },
+            ".text-bold-section": {
+              fontSize: "10px",
+              lineHeight: "13.2px",
+              fontWeight: "700",
+            },
+          },
+        },
+      }),
     },
   },
   variants: {
@@ -238,7 +387,7 @@ const config = {
       scrollbar: ["rounded"],
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;
 
 export default config;
