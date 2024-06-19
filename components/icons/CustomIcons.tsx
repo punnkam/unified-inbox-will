@@ -1436,3 +1436,59 @@ export const TagIcon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const SlashCircleIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={15}
+    height={15}
+    fill="none"
+    viewBox="0 0 15 15"
+    {...props}
+  >
+    <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M7.542 1.083a6.417 6.417 0 1 0 0 12.834 6.417 6.417 0 0 0 0-12.834ZM4.265 3.398a5.25 5.25 0 0 1 7.379 7.379l-7.38-7.379Zm-.825.825a5.25 5.25 0 0 0 7.379 7.379l-7.38-7.379Z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
+
+export const Home02Icon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={13}
+    height={13}
+    fill="none"
+    viewBox="0 0 13 13"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.167}
+      d="M4.793 11.75V7.433c0-.326 0-.49.064-.614a.583.583 0 0 1 .254-.255c.125-.064.289-.064.615-.064H7.36c.326 0 .49 0 .614.064.11.056.2.145.255.255.064.124.064.288.064.614v4.317M5.97 1.112 2.014 4.19c-.265.206-.397.309-.492.438a1.167 1.167 0 0 0-.186.38c-.043.153-.043.32-.043.656v4.22c0 .654 0 .98.127 1.23.112.22.29.398.51.51.25.127.576.127 1.23.127h6.766c.654 0 .98 0 1.23-.127.22-.112.398-.29.51-.51.127-.25.127-.576.127-1.23v-4.22c0-.335 0-.503-.043-.657a1.167 1.167 0 0 0-.186-.38c-.095-.128-.227-.23-.492-.437L7.116 1.112c-.205-.16-.307-.239-.42-.27a.583.583 0 0 0-.305 0c-.114.031-.216.11-.421.27Z"
+    />
+  </svg>
+);
+
+export const CalendarPlus = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={13}
+    height={13}
+    fill="none"
+    viewBox="0 0 13 13"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.167}
+      d="M11.793 6.208V4.633c0-.98 0-1.47-.19-1.844a1.75 1.75 0 0 0-.765-.765c-.375-.19-.865-.19-1.845-.19h-4.9c-.98 0-1.47 0-1.845.19a1.75 1.75 0 0 0-.764.765c-.191.374-.191.864-.191 1.844v4.9c0 .98 0 1.47.19 1.845.168.33.436.597.765.765.375.19.865.19 1.845.19h2.742m4.958-7h-10.5M8.876.667V3M4.21.667V3m5.833 8.75v-3.5M8.293 10h3.5"
+    />
+  </svg>
+);

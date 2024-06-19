@@ -26,9 +26,30 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
             className="w-10 h-10 rounded-full object-cover"
           />
 
-          <p className="text-subtitle-sm text-nowrap">
-            {row.original.guestName}
-          </p>
+          <div className="flex flex-col gap-2">
+            <p className="text-subtitle-sm text-nowrap">
+              {row.original.guestName}
+            </p>
+            <div className="flex items-center gap-2">
+              <ResponseStatus type={row.original.tripStatus} />
+              <div className="flex items-center gap-2 text-secondary text-body-xs">
+                <p>
+                  {new Date(row.original.tripStartDate).toLocaleDateString(
+                    "en-US",
+                    { month: "short", day: "numeric" }
+                  )}{" "}
+                  -{" "}
+                  {new Date(row.original.tripEndDate).toLocaleDateString(
+                    "en-US",
+                    {
+                      month: "short",
+                      day: "numeric",
+                    }
+                  )}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       );
     },
@@ -128,21 +149,7 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
               {row.original.tripListing.title}
             </p>
           )}
-          <div className="flex items-center gap-2 text-secondary text-body-2xs">
-            <p>{row.original.tripStatus}</p>
-            <div className="size-0.5 bg-icon-tertiary rounded-full" />
-            <p>
-              {new Date(row.original.tripStartDate).toLocaleDateString(
-                "en-US",
-                { month: "short", day: "numeric" }
-              )}{" "}
-              -{" "}
-              {new Date(row.original.tripEndDate).toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-              })}
-            </p>
-          </div>
+          {/* add group here */}
         </div>
       );
     },

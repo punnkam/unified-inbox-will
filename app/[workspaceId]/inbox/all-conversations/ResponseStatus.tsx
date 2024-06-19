@@ -1,30 +1,46 @@
 import { cn } from "@/lib/utils";
 import { HostAiIcon } from "@/components/icons/CustomIcons";
+import { Conversation } from "@/lib/types";
+import {
+  CheckCircleIcon,
+  Home02Icon,
+  CalendarPlus,
+  SlashCircleIcon,
+} from "@/components/icons/CustomIcons";
+
+const IconMap = {
+  Current: {
+    icon: <Home02Icon />,
+    classes: "text-link bg-blue-500/10",
+  },
+  Inquiry: {
+    icon: <CalendarPlus />,
+    classes: "text-amber-600 bg-amber-600/10",
+  },
+  Past: {
+    icon: <CheckCircleIcon />,
+    classes: "text-secondary bg-secondary",
+  },
+  Cancelled: {
+    icon: <SlashCircleIcon />,
+    classes: "text-error bg-red-500/10",
+  },
+};
 
 export const ResponseStatus = ({
-  text,
   type,
-  icon,
-  showHosty,
 }: {
-  text: string;
-  type: "Needs Reply" | "Response Available" | "Default" | "Done";
-  icon?: React.ReactNode;
-  showHosty?: boolean;
+  type: Conversation["tripStatus"];
 }) => {
   return (
     <div
       className={cn(
-        "flex items-center gap-[6px] border rounded-full text-secondary text-subtitle-2xs px-2 py-[6px]",
-        type == "Needs Reply" && "bg-error-alt border-error-alt",
-        type == "Response Available" && "bg-selected-subtle border-info",
-        type == "Default" && "bg-disabled border-secondary-hover",
-        type == "Done" && "bg-success-subtle border-success"
+        "flex items-center gap-1 rounded-full text-subtitle-xs px-2 py-1",
+        IconMap[type].classes
       )}
     >
-      {showHosty && <HostAiIcon className="w-3 h-3" />}
-      {icon && <div>{icon}</div>}
-      {text}
+      <div className="">{IconMap[type].icon}</div>
+      {type}
     </div>
   );
 };

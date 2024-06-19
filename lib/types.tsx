@@ -956,7 +956,7 @@ export type Conversation = {
   conversationTagIds?: number[];
   replyStatus: "Needs Reply" | "Response Available" | "Default" | "Done";
   tripListingId: number;
-  tripStatus: "Upcoming" | "Ongoing" | "Completed" | "Cancelled";
+  tripStatus: "Current" | "Inquiry" | "Past" | "Cancelled";
   tripStartDate: string;
   tripEndDate: string;
 };
@@ -988,7 +988,7 @@ export const fakeConversationData: Conversation[] = [
     conversationTagIds: [3],
     replyStatus: "Response Available",
     tripListingId: 1,
-    tripStatus: "Upcoming",
+    tripStatus: "Cancelled",
     tripStartDate: "2024-01-01",
     tripEndDate: "2024-01-08",
   },
@@ -1018,7 +1018,7 @@ export const fakeConversationData: Conversation[] = [
     conversationTagIds: [1],
     replyStatus: "Default",
     tripListingId: 2,
-    tripStatus: "Ongoing",
+    tripStatus: "Current",
     tripStartDate: "2024-01-01",
     tripEndDate: "2024-01-08",
   },
@@ -1048,7 +1048,7 @@ export const fakeConversationData: Conversation[] = [
     conversationTagIds: [2],
     replyStatus: "Needs Reply",
     tripListingId: 3,
-    tripStatus: "Completed",
+    tripStatus: "Inquiry",
     tripStartDate: "2024-01-01",
     tripEndDate: "2024-01-08",
   },
@@ -1078,7 +1078,7 @@ export const fakeConversationData: Conversation[] = [
     conversationTagIds: [2],
     replyStatus: "Done",
     tripListingId: 3,
-    tripStatus: "Completed",
+    tripStatus: "Past",
     tripStartDate: "2024-01-01",
     tripEndDate: "2024-01-08",
   },
