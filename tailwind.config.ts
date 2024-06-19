@@ -162,15 +162,15 @@ const config = {
       },
       fontSize: {
         // Title - semibold weight
-        "title-6xl": ["48px", { lineHeight: "57.6px", fontWeight: 600 }],
-        "title-5xl": ["40px", { lineHeight: "48px", fontWeight: 600 }],
-        "title-4xl": ["36px", { lineHeight: "43.2px", fontWeight: 600 }],
-        "title-3xl": ["30px", { lineHeight: "38.4px", fontWeight: 600 }],
-        "title-2xl": ["24px", { lineHeight: "33.6px", fontWeight: 600 }],
-        "title-xl": ["22px", { lineHeight: "28.8px", fontWeight: 600 }],
-        "title-lg": ["18px", { lineHeight: "24px", fontWeight: 600 }],
-        "title-md": ["16px", { lineHeight: "21.6px", fontWeight: 600 }],
-        "title-sm": ["14px", { lineHeight: "19.2px", fontWeight: 600 }],
+        "title-6xl": ["48px", { lineHeight: "57.6px", fontWeight: 500 }],
+        "title-5xl": ["40px", { lineHeight: "48px", fontWeight: 500 }],
+        "title-4xl": ["36px", { lineHeight: "43.2px", fontWeight: 500 }],
+        "title-3xl": ["30px", { lineHeight: "38.4px", fontWeight: 500 }],
+        "title-2xl": ["24px", { lineHeight: "33.6px", fontWeight: 500 }],
+        "title-xl": ["22px", { lineHeight: "28.8px", fontWeight: 500 }],
+        "title-lg": ["18px", { lineHeight: "24px", fontWeight: 500 }],
+        "title-md": ["16px", { lineHeight: "21.6px", fontWeight: 500 }],
+        "title-sm": ["14px", { lineHeight: "19.2px", fontWeight: 500 }],
 
         // Subtitle - medium weight
         "subtitle-xl": ["22px", { lineHeight: "28.8px", fontWeight: 500 }],

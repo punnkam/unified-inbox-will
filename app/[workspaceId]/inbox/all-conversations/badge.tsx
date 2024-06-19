@@ -132,8 +132,8 @@ export const Badge = ({
         </AlertDialog>
       </div>
       <div>
-        <p className="text-body-5xl font-normal">{number}</p>
-        <p className="text-body-sm font-normal text-tertiary">{subscipton}</p>
+        <p className="text-body-5xl">{number}</p>
+        <p className="text-body-sm text-tertiary">{subscipton}</p>
       </div>
     </div>
   );

@@ -124,11 +124,11 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
       return (
         <div className="flex flex-col gap-2 ">
           {table.getColumn("Listing name")?.getIsVisible() && (
-            <p className="text-subtitle-xs truncate">
+            <p className="text-body-sm truncate">
               {row.original.tripListing.title}
             </p>
           )}
-          <div className="flex items-center gap-2 text-secondary text-subtitle-2xs">
+          <div className="flex items-center gap-2 text-secondary text-body-2xs">
             <p>{row.original.tripStatus}</p>
             <div className="size-0.5 bg-icon-tertiary rounded-full" />
             <p>
@@ -161,7 +161,7 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
               className="w-5 h-5 rounded-full object-cover"
             />
           )}
-          <p className=" text-body-2xs font-normal text-nowrap">12:47 am</p>
+          <p className=" text-body-xs font-normal text-nowrap">12:47 am</p>
         </div>
       );
     },

@@ -25,7 +25,7 @@ export const InboxSideBarOption = ({
           selected ? "bg-selected hover:bg-selected" : "hover:bg-hover"
         )}
       >
-        <div className="text-subtitle-xs flex items-center gap-2">
+        <div className="text-subtitle-sm flex items-center gap-2">
           {icon && (
             <div
               className={cn(
@@ -49,7 +49,7 @@ export const InboxSideBarOption = ({
         {count && (
           <div
             className={cn(
-              "rounded-lg text-subtitle-2xs size-6 flex items-center justify-center",
+              "rounded-lg text-subtitle-xs size-6 flex items-center justify-center",
               selected ? "text-brand bg-primary" : "text-tertiary"
             )}
           >

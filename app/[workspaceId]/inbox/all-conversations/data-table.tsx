@@ -147,13 +147,13 @@ export function DataTable<TData, TValue>({
             <TabsList>
               <TabsTrigger value="Todo" onClick={() => handleTabChange("Todo")}>
                 <div className="relative">
-                  <p className="flex items-center gap-2 h-9">
+                  <p className="flex items-center gap-2 h-9 text-title-sm">
                     Todo
                     <span
                       className={cn(
-                        "bg-hover size-6 rounded-lg flex items-center justify-center text-tertiary text-subtitle-2xs",
+                        "bg-hover size-6 rounded-lg flex items-center justify-center text-tertiary text-subtitle-xs",
                         table.getColumn("messageStatus")?.getFilterValue() ===
-                          "Todo" && "text-brand text-subtitle-2xs"
+                          "Todo" && "text-brand text-subtitle-xs"
                       )}
                     >
                       17
@@ -161,13 +161,13 @@ export function DataTable<TData, TValue>({
                   </p>
                   {table.getColumn("messageStatus")?.getFilterValue() ===
                     "Todo" && (
-                    <div className="h-[3px] mt-[9px] right-0 left-0 w-full bg-brand absolute" />
+                    <div className="h-[3px] mt-3 right-0 left-0 w-full bg-brand absolute" />
                   )}
                 </div>
               </TabsTrigger>
               <TabsTrigger value="done" onClick={() => handleTabChange("Done")}>
                 <div className="relative">
-                  <p className="flex items-center h-9">Done</p>
+                  <p className="flex items-center h-9 text-title-sm">Done</p>
                   {table.getColumn("messageStatus")?.getFilterValue() ===
                     "Done" && (
                     <div className="h-[3px] mt-3 right-0 left-0 w-full bg-brand absolute" />
