@@ -1327,3 +1327,112 @@ export const CornerUpLeftIcon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const AttributesIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={18}
+    height={18}
+    fill="none"
+    viewBox="0 0 18 18"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M1.5 6.5h15m-15 5h15m-11-10h7c1.4 0 2.1 0 2.635.272a2.5 2.5 0 0 1 1.092 1.093C16.5 3.4 16.5 4.1 16.5 5.5v7c0 1.4 0 2.1-.273 2.635a2.5 2.5 0 0 1-1.092 1.092c-.535.273-1.235.273-2.635.273h-7c-1.4 0-2.1 0-2.635-.273a2.5 2.5 0 0 1-1.093-1.092C1.5 14.6 1.5 13.9 1.5 12.5v-7c0-1.4 0-2.1.272-2.635a2.5 2.5 0 0 1 1.093-1.093C3.4 1.5 4.1 1.5 5.5 1.5Z"
+    />
+  </svg>
+);
+
+export const EyeIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={16}
+    height={12}
+    fill="none"
+    viewBox="0 0 16 12"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M1.613 6.475c-.09-.143-.136-.215-.161-.326a.782.782 0 0 1 0-.298c.025-.11.07-.183.161-.326C2.363 4.337 4.597 1.333 8 1.333c3.404 0 5.637 3.004 6.387 4.192.09.143.136.215.162.326.019.083.019.215 0 .298-.026.11-.071.183-.162.326-.75 1.188-2.983 4.192-6.387 4.192-3.403 0-5.636-3.004-6.387-4.192Z"
+    />
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M8 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
+    />
+  </svg>
+);
+
+export const EyeOffIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={16}
+    height={14}
+    fill="none"
+    viewBox="0 0 16 14"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M7.162 2.395c.27-.04.55-.062.838-.062 3.404 0 5.637 3.004 6.387 4.192.09.143.136.215.162.326a.784.784 0 0 1 0 .298c-.026.11-.071.183-.163.328-.2.316-.505.761-.908 1.243M4.483 3.477c-1.441.977-2.42 2.336-2.869 3.047-.091.144-.137.216-.162.327a.782.782 0 0 0 0 .298c.025.11.07.183.161.326.75 1.188 2.984 4.192 6.387 4.192 1.373 0 2.555-.489 3.526-1.15M2 1l12 12M6.586 5.586a2 2 0 0 0 2.828 2.828"
+    />
+  </svg>
+);
+
+export const ContrastIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={16}
+    height={16}
+    fill="none"
+    viewBox="0 0 16 16"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M7.999 14.667a6.667 6.667 0 1 0 0-13.334 6.667 6.667 0 0 0 0 13.334Z"
+    />
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M7.999 12.333a4.333 4.333 0 0 0 0-8.666v8.666Z"
+    />
+  </svg>
+);
+
+export const TagIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={16}
+    height={16}
+    fill="none"
+    viewBox="0 0 16 16"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.714}
+      d="M5.332 5.333h.007M1.332 3.466V6.45c0 .327 0 .49.037.643.033.136.086.266.16.386.082.134.197.25.428.48l5.112 5.112c.792.792 1.188 1.188 1.645 1.337a2 2 0 0 0 1.236 0c.457-.149.853-.545 1.645-1.337l1.474-1.474c.792-.792 1.188-1.188 1.337-1.645a2 2 0 0 0 0-1.236c-.149-.457-.545-.853-1.337-1.645L7.957 1.958c-.23-.23-.346-.346-.48-.428a1.333 1.333 0 0 0-.386-.16c-.153-.037-.317-.037-.643-.037H3.465c-.746 0-1.12 0-1.405.145-.25.128-.455.332-.583.583-.145.285-.145.659-.145 1.405Zm4.333 1.867a.333.333 0 1 1-.666 0 .333.333 0 0 1 .666 0Z"
+    />
+  </svg>
+);

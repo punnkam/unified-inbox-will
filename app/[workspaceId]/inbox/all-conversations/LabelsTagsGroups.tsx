@@ -1,17 +1,23 @@
+import { HostAiIcon } from "@/components/icons/CustomIcons";
+
 export const LabelsTagsGroups = ({
   text,
   avatar,
   icon,
   emoji,
+  showHosty,
 }: {
   text: string;
   avatar?: string;
   icon?: React.ReactNode;
   emoji?: string;
+  showHosty?: boolean;
 }) => {
   return (
-    <div className="flex items-center gap-1 rounded-full px-2 py-[6px] border border-secondary w-fit">
+    <div className="flex items-center gap-1 rounded-full px-2 py-1 border border-secondary-hover w-fit">
       {icon && <div>{icon}</div>}
+
+      {showHosty && <HostAiIcon className="w-3 h-3" />}
 
       {avatar && (
         <img
@@ -27,7 +33,7 @@ export const LabelsTagsGroups = ({
         </span>
       )}
 
-      <p className=" text-body-2xs">{text}</p>
+      <p className="text-body-xs font-normal">{text}</p>
     </div>
   );
 };

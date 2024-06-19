@@ -16,6 +16,7 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
   {
     accessorKey: "user",
     header: "User",
+    enableHiding: false,
     cell: ({ row }) => {
       return (
         <div className="flex gap-3 items-center w-full">
@@ -35,27 +36,31 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
   {
     accessorKey: "guestName",
     header: "Guest Name",
+    enableHiding: false,
   },
   {
     accessorKey: "messageStatus",
     header: "Message Status",
+    enableHiding: false,
   },
   {
     accessorKey: "messages",
     header: "Messages",
-    cell: ({ row }) => {
+    enableHiding: false,
+    cell: ({ table, row }) => {
       const replyStatus = row.original.replyStatus;
+
       return (
         <div className="flex flex-col gap-2 pl-10">
-          <p className="text-secondary text-subtitle-xs truncate max-w-[80%]">
+          <p className="text-secondary text-body-sm font-normal truncate max-w-[80%]">
             {row.original.messages[row.original.messages.length - 1].message}
           </p>
           <div className="flex gap-1 items-center">
             {/* message status */}
             {replyStatus && (
-              <ResponseStatus
-                type={replyStatus}
-                showHosty={replyStatus === "Response Available"}
+              <LabelsTagsGroups
+                text={replyStatus}
+                showHosty={replyStatus == "Response Available"}
                 icon={
                   (replyStatus === "Done" && (
                     <CheckCircleIcon className="text-success w-3 h-3" />
@@ -65,28 +70,19 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
                     <CornerUpLeftIcon className="text-tertiary w-3 h-3" />
                   ))
                 }
-                text={
-                  replyStatus === "Response Available"
-                    ? "Response available"
-                    : replyStatus == "Needs Reply"
-                    ? "Needs reply"
-                    : replyStatus == "Done"
-                    ? "Done"
-                    : "Replied to"
-                }
               />
             )}
 
-            {/* List the listing */}
-            {row.original.tripListing && (
-              <LabelsTagsGroups
-                text={row.original.tripListing.address}
-                avatar={row.original.tripListing.image}
-              />
-            )}
+            {table.getColumn("Listing name")?.getIsVisible() &&
+              row.original.tripListing && (
+                <LabelsTagsGroups
+                  text={row.original.tripListing.address}
+                  avatar={row.original.tripListing.image}
+                />
+              )}
 
-            {/*  list all reservation labels applied */}
-            {row.original.reservationLabels &&
+            {table.getColumn("Reservation labels")?.getIsVisible() &&
+              row.original.reservationLabels &&
               row.original.reservationLabels.map((label) => (
                 <LabelsTagsGroups
                   key={label?.id}
@@ -96,7 +92,8 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
               ))}
 
             {/* list all tags applied */}
-            {row.original.conversationTags &&
+            {table.getColumn("Conversation tags")?.getIsVisible() &&
+              row.original.conversationTags &&
               row.original.conversationTags.map((tag) => {
                 const icon = fakeIconsData.find(
                   (icon) => icon.id === tag?.iconId
@@ -122,12 +119,15 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
   {
     accessorKey: "listing",
     header: "Listing",
-    cell: ({ row }) => {
+    enableHiding: false,
+    cell: ({ table, row }) => {
       return (
         <div className="flex flex-col gap-2 ">
-          <p className="text-subtitle-xs truncate">
-            {row.original.tripListing.title}
-          </p>
+          {table.getColumn("Listing name")?.getIsVisible() && (
+            <p className="text-subtitle-xs truncate">
+              {row.original.tripListing.title}
+            </p>
+          )}
           <div className="flex items-center gap-2 text-secondary text-subtitle-2xs">
             <p>{row.original.tripStatus}</p>
             <div className="size-0.5 bg-icon-tertiary rounded-full" />
@@ -148,19 +148,35 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
     },
   },
   {
-    accessorKey: "teamResponse",
-    header: "Team Response",
-    cell: ({ row }) => {
+    accessorKey: "assigneeGroup",
+    header: "AssigneeGroup",
+    enableHiding: false,
+    cell: ({ table, row }) => {
       return (
         <div className="flex items-end flex-col gap-2">
-          <img
-            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="team"
-            className="w-5 h-5 rounded-full object-cover"
-          />
+          {table.getColumn("Assignee")?.getIsVisible() && (
+            <img
+              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              alt="team"
+              className="w-5 h-5 rounded-full object-cover"
+            />
+          )}
           <p className=" text-body-2xs font-normal text-nowrap">12:47 am</p>
         </div>
       );
     },
+  },
+  // These columns are hidden table columns used for condintional attributes
+  {
+    header: "Reservation labels",
+  },
+  {
+    header: "Conversation tags",
+  },
+  {
+    header: "Listing name",
+  },
+  {
+    header: "Assignee",
   },
 ];

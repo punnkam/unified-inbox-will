@@ -9,11 +9,16 @@ import {
   getFilteredRowModel,
   getCoreRowModel,
   useReactTable,
+  VisibilityState,
 } from "@tanstack/react-table";
 import { Badge } from "./badge";
 
 import { Input } from "@/components/ui/input";
-
+import {
+  DropdownMenu,
+  DropdownMenuInboxContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -23,11 +28,29 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
-import { SearchIcon } from "lucide-react";
+import { SearchIcon, XIcon } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs-inbox";
 import { SidebarTrigger } from "../SidebarTrigger";
 import { cn } from "@/lib/utils";
 import { ConversationTag, ReservationLabel } from "@/lib/types";
+import { Button } from "@/components/ui/button";
+import {
+  TagIcon,
+  KeyIcon,
+  AttributesIcon,
+  EyeIcon,
+  EyeOffIcon,
+  User03Icon,
+  BuildingIcon,
+  ContrastIcon,
+} from "@/components/icons/CustomIcons";
+
+const AttributesIconMap = {
+  "Reservation labels": <ContrastIcon className="size-4 text-icon-tertiary" />,
+  "Conversation tags": <TagIcon className="size-4 text-icon-tertiary" />,
+  "Listing name": <BuildingIcon className="size-4 text-icon-tertiary" />,
+  Assignee: <User03Icon className="size-4 text-icon-tertiary" />,
+};
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -48,6 +71,10 @@ export function DataTable<TData, TValue>({
       value: "Todo",
     },
   ]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+    messageStatus: false,
+    guestName: false,
+  });
 
   const table = useReactTable({
     data,
@@ -55,8 +82,10 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
     state: {
       columnFilters,
+      columnVisibility,
     },
     initialState: {
       // hide active column - so we can filter by active without showing the column
@@ -91,7 +120,7 @@ export function DataTable<TData, TValue>({
               onChange={(event) =>
                 table.getColumn("guestName")?.setFilterValue(event.target.value)
               }
-              className="pl-10 max-w-sm w-[300px]"
+              className="pl-10 rounded-xl max-w-sm w-[300px]"
             />
           </div>
         </div>
@@ -113,39 +142,100 @@ export function DataTable<TData, TValue>({
           })}
         </div>
 
-        <Tabs defaultValue="Todo" className="w-[400px]">
-          <TabsList>
-            <TabsTrigger value="Todo" onClick={() => handleTabChange("Todo")}>
-              <div className="relative">
-                <p className="flex items-center gap-2">
-                  Todo
-                  <span
-                    className={cn(
-                      "bg-hover size-6 rounded-lg flex items-center justify-center text-tertiary text-subtitle-2xs",
-                      table.getColumn("messageStatus")?.getFilterValue() ===
-                        "Todo" && "text-brand text-subtitle-2xs"
-                    )}
-                  >
-                    17
-                  </span>
-                </p>
-                {table.getColumn("messageStatus")?.getFilterValue() ===
-                  "Todo" && (
-                  <div className="h-[3px] mt-[9px] right-0 left-0 w-full bg-brand absolute" />
-                )}
+        <div className="flex items-center justify-between">
+          <Tabs defaultValue="Todo">
+            <TabsList>
+              <TabsTrigger value="Todo" onClick={() => handleTabChange("Todo")}>
+                <div className="relative">
+                  <p className="flex items-center gap-2 h-9">
+                    Todo
+                    <span
+                      className={cn(
+                        "bg-hover size-6 rounded-lg flex items-center justify-center text-tertiary text-subtitle-2xs",
+                        table.getColumn("messageStatus")?.getFilterValue() ===
+                          "Todo" && "text-brand text-subtitle-2xs"
+                      )}
+                    >
+                      17
+                    </span>
+                  </p>
+                  {table.getColumn("messageStatus")?.getFilterValue() ===
+                    "Todo" && (
+                    <div className="h-[3px] mt-[9px] right-0 left-0 w-full bg-brand absolute" />
+                  )}
+                </div>
+              </TabsTrigger>
+              <TabsTrigger value="done" onClick={() => handleTabChange("Done")}>
+                <div className="relative">
+                  <p className="flex items-center h-9">Done</p>
+                  {table.getColumn("messageStatus")?.getFilterValue() ===
+                    "Done" && (
+                    <div className="h-[3px] mt-3 right-0 left-0 w-full bg-brand absolute" />
+                  )}
+                </div>
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size={"md"} className="w-fit">
+                <AttributesIcon className="text-icon-secondary size-[15px] mr-2" />
+                Attributes
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuInboxContent align="end">
+              <div className="p-4 flex items-center justify-between w-[284px] border-b border-primary">
+                <p className="text-subtitle-sm">Display attributes</p>
+                <XIcon
+                  className="h-4 w-4 text-icon-tertiary hover:text-icon-secondary hover:cursor-pointer"
+                  onClick={() => {
+                    table
+                      .getAllColumns()
+                      .filter((column) => column.getCanHide())
+                      .map((column) => {
+                        column.toggleVisibility(true);
+                      });
+                  }}
+                />
               </div>
-            </TabsTrigger>
-            <TabsTrigger value="done" onClick={() => handleTabChange("Done")}>
-              <div className="relative">
-                <p>Done</p>
-                {table.getColumn("messageStatus")?.getFilterValue() ===
-                  "Done" && (
-                  <div className="h-[3px] mt-3 right-0 left-0 w-full bg-brand absolute" />
-                )}
+              <div className="p-2">
+                {table
+                  .getAllColumns()
+                  .filter((column) => column.getCanHide())
+                  .map((column) => {
+                    return (
+                      <div
+                        key={column.id}
+                        className="p-2 hover:bg-hover rounded-md cursor-pointer"
+                        onClick={() =>
+                          column.toggleVisibility(!column.getIsVisible())
+                        }
+                      >
+                        <div className="flex items-center justify-between gap-2 w-full">
+                          <div className="flex items-center gap-2">
+                            <span className="size-6 flex items-center justify-center">
+                              {
+                                AttributesIconMap[
+                                  column.id as keyof typeof AttributesIconMap
+                                ]
+                              }
+                            </span>
+                            <p className="text-subtitle-xs">{column.id}</p>
+                          </div>
+                          {column.getIsVisible() ? (
+                            <EyeIcon className="size-4 text-icon-tertiary" />
+                          ) : (
+                            <EyeOffIcon className="size-4 text-icon-tertiary" />
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
               </div>
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+            </DropdownMenuInboxContent>
+          </DropdownMenu>
+        </div>
       </div>
       <div className="bg-primary">
         <Table>
@@ -182,6 +272,25 @@ export function DataTable<TData, TValue>({
                           index === row.getVisibleCells().length - 1
                             ? "right"
                             : "left",
+                        // Width 0 for the columns that are only for Attributes
+                        width:
+                          cell.column.id == "Reservation labels" ||
+                          cell.column.id == "Conversation tags" ||
+                          cell.column.id == "Listing name" ||
+                          cell.column.id == "Assignee"
+                            ? "0px"
+                            : "",
+                        // padding for the first and last cell + Remove padding for the columns that are only for Attributes
+                        padding:
+                          cell.column.id == "Reservation labels" ||
+                          cell.column.id == "Conversation tags" ||
+                          cell.column.id == "Listing name" ||
+                          cell.column.id == "Assignee"
+                            ? "0px"
+                            : index === 0 ||
+                              index === row.getVisibleCells().length - 1
+                            ? "20px 32px"
+                            : "20px",
                       }}
                     >
                       {flexRender(
