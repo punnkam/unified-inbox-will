@@ -4,7 +4,11 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { LabelsTagsGroups } from "./LabelsTagsGroups";
-import { ConversationWithAllData, fakeIconsData } from "@/lib/types";
+import {
+  ConversationWithAllData,
+  fakeIconsData,
+  appliedFilters,
+} from "@/lib/types";
 import { IconComponent } from "@/components/icons/IconComponent";
 import { ResponseStatus } from "./ResponseStatus";
 import {
@@ -19,6 +23,69 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
     accessorKey: "user",
     header: "User",
     enableHiding: false,
+    filterFn: (row, columnId, filterValue: appliedFilters) => {
+      console.log(filterValue);
+
+      const tripStatus = filterValue.tripStatus;
+      const checkInDate = filterValue.checkInDate;
+
+      if (tripStatus) {
+        // if the array is empty (no filter applied), return true (show all rows)
+        if (tripStatus.length === 0) return true;
+
+        if (!tripStatus.includes(row.original.tripStatus)) {
+          return false;
+        }
+      }
+
+      if (checkInDate) {
+        // if the array is empty (no filter applied), return true (show all rows)
+        if (checkInDate.length === 0) return true;
+
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+        const endOfWeek = new Date(today);
+        endOfWeek.setDate(today.getDate() + (7 - today.getDay()));
+
+        const checkInDateMatch = checkInDate.some((option) => {
+          const tripStartDate = new Date(row.original.tripStartDate).getTime();
+          const tripEndDate = new Date(row.original.tripEndDate).getTime();
+          const todayStart = new Date(today).setHours(0, 0, 0, 0);
+          const todayEnd = new Date(today).setHours(23, 59, 59, 999);
+          const tomorrowStart = new Date(tomorrow).setHours(0, 0, 0, 0);
+          const tomorrowEnd = new Date(tomorrow).setHours(23, 59, 59, 999);
+          const endOfWeekEnd = new Date(endOfWeek).setHours(23, 59, 59, 999);
+
+          switch (option) {
+            case "Current Guest":
+              return tripStartDate <= todayEnd && tripEndDate >= todayStart;
+
+            case "Checking in today":
+              return tripStartDate >= todayStart && tripStartDate <= todayEnd;
+
+            case "Checking in tomorrow":
+              return (
+                tripStartDate >= tomorrowStart && tripStartDate <= tomorrowEnd
+              );
+
+            case "Checking in this week":
+              return (
+                tripStartDate >= todayStart && tripStartDate <= endOfWeekEnd
+              );
+
+            default:
+              return false;
+          }
+        });
+
+        if (!checkInDateMatch) {
+          return false;
+        }
+      }
+
+      return true;
+    },
     cell: ({ row }) => {
       return (
         <div className="flex gap-3 items-center w-full">
@@ -84,6 +151,61 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
     accessorKey: "messages",
     header: "Messages",
     enableHiding: false,
+    filterFn: (row, columnId, filterValue: appliedFilters) => {
+      // filterValue: { responseStatus: ["Response Available"] }
+      //reservationStatus: ["label1", "label2"]
+
+      console.log(filterValue);
+
+      const responseStatus = filterValue.responseStatus;
+      const reservationLabels = filterValue.reservationLabels;
+      const conversationTags = filterValue.conversationTags;
+
+      if (responseStatus) {
+        // if the array is empty (no filter applied), return true (show all rows)
+        if (responseStatus.length == 0) return true;
+
+        if (!responseStatus.includes(row.original.replyStatus)) {
+          return false;
+        }
+      }
+
+      if (reservationLabels) {
+        // if the array is empty (no filter applied), return true (show all rows)
+        if (reservationLabels.length === 0) return true;
+
+        // Check if at least one of the selected labels is present in the row's reservation labels
+        const hasAnySelectedLabel = reservationLabels.some((label) =>
+          row.original.reservationLabels?.some(
+            (reservationLabel) => reservationLabel?.name === label
+          )
+        );
+
+        // If none of the selected labels are present, return false
+        if (!hasAnySelectedLabel) {
+          return false;
+        }
+      }
+
+      if (conversationTags) {
+        // if the array is empty (no filter applied), return true (show all rows)
+        if (conversationTags.length === 0) return true;
+
+        // Check if at least one of the selected tags is present in the row's conversation tags
+        const hasAnySelectedTag = conversationTags.some((tag) =>
+          row.original.conversationTags?.some(
+            (conversationTag) => conversationTag?.name === tag
+          )
+        );
+
+        // If none of the selected tags are present, return false
+        if (!hasAnySelectedTag) {
+          return false;
+        }
+      }
+
+      return true;
+    },
     cell: ({ table, row }) => {
       const replyStatus = row.original.replyStatus;
 

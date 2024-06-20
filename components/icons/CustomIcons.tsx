@@ -1529,3 +1529,22 @@ export const MessageNotificationIcon = (
     />
   </svg>
 );
+
+export const FilterLinesIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={18}
+    height={12}
+    fill="none"
+    viewBox="0 0 18 12"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M4 6h10M1.5 1h15m-10 10h5"
+    />
+  </svg>
+);

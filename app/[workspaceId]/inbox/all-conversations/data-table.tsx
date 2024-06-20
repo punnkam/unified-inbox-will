@@ -44,6 +44,7 @@ import {
   BuildingIcon,
   ContrastIcon,
 } from "@/components/icons/CustomIcons";
+import { FilterPopover } from "./FilterPopover";
 
 const AttributesIconMap = {
   "Reservation labels": <ContrastIcon className="size-4 text-icon-tertiary" />,
@@ -98,6 +99,11 @@ export function DataTable<TData, TValue>({
 
   const handleTabChange = (tab: "Todo" | "Done") => {
     table.getColumn("messageStatus")?.setFilterValue(tab);
+  };
+
+  // Helper for filtering dropdown
+  const handleFilterChange = (columnId: string, value: string) => {
+    table.getColumn(columnId)?.setFilterValue(value);
   };
 
   return (
@@ -178,64 +184,79 @@ export function DataTable<TData, TValue>({
             </TabsList>
           </Tabs>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size={"md"} className="w-fit">
-                <AttributesIcon className="text-icon-secondary size-[15px] mr-2" />
-                Attributes
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuInboxContent align="end">
-              <div className="p-4 flex items-center justify-between w-[284px] border-b border-primary">
-                <p className="text-subtitle-sm">Display attributes</p>
-                <XIcon
-                  className="h-4 w-4 text-icon-tertiary hover:text-icon-secondary hover:cursor-pointer"
-                  onClick={() => {
-                    table
-                      .getAllColumns()
-                      .filter((column) => column.getCanHide())
-                      .map((column) => {
-                        column.toggleVisibility(true);
-                      });
-                  }}
-                />
-              </div>
-              <div className="p-2">
-                {table
-                  .getAllColumns()
-                  .filter((column) => column.getCanHide())
-                  .map((column) => {
-                    return (
-                      <div
-                        key={column.id}
-                        className="p-2 hover:bg-hover rounded-md cursor-pointer"
-                        onClick={() =>
-                          column.toggleVisibility(!column.getIsVisible())
-                        }
-                      >
-                        <div className="flex items-center justify-between gap-2 w-full">
-                          <div className="flex items-center gap-2">
-                            <span className="size-6 flex items-center justify-center">
-                              {
-                                AttributesIconMap[
-                                  column.id as keyof typeof AttributesIconMap
-                                ]
-                              }
-                            </span>
-                            <p className="text-subtitle-xs">{column.id}</p>
+          <div className="flex items-center gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size={"md"} className="w-fit">
+                  <AttributesIcon className="text-icon-secondary size-[15px] mr-2" />
+                  Attributes
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuInboxContent align="end">
+                <div className="p-4 flex items-center justify-between w-[284px] border-b border-primary">
+                  <p className="text-subtitle-sm">Display attributes</p>
+                  <XIcon
+                    className="h-4 w-4 text-icon-tertiary hover:text-icon-secondary hover:cursor-pointer"
+                    onClick={() => {
+                      table
+                        .getAllColumns()
+                        .filter((column) => column.getCanHide())
+                        .map((column) => {
+                          column.toggleVisibility(true);
+                        });
+                    }}
+                  />
+                </div>
+                <div className="p-2">
+                  {table
+                    .getAllColumns()
+                    .filter((column) => column.getCanHide())
+                    .map((column) => {
+                      return (
+                        <div
+                          key={column.id}
+                          className="p-2 hover:bg-hover rounded-md cursor-pointer"
+                          onClick={() =>
+                            column.toggleVisibility(!column.getIsVisible())
+                          }
+                        >
+                          <div className="flex items-center justify-between gap-2 w-full">
+                            <div className="flex items-center gap-2">
+                              <span className="size-6 flex items-center justify-center">
+                                {
+                                  AttributesIconMap[
+                                    column.id as keyof typeof AttributesIconMap
+                                  ]
+                                }
+                              </span>
+                              <p className="text-subtitle-xs">{column.id}</p>
+                            </div>
+                            {column.getIsVisible() ? (
+                              <EyeIcon className="size-4 text-icon-tertiary" />
+                            ) : (
+                              <EyeOffIcon className="size-4 text-icon-tertiary" />
+                            )}
                           </div>
-                          {column.getIsVisible() ? (
-                            <EyeIcon className="size-4 text-icon-tertiary" />
-                          ) : (
-                            <EyeOffIcon className="size-4 text-icon-tertiary" />
-                          )}
                         </div>
-                      </div>
-                    );
-                  })}
-              </div>
-            </DropdownMenuInboxContent>
-          </DropdownMenu>
+                      );
+                    })}
+                </div>
+              </DropdownMenuInboxContent>
+            </DropdownMenu>
+
+            <FilterPopover
+              columnFilters={columnFilters}
+              setColumnFilters={(columnId, value) =>
+                handleFilterChange(columnId, value)
+              }
+              clearFilters={() => {
+                // TODO: need to handle some sort of state to know which filters were added via dropdown vs search & sidebar
+                columnFilters.forEach((filter) => {
+                  table.getColumn(filter.id)?.setFilterValue(null);
+                });
+              }}
+            />
+          </div>
         </div>
       </div>
       <div className="bg-primary shadow-inner">

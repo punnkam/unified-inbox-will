@@ -998,7 +998,7 @@ export const fakeConversationData: Conversation[] = [
     unread: true,
     tripListingId: 1,
     tripStatus: "Cancelled",
-    tripStartDate: "2024-01-01",
+    tripStartDate: "2024-06-22",
     tripEndDate: "2024-01-08",
   },
   {
@@ -1029,7 +1029,7 @@ export const fakeConversationData: Conversation[] = [
     unread: true,
     tripListingId: 2,
     tripStatus: "Current",
-    tripStartDate: "2024-01-01",
+    tripStartDate: "2024-06-20",
     tripEndDate: "2024-01-08",
   },
   {
@@ -1060,7 +1060,7 @@ export const fakeConversationData: Conversation[] = [
     unread: false,
     tripListingId: 3,
     tripStatus: "Inquiry",
-    tripStartDate: "2024-01-01",
+    tripStartDate: "2024-06-25",
     tripEndDate: "2024-01-08",
   },
   {
@@ -1083,7 +1083,7 @@ export const fakeConversationData: Conversation[] = [
     guestImage:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     guestName: "Jack Doe",
-    messageStatus: "Done",
+    messageStatus: "Todo",
     channel: "WhatsApp",
     reservationLabelIds: [3],
     conversationTagIds: [2],
@@ -1091,7 +1091,7 @@ export const fakeConversationData: Conversation[] = [
     unread: false,
     tripListingId: 3,
     tripStatus: "Past",
-    tripStartDate: "2024-01-01",
+    tripStartDate: "2024-06-21",
     tripEndDate: "2024-01-08",
   },
 ];
@@ -1150,3 +1150,84 @@ export const apiConversationData: ConversationWithAllData[] =
       listingGroupData,
     };
   });
+
+export type AllFilters = {
+  reservationLabels?: {
+    column: "messages";
+    title: "Reservation labels";
+    options: string[];
+  };
+  conversationTags?: {
+    column: "messages";
+    title: "Conversation tags";
+    options: string[];
+  };
+  // listingGroups: ListingGroup[];
+  responseStatus?: {
+    column: "messages";
+    title: "Response status";
+    options: ("Needs Reply" | "Response Available" | "Done")[];
+  };
+  tripStatus?: {
+    column: "user";
+    title: "Trip status";
+    options: ("Current" | "Inquiry" | "Past" | "Cancelled")[];
+  };
+
+  checkInDate?: {
+    column: "user";
+    title: "Check-in date";
+    options: (
+      | "Current Guest"
+      | "Checking in today"
+      | "Checking in tomorrow"
+      | "Checking in this week"
+    )[];
+  };
+};
+
+export const allFilters: AllFilters = {
+  reservationLabels: {
+    column: "messages",
+    title: "Reservation labels",
+    options: fakeReservationLabels.map((label) => label.name),
+  },
+  conversationTags: {
+    column: "messages",
+    title: "Conversation tags",
+    options: fakeConversationTags.map((tag) => tag.name),
+  },
+  responseStatus: {
+    column: "messages",
+    title: "Response status",
+    options: ["Needs Reply", "Response Available", "Done"],
+  },
+  tripStatus: {
+    column: "user",
+    title: "Trip status",
+    options: ["Current", "Inquiry", "Past", "Cancelled"],
+  },
+  checkInDate: {
+    column: "user",
+    title: "Check-in date",
+    options: [
+      "Current Guest",
+      "Checking in today",
+      "Checking in tomorrow",
+      "Checking in this week",
+    ],
+  },
+};
+
+export type appliedFilters = {
+  reservationLabels?: string[];
+  conversationTags?: string[];
+  responseStatus?: ("Needs Reply" | "Response Available" | "Done")[];
+  tripStatus?: ("Current" | "Inquiry" | "Past" | "Cancelled")[];
+  checkInDate?: (
+    | "Current Guest"
+    | "Checking in today"
+    | "Checking in tomorrow"
+    | "Checking in this week"
+  )[];
+};
