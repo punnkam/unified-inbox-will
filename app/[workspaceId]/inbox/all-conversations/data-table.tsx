@@ -250,8 +250,15 @@ export function DataTable<TData, TValue>({
                 handleFilterChange(columnId, value)
               }
               clearFilters={() => {
-                // TODO: need to handle some sort of state to know which filters were added via dropdown vs search & sidebar
                 columnFilters.forEach((filter) => {
+                  if (
+                    // guestName comes from search
+                    // messageStatus is the tab
+                    filter.id === "guestName" ||
+                    filter.id === "messageStatus"
+                  ) {
+                    return;
+                  }
                   table.getColumn(filter.id)?.setFilterValue(null);
                 });
               }}

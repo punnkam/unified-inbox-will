@@ -22,6 +22,7 @@ import { FilterLinesIcon } from "@/components/icons/CustomIcons";
 import { XIcon } from "lucide-react";
 import { allFilters, AllFilters } from "@/lib/types";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from "react";
 
 export const FilterPopover = ({
   columnFilters,
@@ -32,6 +33,8 @@ export const FilterPopover = ({
   setColumnFilters: (columnId: string, value: any) => void;
   clearFilters: () => void;
 }) => {
+  const [open, setOpen] = useState(false);
+
   const handleSelect = (
     filter: keyof AllFilters,
     label: string,
@@ -60,7 +63,7 @@ export const FilterPopover = ({
 
   return (
     <div>
-      <DropdownMenu>
+      <DropdownMenu open={open} onOpenChange={() => setOpen(!open)}>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size={"md"} className="w-fit">
             <FilterLinesIcon className="text-icon-secondary size-[15px] mr-2" />
@@ -72,7 +75,10 @@ export const FilterPopover = ({
             <p className="text-subtitle-sm">Add filter</p>
             <XIcon
               className="h-4 w-4 text-icon-tertiary hover:text-icon-secondary hover:cursor-pointer"
-              onClick={clearFilters}
+              onClick={() => {
+                clearFilters();
+                setOpen(false);
+              }}
             />
           </div>
           <div className="p-2">

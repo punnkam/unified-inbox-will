@@ -26,6 +26,8 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
     filterFn: (row, columnId, filterValue: appliedFilters) => {
       console.log(filterValue);
 
+      if (!filterValue) return true;
+
       const tripStatus = filterValue.tripStatus;
       const checkInDate = filterValue.checkInDate;
 
@@ -157,15 +159,23 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
 
       console.log(filterValue);
 
+      if (!filterValue) return true;
+
       const responseStatus = filterValue.responseStatus;
       const reservationLabels = filterValue.reservationLabels;
       const conversationTags = filterValue.conversationTags;
 
       if (responseStatus) {
         // if the array is empty (no filter applied), return true (show all rows)
-        if (responseStatus.length == 0) return true;
+        if (responseStatus.length === 0) return true;
 
-        if (!responseStatus.includes(row.original.replyStatus)) {
+        // Check if at least one of the selected labels is present in the row's reservation labels
+        const hasAnySelectedStatus = responseStatus.some((status) =>
+          row.original.replyStatus?.includes(status)
+        );
+
+        // If none of the selected labels are present, return false
+        if (!hasAnySelectedStatus) {
           return false;
         }
       }
