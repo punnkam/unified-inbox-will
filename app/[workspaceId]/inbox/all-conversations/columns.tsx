@@ -307,6 +307,19 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
       );
     },
   },
+  // These columns are hidden table columns used for condintional attributes
+  {
+    header: "Reservation labels",
+  },
+  {
+    header: "Conversation tags",
+  },
+  {
+    header: "Listing name",
+  },
+  {
+    header: "Assignee",
+  },
   {
     accessorKey: "assigneeGroup",
     header: "AssigneeGroup",
@@ -325,18 +338,5 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
         </div>
       );
     },
-  },
-  // These columns are hidden table columns used for condintional attributes
-  {
-    header: "Reservation labels",
-  },
-  {
-    header: "Conversation tags",
-  },
-  {
-    header: "Listing name",
-  },
-  {
-    header: "Assignee",
   },
 ];

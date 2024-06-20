@@ -1155,28 +1155,33 @@ export type AllFilters = {
   reservationLabels?: {
     column: "messages";
     title: "Reservation labels";
+    icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
     options: string[];
   };
   conversationTags?: {
     column: "messages";
     title: "Conversation tags";
+    icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
     options: string[];
   };
   // listingGroups: ListingGroup[];
   responseStatus?: {
     column: "messages";
     title: "Response status";
+    icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
     options: ("Needs Reply" | "Response Available" | "Done")[];
   };
   tripStatus?: {
     column: "user";
     title: "Trip status";
+    icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
     options: ("Current" | "Inquiry" | "Past" | "Cancelled")[];
   };
 
   checkInDate?: {
     column: "user";
     title: "Check-in date";
+    icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
     options: (
       | "Current Guest"
       | "Checking in today"
@@ -1190,26 +1195,31 @@ export const allFilters: AllFilters = {
   reservationLabels: {
     column: "messages",
     title: "Reservation labels",
+    icon: AnchorIcon,
     options: fakeReservationLabels.map((label) => label.name),
   },
   conversationTags: {
     column: "messages",
     title: "Conversation tags",
+    icon: HeartsIcon,
     options: fakeConversationTags.map((tag) => tag.name),
   },
   responseStatus: {
     column: "messages",
     title: "Response status",
+    icon: Dice1Icon,
     options: ["Needs Reply", "Response Available", "Done"],
   },
   tripStatus: {
     column: "user",
     title: "Trip status",
+    icon: HourGlassIcon,
     options: ["Current", "Inquiry", "Past", "Cancelled"],
   },
   checkInDate: {
     column: "user",
     title: "Check-in date",
+    icon: GlobeIcon,
     options: [
       "Current Guest",
       "Checking in today",
@@ -1220,9 +1230,6 @@ export const allFilters: AllFilters = {
 };
 
 export type appliedFilters = {
-  reservationLabels?: string[];
-  conversationTags?: string[];
-  responseStatus?: ("Needs Reply" | "Response Available" | "Done")[];
   tripStatus?: ("Current" | "Inquiry" | "Past" | "Cancelled")[];
   checkInDate?: (
     | "Current Guest"
@@ -1230,4 +1237,7 @@ export type appliedFilters = {
     | "Checking in tomorrow"
     | "Checking in this week"
   )[];
+  reservationLabels?: string[];
+  conversationTags?: string[];
+  responseStatus?: ("Needs Reply" | "Response Available" | "Done")[];
 };

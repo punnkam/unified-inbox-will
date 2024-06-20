@@ -32,7 +32,7 @@ import { SearchIcon, XIcon } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs-inbox";
 import { SidebarTrigger } from "../SidebarTrigger";
 import { cn } from "@/lib/utils";
-import { ConversationTag, ReservationLabel } from "@/lib/types";
+import { ConversationTag } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import {
   TagIcon,
@@ -45,6 +45,7 @@ import {
   ContrastIcon,
 } from "@/components/icons/CustomIcons";
 import { FilterPopover } from "./FilterPopover";
+import { FilterTags } from "./filterTags";
 
 const AttributesIconMap = {
   "Reservation labels": <ContrastIcon className="size-4 text-icon-tertiary" />,
@@ -97,6 +98,21 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  // Function to clear all filters except for search and tab
+  const clearFilters = () => {
+    columnFilters.forEach((filter) => {
+      if (
+        // guestName comes from search
+        // messageStatus is the tab
+        filter.id === "guestName" ||
+        filter.id === "messageStatus"
+      ) {
+        return;
+      }
+      table.getColumn(filter.id)?.setFilterValue(null);
+    });
+  };
+
   const handleTabChange = (tab: "Todo" | "Done") => {
     table.getColumn("messageStatus")?.setFilterValue(tab);
   };
@@ -104,6 +120,24 @@ export function DataTable<TData, TValue>({
   // Helper for filtering dropdown
   const handleFilterChange = (columnId: string, value: string) => {
     table.getColumn(columnId)?.setFilterValue(value);
+  };
+
+  // Function to remove filter tag groups
+  const removeFilter = (columnId: string, filterKey: string) => {
+    setColumnFilters((prevFilters) =>
+      prevFilters.map((filter) => {
+        if (
+          filter.id === columnId &&
+          typeof filter.value === "object" &&
+          filter.value !== null
+        ) {
+          const newValue = { ...(filter.value as Record<string, unknown>) };
+          delete newValue[filterKey];
+          return { ...filter, value: newValue };
+        }
+        return filter;
+      })
+    );
   };
 
   return (
@@ -249,24 +283,17 @@ export function DataTable<TData, TValue>({
               setColumnFilters={(columnId, value) =>
                 handleFilterChange(columnId, value)
               }
-              clearFilters={() => {
-                columnFilters.forEach((filter) => {
-                  if (
-                    // guestName comes from search
-                    // messageStatus is the tab
-                    filter.id === "guestName" ||
-                    filter.id === "messageStatus"
-                  ) {
-                    return;
-                  }
-                  table.getColumn(filter.id)?.setFilterValue(null);
-                });
-              }}
+              clearFilters={clearFilters}
             />
           </div>
         </div>
       </div>
       <div className="bg-primary shadow-inner">
+        <FilterTags
+          columnFilters={table.getState().columnFilters}
+          clearFilters={clearFilters}
+          removeFilter={removeFilter}
+        />
         <Table>
           <TableHeader hidden>
             {table.getHeaderGroups().map((headerGroup) => (

@@ -23,6 +23,7 @@ import { XIcon } from "lucide-react";
 import { allFilters, AllFilters } from "@/lib/types";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
+import { IconComponent } from "@/components/icons/IconComponent";
 
 export const FilterPopover = ({
   columnFilters,
@@ -84,18 +85,34 @@ export const FilterPopover = ({
           <div className="p-2">
             {Object.keys(allFilters).map((filter) => {
               const filterKey = filter as keyof AllFilters;
-              const title = allFilters[filterKey]?.title || "filter";
+              const title = allFilters[filterKey]!.title;
+              const icon = allFilters[filterKey]!.icon;
               const filterOptions = allFilters[filterKey]?.options || [];
               const columnId = allFilters[filterKey]?.column || "";
+
+              const currentFilter = columnFilters.find(
+                (appliedFilter) => appliedFilter.id === columnId
+              )?.value as { [key: string]: string[] };
+              const selectedCount = currentFilter?.[filterKey]?.length || 0;
 
               return (
                 <DropdownMenuSub key={filterKey}>
                   <DropdownMenuSubTrigger className="p-2 hover:bg-hover rounded-md cursor-pointer">
-                    <div className="flex items-center gap-2">
-                      <span className="size-6 flex items-center justify-center">
-                        <FilterLinesIcon className="text-icon-secondary size-[15px]" />
-                      </span>
-                      <p className="text-subtitle-xs">{title}</p>
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center gap-2">
+                        <span className="size-6 flex items-center justify-center">
+                          <IconComponent
+                            icon={icon}
+                            classNames="text-icon-tertiary size-[15px]"
+                          />
+                        </span>
+                        <p className="text-subtitle-xs">{title}</p>
+                      </div>
+                      {selectedCount > 0 && (
+                        <span className="text-subtitle-2xs text-disabled">
+                          {selectedCount} selected
+                        </span>
+                      )}
                     </div>
                   </DropdownMenuSubTrigger>
                   <DropdownMenuSubContent className="p-0">
@@ -108,10 +125,6 @@ export const FilterPopover = ({
                         <CommandEmpty>No label found.</CommandEmpty>
                         <CommandGroup>
                           {filterOptions.map((label) => {
-                            const currentFilter = columnFilters.find(
-                              (appliedFilter) => appliedFilter.id === columnId
-                            )?.value as { [key: string]: string[] };
-
                             const checked =
                               currentFilter?.[filterKey]?.includes(label);
 
