@@ -961,7 +961,7 @@ export type Conversation = {
   channel: "Slack" | "WhatsApp";
   reservationLabelIds?: number[];
   conversationTagIds?: number[];
-  replyStatus: "Needs Reply" | "Response Available" | "Default" | "Done";
+  replyStatus: "Needs Reply" | "Response Available" | "Done";
   tripListingId: number;
   tripStatus: "Current" | "Inquiry" | "Past" | "Cancelled";
   tripStartDate: string;
@@ -1023,7 +1023,7 @@ export const fakeConversationData: Conversation[] = [
     channel: "Slack",
     reservationLabelIds: [2, 1],
     conversationTagIds: [1],
-    replyStatus: "Default",
+    replyStatus: "Needs Reply",
     tripListingId: 2,
     tripStatus: "Current",
     tripStartDate: "2024-01-01",

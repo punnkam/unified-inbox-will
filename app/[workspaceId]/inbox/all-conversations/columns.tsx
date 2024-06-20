@@ -9,7 +9,7 @@ import { IconComponent } from "@/components/icons/IconComponent";
 import { ResponseStatus } from "./ResponseStatus";
 import {
   CheckCircleIcon,
-  CornerUpLeftIcon,
+  MessageNotificationIcon,
   SlackIcon,
   WhatsAppIcon,
 } from "@/components/icons/CustomIcons";
@@ -99,9 +99,8 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
                   (replyStatus === "Done" && (
                     <CheckCircleIcon className="text-success w-3 h-3" />
                   )) ||
-                  ((replyStatus == "Needs Reply" ||
-                    replyStatus == "Default") && (
-                    <CornerUpLeftIcon className="text-tertiary w-3 h-3" />
+                  (replyStatus == "Needs Reply" && (
+                    <MessageNotificationIcon className="text-icon-error-alt w-3 h-3" />
                   ))
                 }
               />

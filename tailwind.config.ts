@@ -62,6 +62,7 @@ const config = {
           brand: "#10275B",
           disabled: "#D1D5DB",
           error: "#EF4444",
+          "error-alt": "#FB7185",
           success: "#10B981",
           active: "#3B82F6",
           "primary-inverse": "#FFFFFF",

@@ -1508,3 +1508,24 @@ export const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const MessageNotificationIcon = (
+  props: React.SVGProps<SVGSVGElement>
+) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={13}
+    height={12}
+    fill="none"
+    viewBox="0 0 13 12"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.167}
+      d="M6.829 1.271A4.959 4.959 0 0 0 2.59 7.793c.063.187.095.28.1.353a.524.524 0 0 1-.016.19c-.017.07-.057.142-.135.288l-.954 1.766c-.137.252-.205.378-.19.475.014.085.064.16.137.204.084.051.226.036.511.007l2.987-.309c.09-.01.136-.014.177-.012.04.001.07.005.109.014.04.01.09.029.192.068a4.959 4.959 0 0 0 6.72-4.172m-.492-4.902a1.75 1.75 0 1 1-2.475 2.474 1.75 1.75 0 0 1 2.475-2.474Z"
+    />
+  </svg>
+);
