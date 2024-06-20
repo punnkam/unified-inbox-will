@@ -102,7 +102,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="flex flex-col bg-primary-subtle">
-      <div className="flex flex-col gap-[28px] px-8 pt-8 pb-3">
+      <div className="flex flex-col gap-[28px] px-8 pt-8 pb-3 border-b border-primary">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <SidebarTrigger />
@@ -238,7 +238,7 @@ export function DataTable<TData, TValue>({
           </DropdownMenu>
         </div>
       </div>
-      <div className="bg-primary">
+      <div className="bg-primary shadow-inner">
         <Table>
           <TableHeader hidden>
             {table.getHeaderGroups().map((headerGroup) => (
