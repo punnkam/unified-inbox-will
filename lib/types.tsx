@@ -129,6 +129,13 @@ export type Workspace = {
   };
 };
 
+export type ListingGroup = {
+  id: number;
+  workspaceId: number;
+  name: string;
+  color: "bg-cyan-500" | "bg-lime-500" | "bg-amber-500";
+};
+
 export type Listing = {
   id: number;
   workspaceId: number;
@@ -1088,7 +1095,29 @@ export type ConversationWithAllData = Conversation & {
   tripListing: Listing;
   reservationLabels?: (ReservationLabel | undefined)[];
   conversationTags?: (ConversationTag | undefined)[];
+  listingGroupData?: ListingGroup;
 };
+
+export const fakeListingGroupsData: ListingGroup[] = [
+  {
+    id: 1,
+    workspaceId: 1,
+    name: "Joshua Tree",
+    color: "bg-amber-500",
+  },
+  {
+    id: 2,
+    workspaceId: 1,
+    name: "Group 2",
+    color: "bg-lime-500",
+  },
+  {
+    id: 3,
+    workspaceId: 1,
+    name: "Group 3",
+    color: "bg-amber-500",
+  },
+];
 
 export const apiConversationData: ConversationWithAllData[] =
   fakeConversationData.map((conversation) => {
@@ -1104,10 +1133,15 @@ export const apiConversationData: ConversationWithAllData[] =
       fakeConversationTags.find((tag) => tag.id === tagId)
     );
 
+    const listingGroupData = fakeListingGroupsData.find(
+      (group) => group.id === tripListing.group
+    );
+
     return {
       ...conversation,
       tripListing,
       reservationLabels,
       conversationTags,
+      listingGroupData,
     };
   });

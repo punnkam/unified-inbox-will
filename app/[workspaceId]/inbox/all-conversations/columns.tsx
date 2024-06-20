@@ -32,7 +32,7 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
             </p>
             <div className="flex items-center gap-2">
               <ResponseStatus type={row.original.tripStatus} />
-              <div className="flex items-center gap-2 text-secondary text-body-xs">
+              <div className="flex items-center gap-2 text-secondary text-body-xs text-nowrap">
                 <p>
                   {new Date(row.original.tripStartDate).toLocaleDateString(
                     "en-US",
@@ -143,11 +143,17 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
     enableHiding: false,
     cell: ({ table, row }) => {
       return (
-        <div className="flex flex-col gap-2 ">
+        <div className="flex flex-col gap-2">
           {table.getColumn("Listing name")?.getIsVisible() && (
             <p className="text-body-sm truncate">
               {row.original.tripListing.title}
             </p>
+          )}
+          {row.original.listingGroupData && (
+            <LabelsTagsGroups
+              text={row.original.listingGroupData.name}
+              color={row.original.listingGroupData.color}
+            />
           )}
           {/* add group here */}
         </div>
