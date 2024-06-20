@@ -962,6 +962,7 @@ export type Conversation = {
   reservationLabelIds?: number[];
   conversationTagIds?: number[];
   replyStatus: "Needs Reply" | "Response Available" | "Done";
+  unread: boolean;
   tripListingId: number;
   tripStatus: "Current" | "Inquiry" | "Past" | "Cancelled";
   tripStartDate: string;
@@ -994,6 +995,7 @@ export const fakeConversationData: Conversation[] = [
     reservationLabelIds: [1],
     conversationTagIds: [3],
     replyStatus: "Response Available",
+    unread: true,
     tripListingId: 1,
     tripStatus: "Cancelled",
     tripStartDate: "2024-01-01",
@@ -1024,6 +1026,7 @@ export const fakeConversationData: Conversation[] = [
     reservationLabelIds: [2, 1],
     conversationTagIds: [1],
     replyStatus: "Needs Reply",
+    unread: true,
     tripListingId: 2,
     tripStatus: "Current",
     tripStartDate: "2024-01-01",
@@ -1054,6 +1057,7 @@ export const fakeConversationData: Conversation[] = [
     reservationLabelIds: [3],
     conversationTagIds: [2],
     replyStatus: "Needs Reply",
+    unread: false,
     tripListingId: 3,
     tripStatus: "Inquiry",
     tripStartDate: "2024-01-01",
@@ -1084,6 +1088,7 @@ export const fakeConversationData: Conversation[] = [
     reservationLabelIds: [3],
     conversationTagIds: [2],
     replyStatus: "Done",
+    unread: false,
     tripListingId: 3,
     tripStatus: "Past",
     tripStartDate: "2024-01-01",

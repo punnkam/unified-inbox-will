@@ -22,11 +22,14 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex gap-3 items-center w-full">
+          {row.original.unread && (
+            <div className="size-2 bg-brand rounded-full absolute top-1/2 left-[16px] " />
+          )}
           <div className="relative">
             <img
               src={row.original.guestImage}
               alt={row.original.guestName}
-              className="w-10 h-10 rounded-full object-cover"
+              className="size-10 min-w-10 min-h-10 rounded-full object-cover"
             />
             {row.original.channel === "WhatsApp" ? (
               <div className="absolute bottom-0 -right-1 w-4 h-4 flex items-center justify-center bg-[#27D045] rounded-full">

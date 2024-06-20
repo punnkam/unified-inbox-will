@@ -267,6 +267,7 @@ export function DataTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell, index) => (
                     <TableCell
+                      className="relative"
                       key={cell.id}
                       style={{
                         textAlign:
