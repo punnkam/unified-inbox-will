@@ -24,7 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn("bg-primary h-screen text-primary", inter.className)}>
+      <body
+        className={cn(
+          "bg-primary h-screen max-w-screen text-primary",
+          inter.className
+        )}
+      >
         {children}
       </body>
       <Toaster />
