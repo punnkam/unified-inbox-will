@@ -10,6 +10,8 @@ import { ResponseStatus } from "./ResponseStatus";
 import {
   CheckCircleIcon,
   CornerUpLeftIcon,
+  SlackIcon,
+  WhatsAppIcon,
 } from "@/components/icons/CustomIcons";
 
 export const columns: ColumnDef<ConversationWithAllData>[] = [
@@ -20,11 +22,22 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex gap-3 items-center w-full">
-          <img
-            src={row.original.guestImage}
-            alt={row.original.guestName}
-            className="w-10 h-10 rounded-full object-cover"
-          />
+          <div className="relative">
+            <img
+              src={row.original.guestImage}
+              alt={row.original.guestName}
+              className="w-10 h-10 rounded-full object-cover"
+            />
+            {row.original.channel === "WhatsApp" ? (
+              <div className="absolute bottom-0 -right-1 w-4 h-4 flex items-center justify-center bg-[#27D045] rounded-full">
+                <WhatsAppIcon className="size-[10px] text-primary-inverse" />
+              </div>
+            ) : (
+              <div className="absolute bottom-0 -right-1 w-4 h-4 flex items-center justify-center bg-primary rounded-full">
+                <SlackIcon className="size-[10px]" />
+              </div>
+            )}
+          </div>
 
           <div className="flex flex-col gap-2">
             <p className="text-subtitle-sm text-nowrap">
