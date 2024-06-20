@@ -139,7 +139,7 @@ const config = {
         secondary: "#4B5563",
         tertiary: "#71717A",
         brand: "#10275B",
-        disabled: "#D1D5DB",
+        disabled: "#A1A1AA",
         placeholder: "#A1A1AA",
         error: "#EF4444",
         "error-bold": "#DC2626",
