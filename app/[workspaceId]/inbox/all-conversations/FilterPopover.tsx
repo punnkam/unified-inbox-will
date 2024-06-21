@@ -128,59 +128,35 @@ export const FilterPopover = ({
                         <CommandGroup>
                           {filterOptions.map((label) => {
                             // check if label & data is an object (ugly typscript)
-                            if (
-                              typeof label !== "string" &&
-                              typeof label !== "number"
-                            ) {
-                              const checked = (
-                                currentFilter?.[filterKey] as FilterValue[]
-                              )?.some((item: FilterValue) => {
-                                if (
-                                  typeof item !== "string" &&
-                                  typeof item !== "number"
-                                ) {
-                                  return item.id === label.id;
+
+                            const checked = (
+                              currentFilter?.[filterKey] as FilterValue[]
+                            )?.some((item: FilterValue) => {
+                              if (
+                                typeof item !== "string" &&
+                                typeof item !== "number"
+                              ) {
+                                return item.id === label.id;
+                              }
+                            });
+
+                            return (
+                              <CommandItem
+                                key={label.id!}
+                                value={label.name}
+                                onSelect={() =>
+                                  handleSelect(filterKey, label, columnId)
                                 }
-                              });
-
-                              return (
-                                <CommandItem
-                                  key={label.id!}
-                                  value={label.name}
-                                  onSelect={() =>
-                                    handleSelect(filterKey, label, columnId)
-                                  }
-                                  className="flex items-center gap-2 text-subtitle-sm hover:cursor-pointer"
-                                >
-                                  <Checkbox checked={checked} />
-                                  <img
-                                    src={label.image}
-                                    className="w-6 h-6 rounded-full object-cover"
-                                  />
-                                  {label.name}
-                                </CommandItem>
-                              );
-                            }
-
-                            // just a string for label
-                            if (typeof label == "string") {
-                              const checked =
-                                currentFilter?.[filterKey]?.includes(label);
-
-                              return (
-                                <CommandItem
-                                  key={label}
-                                  value={label}
-                                  onSelect={() =>
-                                    handleSelect(filterKey, label, columnId)
-                                  }
-                                  className="flex items-center gap-2 text-subtitle-sm hover:cursor-pointer"
-                                >
-                                  <Checkbox checked={checked} />
-                                  {label}
-                                </CommandItem>
-                              );
-                            }
+                                className="flex items-center gap-2 text-subtitle-sm hover:cursor-pointer"
+                              >
+                                <Checkbox checked={checked} />
+                                <img
+                                  src={label.image}
+                                  className="w-6 h-6 rounded-full object-cover"
+                                />
+                                {label.name}
+                              </CommandItem>
+                            );
                           })}
                         </CommandGroup>
                       </CommandList>

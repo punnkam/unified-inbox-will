@@ -1163,13 +1163,14 @@ export const apiConversationData: ConversationWithAllData[] =
   });
 
 export type optionWithData = {
-  id: number;
+  id?: number;
   name: string;
   image?: string;
   icon?: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
+  pinned?: boolean;
 };
 
-export type FilterValue = string | number | optionWithData;
+export type FilterValue = optionWithData;
 
 export type AllFilters = {
   reservationLabels?: {
@@ -1217,35 +1218,52 @@ export const allFilters: AllFilters = {
     column: "messages",
     title: "Reservation labels",
     icon: AnchorIcon,
-    options: fakeReservationLabels.map((label) => label.name),
+    options: fakeReservationLabels.map((label) => ({
+      id: label.id,
+      name: label.name,
+      pinned: false,
+    })),
   },
   conversationTags: {
     column: "messages",
     title: "Conversation tags",
     icon: HeartsIcon,
-    options: fakeConversationTags.map((tag) => tag.name),
+    options: fakeConversationTags.map((tag) => ({
+      id: tag.id,
+      name: tag.name,
+      pinned: false,
+    })),
   },
   responseStatus: {
     column: "messages",
     title: "Response status",
     icon: Dice1Icon,
-    options: ["Needs Reply", "Response Available", "Done"],
+    options: [
+      { id: 1, name: "Needs Reply", pinned: true },
+      { id: 2, name: "Response Available", pinned: false },
+      { id: 3, name: "Done", pinned: false },
+    ],
   },
   tripStatus: {
     column: "user",
     title: "Trip status",
     icon: HourGlassIcon,
-    options: ["Current", "Inquiry", "Past", "Cancelled"],
+    options: [
+      { id: 1, name: "Current", pinned: false },
+      { id: 2, name: "Inquiry", pinned: false },
+      { id: 3, name: "Past", pinned: true },
+      { id: 4, name: "Cancelled", pinned: false },
+    ],
   },
   checkInDate: {
     column: "user",
     title: "Check-in date",
     icon: GlobeIcon,
     options: [
-      "Current Guest",
-      "Checking in today",
-      "Checking in tomorrow",
-      "Checking in this week",
+      { id: 1, name: "Current Guest", pinned: false },
+      { id: 2, name: "Checking in today", pinned: true },
+      { id: 3, name: "Checking in tomorrow", pinned: false },
+      { id: 4, name: "Checking in this week", pinned: true },
     ],
   },
   assignee: {
@@ -1253,27 +1271,18 @@ export const allFilters: AllFilters = {
     title: "Assignee",
     icon: ShieldIcon,
     options: fakeMembersData.map((member) => ({
+      id: member.id!,
       name: member.name!,
       image: member.image!,
-      id: member.id!,
     })),
   },
 };
 
 export type appliedFilters = {
-  tripStatus?: ("Current" | "Inquiry" | "Past" | "Cancelled")[];
-  checkInDate?: (
-    | "Current Guest"
-    | "Checking in today"
-    | "Checking in tomorrow"
-    | "Checking in this week"
-  )[];
+  tripStatus?: FilterValue[];
+  checkInDate?: FilterValue[];
   reservationLabels?: string[];
   conversationTags?: string[];
-  responseStatus?: ("Needs Reply" | "Response Available" | "Done")[];
-  assignee?: {
-    name: string;
-    image: string;
-    id: number;
-  }[];
+  responseStatus?: FilterValue[];
+  assignee?: FilterValue[];
 };

@@ -35,7 +35,11 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
         // if the array is empty (no filter applied), return true (show all rows)
         if (tripStatus.length === 0) return true;
 
-        if (!tripStatus.includes(row.original.tripStatus)) {
+        const hasAnySelectedTripStatus = tripStatus.some(
+          (selectedStatus) => selectedStatus.name == row.original.tripStatus
+        );
+
+        if (!hasAnySelectedTripStatus) {
           return false;
         }
       }
@@ -59,7 +63,7 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
           const tomorrowEnd = new Date(tomorrow).setHours(23, 59, 59, 999);
           const endOfWeekEnd = new Date(endOfWeek).setHours(23, 59, 59, 999);
 
-          switch (option) {
+          switch (option.name) {
             case "Current Guest":
               return tripStartDate <= todayEnd && tripEndDate >= todayStart;
 
@@ -171,7 +175,7 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
 
         // Check if at least one of the selected labels is present in the row's reservation labels
         const hasAnySelectedStatus = responseStatus.some((status) =>
-          row.original.replyStatus?.includes(status)
+          row.original.replyStatus?.includes(status.name)
         );
 
         // If none of the selected labels are present, return false
