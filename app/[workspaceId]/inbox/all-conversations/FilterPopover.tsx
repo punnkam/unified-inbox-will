@@ -20,10 +20,12 @@ import {
 import { ColumnFiltersState } from "@tanstack/react-table";
 import { FilterLinesIcon } from "@/components/icons/CustomIcons";
 import { XIcon } from "lucide-react";
-import { allFilters, AllFilters } from "@/lib/types";
+import { allFilters, AllFilters, FilterValue } from "@/lib/types";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { IconComponent } from "@/components/icons/IconComponent";
+
+type FilterValues = { [key: string]: FilterValue[] };
 
 export const FilterPopover = ({
   columnFilters,
@@ -38,12 +40,12 @@ export const FilterPopover = ({
 
   const handleSelect = (
     filter: keyof AllFilters,
-    label: string,
+    label: FilterValue,
     columnId: string
   ) => {
     // Find the current filter parent and current values for the column
     const currentFilter = columnFilters.find((f) => f.id === columnId)
-      ?.value as { [key: string]: string[] } | undefined;
+      ?.value as FilterValues | undefined;
 
     // Determine the new filter values for the specified filter parent
     const newFilterValues = currentFilter?.[filter]
@@ -87,12 +89,12 @@ export const FilterPopover = ({
               const filterKey = filter as keyof AllFilters;
               const title = allFilters[filterKey]!.title;
               const icon = allFilters[filterKey]!.icon;
-              const filterOptions = allFilters[filterKey]?.options || [];
               const columnId = allFilters[filterKey]?.column || "";
+              const filterOptions = allFilters[filterKey]!.options;
 
               const currentFilter = columnFilters.find(
                 (appliedFilter) => appliedFilter.id === columnId
-              )?.value as { [key: string]: string[] };
+              )?.value as FilterValues;
               const selectedCount = currentFilter?.[filterKey]?.length || 0;
 
               return (
@@ -125,22 +127,60 @@ export const FilterPopover = ({
                         <CommandEmpty>No label found.</CommandEmpty>
                         <CommandGroup>
                           {filterOptions.map((label) => {
-                            const checked =
-                              currentFilter?.[filterKey]?.includes(label);
-
-                            return (
-                              <CommandItem
-                                key={label}
-                                value={label}
-                                onSelect={() =>
-                                  handleSelect(filterKey, label, columnId)
+                            // check if label & data is an object (ugly typscript)
+                            if (
+                              typeof label !== "string" &&
+                              typeof label !== "number"
+                            ) {
+                              const checked = (
+                                currentFilter?.[filterKey] as FilterValue[]
+                              )?.some((item: FilterValue) => {
+                                if (
+                                  typeof item !== "string" &&
+                                  typeof item !== "number"
+                                ) {
+                                  return item.id === label.id;
                                 }
-                                className="flex items-center gap-2 text-subtitle-sm hover:cursor-pointer"
-                              >
-                                <Checkbox checked={checked} />
-                                {label}
-                              </CommandItem>
-                            );
+                              });
+
+                              return (
+                                <CommandItem
+                                  key={label.id!}
+                                  value={label.name}
+                                  onSelect={() =>
+                                    handleSelect(filterKey, label, columnId)
+                                  }
+                                  className="flex items-center gap-2 text-subtitle-sm hover:cursor-pointer"
+                                >
+                                  <Checkbox checked={checked} />
+                                  <img
+                                    src={label.image}
+                                    className="w-6 h-6 rounded-full object-cover"
+                                  />
+                                  {label.name}
+                                </CommandItem>
+                              );
+                            }
+
+                            // just a string for label
+                            if (typeof label == "string") {
+                              const checked =
+                                currentFilter?.[filterKey]?.includes(label);
+
+                              return (
+                                <CommandItem
+                                  key={label}
+                                  value={label}
+                                  onSelect={() =>
+                                    handleSelect(filterKey, label, columnId)
+                                  }
+                                  className="flex items-center gap-2 text-subtitle-sm hover:cursor-pointer"
+                                >
+                                  <Checkbox checked={checked} />
+                                  {label}
+                                </CommandItem>
+                              );
+                            }
                           })}
                         </CommandGroup>
                       </CommandList>

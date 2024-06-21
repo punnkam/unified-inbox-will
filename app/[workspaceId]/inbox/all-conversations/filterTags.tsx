@@ -1,5 +1,5 @@
 import { ColumnFiltersState } from "@tanstack/react-table";
-import { AllFilters, allFilters } from "@/lib/types";
+import { AllFilters, FilterValue, allFilters } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { XIcon } from "lucide-react";
 import { IconComponent } from "@/components/icons/IconComponent";
@@ -52,12 +52,18 @@ export const FilterTags = ({
       <div className={`flex gap-2 flex-wrap px-9 pt-4 pb-2`}>
         {columnFilters.map((filter) => {
           if (typeof filter.value === "object" && filter.value !== null) {
-            return Object.entries(filter.value).map(([key, value]) => {
-              if (value.length > 0) {
+            return Object.entries(
+              filter.value as { [key in keyof AllFilters]: FilterValue[] }
+            ).map(([key, values]) => {
+              if (values.length > 0) {
                 const displayValue =
-                  value.length > 2
-                    ? `${value.length} selected`
-                    : value.join(", ");
+                  values.length > 2
+                    ? `${values.length} selected`
+                    : values
+                        .map((value) =>
+                          typeof value === "object" ? value.name : value
+                        )
+                        .join(", ");
                 return (
                   <Tag
                     key={filter.id}

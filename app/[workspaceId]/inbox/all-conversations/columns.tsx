@@ -324,17 +324,41 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
     accessorKey: "assigneeGroup",
     header: "AssigneeGroup",
     enableHiding: false,
+    filterFn: (row, columnId, filterValue: appliedFilters) => {
+      // filterValue: { assigneeGroup: [{optionWithData}, {optionWithData}, {optionWithData}] }
+
+      if (!filterValue) return true;
+
+      const assigneeGroup = filterValue.assignee;
+
+      if (assigneeGroup) {
+        // if the array is empty (no filter applied), return true (show all rows)
+        if (assigneeGroup.length === 0) return true;
+
+        // Check if at least one of the selected members is the current row's assignee
+        const hasAnySelectedLabel = assigneeGroup.some(
+          (member) => member.id == row.original.assigneeData?.id!
+        );
+
+        // If none of the selected labels are present, return false
+        if (!hasAnySelectedLabel) {
+          return false;
+        }
+      }
+
+      return true;
+    },
     cell: ({ table, row }) => {
       return (
         <div className="flex items-end flex-col gap-2">
           {table.getColumn("Assignee")?.getIsVisible() && (
             <img
-              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt="team"
+              src={row.original.assigneeData?.image}
+              alt={row.original.assigneeData?.name}
               className="w-5 h-5 rounded-full object-cover"
             />
           )}
-          <p className=" text-body-xs font-normal text-nowrap">12:47 am</p>
+          <p className="text-body-xs font-normal text-nowrap">12:47 am</p>
         </div>
       );
     },

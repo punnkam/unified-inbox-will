@@ -967,6 +967,7 @@ export type Conversation = {
   tripStatus: "Current" | "Inquiry" | "Past" | "Cancelled";
   tripStartDate: string;
   tripEndDate: string;
+  assignedTo?: number;
 };
 
 export const fakeConversationData: Conversation[] = [
@@ -1000,6 +1001,7 @@ export const fakeConversationData: Conversation[] = [
     tripStatus: "Cancelled",
     tripStartDate: "2024-06-22",
     tripEndDate: "2024-01-08",
+    assignedTo: 1,
   },
   {
     id: 2,
@@ -1031,6 +1033,7 @@ export const fakeConversationData: Conversation[] = [
     tripStatus: "Current",
     tripStartDate: "2024-06-20",
     tripEndDate: "2024-01-08",
+    assignedTo: 2,
   },
   {
     id: 3,
@@ -1062,6 +1065,7 @@ export const fakeConversationData: Conversation[] = [
     tripStatus: "Inquiry",
     tripStartDate: "2024-06-25",
     tripEndDate: "2024-01-08",
+    assignedTo: 3,
   },
   {
     id: 3,
@@ -1093,6 +1097,7 @@ export const fakeConversationData: Conversation[] = [
     tripStatus: "Past",
     tripStartDate: "2024-06-21",
     tripEndDate: "2024-01-08",
+    assignedTo: 3,
   },
 ];
 
@@ -1101,6 +1106,7 @@ export type ConversationWithAllData = Conversation & {
   reservationLabels?: (ReservationLabel | undefined)[];
   conversationTags?: (ConversationTag | undefined)[];
   listingGroupData?: ListingGroup;
+  assigneeData?: Member;
 };
 
 export const fakeListingGroupsData: ListingGroup[] = [
@@ -1142,52 +1148,67 @@ export const apiConversationData: ConversationWithAllData[] =
       (group) => group.id === tripListing.group
     );
 
+    const assigneeData = fakeMembersData.find(
+      (member) => member.id === conversation.assignedTo
+    );
+
     return {
       ...conversation,
       tripListing,
       reservationLabels,
       conversationTags,
       listingGroupData,
+      assigneeData,
     };
   });
+
+export type optionWithData = {
+  id: number;
+  name: string;
+  image?: string;
+  icon?: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
+};
+
+export type FilterValue = string | number | optionWithData;
 
 export type AllFilters = {
   reservationLabels?: {
     column: "messages";
     title: "Reservation labels";
     icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
-    options: string[];
+    options: FilterValue[];
   };
   conversationTags?: {
     column: "messages";
     title: "Conversation tags";
     icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
-    options: string[];
+    options: FilterValue[];
   };
   // listingGroups: ListingGroup[];
   responseStatus?: {
     column: "messages";
     title: "Response status";
     icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
-    options: ("Needs Reply" | "Response Available" | "Done")[];
+    options: FilterValue[];
   };
   tripStatus?: {
     column: "user";
     title: "Trip status";
     icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
-    options: ("Current" | "Inquiry" | "Past" | "Cancelled")[];
+    options: FilterValue[];
   };
 
   checkInDate?: {
     column: "user";
     title: "Check-in date";
     icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
-    options: (
-      | "Current Guest"
-      | "Checking in today"
-      | "Checking in tomorrow"
-      | "Checking in this week"
-    )[];
+    options: FilterValue[];
+  };
+  assignee?: {
+    column: "assigneeGroup";
+    title: "Assignee";
+    icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
+    options: FilterValue[];
   };
 };
 
@@ -1227,6 +1248,16 @@ export const allFilters: AllFilters = {
       "Checking in this week",
     ],
   },
+  assignee: {
+    column: "assigneeGroup",
+    title: "Assignee",
+    icon: ShieldIcon,
+    options: fakeMembersData.map((member) => ({
+      name: member.name!,
+      image: member.image!,
+      id: member.id!,
+    })),
+  },
 };
 
 export type appliedFilters = {
@@ -1240,4 +1271,9 @@ export type appliedFilters = {
   reservationLabels?: string[];
   conversationTags?: string[];
   responseStatus?: ("Needs Reply" | "Response Available" | "Done")[];
+  assignee?: {
+    name: string;
+    image: string;
+    id: number;
+  }[];
 };
