@@ -1281,8 +1281,8 @@ export const allFilters: AllFilters = {
 export type appliedFilters = {
   tripStatus?: FilterValue[];
   checkInDate?: FilterValue[];
-  reservationLabels?: string[];
-  conversationTags?: string[];
+  reservationLabels?: FilterValue[];
+  conversationTags?: FilterValue[];
   responseStatus?: FilterValue[];
   assignee?: FilterValue[];
 };

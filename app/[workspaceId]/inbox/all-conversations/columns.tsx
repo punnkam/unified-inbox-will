@@ -161,13 +161,15 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
       // filterValue: { responseStatus: ["Response Available"] }
       //reservationStatus: ["label1", "label2"]
 
-      console.log(filterValue);
+      // console.log(filterValue);
 
       if (!filterValue) return true;
 
       const responseStatus = filterValue.responseStatus;
       const reservationLabels = filterValue.reservationLabels;
       const conversationTags = filterValue.conversationTags;
+
+      console.log(reservationLabels);
 
       if (responseStatus) {
         // if the array is empty (no filter applied), return true (show all rows)
@@ -191,7 +193,7 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
         // Check if at least one of the selected labels is present in the row's reservation labels
         const hasAnySelectedLabel = reservationLabels.some((label) =>
           row.original.reservationLabels?.some(
-            (reservationLabel) => reservationLabel?.name === label
+            (reservationLabel) => reservationLabel?.id === label.id
           )
         );
 
@@ -208,7 +210,7 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
         // Check if at least one of the selected tags is present in the row's conversation tags
         const hasAnySelectedTag = conversationTags.some((tag) =>
           row.original.conversationTags?.some(
-            (conversationTag) => conversationTag?.name === tag
+            (conversationTag) => conversationTag?.id === tag.id
           )
         );
 
