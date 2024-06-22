@@ -1,5 +1,6 @@
 import Link from "next/link";
 import cn from "classnames";
+import { colorMap } from "@/lib/types";
 
 export const InboxSideBarOption = ({
   path,
@@ -8,6 +9,8 @@ export const InboxSideBarOption = ({
   icon,
   image,
   count,
+  color,
+  emoji,
 }: {
   path: string;
   name: string;
@@ -16,6 +19,7 @@ export const InboxSideBarOption = ({
   image?: string;
   emoji?: string;
   count?: number;
+  color?: keyof typeof colorMap;
 }) => {
   return (
     <Link href={path}>
@@ -26,6 +30,10 @@ export const InboxSideBarOption = ({
         )}
       >
         <div className="text-subtitle-sm flex items-center gap-2">
+          {color && (
+            <div className={cn(`w-2 h-2 rounded-full`, colorMap[color])}></div>
+          )}
+
           {icon && (
             <div
               className={cn(
@@ -35,6 +43,12 @@ export const InboxSideBarOption = ({
             >
               {icon}
             </div>
+          )}
+
+          {emoji && (
+            <span role="img" aria-label="Emoji" className="text-body-2xs">
+              {String.fromCodePoint(parseInt(emoji, 16))}
+            </span>
           )}
 
           {image && (

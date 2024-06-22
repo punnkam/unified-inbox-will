@@ -129,11 +129,17 @@ export type Workspace = {
   };
 };
 
+export const colorMap = {
+  cyan: "bg-cyan-600",
+  amber: "bg-amber-500",
+  green: "bg-lime-500",
+};
+
 export type ListingGroup = {
   id: number;
   workspaceId: number;
   name: string;
-  color: "cyan" | "green" | "amber";
+  color: keyof typeof colorMap;
 };
 
 export type Listing = {

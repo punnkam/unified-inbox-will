@@ -17,6 +17,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { fakeListingGroupsData, fakeReservationLabels } from "@/lib/types";
 
 export const InboxSidebar = () => {
   const pathname = usePathname();
@@ -81,27 +82,17 @@ export const InboxSidebar = () => {
               </AccordionTrigger>
               <AccordionContent className="pb-0 pt-2">
                 {/* Using reglar emojis for now - implement this however */}
-                <InboxSideBarOption
-                  path={`/${workspaceId}/inbox/reservation-labels/big-ticket-guests`}
-                  name="🐋 Big ticket guests"
-                  selected={pathname.startsWith(
-                    `/${workspaceId}/inbox/reservation-labels/big-ticket-guests`
-                  )}
-                />
-                <InboxSideBarOption
-                  path={`/${workspaceId}/inbox/reservation-labels/family`}
-                  name="👨‍👩‍👦 Family"
-                  selected={pathname.startsWith(
-                    `/${workspaceId}/inbox/reservation-labels/family`
-                  )}
-                />
-                <InboxSideBarOption
-                  path={`/${workspaceId}/inbox/reservation-labels/couples`}
-                  name="❤️ Couples"
-                  selected={pathname.startsWith(
-                    `/${workspaceId}/inbox/reservation-labels/couples`
-                  )}
-                />
+                {fakeReservationLabels.map((label) => (
+                  <InboxSideBarOption
+                    key={label.id}
+                    path={`/${workspaceId}/inbox/reservation-labels/res_${label.id}`}
+                    name={label.name}
+                    selected={pathname.startsWith(
+                      `/${workspaceId}/inbox/reservation-labels/res_${label.id}`
+                    )}
+                    emoji={label.emojiId}
+                  />
+                ))}
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -111,31 +102,19 @@ export const InboxSidebar = () => {
               <AccordionTrigger className="px-1 rounded-md py-0.5">
                 Listing groups
               </AccordionTrigger>
+
               <AccordionContent className="pb-0 pt-2">
-                <InboxSideBarOption
-                  path={`/${workspaceId}/inbox/listing-groups/joshua-tree`}
-                  name="Joshua Tree"
-                  selected={pathname.startsWith(
-                    `/${workspaceId}/inbox/listing-groups/joshua-tree`
-                  )}
-                  image="https://images.unsplash.com/photo-1509316785289-025f5b846b35?q=80&w=2076&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                />
-                <InboxSideBarOption
-                  path={`/${workspaceId}/inbox/listing-groups/big-bear`}
-                  name="Big Bear"
-                  selected={pathname.startsWith(
-                    `/${workspaceId}/inbox/listing-groups/big-bear`
-                  )}
-                  image="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                />
-                <InboxSideBarOption
-                  path={`/${workspaceId}/inbox/listing-groups/san-francisco`}
-                  name="San Francisco"
-                  selected={pathname.startsWith(
-                    `/${workspaceId}/inbox/listing-groups/san-francisco`
-                  )}
-                  image="https://images.unsplash.com/photo-1554107136-57b138ea99df?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                />
+                {fakeListingGroupsData.map((group) => (
+                  <InboxSideBarOption
+                    key={group.id}
+                    path={`/${workspaceId}/inbox/listing-groups/group_${group.id}`}
+                    name={group.name}
+                    selected={pathname.startsWith(
+                      `/${workspaceId}/inbox/listing-groups/group_${group.id}`
+                    )}
+                    color={group.color}
+                  />
+                ))}
               </AccordionContent>
             </AccordionItem>
           </Accordion>
