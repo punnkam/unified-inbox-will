@@ -24,8 +24,6 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
     header: "User",
     enableHiding: false,
     filterFn: (row, columnId, filterValue: appliedFilters) => {
-      console.log(filterValue);
-
       if (!filterValue) return true;
 
       const tripStatus = filterValue.tripStatus;
@@ -158,18 +156,11 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
     header: "Messages",
     enableHiding: false,
     filterFn: (row, columnId, filterValue: appliedFilters) => {
-      // filterValue: { responseStatus: ["Response Available"] }
-      //reservationStatus: ["label1", "label2"]
-
-      // console.log(filterValue);
-
       if (!filterValue) return true;
 
       const responseStatus = filterValue.responseStatus;
       const reservationLabels = filterValue.reservationLabels;
       const conversationTags = filterValue.conversationTags;
-
-      console.log(reservationLabels);
 
       if (responseStatus) {
         // if the array is empty (no filter applied), return true (show all rows)
