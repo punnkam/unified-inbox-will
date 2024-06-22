@@ -1,6 +1,12 @@
 import { HostAiIcon } from "@/components/icons/CustomIcons";
 import { cn } from "@/lib/utils";
 
+const colorMap = {
+  cyan: "bg-cyan-600",
+  amber: "bg-amber-500",
+  green: "bg-lime-500",
+};
+
 export const LabelsTagsGroups = ({
   text,
   avatar,
@@ -14,7 +20,7 @@ export const LabelsTagsGroups = ({
   icon?: React.ReactNode;
   emoji?: string;
   showHosty?: boolean;
-  color?: string;
+  color?: keyof typeof colorMap;
 }) => {
   return (
     <div className="flex items-center gap-1 rounded-full px-2 py-1 border border-secondary-hover w-fit">
@@ -36,7 +42,9 @@ export const LabelsTagsGroups = ({
         </span>
       )}
 
-      {color && <div className={cn(`w-2 h-2 rounded-full`, color)}></div>}
+      {color && (
+        <div className={cn(`w-2 h-2 rounded-full`, colorMap[color])}></div>
+      )}
 
       <p className="text-body-xs">{text}</p>
     </div>

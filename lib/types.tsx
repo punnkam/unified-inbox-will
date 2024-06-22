@@ -133,7 +133,7 @@ export type ListingGroup = {
   id: number;
   workspaceId: number;
   name: string;
-  color: "bg-cyan-500" | "bg-lime-500" | "bg-amber-500";
+  color: "cyan" | "green" | "amber";
 };
 
 export type Listing = {
@@ -551,7 +551,7 @@ export const fakeListingsData: Listing[] = [
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     autopilot: true,
-    group: 3,
+    group: 1,
   },
   {
     id: 2,
@@ -594,7 +594,7 @@ export const fakeListingsData: Listing[] = [
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     autopilot: false,
-    group: 2,
+    group: 3,
   },
   {
     id: 6,
@@ -1093,7 +1093,7 @@ export const fakeConversationData: Conversation[] = [
     conversationTagIds: [2],
     replyStatus: "Done",
     unread: false,
-    tripListingId: 3,
+    tripListingId: 5,
     tripStatus: "Past",
     tripStartDate: "2024-06-21",
     tripEndDate: "2024-01-08",
@@ -1113,20 +1113,20 @@ export const fakeListingGroupsData: ListingGroup[] = [
   {
     id: 1,
     workspaceId: 1,
-    name: "Joshua Tree",
-    color: "bg-amber-500",
+    name: "Big Bear",
+    color: "cyan",
   },
   {
     id: 2,
     workspaceId: 1,
-    name: "Group 2",
-    color: "bg-lime-500",
+    name: "Joshua Tree",
+    color: "green",
   },
   {
     id: 3,
     workspaceId: 1,
-    name: "Group 3",
-    color: "bg-amber-500",
+    name: "San Fransisco",
+    color: "amber",
   },
 ];
 
