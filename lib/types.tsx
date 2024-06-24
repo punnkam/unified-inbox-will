@@ -19,6 +19,7 @@ import {
   WindIcon,
   ZapSquareIcon,
   UmbrellaIcon,
+  User03Icon,
 } from "@/components/icons/CustomIcons";
 
 export type Member = {
@@ -552,7 +553,7 @@ export const fakeListingsData: Listing[] = [
     id: 1,
     workspaceId: 1,
     active: true,
-    title: "Cozy 2 Bedroom Apartment",
+    title: "Luxurious Beachfront Villa",
     address: "1234 Elm Street",
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -563,7 +564,7 @@ export const fakeListingsData: Listing[] = [
     id: 2,
     workspaceId: 1,
     active: true,
-    title: "Modern 1 Bedroom Apartment",
+    title: "Charming Mountain Cabin",
     address: "5678 Oak Street",
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -573,7 +574,7 @@ export const fakeListingsData: Listing[] = [
     id: 3,
     workspaceId: 1,
     active: false,
-    title: "Spacious 3 Bedroom House",
+    title: "Secluded Countryside Retreat",
     address: "91011 Pine Street",
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -584,7 +585,7 @@ export const fakeListingsData: Listing[] = [
     id: 4,
     workspaceId: 1,
     active: false,
-    title: "Spacious 3 Bedroom House",
+    title: "Modern City Loft",
     address: "91011 Pine Street",
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -595,7 +596,7 @@ export const fakeListingsData: Listing[] = [
     id: 5,
     workspaceId: 1,
     active: false,
-    title: "Spacious 3 Bedroom House",
+    title: "Rustic Lakeside Cottage",
     address: "91011 Pine Street",
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -606,7 +607,7 @@ export const fakeListingsData: Listing[] = [
     id: 6,
     workspaceId: 1,
     active: false,
-    title: "Spacious 3 Bedroom House",
+    title: "Mountain View Chalet",
     address: "91011 Pine Street",
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -1039,7 +1040,7 @@ export const fakeConversationData: Conversation[] = [
     tripStatus: "Current",
     tripStartDate: "2024-06-20",
     tripEndDate: "2024-01-08",
-    assignedTo: 2,
+    assignedTo: -1,
   },
   {
     id: 3,
@@ -1174,6 +1175,7 @@ export type optionWithData = {
   image?: string;
   icon?: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
   pinned?: boolean;
+  groupId?: number;
 };
 
 export type FilterValue = optionWithData;
@@ -1214,6 +1216,18 @@ export type AllFilters = {
   assignee?: {
     column: "assigneeGroup";
     title: "Assignee";
+    icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
+    options: FilterValue[];
+  };
+  listings?: {
+    column: "listing";
+    title: "Listings";
+    icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
+    options: FilterValue[];
+  };
+  listingGroups?: {
+    column: "listing";
+    title: "Listing Groups";
     icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
     options: FilterValue[];
   };
@@ -1276,10 +1290,35 @@ export const allFilters: AllFilters = {
     column: "assigneeGroup",
     title: "Assignee",
     icon: ShieldIcon,
-    options: fakeMembersData.map((member) => ({
-      id: member.id!,
-      name: member.name!,
-      image: member.image!,
+    options: [
+      { id: -1, name: "Unassigned", icon: User03Icon }, // Adding Unassigned option
+
+      ...fakeMembersData.map((member) => ({
+        id: member.id!,
+        name: member.name!,
+        image: member.image!,
+      })),
+    ],
+  },
+  listings: {
+    column: "listing",
+    title: "Listings",
+    icon: AnchorIcon,
+    options: fakeListingsData.map((listing) => ({
+      id: listing.id,
+      name: listing.title,
+      image: listing.image,
+      groupId: listing.group,
+    })),
+  },
+  listingGroups: {
+    column: "listing",
+    title: "Listing Groups",
+    icon: AnchorIcon,
+    options: fakeListingGroupsData.map((group) => ({
+      id: group.id,
+      name: group.name,
+      color: group.color,
     })),
   },
 };
@@ -1291,4 +1330,6 @@ export type appliedFilters = {
   conversationTags?: FilterValue[];
   responseStatus?: FilterValue[];
   assignee?: FilterValue[];
+  listings?: FilterValue[];
+  listingGroups?: FilterValue[];
 };

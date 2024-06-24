@@ -16,6 +16,7 @@ import {
   MessageNotificationIcon,
   SlackIcon,
   WhatsAppIcon,
+  AccountCircleIcon,
 } from "@/components/icons/CustomIcons";
 
 export const columns: ColumnDef<ConversationWithAllData>[] = [
@@ -285,6 +286,37 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
     accessorKey: "listing",
     header: "Listing",
     enableHiding: false,
+    filterFn: (row, columnId, filterValue: appliedFilters) => {
+      if (!filterValue) return true;
+
+      const listingGroup = filterValue.listingGroups;
+      const listings = filterValue.listings;
+
+      if (listingGroup && listingGroup.length > 0) {
+        // Check if the listing is in the listing group
+        const isInListingGroup = listingGroup.some(
+          (group) => group.id == row.original.listingGroupData?.id!
+        );
+
+        if (isInListingGroup) {
+          return true;
+        }
+      }
+
+      if (listings && listings.length > 0) {
+        // Check if the listing is selected
+        const isSelectedListing = listings.some(
+          (listing) => listing.id == row.original.tripListing.id!
+        );
+
+        if (isSelectedListing) {
+          return true;
+        }
+      }
+
+      // If no filters are applied or the listing is not in the group or selected, return false
+      return false;
+    },
     cell: ({ table, row }) => {
       return (
         <div className="flex flex-col gap-2">
@@ -299,7 +331,6 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
               color={row.original.listingGroupData.color}
             />
           )}
-          {/* add group here */}
         </div>
       );
     },
@@ -333,8 +364,11 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
         if (assigneeGroup.length === 0) return true;
 
         // Check if at least one of the selected members is the current row's assignee
+        // or if the row is unassigned (-1 id)
         const hasAnySelectedLabel = assigneeGroup.some(
-          (member) => member.id == row.original.assigneeData?.id!
+          (member) =>
+            member.id == row.original.assigneeData?.id! ||
+            (member.id == -1 && !row.original.assigneeData)
         );
 
         // If none of the selected labels are present, return false
@@ -346,6 +380,21 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
       return true;
     },
     cell: ({ table, row }) => {
+      // unassigned
+      if (!row.original.assigneeData) {
+        return (
+          <div className="flex items-end flex-col gap-2">
+            {table.getColumn("Assignee")?.getIsVisible() && (
+              <div className="w-5 h-5 rounded-full bg-primary-subtle flex items-center justify-center">
+                <AccountCircleIcon className="text-icon-secondary size-4" />
+              </div>
+            )}
+            <p className="text-body-xs font-normal text-nowrap">12:47 am</p>
+          </div>
+        );
+      }
+
+      // assigned
       return (
         <div className="flex items-end flex-col gap-2">
           {table.getColumn("Assignee")?.getIsVisible() && (

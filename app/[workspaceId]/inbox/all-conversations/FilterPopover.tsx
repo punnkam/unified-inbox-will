@@ -19,8 +19,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ColumnFiltersState } from "@tanstack/react-table";
 import { FilterLinesIcon, Pin02Icon } from "@/components/icons/CustomIcons";
-import { XIcon } from "lucide-react";
-import { allFilters, AllFilters, FilterValue } from "@/lib/types";
+import { XIcon, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  allFilters,
+  AllFilters,
+  FilterValue,
+  optionWithData,
+} from "@/lib/types";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useEffect, useState } from "react";
 import { IconComponent } from "@/components/icons/IconComponent";
@@ -40,6 +45,12 @@ export const FilterPopover = ({
   const [pinned, setPinned] = useState<FilterValues>({});
   const [filterTitles, setFilterTitles] = useState<{ [key: string]: string }>(
     {}
+  );
+  const [listingsStep, setListingsStep] = useState<"listings" | "group">(
+    "listings"
+  );
+  const [selectedGroup, setSelectedGroup] = useState<optionWithData | null>(
+    null
   );
 
   // Find/Set the pinned filters on mount - to avoid infinate rerenders
@@ -63,6 +74,7 @@ export const FilterPopover = ({
     setFilterTitles(titles);
   }, []);
 
+  // function to handle selecting a filter value nad updating states
   const handleSelect = (
     filter: keyof AllFilters,
     label: FilterValue,
@@ -142,7 +154,7 @@ export const FilterPopover = ({
                   </div>
                 </div>
               </DropdownMenuSubTrigger>
-              <DropdownMenuSubContent className="p-0">
+              <DropdownMenuSubContent className="p-0 w-[248px]">
                 <Command>
                   <CommandInput
                     placeholder={`Search pinned`}
@@ -163,7 +175,6 @@ export const FilterPopover = ({
                                   {filterTitles[pinnedCategory]}
                                 </p>
                                 {filters.map((filter) => {
-                                  // Get the column Id
                                   const columnId =
                                     allFilters[
                                       pinnedCategory as keyof AllFilters
@@ -174,7 +185,6 @@ export const FilterPopover = ({
                                       appliedFilter.id === columnId
                                   )?.value as FilterValues;
 
-                                  // Check if the filter is already applied
                                   const isChecked = currentFilter?.[
                                     pinnedCategory as keyof FilterValues
                                   ]?.some((item) => item.id === filter.id);
@@ -183,24 +193,37 @@ export const FilterPopover = ({
                                     <CommandItem
                                       key={filter.id!}
                                       value={filter.name}
-                                      onSelect={() =>
-                                        handleSelect(
-                                          pinnedCategory as keyof AllFilters,
-                                          filter,
-                                          columnId
-                                        )
-                                      }
-                                      className="flex items-center justify-between"
+                                      className="flex items-center justify-between gap-2 p-0"
                                     >
-                                      <div className="flex items-center gap-2 text-subtitle-sm hover:cursor-pointer">
-                                        <Checkbox checked={isChecked} />
+                                      <div className="flex items-center gap-2 text-subtitle-xs hover:cursor-pointer truncate p-2">
+                                        <Checkbox
+                                          checked={isChecked}
+                                          onCheckedChange={() => {
+                                            handleSelect(
+                                              pinnedCategory as keyof AllFilters,
+                                              filter,
+                                              columnId
+                                            );
+                                          }}
+                                        />
+                                        {filter.icon && (
+                                          <div className="flex items-center justify-center size-6">
+                                            <IconComponent
+                                              icon={filter.icon}
+                                              classNames="text-icon-tertiary size-[15px]"
+                                            />
+                                          </div>
+                                        )}
+
                                         {filter.image && (
                                           <img
                                             src={filter.image}
                                             className="w-6 h-6 rounded-full object-cover"
                                           />
                                         )}
-                                        {filter.name}
+                                        <p className="truncate">
+                                          {filter.name}
+                                        </p>
                                       </div>
                                       <Pin02Icon
                                         className="text-icon-tertiary size-[15px] hover:cursor-pointer fill-icon-tertiary"
@@ -236,6 +259,285 @@ export const FilterPopover = ({
               )?.value as FilterValues;
               const selectedCount = currentFilter?.[filterKey]?.length || 0;
 
+              // dont show the listing groups in popover
+              if (filterKey === "listingGroups") {
+                return null;
+              }
+
+              if (filterKey === "listings") {
+                return (
+                  <DropdownMenuSub
+                    key={filterKey}
+                    // when closed/opened reset state to start back at all listings
+                    onOpenChange={() => {
+                      setListingsStep("listings");
+                      setSelectedGroup(null);
+                    }}
+                  >
+                    <DropdownMenuSubTrigger className="p-2 hover:bg-hover rounded-md cursor-pointer">
+                      <div className="flex items-center justify-between w-full">
+                        <div className="flex items-center gap-2">
+                          <span className="size-6 flex items-center justify-center">
+                            <IconComponent
+                              icon={icon}
+                              classNames="text-icon-tertiary size-[15px]"
+                            />
+                          </span>
+                          <p className="text-subtitle-xs">{title}</p>
+                        </div>
+                        {selectedCount > 0 && (
+                          <span className="text-subtitle-2xs text-disabled">
+                            {selectedCount} selected
+                          </span>
+                        )}
+                      </div>
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuSubContent className="p-0 w-[248px]">
+                      {listingsStep === "listings" ? (
+                        // if we are in the listings step, show all listings
+                        <Command>
+                          <CommandInput
+                            placeholder={`Search ${title.toLowerCase()}`}
+                            autoFocus={true}
+                          />
+                          <CommandList>
+                            <CommandEmpty>No filter found.</CommandEmpty>
+                            <CommandGroup>
+                              <div
+                                className="text-subtitle-xs hover:bg-hover w-full p-2 cursor-pointer rounded-md flex items-center justify-between gap-2 h-10"
+                                onClick={() => {
+                                  setListingsStep("group");
+                                  setSelectedGroup(null);
+                                }}
+                              >
+                                <div>Listing groups</div>
+                                <ChevronRight className="h-4 w-4 text-icon-disabled" />
+                              </div>
+
+                              {filterOptions.map((label) => {
+                                const isChecked = (item: FilterValue) => {
+                                  if (
+                                    typeof item === "object" &&
+                                    typeof label === "object"
+                                  ) {
+                                    return item.id === label.id;
+                                  }
+                                  return item === label;
+                                };
+                                const checked =
+                                  currentFilter?.[filterKey]?.some(isChecked);
+
+                                return (
+                                  <CommandItem
+                                    key={label.id!}
+                                    value={label.name}
+                                    className="flex items-center justify-between group gap-2"
+                                  >
+                                    <div className="flex items-center gap-2 text-subtitle-xs truncate">
+                                      <Checkbox
+                                        checked={checked}
+                                        onCheckedChange={() =>
+                                          handleSelect(
+                                            filterKey,
+                                            label,
+                                            columnId
+                                          )
+                                        }
+                                      />
+                                      {label.icon && (
+                                        <div className="flex items-center justify-center size-6">
+                                          <IconComponent
+                                            icon={label.icon}
+                                            classNames="text-icon-tertiary size-[15px]"
+                                          />
+                                        </div>
+                                      )}
+
+                                      {label.image && (
+                                        <img
+                                          src={label.image}
+                                          className="w-6 h-6 min-h-6 min-w-6 rounded-full object-cover"
+                                        />
+                                      )}
+                                      <p className="truncate">{label.name}</p>
+                                    </div>
+                                    <Pin02Icon
+                                      className={`${
+                                        pinned[filterKey]?.some(
+                                          (item) => item.id === label.id
+                                        )
+                                          ? "fill-icon-tertiary"
+                                          : "hidden group-hover:block"
+                                      } text-icon-tertiary size-[15px] hover:cursor-pointer`}
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handlePinToggle(filterKey, label);
+                                      }}
+                                    />
+                                  </CommandItem>
+                                );
+                              })}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      ) : !selectedGroup ? (
+                        // if we are in the group step (and no group selected), show all groups
+                        <Command>
+                          <CommandInput
+                            placeholder={`Search groups`}
+                            autoFocus={true}
+                          />
+                          <CommandList>
+                            <CommandEmpty>No filter found.</CommandEmpty>
+                            <CommandGroup>
+                              <div
+                                className="text-subtitle-xs hover:bg-hover w-full p-2 cursor-pointer rounded-md flex items-center gap-2 h-10"
+                                onClick={() => setListingsStep("listings")}
+                              >
+                                <ChevronLeft className="h-4 w-4 text-icon-disabled" />
+                                <div>All Listings</div>
+                              </div>
+                              {allFilters.listingGroups?.options.map(
+                                (group) => (
+                                  <CommandItem
+                                    key={group.id}
+                                    value={group.name}
+                                    onSelect={() => {
+                                      setListingsStep("group");
+                                      setSelectedGroup(group);
+                                    }}
+                                    className="flex items-center justify-between gap-2 text-subtitle-xs truncate cursor-pointer"
+                                  >
+                                    <div className="flex items-center gap-2 text-subtitle-xs truncate">
+                                      <Checkbox
+                                        checked={currentFilter?.listingGroups?.some(
+                                          (item) => item.id === group.id
+                                        )}
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          handleSelect(
+                                            "listingGroups",
+                                            group,
+                                            columnId
+                                          );
+                                        }}
+                                      />
+
+                                      {group.icon && (
+                                        <div className="flex items-center justify-center size-6">
+                                          <IconComponent
+                                            icon={group.icon}
+                                            classNames="text-icon-tertiary size-[15px]"
+                                          />
+                                        </div>
+                                      )}
+                                      <p className="truncate">{group.name}</p>
+                                    </div>
+                                    <ChevronRight className="h-4 w-4 text-icon-disabled" />
+                                  </CommandItem>
+                                )
+                              )}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      ) : (
+                        // if we are in the group step with a group selected, show listings in group
+                        <Command>
+                          <CommandInput
+                            placeholder={`Search ${selectedGroup.name}`}
+                            autoFocus={true}
+                          />
+                          <CommandList>
+                            <CommandEmpty>No filter found.</CommandEmpty>
+                            <CommandGroup>
+                              <div
+                                className="text-subtitle-xs hover:bg-hover w-full p-2 cursor-pointer rounded-md flex items-center gap-2 h-10"
+                                onClick={() => {
+                                  setListingsStep("group");
+                                  setSelectedGroup(null);
+                                }}
+                              >
+                                <ChevronLeft className="h-4 w-4 text-icon-disabled" />
+                                <div>All groups</div>
+                              </div>
+
+                              {filterOptions
+                                .filter((label) => {
+                                  if (selectedGroup === null) return true;
+                                  return label.groupId === selectedGroup.id;
+                                })
+                                .map((label) => {
+                                  const isChecked = (item: FilterValue) => {
+                                    if (
+                                      typeof item === "object" &&
+                                      typeof label === "object"
+                                    ) {
+                                      return item.id === label.id;
+                                    }
+                                    return item === label;
+                                  };
+                                  const checked =
+                                    currentFilter?.[filterKey]?.some(isChecked);
+
+                                  return (
+                                    <CommandItem
+                                      key={label.id!}
+                                      value={label.name}
+                                      className="flex items-center justify-between group gap-2 "
+                                    >
+                                      <div className="flex items-center gap-2 text-subtitle-xs truncate">
+                                        <Checkbox
+                                          checked={checked}
+                                          onCheckedChange={() =>
+                                            handleSelect(
+                                              filterKey,
+                                              label,
+                                              columnId
+                                            )
+                                          }
+                                        />
+                                        {label.icon && (
+                                          <div className="flex items-center justify-center size-6">
+                                            <IconComponent
+                                              icon={label.icon}
+                                              classNames="text-icon-tertiary size-[15px]"
+                                            />
+                                          </div>
+                                        )}
+
+                                        {label.image && (
+                                          <img
+                                            src={label.image}
+                                            className="w-6 h-6 min-h-6 min-w-6 rounded-full object-cover"
+                                          />
+                                        )}
+                                        <p className="truncate">{label.name}</p>
+                                      </div>
+                                      <Pin02Icon
+                                        className={`${
+                                          pinned[filterKey]?.some(
+                                            (item) => item.id === label.id
+                                          )
+                                            ? "fill-icon-tertiary"
+                                            : "hidden group-hover:block"
+                                        } text-icon-tertiary size-[15px] hover:cursor-pointer`}
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          handlePinToggle(filterKey, label);
+                                        }}
+                                      />
+                                    </CommandItem>
+                                  );
+                                })}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      )}
+                    </DropdownMenuSubContent>
+                  </DropdownMenuSub>
+                );
+              }
+
               return (
                 <DropdownMenuSub key={filterKey}>
                   <DropdownMenuSubTrigger className="p-2 hover:bg-hover rounded-md cursor-pointer">
@@ -256,7 +558,7 @@ export const FilterPopover = ({
                       )}
                     </div>
                   </DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent className="p-0">
+                  <DropdownMenuSubContent className="p-0 w-[248px]">
                     <Command>
                       <CommandInput
                         placeholder={`Search ${title.toLowerCase()}`}
@@ -282,20 +584,31 @@ export const FilterPopover = ({
                               <CommandItem
                                 key={label.id!}
                                 value={label.name}
-                                onSelect={() =>
-                                  handleSelect(filterKey, label, columnId)
-                                }
-                                className="flex items-center justify-between group"
+                                className="flex items-center justify-between group gap-2"
                               >
-                                <div className="flex items-center gap-2 text-subtitle-sm hover:cursor-pointer">
-                                  <Checkbox checked={checked} />
+                                <div className="flex items-center gap-2 text-subtitle-xs truncate">
+                                  <Checkbox
+                                    checked={checked}
+                                    onCheckedChange={() =>
+                                      handleSelect(filterKey, label, columnId)
+                                    }
+                                  />
+                                  {label.icon && (
+                                    <div className="flex items-center justify-center size-6">
+                                      <IconComponent
+                                        icon={label.icon}
+                                        classNames="text-icon-tertiary size-[15px]"
+                                      />
+                                    </div>
+                                  )}
+
                                   {label.image && (
                                     <img
                                       src={label.image}
                                       className="w-6 h-6 rounded-full object-cover"
                                     />
                                   )}
-                                  {label.name}
+                                  <p className="truncate">{label.name}</p>
                                 </div>
                                 <Pin02Icon
                                   className={`${
