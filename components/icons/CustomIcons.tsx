@@ -1640,3 +1640,16 @@ export const NotificationBox = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const ThickCarrotIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={6}
+    height={4}
+    fill="none"
+    viewBox="0 0 6 4"
+    {...props}
+  >
+    <path fill="currentColor" d="m0 4 3-4 3 4H0Z" />
+  </svg>
+);

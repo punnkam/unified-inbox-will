@@ -24,6 +24,7 @@ import {
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { ThickCarrotIcon } from "@/components/icons/CustomIcons";
 
 export const Badge = ({
   subscipton,
@@ -33,6 +34,7 @@ export const Badge = ({
   badge,
   icon,
   iconType,
+  percentage,
 }: {
   subscipton?: string;
   id: number;
@@ -41,6 +43,7 @@ export const Badge = ({
   badge?: string;
   icon?: number;
   iconType?: ConversationTagType["color"];
+  percentage?: number;
 }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -132,7 +135,26 @@ export const Badge = ({
         </AlertDialog>
       </div>
       <div>
-        <p className="text-body-5xl">{number}</p>
+        <div className="flex items-center gap-3">
+          <p className="text-body-5xl">{number}</p>
+          {percentage && (
+            <div
+              className={cn(
+                "px-2 py-1 rounded-[12px] flex items-center gap-1 text-subtitle-md",
+                percentage > 0
+                  ? "bg-green-600/10 text-green-600"
+                  : "bg-red-600/10 text-red-600"
+              )}
+            >
+              <ThickCarrotIcon
+                className={cn(
+                  percentage > 0 ? "transform" : "transform -rotate-180"
+                )}
+              />
+              <p>{Math.abs(percentage)}%</p>
+            </div>
+          )}
+        </div>
         <p className="text-body-sm text-tertiary">{subscipton}</p>
       </div>
     </div>

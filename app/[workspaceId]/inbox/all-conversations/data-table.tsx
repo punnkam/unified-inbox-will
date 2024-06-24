@@ -177,6 +177,7 @@ export function DataTable<TData, TValue>({
                 subscipton="Outstanding requests"
                 icon={item.iconId}
                 iconType={item.type.color}
+                percentage={-12}
               />
             );
           })}
