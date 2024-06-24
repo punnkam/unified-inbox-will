@@ -148,7 +148,7 @@ export const FilterPopover = ({
                 <div className="flex items-center justify-between w-full">
                   <div className="flex items-center gap-2">
                     <span className="size-6 flex items-center justify-center">
-                      <Pin02Icon className="text-icon-tertiary size-[15px]" />
+                      <Pin02Icon className="text-icon-tertiary size-3" />
                     </span>
                     <p className="text-subtitle-xs">Pinned filters</p>
                   </div>
@@ -210,7 +210,7 @@ export const FilterPopover = ({
                                           <div className="flex items-center justify-center size-6">
                                             <IconComponent
                                               icon={filter.icon}
-                                              classNames="text-icon-tertiary size-[15px]"
+                                              classNames="text-icon-tertiary size-3"
                                             />
                                           </div>
                                         )}
@@ -226,7 +226,7 @@ export const FilterPopover = ({
                                         </p>
                                       </div>
                                       <Pin02Icon
-                                        className="text-icon-tertiary size-[15px] hover:cursor-pointer fill-icon-tertiary"
+                                        className="text-icon-tertiary size-3 hover:cursor-pointer fill-icon-tertiary"
                                         onClick={(e) => {
                                           e.stopPropagation();
                                           handlePinToggle(
@@ -280,7 +280,7 @@ export const FilterPopover = ({
                           <span className="size-6 flex items-center justify-center">
                             <IconComponent
                               icon={icon}
-                              classNames="text-icon-tertiary size-[15px]"
+                              classNames="text-icon-tertiary size-3"
                             />
                           </span>
                           <p className="text-subtitle-xs">{title}</p>
@@ -348,7 +348,7 @@ export const FilterPopover = ({
                                         <div className="flex items-center justify-center size-6">
                                           <IconComponent
                                             icon={label.icon}
-                                            classNames="text-icon-tertiary size-[15px]"
+                                            classNames="text-icon-tertiary size-3"
                                           />
                                         </div>
                                       )}
@@ -368,7 +368,7 @@ export const FilterPopover = ({
                                         )
                                           ? "fill-icon-tertiary"
                                           : "hidden group-hover:block"
-                                      } text-icon-tertiary size-[15px] hover:cursor-pointer`}
+                                      } text-icon-tertiary size-3 hover:cursor-pointer`}
                                       onClick={(e) => {
                                         e.stopPropagation();
                                         handlePinToggle(filterKey, label);
@@ -427,7 +427,7 @@ export const FilterPopover = ({
                                         <div className="flex items-center justify-center size-6">
                                           <IconComponent
                                             icon={group.icon}
-                                            classNames="text-icon-tertiary size-[15px]"
+                                            classNames="text-icon-tertiary size-3"
                                           />
                                         </div>
                                       )}
@@ -500,7 +500,7 @@ export const FilterPopover = ({
                                           <div className="flex items-center justify-center size-6">
                                             <IconComponent
                                               icon={label.icon}
-                                              classNames="text-icon-tertiary size-[15px]"
+                                              classNames="text-icon-tertiary size-3"
                                             />
                                           </div>
                                         )}
@@ -520,7 +520,7 @@ export const FilterPopover = ({
                                           )
                                             ? "fill-icon-tertiary"
                                             : "hidden group-hover:block"
-                                        } text-icon-tertiary size-[15px] hover:cursor-pointer`}
+                                        } text-icon-tertiary size-3 hover:cursor-pointer`}
                                         onClick={(e) => {
                                           e.stopPropagation();
                                           handlePinToggle(filterKey, label);
@@ -546,7 +546,7 @@ export const FilterPopover = ({
                         <span className="size-6 flex items-center justify-center">
                           <IconComponent
                             icon={icon}
-                            classNames="text-icon-tertiary size-[15px]"
+                            classNames="text-icon-tertiary size-3"
                           />
                         </span>
                         <p className="text-subtitle-xs">{title}</p>
@@ -597,7 +597,7 @@ export const FilterPopover = ({
                                     <div className="flex items-center justify-center size-6">
                                       <IconComponent
                                         icon={label.icon}
-                                        classNames="text-icon-tertiary size-[15px]"
+                                        classNames="text-icon-tertiary size-3"
                                       />
                                     </div>
                                   )}
@@ -617,7 +617,7 @@ export const FilterPopover = ({
                                     )
                                       ? "fill-icon-tertiary"
                                       : "hidden group-hover:block"
-                                  } text-icon-tertiary size-[15px] hover:cursor-pointer`}
+                                  } text-icon-tertiary size-3 hover:cursor-pointer`}
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     handlePinToggle(filterKey, label);
