@@ -1,6 +1,6 @@
 // Helper hook to manage the sidebar state and allow us to toggle it from anywhere in inbox.
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { useWindowSize } from "@/lib/hooks/useWindowSize";
 
 const SidebarContext = createContext<any>(null);
@@ -11,7 +11,14 @@ export const SidebarProvider = ({
   children: React.ReactNode;
 }) => {
   const size = useWindowSize();
-  const [isOpen, setIsOpen] = useState(size.width && size.width > 1024); // default to open on desktop (hide on mobile)
+  const [isOpen, setIsOpen] = useState(false);
+
+  // open sidebar by default on desktop
+  useEffect(() => {
+    if (size.width && size.width > 705 && !isOpen) {
+      setIsOpen(true);
+    }
+  }, [size]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
