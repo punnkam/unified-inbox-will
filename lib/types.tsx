@@ -1307,6 +1307,7 @@ export const allFilters: AllFilters = {
     options: fakeConversationTags.map((tag) => ({
       id: tag.id,
       name: tag.name,
+      icon: fakeIconsData.find((icon) => icon.id === tag.iconId)?.icon,
       pinned: false,
     })),
   },
