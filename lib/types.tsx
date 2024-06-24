@@ -981,7 +981,7 @@ export type Conversation = {
   replyStatus: "Needs Reply" | "Response Available" | "Done";
   unread: boolean;
   tripListingId: number;
-  tripStatus: "Current" | "Inquiry" | "Past" | "Cancelled";
+  reservationStatus: "Current" | "Inquiry" | "Past" | "Cancelled";
   tripStartDate: string;
   tripEndDate: string;
   assignedTo?: number;
@@ -1015,7 +1015,7 @@ export const fakeConversationData: Conversation[] = [
     replyStatus: "Response Available",
     unread: true,
     tripListingId: 1,
-    tripStatus: "Cancelled",
+    reservationStatus: "Cancelled",
     tripStartDate: "2024-06-22",
     tripEndDate: "2024-01-08",
     assignedTo: 1,
@@ -1047,7 +1047,7 @@ export const fakeConversationData: Conversation[] = [
     replyStatus: "Needs Reply",
     unread: true,
     tripListingId: 2,
-    tripStatus: "Current",
+    reservationStatus: "Current",
     tripStartDate: "2024-06-20",
     tripEndDate: "2024-01-08",
     assignedTo: -1,
@@ -1079,7 +1079,7 @@ export const fakeConversationData: Conversation[] = [
     replyStatus: "Needs Reply",
     unread: false,
     tripListingId: 3,
-    tripStatus: "Inquiry",
+    reservationStatus: "Inquiry",
     tripStartDate: "2024-06-25",
     tripEndDate: "2024-01-08",
     assignedTo: 3,
@@ -1111,7 +1111,7 @@ export const fakeConversationData: Conversation[] = [
     replyStatus: "Done",
     unread: false,
     tripListingId: 5,
-    tripStatus: "Past",
+    reservationStatus: "Past",
     tripStartDate: "2024-06-21",
     tripEndDate: "2024-01-08",
     assignedTo: 3,
@@ -1210,9 +1210,9 @@ export type AllFilters = {
     icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
     options: FilterValue[];
   };
-  tripStatus?: {
+  reservationStatus?: {
     column: "user";
-    title: "Trip status";
+    title: "Reservation status";
     icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
     options: FilterValue[];
   };
@@ -1258,10 +1258,9 @@ export const allFilters: AllFilters = {
       })),
     ],
   },
-
-  tripStatus: {
+  reservationStatus: {
     column: "user",
-    title: "Trip status",
+    title: "Reservation status",
     icon: NotificationBox,
     options: [
       { id: 1, name: "Current", pinned: false },
@@ -1335,7 +1334,7 @@ export const allFilters: AllFilters = {
 };
 
 export type appliedFilters = {
-  tripStatus?: FilterValue[];
+  reservationStatus?: FilterValue[];
   checkInDate?: FilterValue[];
   reservationLabels?: FilterValue[];
   conversationTags?: FilterValue[];

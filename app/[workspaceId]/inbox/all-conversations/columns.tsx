@@ -27,7 +27,7 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
     filterFn: (row, columnId, filterValue: appliedFilters) => {
       if (!filterValue) return true;
 
-      const tripStatus = filterValue.tripStatus;
+      const tripStatus = filterValue.reservationStatus;
       const checkInDate = filterValue.checkInDate;
 
       if (tripStatus) {
@@ -35,7 +35,8 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
         if (tripStatus.length === 0) return true;
 
         const hasAnySelectedTripStatus = tripStatus.some(
-          (selectedStatus) => selectedStatus.name == row.original.tripStatus
+          (selectedStatus) =>
+            selectedStatus.name == row.original.reservationStatus
         );
 
         if (!hasAnySelectedTripStatus) {
@@ -119,7 +120,7 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
               {row.original.guestName}
             </p>
             <div className="flex items-center gap-2">
-              <ResponseStatus type={row.original.tripStatus} />
+              <ResponseStatus type={row.original.reservationStatus} />
               <div className="flex items-center gap-2 text-secondary text-body-xs text-nowrap">
                 <p>
                   {new Date(row.original.tripStartDate).toLocaleDateString(
