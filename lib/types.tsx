@@ -20,6 +20,13 @@ import {
   ZapSquareIcon,
   UmbrellaIcon,
   User03Icon,
+  AccountCircleIcon,
+  CalendarIcon,
+  TagIcon,
+  BuildingIcon,
+  NotificationBox,
+  NavigationPointerIcon,
+  CircleIcon,
 } from "@/components/icons/CustomIcons";
 
 export type Member = {
@@ -1234,62 +1241,10 @@ export type AllFilters = {
 };
 
 export const allFilters: AllFilters = {
-  reservationLabels: {
-    column: "messages",
-    title: "Reservation labels",
-    icon: AnchorIcon,
-    options: fakeReservationLabels.map((label) => ({
-      id: label.id,
-      name: label.name,
-      pinned: false,
-    })),
-  },
-  conversationTags: {
-    column: "messages",
-    title: "Conversation tags",
-    icon: HeartsIcon,
-    options: fakeConversationTags.map((tag) => ({
-      id: tag.id,
-      name: tag.name,
-      pinned: false,
-    })),
-  },
-  responseStatus: {
-    column: "messages",
-    title: "Response status",
-    icon: Dice1Icon,
-    options: [
-      { id: 1, name: "Needs Reply", pinned: true },
-      { id: 2, name: "Response Available", pinned: false },
-      { id: 3, name: "Done", pinned: false },
-    ],
-  },
-  tripStatus: {
-    column: "user",
-    title: "Trip status",
-    icon: HourGlassIcon,
-    options: [
-      { id: 1, name: "Current", pinned: false },
-      { id: 2, name: "Inquiry", pinned: false },
-      { id: 3, name: "Past", pinned: true },
-      { id: 4, name: "Cancelled", pinned: false },
-    ],
-  },
-  checkInDate: {
-    column: "user",
-    title: "Check-in date",
-    icon: GlobeIcon,
-    options: [
-      { id: 1, name: "Current Guest", pinned: false },
-      { id: 2, name: "Checking in today", pinned: true },
-      { id: 3, name: "Checking in tomorrow", pinned: false },
-      { id: 4, name: "Checking in this week", pinned: true },
-    ],
-  },
   assignee: {
     column: "assigneeGroup",
     title: "Assignee",
-    icon: ShieldIcon,
+    icon: User03Icon,
     options: [
       { id: -1, name: "Unassigned", icon: User03Icon }, // Adding Unassigned option
 
@@ -1300,10 +1255,63 @@ export const allFilters: AllFilters = {
       })),
     ],
   },
+
+  tripStatus: {
+    column: "user",
+    title: "Trip status",
+    icon: NotificationBox,
+    options: [
+      { id: 1, name: "Current", pinned: false },
+      { id: 2, name: "Inquiry", pinned: false },
+      { id: 3, name: "Past", pinned: true },
+      { id: 4, name: "Cancelled", pinned: false },
+    ],
+  },
+  checkInDate: {
+    column: "user",
+    title: "Check-in date",
+    icon: CalendarIcon,
+    options: [
+      { id: 1, name: "Current Guest", pinned: false },
+      { id: 2, name: "Checking in today", pinned: true },
+      { id: 3, name: "Checking in tomorrow", pinned: false },
+      { id: 4, name: "Checking in this week", pinned: true },
+    ],
+  },
+  responseStatus: {
+    column: "messages",
+    title: "Response status",
+    icon: NavigationPointerIcon,
+    options: [
+      { id: 1, name: "Needs Reply", pinned: true },
+      { id: 2, name: "Response Available", pinned: false },
+      { id: 3, name: "Done", pinned: false },
+    ],
+  },
+  reservationLabels: {
+    column: "messages",
+    title: "Reservation labels",
+    icon: CircleIcon,
+    options: fakeReservationLabels.map((label) => ({
+      id: label.id,
+      name: label.name,
+      pinned: false,
+    })),
+  },
+  conversationTags: {
+    column: "messages",
+    title: "Conversation tags",
+    icon: TagIcon,
+    options: fakeConversationTags.map((tag) => ({
+      id: tag.id,
+      name: tag.name,
+      pinned: false,
+    })),
+  },
   listings: {
     column: "listing",
     title: "Listings",
-    icon: AnchorIcon,
+    icon: BuildingIcon,
     options: fakeListingsData.map((listing) => ({
       id: listing.id,
       name: listing.title,
@@ -1314,7 +1322,7 @@ export const allFilters: AllFilters = {
   listingGroups: {
     column: "listing",
     title: "Listing Groups",
-    icon: AnchorIcon,
+    icon: BuildingIcon,
     options: fakeListingGroupsData.map((group) => ({
       id: group.id,
       name: group.name,
