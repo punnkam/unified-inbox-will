@@ -1653,3 +1653,41 @@ export const ThickCarrotIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <path fill="currentColor" d="m0 4 3-4 3 4H0Z" />
   </svg>
 );
+
+export const Stars01Icon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={16}
+    height={16}
+    fill="none"
+    viewBox="0 0 16 16"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="m4.332 8.667.523 1.046c.177.354.265.53.384.684a2 2 0 0 0 .363.363c.153.118.33.207.684.384l1.046.523-1.046.523c-.354.177-.53.265-.684.383a2 2 0 0 0-.363.363c-.119.154-.207.33-.384.685l-.523 1.046-.523-1.046c-.177-.354-.265-.531-.384-.685a2 2 0 0 0-.363-.363c-.153-.118-.33-.207-.684-.383l-1.046-.523 1.046-.523c.354-.177.53-.266.684-.384a2 2 0 0 0 .363-.363c.119-.154.207-.33.384-.684l.523-1.046ZM9.999 1.333l.785 2.043c.188.489.282.733.429.939.13.182.288.341.47.471.206.146.45.24.94.428L14.664 6l-2.043.786c-.488.188-.733.282-.938.428-.183.13-.342.289-.471.47-.146.206-.24.45-.429.94L10 10.667l-.786-2.043c-.188-.49-.282-.734-.428-.94a2 2 0 0 0-.471-.47c-.206-.146-.45-.24-.939-.428L5.332 6l2.043-.786c.489-.188.733-.282.939-.428a2 2 0 0 0 .47-.471c.147-.206.24-.45.429-.939l.786-2.043Z"
+    />
+  </svg>
+);
+
+export const CornerDownRightIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={14}
+    height={14}
+    fill="none"
+    viewBox="0 0 14 14"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M1.668 1.667V2.6c0 2.24 0 3.36.436 4.216a4 4 0 0 0 1.748 1.748C4.708 9 5.828 9 8.068 9h4.267m0 0L9 5.667M12.335 9 9 12.333"
+    />
+  </svg>
+);

@@ -27,6 +27,9 @@ import {
   NotificationBox,
   NavigationPointerIcon,
   CircleIcon,
+  CornerUpLeftIcon,
+  Stars01Icon,
+  CornerDownRightIcon,
 } from "@/components/icons/CustomIcons";
 
 export type Member = {
@@ -1283,9 +1286,9 @@ export const allFilters: AllFilters = {
     title: "Response status",
     icon: NavigationPointerIcon,
     options: [
-      { id: 1, name: "Needs Reply", pinned: true },
-      { id: 2, name: "Response Available", pinned: false },
-      { id: 3, name: "Done", pinned: false },
+      { id: 1, name: "Needs Reply", pinned: true, icon: CornerUpLeftIcon },
+      { id: 2, name: "Response Available", pinned: false, icon: Stars01Icon },
+      { id: 3, name: "Replied to", pinned: false, icon: CornerDownRightIcon },
     ],
   },
   reservationLabels: {
