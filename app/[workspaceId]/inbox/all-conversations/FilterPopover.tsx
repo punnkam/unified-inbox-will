@@ -193,9 +193,9 @@ export const FilterPopover = ({
                                     <CommandItem
                                       key={filter.id!}
                                       value={filter.name}
-                                      className="flex items-center justify-between gap-2 p-0"
+                                      className="flex items-center justify-between gap-2 p-2"
                                     >
-                                      <div className="flex items-center gap-2 text-subtitle-xs hover:cursor-pointer truncate p-2">
+                                      <div className="flex items-center gap-2 text-subtitle-xs hover:cursor-pointer truncate">
                                         <Checkbox
                                           checked={isChecked}
                                           onCheckedChange={() => {
