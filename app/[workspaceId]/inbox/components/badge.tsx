@@ -54,7 +54,7 @@ export const Badge = ({
   return (
     <div
       className={cn(
-        "p-4 flex flex-col gap-5 border border-primary rounded-xl bg-primary w-full",
+        "p-4 flex flex-col gap-5 border border-primary rounded-xl bg-primary w-full min-w-[25%]",
         loading && "opacity-50"
       )}
     >

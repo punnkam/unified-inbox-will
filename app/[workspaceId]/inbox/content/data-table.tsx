@@ -272,7 +272,7 @@ export function DataTable<TData, TValue>({
           </div>
 
           {/* badges */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 overflow-x-auto py-1">
             {conversationLabels.map((item, index) => {
               return (
                 <Badge
