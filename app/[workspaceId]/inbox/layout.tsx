@@ -33,7 +33,7 @@ function InboxLayoutContent({ children }: { children: React.ReactNode }) {
         </CollapsibleContent>
 
         {/* Page Content */}
-        <div className="h-screen flex-grow bg-primary w-full overflow-y-auto">
+        <div className="h-screen flex-grow bg-primary w-full overflow-y-clip relative">
           {children}
         </div>
       </div>

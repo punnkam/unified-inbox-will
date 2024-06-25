@@ -18,6 +18,7 @@ import {
   WhatsAppIcon,
   AccountCircleIcon,
 } from "@/components/icons/CustomIcons";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export const columns: ColumnDef<ConversationWithAllData>[] = [
   {
@@ -92,28 +93,43 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
 
       return true;
     },
-    cell: ({ row }) => {
+    cell: ({ table, row }) => {
+      const isHovered = table.options.meta?.hoverRow === row.id;
+      const isSelected = row.getIsSelected();
+
       return (
-        <div className="flex gap-3 items-center w-full">
+        <div className={`flex gap-3 items-center w-full`}>
           {row.original.unread && (
             <div className="size-2 bg-brand rounded-full absolute top-1/2 left-[16px] " />
           )}
-          <div className="relative">
-            <img
-              src={row.original.guestImage}
-              alt={row.original.guestName}
-              className="size-10 min-w-10 min-h-10 rounded-full object-cover"
-            />
-            {row.original.channel === "WhatsApp" ? (
-              <div className="absolute bottom-0 -right-1 w-4 h-4 flex items-center justify-center bg-[#27D045] rounded-full">
-                <WhatsAppIcon className="size-[10px] text-primary-inverse" />
-              </div>
-            ) : (
-              <div className="absolute bottom-0 -right-1 w-4 h-4 flex items-center justify-center bg-primary rounded-full">
-                <SlackIcon className="size-[10px]" />
-              </div>
-            )}
-          </div>
+
+          {/* If is hovered or is selected then show the checkbox */}
+          {isHovered || isSelected ? (
+            <div className="flex items-center justify-center size-10">
+              <Checkbox
+                checked={isSelected}
+                onCheckedChange={(value) => row.toggleSelected(!!value)}
+                aria-label="Select row"
+              />
+            </div>
+          ) : (
+            <div className="relative">
+              <img
+                src={row.original.guestImage}
+                alt={row.original.guestName}
+                className="size-10 min-w-10 min-h-10 rounded-full object-cover"
+              />
+              {row.original.channel === "WhatsApp" ? (
+                <div className="absolute bottom-0 -right-1 w-4 h-4 flex items-center justify-center bg-[#27D045] rounded-full">
+                  <WhatsAppIcon className="size-[10px] text-primary-inverse" />
+                </div>
+              ) : (
+                <div className="absolute bottom-0 -right-1 w-4 h-4 flex items-center justify-center bg-primary rounded-full">
+                  <SlackIcon className="size-[10px]" />
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="flex flex-col gap-2">
             <p className="text-subtitle-sm text-nowrap">
