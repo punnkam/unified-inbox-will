@@ -51,7 +51,11 @@ export const FilterTags = ({
     hasTags && (
       <div className={`flex gap-2 flex-wrap px-9 pt-4 pb-2`}>
         {columnFilters.map((filter) => {
-          if (typeof filter.value === "object" && filter.value !== null) {
+          if (
+            typeof filter.value === "object" &&
+            filter.value !== null &&
+            Object.keys(filter.value).length > 0
+          ) {
             return Object.entries(
               filter.value as { [key in keyof AllFilters]: FilterValue[] }
             ).map(([key, values]) => {

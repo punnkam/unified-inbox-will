@@ -25,12 +25,12 @@ import {
   AllFilters,
   FilterValue,
   optionWithData,
+  FilterValues,
 } from "@/lib/types";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useEffect, useState } from "react";
 import { IconComponent } from "@/components/icons/IconComponent";
-
-type FilterValues = { [key: string]: FilterValue[] };
+import { handleSelect } from "@/lib/utils";
 
 export const FilterPopover = ({
   columnFilters,
@@ -73,33 +73,6 @@ export const FilterPopover = ({
     setPinned(pinnedFilters);
     setFilterTitles(titles);
   }, []);
-
-  // function to handle selecting a filter value nad updating states
-  const handleSelect = (
-    filter: keyof AllFilters,
-    label: FilterValue,
-    columnId: string
-  ) => {
-    // Find the current filter parent and current values for the column
-    const currentFilter = columnFilters.find((f) => f.id === columnId)
-      ?.value as FilterValues | undefined;
-
-    // Determine the new filter values for the specified filter parent
-    const newFilterValues = currentFilter?.[filter]
-      ? currentFilter[filter].includes(label)
-        ? // If the value is already included, remove it
-          currentFilter[filter].filter((item) => item !== label)
-        : // If the value is not included, add it
-          [...currentFilter[filter], label]
-      : // If there are no current filters for this filter parent, start a new array with the label
-        [label];
-
-    // Create a new filter object with the updated filter values
-    const newFilter = { [filter]: newFilterValues };
-
-    // Update the column filters by merging the current filter object with the new filter object
-    setColumnFilters(columnId, { ...currentFilter, ...newFilter });
-  };
 
   // updates the local state for pinned filters - you would also want to call a backend here to save the pin
   const handlePinToggle = (filterId: string, label: FilterValue) => {
@@ -199,11 +172,14 @@ export const FilterPopover = ({
                                         <Checkbox
                                           checked={isChecked}
                                           onCheckedChange={() => {
-                                            handleSelect(
-                                              pinnedCategory as keyof AllFilters,
-                                              filter,
-                                              columnId
-                                            );
+                                            handleSelect({
+                                              filter:
+                                                pinnedCategory as keyof AllFilters,
+                                              label: filter,
+                                              columnId,
+                                              columnFilters,
+                                              setColumnFilters,
+                                            });
                                           }}
                                         />
                                         {filter.icon && (
@@ -337,11 +313,13 @@ export const FilterPopover = ({
                                       <Checkbox
                                         checked={checked}
                                         onCheckedChange={() =>
-                                          handleSelect(
-                                            filterKey,
-                                            label,
-                                            columnId
-                                          )
+                                          handleSelect({
+                                            filter: filterKey,
+                                            label: label,
+                                            columnId,
+                                            columnFilters,
+                                            setColumnFilters,
+                                          })
                                         }
                                       />
                                       {label.icon && (
@@ -415,11 +393,13 @@ export const FilterPopover = ({
                                         )}
                                         onClick={(e) => {
                                           e.stopPropagation();
-                                          handleSelect(
-                                            "listingGroups",
-                                            group,
-                                            columnId
-                                          );
+                                          handleSelect({
+                                            filter: "listingGroups",
+                                            label: group,
+                                            columnId,
+                                            columnFilters,
+                                            setColumnFilters,
+                                          });
                                         }}
                                       />
 
@@ -489,11 +469,13 @@ export const FilterPopover = ({
                                         <Checkbox
                                           checked={checked}
                                           onCheckedChange={() =>
-                                            handleSelect(
-                                              filterKey,
-                                              label,
-                                              columnId
-                                            )
+                                            handleSelect({
+                                              filter: filterKey,
+                                              label: label,
+                                              columnId,
+                                              columnFilters,
+                                              setColumnFilters,
+                                            })
                                           }
                                         />
                                         {label.icon && (
@@ -590,7 +572,13 @@ export const FilterPopover = ({
                                   <Checkbox
                                     checked={checked}
                                     onCheckedChange={() =>
-                                      handleSelect(filterKey, label, columnId)
+                                      handleSelect({
+                                        filter: filterKey,
+                                        label: label,
+                                        columnId,
+                                        columnFilters,
+                                        setColumnFilters,
+                                      })
                                     }
                                   />
                                   {label.icon && (

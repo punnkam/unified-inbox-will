@@ -25,6 +25,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ThickCarrotIcon } from "@/components/icons/CustomIcons";
+import { ColumnFiltersState } from "@tanstack/react-table";
+import { handleSelect } from "@/lib/utils";
 
 export const Badge = ({
   subscipton,
@@ -35,6 +37,8 @@ export const Badge = ({
   icon,
   iconType,
   percentage,
+  setColumnFilters,
+  columnFilters,
 }: {
   subscipton?: string;
   id: number;
@@ -44,6 +48,8 @@ export const Badge = ({
   icon?: number;
   iconType?: ConversationTagType["color"];
   percentage?: number;
+  setColumnFilters: (columnId: string, value: any) => void;
+  columnFilters: ColumnFiltersState;
 }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -54,9 +60,21 @@ export const Badge = ({
   return (
     <div
       className={cn(
-        "p-4 flex flex-col gap-5 border border-primary rounded-xl bg-primary w-full min-w-[24%]",
+        "p-4 flex flex-col gap-5 border border-primary rounded-xl bg-primary w-full min-w-[24%] hover:border-secondary cursor-pointer",
         loading && "opacity-50"
       )}
+      onClick={() => {
+        handleSelect({
+          filter: "conversationTags",
+          label: {
+            id,
+            name: title,
+          },
+          columnId: "messages",
+          columnFilters,
+          setColumnFilters,
+        });
+      }}
     >
       <div className="flex items-center gap-[28px] justify-between">
         <div className="flex items-center gap-2">
