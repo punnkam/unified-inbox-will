@@ -1466,6 +1466,7 @@ export type optionWithData = {
 };
 
 export type FilterValue = optionWithData;
+export type FilterValues = { [key: string]: FilterValue[] };
 
 export type AllFilters = {
   reservationLabels?: {
