@@ -1,14 +1,6 @@
-import { Metadata } from "next";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Inbox",
-  description: "Page description",
-};
-
-export default function InboxPage() {
-  return (
-    <div>
-      <h1>Inbox</h1>
-    </div>
-  );
+export default function Inbox() {
+  // Redirect to the personal notifications settings page
+  redirect("./inbox/all-conversations");
 }
