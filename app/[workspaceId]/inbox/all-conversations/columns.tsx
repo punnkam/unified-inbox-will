@@ -3,14 +3,14 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { LabelsTagsGroups } from "./LabelsTagsGroups";
+import { LabelsTagsGroups } from "../components/LabelsTagsGroups";
 import {
   ConversationWithAllData,
   fakeIconsData,
   appliedFilters,
 } from "@/lib/types";
 import { IconComponent } from "@/components/icons/IconComponent";
-import { ResponseStatus } from "./ResponseStatus";
+import { ResponseStatus } from "../components/ResponseStatus";
 import {
   CheckCircleIcon,
   MessageNotificationIcon,

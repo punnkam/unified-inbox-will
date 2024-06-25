@@ -12,7 +12,7 @@ import {
   VisibilityState,
   RowData,
 } from "@tanstack/react-table";
-import { Badge } from "./badge";
+import { Badge } from "../components/badge";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -46,13 +46,13 @@ import {
   ContrastIcon,
   CheckCircleIcon,
 } from "@/components/icons/CustomIcons";
-import { FilterPopover } from "./FilterPopover";
-import { FilterTags } from "./filterTags";
+import { FilterPopover } from "../components/FilterPopover";
+import { FilterTags } from "../components/filterTags";
 import { KeyboardShortcut } from "@/components/custom/KeyBoardShortcut";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
 import { useHotkeys } from "react-hotkeys-hook";
-import { AssignMemberComboBox } from "./AssignMemberCombobox";
+import { AssignMemberComboBox } from "../components/AssignMemberCombobox";
 
 // Add custom properties TableMeta (to let us see if row is hovered (for now))
 declare module "@tanstack/react-table" {
