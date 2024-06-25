@@ -87,10 +87,10 @@ export const InboxSidebar = () => {
                   {fakeReservationLabels.map((label) => (
                     <InboxSideBarOption
                       key={label.id}
-                      path={`/${workspaceId}/inbox/reservation-labels/res_${label.id}`}
+                      path={`/${workspaceId}/inbox/reservation-label/${label.id}`}
                       name={label.name}
                       selected={pathname.startsWith(
-                        `/${workspaceId}/inbox/reservation-labels/res_${label.id}`
+                        `/${workspaceId}/inbox/reservation-label/${label.id}`
                       )}
                       emoji={label.emojiId}
                     />
@@ -109,10 +109,10 @@ export const InboxSidebar = () => {
                   {fakeListingGroupsData.map((group) => (
                     <InboxSideBarOption
                       key={group.id}
-                      path={`/${workspaceId}/inbox/listing-groups/group_${group.id}`}
+                      path={`/${workspaceId}/inbox/listing-group/${group.id}`}
                       name={group.name}
                       selected={pathname.startsWith(
-                        `/${workspaceId}/inbox/listing-groups/group_${group.id}`
+                        `/${workspaceId}/inbox/listing-group/${group.id}`
                       )}
                       color={group.color}
                     />
