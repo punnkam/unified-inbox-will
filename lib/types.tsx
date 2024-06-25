@@ -1007,7 +1007,7 @@ export const fakeConversationData: Conversation[] = [
     ],
     guestImage:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    guestName: "John Doe",
+    guestName: "Alice Smith",
     messageStatus: "Todo",
     channel: "Slack",
     reservationLabelIds: [1],
@@ -1039,7 +1039,7 @@ export const fakeConversationData: Conversation[] = [
     ],
     guestImage:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    guestName: "Jane Doe",
+    guestName: "Bob Johnson",
     messageStatus: "Todo",
     channel: "Slack",
     reservationLabelIds: [2, 1],
@@ -1071,7 +1071,7 @@ export const fakeConversationData: Conversation[] = [
     ],
     guestImage:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    guestName: "Jack Doe",
+    guestName: "Charlie Brown",
     messageStatus: "Todo",
     channel: "WhatsApp",
     reservationLabelIds: [3],
@@ -1081,38 +1081,6 @@ export const fakeConversationData: Conversation[] = [
     tripListingId: 3,
     reservationStatus: "Inquiry",
     tripStartDate: "2024-06-25",
-    tripEndDate: "2024-01-08",
-    assignedTo: 3,
-  },
-  {
-    id: 3,
-    workspaceId: 1,
-    name: "Wifi password",
-    messages: [
-      {
-        from: "Guest",
-        message: "What's the wifi password?",
-        date: "2024-01-01",
-      },
-      {
-        from: "Host",
-        message:
-          "The wifi password is 123456 Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
-        date: "2024-01-01",
-      },
-    ],
-    guestImage:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    guestName: "Jack Doe",
-    messageStatus: "Todo",
-    channel: "WhatsApp",
-    reservationLabelIds: [3],
-    conversationTagIds: [2],
-    replyStatus: "Done",
-    unread: false,
-    tripListingId: 5,
-    reservationStatus: "Past",
-    tripStartDate: "2024-06-21",
     tripEndDate: "2024-01-08",
     assignedTo: 3,
   },
@@ -1135,7 +1103,7 @@ export const fakeConversationData: Conversation[] = [
     ],
     guestImage:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    guestName: "Jack Doe",
+    guestName: "David Wilson",
     messageStatus: "Todo",
     channel: "WhatsApp",
     reservationLabelIds: [3],
@@ -1167,7 +1135,7 @@ export const fakeConversationData: Conversation[] = [
     ],
     guestImage:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    guestName: "Jack Doe",
+    guestName: "Eve Martinez",
     messageStatus: "Todo",
     channel: "WhatsApp",
     reservationLabelIds: [3],
@@ -1199,7 +1167,7 @@ export const fakeConversationData: Conversation[] = [
     ],
     guestImage:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    guestName: "Jack Doe",
+    guestName: "Frank Garcia",
     messageStatus: "Todo",
     channel: "WhatsApp",
     reservationLabelIds: [3],
@@ -1231,7 +1199,7 @@ export const fakeConversationData: Conversation[] = [
     ],
     guestImage:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    guestName: "Jack Doe",
+    guestName: "Grace Lee",
     messageStatus: "Todo",
     channel: "WhatsApp",
     reservationLabelIds: [3],
@@ -1263,7 +1231,7 @@ export const fakeConversationData: Conversation[] = [
     ],
     guestImage:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    guestName: "Jack Doe",
+    guestName: "Hank Miller",
     messageStatus: "Todo",
     channel: "WhatsApp",
     reservationLabelIds: [3],
@@ -1295,8 +1263,8 @@ export const fakeConversationData: Conversation[] = [
     ],
     guestImage:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    guestName: "Jack Doe",
-    messageStatus: "Todo",
+    guestName: "Ivy Wilson",
+    messageStatus: "Done",
     channel: "WhatsApp",
     reservationLabelIds: [3],
     conversationTagIds: [2],
@@ -1327,8 +1295,8 @@ export const fakeConversationData: Conversation[] = [
     ],
     guestImage:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    guestName: "Jack Doe",
-    messageStatus: "Todo",
+    guestName: "Jack Taylor",
+    messageStatus: "Done",
     channel: "WhatsApp",
     reservationLabelIds: [3],
     conversationTagIds: [2],
@@ -1359,8 +1327,8 @@ export const fakeConversationData: Conversation[] = [
     ],
     guestImage:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    guestName: "Jack Doe",
-    messageStatus: "Todo",
+    guestName: "Karen Harris",
+    messageStatus: "Done",
     channel: "WhatsApp",
     reservationLabelIds: [3],
     conversationTagIds: [2],
@@ -1391,8 +1359,8 @@ export const fakeConversationData: Conversation[] = [
     ],
     guestImage:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    guestName: "Jack Doe",
-    messageStatus: "Todo",
+    guestName: "Leo Martinez",
+    messageStatus: "Done",
     channel: "WhatsApp",
     reservationLabelIds: [3],
     conversationTagIds: [2],
