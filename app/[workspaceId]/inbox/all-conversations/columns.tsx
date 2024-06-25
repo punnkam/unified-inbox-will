@@ -100,7 +100,7 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
       return (
         <div className={`flex gap-3 items-center w-full`}>
           {row.original.unread && (
-            <div className="size-2 bg-brand rounded-full absolute top-1/2 left-[16px] " />
+            <div className="size-2 bg-brand rounded-full absolute top-1/2 -translate-y-1/2 left-[16px] " />
           )}
 
           {/* If is hovered or is selected then show the checkbox */}

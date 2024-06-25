@@ -493,7 +493,7 @@ export function DataTable<TData, TValue>({
               onClick={() => handleMarkDone()}
             >
               <div className="flex items-center gap-2">
-                <CheckCircleIcon className="size-[14px] rounded-full text-icon-tertiary" />
+                <CheckCircleIcon className="size-[13px] rounded-full text-icon-tertiary" />
                 <p>Mark as done</p>
               </div>
               <KeyboardShortcut shortcut="E" />
