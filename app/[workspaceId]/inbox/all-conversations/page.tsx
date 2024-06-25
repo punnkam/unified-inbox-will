@@ -1,7 +1,11 @@
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 
-import { fetchAllConversations, fetchConversationTags } from "@/app/actions";
+import {
+  fetchAllConversations,
+  fetchAvailableMembers,
+  fetchConversationTags,
+} from "@/app/actions";
 import { ConversationTag } from "@/lib/types";
 
 export default async function AllConversationsPage({
@@ -43,6 +47,8 @@ export default async function AllConversationsPage({
     return { ...label, numberOfUses: numberOfUses };
   });
 
+  const availableMembers = await fetchAvailableMembers(workspaceId);
+
   return (
     <DataTable
       columns={columns}
@@ -52,6 +58,7 @@ export default async function AllConversationsPage({
           numberOfUses: number;
         })[]
       }
+      availableMembers={availableMembers}
     />
   );
 }

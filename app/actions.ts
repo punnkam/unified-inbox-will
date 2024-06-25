@@ -268,13 +268,23 @@ export const deleteTeam = async (
 };
 
 export const fetchAvailableMembers = async (
-  workspaceId: number
+  workspaceId: string | number
 ): Promise<Member[]> => {
+  const workspace = fakeWorkspaceData.find(
+    (workspace) =>
+      workspace.slug === workspaceId || workspace.id === workspaceId
+  );
+
+  if (!workspace) {
+    return [];
+  }
+
   // Get all members in the current workspace
   const members = fakeMembersData.filter((member) =>
     member.workspaces?.some(
-      (workspace) =>
-        workspace.id === workspaceId && workspace.status === "Active"
+      (memberWorkspace) =>
+        memberWorkspace.id === workspace.id &&
+        memberWorkspace.status === "Active"
     )
   );
 

@@ -33,7 +33,7 @@ import { SearchIcon, XIcon } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs-inbox";
 import { SidebarTrigger } from "../SidebarTrigger";
 import { cn } from "@/lib/utils";
-import { ConversationTag, ConversationWithAllData } from "@/lib/types";
+import { ConversationTag, ConversationWithAllData, Member } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import {
   TagIcon,
@@ -51,6 +51,8 @@ import { FilterTags } from "./filterTags";
 import { KeyboardShortcut } from "@/components/custom/KeyBoardShortcut";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
+import { useHotkeys } from "react-hotkeys-hook";
+import { AssignMemberComboBox } from "./AssignMemberCombobox";
 
 // Add custom properties TableMeta (to let us see if row is hovered (for now))
 declare module "@tanstack/react-table" {
@@ -73,12 +75,14 @@ interface DataTableProps<TData, TValue> {
   conversationLabels: (ConversationTag & {
     numberOfUses: number;
   })[];
+  availableMembers: Member[];
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   conversationLabels,
+  availableMembers,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
     {
@@ -95,6 +99,9 @@ export function DataTable<TData, TValue>({
   const [currentRowHovered, setCurrentRowHovered] = useState<string | null>(
     null
   );
+
+  // hotkey hooks
+  useHotkeys("e", () => handleMarkDone());
 
   const table = useReactTable({
     data,
@@ -126,6 +133,11 @@ export function DataTable<TData, TValue>({
   const handleMarkUnread = () => {
     const count = table.getSelectedRowModel().rows.length;
 
+    // If no rows are selected, return
+    if (count === 0) {
+      return;
+    }
+
     table.getSelectedRowModel().rows.map((row) => {
       const rowData = row.original as ConversationWithAllData;
       console.log("Mark as unread", rowData);
@@ -144,6 +156,11 @@ export function DataTable<TData, TValue>({
   const handleMarkDone = () => {
     const count = table.getSelectedRowModel().rows.length;
 
+    // If no rows are selected, return
+    if (count === 0) {
+      return;
+    }
+
     table.getSelectedRowModel().rows.map((row) => {
       const rowData = row.original as ConversationWithAllData;
       console.log("Mark as done", rowData);
@@ -156,6 +173,29 @@ export function DataTable<TData, TValue>({
 
     // Placeholder toast message
     toast.success(`${count} conversations marked as done`);
+  };
+
+  // API: Placeholder function to assign a member to selected rows
+  const handleAssign = (member: Member) => {
+    const count = table.getSelectedRowModel().rows.length;
+
+    // If no rows are selected, return
+    if (count === 0) {
+      return;
+    }
+
+    table.getSelectedRowModel().rows.map((row) => {
+      const rowData = row.original as ConversationWithAllData;
+      console.log("Assign", rowData, "to", member);
+
+      // Do something with the rows to assign them to a member
+
+      // Unselect the rows after update (either refresh or this manual way)
+      row.toggleSelected(false);
+    });
+
+    // Placeholder toast message
+    toast.success(`${count} conversations assigned to ${member.name}`);
   };
 
   // Function to clear all filters except for search and tab
@@ -498,13 +538,13 @@ export function DataTable<TData, TValue>({
               </div>
               <KeyboardShortcut shortcut="E" />
             </div>
-            <div className="px-5 py-4 flex items-center gap-2 hover:cursor-pointer hover:bg-hover">
-              <div className="flex items-center gap-2">
-                <User03Icon className="size-[14px] text-icon-tertiary" />
-                <p>Assign</p>
-              </div>
-              <KeyboardShortcut shortcut="A" />
-            </div>
+            <AssignMemberComboBox
+              availableMembers={availableMembers}
+              onAssign={(member) => {
+                handleAssign(member);
+              }}
+            />
+
             <div className="px-2">
               <div
                 className="size-5 hover:bg-hover hover:cursor-pointer flex items-center justify-center rounded-md"
