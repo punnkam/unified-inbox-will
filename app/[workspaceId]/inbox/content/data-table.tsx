@@ -506,18 +506,18 @@ export function DataTable<TData, TValue>({
             animate={{ y: 0, x: "-50%", opacity: 1 }}
             exit={{ y: 32, x: "-50%", opacity: 0 }}
           >
-            <div className="text-tertiary px-6 py-4 border-r border-primary">
+            <div className="text-tertiary px-6 py-4 border-r border-primary whitespace-nowrap">
               {table.getSelectedRowModel().rows.length} selected
             </div>
             <div
-              className="px-5 py-4 border-r border-primary hover:cursor-pointer hover:bg-hover"
+              className="px-5 py-4 border-r border-primary whitespace-nowrap hover:cursor-pointer hover:bg-hover"
               onClick={() => {
                 if (table.getIsAllRowsSelected()) {
                   table.getRowModel().rows.map((row) => {
                     row.toggleSelected(false);
                   });
                 } else {
-                  table.getRowModel().rows.map((row) => {
+                  table.getFilteredRowModel().rows.forEach((row) => {
                     row.toggleSelected(true);
                   });
                 }
@@ -526,7 +526,7 @@ export function DataTable<TData, TValue>({
               {table.getIsAllRowsSelected() ? "Unselect all" : "Select all"}
             </div>
             <div
-              className="px-5 py-4 border-r border-primary flex items-center gap-2 hover:cursor-pointer hover:bg-hover"
+              className="px-5 py-4 border-r border-primary flex items-center gap-2 whitespace-nowrap hover:cursor-pointer hover:bg-hover"
               onClick={() => {
                 handleMarkUnread();
               }}
@@ -538,7 +538,7 @@ export function DataTable<TData, TValue>({
               className="px-5 py-4 border-r border-primary flex items-center gap-3 hover:cursor-pointer hover:bg-hover"
               onClick={() => handleMarkDone()}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 whitespace-nowrap">
                 <CheckCircleIcon className="size-[13px] rounded-full text-icon-tertiary" />
                 <p>Mark as done</p>
               </div>
