@@ -309,30 +309,33 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
       const listingGroup = filterValue.listingGroups;
       const listings = filterValue.listings;
 
-      if (listingGroup && listingGroup.length > 0) {
+      if (listingGroup) {
+        if (listingGroup.length === 0) return true;
+
         // Check if the listing is in the listing group
         const isInListingGroup = listingGroup.some(
           (group) => group.id == row.original.listingGroupData?.id!
         );
 
-        if (isInListingGroup) {
-          return true;
+        if (!isInListingGroup) {
+          return false;
         }
       }
 
-      if (listings && listings.length > 0) {
+      if (listings) {
+        if (listings.length === 0) return true;
+
         // Check if the listing is selected
         const isSelectedListing = listings.some(
           (listing) => listing.id == row.original.tripListing.id!
         );
 
-        if (isSelectedListing) {
-          return true;
+        if (!isSelectedListing) {
+          return false;
         }
       }
 
-      // If no filters are applied or the listing is not in the group or selected, return false
-      return false;
+      return true;
     },
     cell: ({ table, row }) => {
       return (
