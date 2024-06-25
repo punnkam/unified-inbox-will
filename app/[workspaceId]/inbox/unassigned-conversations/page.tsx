@@ -5,6 +5,7 @@ import {
   fetchAllConversations,
   fetchAvailableMembers,
   fetchConversationTags,
+  fetchAssignedConversations,
 } from "@/app/actions";
 import { ConversationTag } from "@/lib/types";
 
@@ -13,7 +14,8 @@ export default async function AllConversationsPage({
 }: {
   params: { workspaceId: string };
 }) {
-  const data = await fetchAllConversations(workspaceId);
+  //workspcae id amd user id are passed as parameters (-1 is unnassigned conversations)
+  const data = await fetchAssignedConversations(workspaceId, -1);
 
   if (!data || !data.success || !data.data) {
     return null;
@@ -51,7 +53,7 @@ export default async function AllConversationsPage({
 
   return (
     <DataTable
-      title="All Conversations"
+      title="Unassigned Conversations"
       columns={columns}
       data={data.data}
       conversationLabels={

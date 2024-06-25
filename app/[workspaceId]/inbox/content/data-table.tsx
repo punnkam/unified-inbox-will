@@ -76,6 +76,7 @@ interface DataTableProps<TData, TValue> {
     numberOfUses: number;
   })[];
   availableMembers: Member[];
+  title: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -83,6 +84,7 @@ export function DataTable<TData, TValue>({
   data,
   conversationLabels,
   availableMembers,
+  title,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
     {
@@ -247,7 +249,7 @@ export function DataTable<TData, TValue>({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <SidebarTrigger />
-              <p className="text-title-3xl">All conversations</p>
+              <p className="text-title-3xl">{title}</p>
             </div>
             <div className="flex items-center relative">
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2">

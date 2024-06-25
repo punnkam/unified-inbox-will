@@ -1160,6 +1160,38 @@ export const fetchAllConversations = async (
   };
 };
 
+// fetch conversations based on assignee
+export const fetchAssignedConversations = async (
+  workspaceId: string,
+  memberId: number
+): Promise<{
+  success: boolean;
+  message: string;
+  data?: ConversationWithAllData[];
+}> => {
+  "use server";
+
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  // add a 2 second wait
+
+  const myConversations = apiConversationData.filter(
+    (conversation) => conversation.assignedTo == memberId
+  );
+
+  return {
+    success: true,
+    message: "Fetched my conversations",
+    data: myConversations,
+  };
+};
+
 export const fetchConversation = async (
   conversationId: string
 ): Promise<{ success: boolean; message: string; data?: Conversation }> => {
