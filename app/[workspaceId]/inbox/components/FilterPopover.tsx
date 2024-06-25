@@ -376,46 +376,62 @@ export const FilterPopover = ({
                                 <div>All Listings</div>
                               </div>
                               {allFilters.listingGroups?.options.map(
-                                (group) => (
-                                  <CommandItem
-                                    key={group.id}
-                                    value={group.name}
-                                    onSelect={() => {
-                                      setListingsStep("group");
-                                      setSelectedGroup(group);
-                                    }}
-                                    className="flex items-center justify-between gap-2 text-subtitle-xs truncate cursor-pointer"
-                                  >
-                                    <div className="flex items-center gap-2 text-subtitle-xs truncate">
-                                      <Checkbox
-                                        checked={currentFilter?.listingGroups?.some(
-                                          (item) => item.id === group.id
-                                        )}
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          handleSelect({
-                                            filter: "listingGroups",
-                                            label: group,
-                                            columnId,
-                                            columnFilters,
-                                            setColumnFilters,
-                                          });
-                                        }}
-                                      />
+                                (group) => {
+                                  const isChecked = (item: FilterValue) => {
+                                    if (
+                                      typeof item === "object" &&
+                                      typeof group === "object"
+                                    ) {
+                                      return item.id === group.id;
+                                    }
+                                    return item === group;
+                                  };
 
-                                      {group.icon && (
-                                        <div className="flex items-center justify-center size-6">
-                                          <IconComponent
-                                            icon={group.icon}
-                                            classNames="text-icon-tertiary size-3"
-                                          />
-                                        </div>
-                                      )}
-                                      <p className="truncate">{group.name}</p>
-                                    </div>
-                                    <ChevronRight className="h-4 w-4 text-icon-disabled" />
-                                  </CommandItem>
-                                )
+                                  const checked =
+                                    currentFilter?.listingGroups?.length > 0 &&
+                                    currentFilter?.listingGroups?.some(
+                                      isChecked
+                                    );
+
+                                  return (
+                                    <CommandItem
+                                      key={group.id}
+                                      value={group.name}
+                                      onSelect={() => {
+                                        setListingsStep("group");
+                                        setSelectedGroup(group);
+                                      }}
+                                      className="flex items-center justify-between gap-2 text-subtitle-xs truncate cursor-pointer"
+                                    >
+                                      <div className="flex items-center gap-2 text-subtitle-xs truncate">
+                                        <Checkbox
+                                          checked={checked}
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleSelect({
+                                              filter: "listingGroups",
+                                              label: group,
+                                              columnId,
+                                              columnFilters,
+                                              setColumnFilters,
+                                            });
+                                          }}
+                                        />
+
+                                        {group.icon && (
+                                          <div className="flex items-center justify-center size-6">
+                                            <IconComponent
+                                              icon={group.icon}
+                                              classNames="text-icon-tertiary size-3"
+                                            />
+                                          </div>
+                                        )}
+                                        <p className="truncate">{group.name}</p>
+                                      </div>
+                                      <ChevronRight className="h-4 w-4 text-icon-disabled" />
+                                    </CommandItem>
+                                  );
+                                }
                               )}
                             </CommandGroup>
                           </CommandList>
