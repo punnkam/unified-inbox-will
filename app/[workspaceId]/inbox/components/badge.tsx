@@ -125,7 +125,10 @@ export const Badge = ({
               <Button
                 variant={"secondary"}
                 size={"sm"}
-                onClick={() => setIsDialogOpen(false)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsDialogOpen(false);
+                }}
               >
                 Cancel
               </Button>
