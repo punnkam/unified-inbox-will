@@ -368,7 +368,6 @@ export const columns: ColumnDef<Conversation>[] = [
       return true;
     },
     cell: ({ table, row }) => {
-      console.log("row", row.original.reservation.listing.listingGroupData);
       return (
         <div className="flex flex-col gap-2">
           {table.getColumn("Listing name")?.getIsVisible() && (
