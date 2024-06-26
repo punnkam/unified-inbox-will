@@ -19,7 +19,7 @@ export default function ProtectedPathsLayout({
       <SideBar />
 
       {/* Page Content */}
-      <div className="flex-grow bg-primary">{children}</div>
+      <div className="flex-grow bg-primary overflow-x-clip">{children}</div>
     </div>
   );
 }

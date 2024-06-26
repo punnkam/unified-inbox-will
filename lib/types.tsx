@@ -19,6 +19,17 @@ import {
   WindIcon,
   ZapSquareIcon,
   UmbrellaIcon,
+  User03Icon,
+  AccountCircleIcon,
+  CalendarIcon,
+  TagIcon,
+  BuildingIcon,
+  NotificationBox,
+  NavigationPointerIcon,
+  CircleIcon,
+  CornerUpLeftIcon,
+  Stars01Icon,
+  CornerDownRightIcon,
 } from "@/components/icons/CustomIcons";
 
 export type Member = {
@@ -127,6 +138,19 @@ export type Workspace = {
     name?: string;
     logo?: string;
   };
+};
+
+export const colorMap = {
+  cyan: "bg-cyan-600",
+  amber: "bg-amber-500",
+  green: "bg-lime-500",
+};
+
+export type ListingGroup = {
+  id: number;
+  workspaceId: number;
+  name: string;
+  color: keyof typeof colorMap;
 };
 
 export type Listing = {
@@ -266,7 +290,7 @@ export const fakeConversationTags: ConversationTag[] = [
     id: 1,
     workspaceId: 1,
     iconId: 0,
-    name: "Urgent thing",
+    name: "Early Check-In",
     description: "This conversation needs immediate attention",
     type: conversationTagTypes[0],
     actionItem: "Mark as done",
@@ -276,7 +300,7 @@ export const fakeConversationTags: ConversationTag[] = [
     id: 2,
     workspaceId: 1,
     iconId: 1,
-    name: "Money thing",
+    name: "Late Checkout",
     description: "This conversation is about money",
     type: conversationTagTypes[1],
     actionItem: "Create task",
@@ -286,7 +310,7 @@ export const fakeConversationTags: ConversationTag[] = [
     id: 3,
     workspaceId: 1,
     iconId: 2,
-    name: "Calendar thing",
+    name: "Forgotten item",
     description: "This conversation is about scheduling",
     type: conversationTagTypes[2],
     actionItem: "Create task",
@@ -300,7 +324,28 @@ export const fakeConversationTags: ConversationTag[] = [
     description: "This conversation is about something else",
     type: conversationTagTypes[3],
     actionItem: "Mark as done",
+    inboxDashboard: true,
   },
+  // {
+  //   id: 5,
+  //   workspaceId: 1,
+  //   iconId: 4,
+  //   name: "5 in here fr",
+  //   description: "This conversation is about something else",
+  //   type: conversationTagTypes[3],
+  //   actionItem: "Mark as done",
+  //   inboxDashboard: true,
+  // },
+  // {
+  //   id: 6,
+  //   workspaceId: 1,
+  //   iconId: 5,
+  //   name: "Hi im 6",
+  //   description: "This conversation is about something else",
+  //   type: conversationTagTypes[3],
+  //   actionItem: "Mark as done",
+  //   inboxDashboard: true,
+  // },
 ];
 
 export type ReservationLabel = {
@@ -539,18 +584,18 @@ export const fakeListingsData: Listing[] = [
     id: 1,
     workspaceId: 1,
     active: true,
-    title: "Cozy 2 Bedroom Apartment",
+    title: "Luxurious Beachfront Villa",
     address: "1234 Elm Street",
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     autopilot: true,
-    group: 3,
+    group: 1,
   },
   {
     id: 2,
     workspaceId: 1,
     active: true,
-    title: "Modern 1 Bedroom Apartment",
+    title: "Charming Mountain Cabin",
     address: "5678 Oak Street",
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -560,7 +605,7 @@ export const fakeListingsData: Listing[] = [
     id: 3,
     workspaceId: 1,
     active: false,
-    title: "Spacious 3 Bedroom House",
+    title: "Secluded Countryside Retreat",
     address: "91011 Pine Street",
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -571,7 +616,7 @@ export const fakeListingsData: Listing[] = [
     id: 4,
     workspaceId: 1,
     active: false,
-    title: "Spacious 3 Bedroom House",
+    title: "Modern City Loft",
     address: "91011 Pine Street",
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -582,18 +627,18 @@ export const fakeListingsData: Listing[] = [
     id: 5,
     workspaceId: 1,
     active: false,
-    title: "Spacious 3 Bedroom House",
+    title: "Rustic Lakeside Cottage",
     address: "91011 Pine Street",
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     autopilot: false,
-    group: 2,
+    group: 3,
   },
   {
     id: 6,
     workspaceId: 1,
     active: false,
-    title: "Spacious 3 Bedroom House",
+    title: "Mountain View Chalet",
     address: "91011 Pine Street",
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -938,3 +983,642 @@ export const daysOfWeek: { key: DayOfWeek; label: string }[] = [
   { key: "saturday", label: "Saturday" },
   { key: "sunday", label: "Sunday" },
 ];
+
+export type Conversation = {
+  id: number;
+  workspaceId: number;
+  name: string;
+  messages: {
+    from: "Guest" | "Host" | "AI";
+    message: string;
+    date: string;
+  }[];
+  guestImage?: string;
+  guestName?: string;
+  messageStatus: "Todo" | "Done";
+  channel: "Slack" | "WhatsApp";
+  reservationLabelIds?: number[];
+  conversationTagIds?: number[];
+  replyStatus: "Needs Reply" | "Response Available" | "Done";
+  unread: boolean;
+  tripListingId: number;
+  reservationStatus: "Current" | "Inquiry" | "Past" | "Cancelled";
+  tripStartDate: string;
+  tripEndDate: string;
+  assignedTo?: number;
+};
+
+export const fakeConversationData: Conversation[] = [
+  {
+    id: 1,
+    workspaceId: 1,
+    name: "Check-in instructions",
+    messages: [
+      {
+        from: "Guest",
+        message: "What time is check-in?",
+        date: "2024-01-01",
+      },
+      {
+        from: "Host",
+        message:
+          "Check-in is at 3pm Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+        date: "2024-01-01",
+      },
+    ],
+    guestImage:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    guestName: "Alice Smith",
+    messageStatus: "Todo",
+    channel: "Slack",
+    reservationLabelIds: [1],
+    conversationTagIds: [3],
+    replyStatus: "Response Available",
+    unread: true,
+    tripListingId: 1,
+    reservationStatus: "Cancelled",
+    tripStartDate: "2024-06-22",
+    tripEndDate: "2024-01-08",
+    assignedTo: 1,
+  },
+  {
+    id: 2,
+    workspaceId: 1,
+    name: "Check-out instructions",
+    messages: [
+      {
+        from: "Guest",
+        message: "What time is check-out?",
+        date: "2024-01-08",
+      },
+      {
+        from: "Host",
+        message:
+          "Check-out is at 11am Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+        date: "2024-01-08",
+      },
+    ],
+    guestImage:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    guestName: "Bob Johnson",
+    messageStatus: "Todo",
+    channel: "Slack",
+    reservationLabelIds: [2, 1],
+    conversationTagIds: [1],
+    replyStatus: "Needs Reply",
+    unread: true,
+    tripListingId: 2,
+    reservationStatus: "Current",
+    tripStartDate: "2024-06-20",
+    tripEndDate: "2024-01-08",
+    assignedTo: -1,
+  },
+  {
+    id: 3,
+    workspaceId: 1,
+    name: "Wifi password",
+    messages: [
+      {
+        from: "Guest",
+        message: "What's the wifi password?",
+        date: "2024-01-01",
+      },
+      {
+        from: "Host",
+        message:
+          "The wifi password is 123456 Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+        date: "2024-01-01",
+      },
+    ],
+    guestImage:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    guestName: "Charlie Brown",
+    messageStatus: "Todo",
+    channel: "WhatsApp",
+    reservationLabelIds: [3],
+    conversationTagIds: [2],
+    replyStatus: "Needs Reply",
+    unread: false,
+    tripListingId: 3,
+    reservationStatus: "Inquiry",
+    tripStartDate: "2024-06-25",
+    tripEndDate: "2024-01-08",
+    assignedTo: 3,
+  },
+  {
+    id: 4,
+    workspaceId: 1,
+    name: "Wifi password",
+    messages: [
+      {
+        from: "Guest",
+        message: "What's the wifi password?",
+        date: "2024-01-01",
+      },
+      {
+        from: "Host",
+        message:
+          "The wifi password is 123456 Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+        date: "2024-01-01",
+      },
+    ],
+    guestImage:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    guestName: "David Wilson",
+    messageStatus: "Todo",
+    channel: "WhatsApp",
+    reservationLabelIds: [3],
+    conversationTagIds: [2],
+    replyStatus: "Done",
+    unread: false,
+    tripListingId: 5,
+    reservationStatus: "Past",
+    tripStartDate: "2024-06-21",
+    tripEndDate: "2024-01-08",
+    assignedTo: 3,
+  },
+  {
+    id: 5,
+    workspaceId: 1,
+    name: "Wifi password",
+    messages: [
+      {
+        from: "Guest",
+        message: "What's the wifi password?",
+        date: "2024-01-01",
+      },
+      {
+        from: "Host",
+        message:
+          "The wifi password is 123456 Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+        date: "2024-01-01",
+      },
+    ],
+    guestImage:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    guestName: "Eve Martinez",
+    messageStatus: "Todo",
+    channel: "WhatsApp",
+    reservationLabelIds: [3],
+    conversationTagIds: [2],
+    replyStatus: "Done",
+    unread: false,
+    tripListingId: 5,
+    reservationStatus: "Past",
+    tripStartDate: "2024-06-21",
+    tripEndDate: "2024-01-08",
+    assignedTo: 1,
+  },
+  {
+    id: 6,
+    workspaceId: 1,
+    name: "Wifi password",
+    messages: [
+      {
+        from: "Guest",
+        message: "What's the wifi password?",
+        date: "2024-01-01",
+      },
+      {
+        from: "Host",
+        message:
+          "The wifi password is 123456 Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+        date: "2024-01-01",
+      },
+    ],
+    guestImage:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    guestName: "Frank Garcia",
+    messageStatus: "Todo",
+    channel: "WhatsApp",
+    reservationLabelIds: [3],
+    conversationTagIds: [2],
+    replyStatus: "Needs Reply",
+    unread: false,
+    tripListingId: 5,
+    reservationStatus: "Current",
+    tripStartDate: "2024-06-21",
+    tripEndDate: "2024-01-08",
+    assignedTo: 1,
+  },
+  {
+    id: 7,
+    workspaceId: 1,
+    name: "Wifi password",
+    messages: [
+      {
+        from: "Guest",
+        message: "What's the wifi password?",
+        date: "2024-01-01",
+      },
+      {
+        from: "Host",
+        message:
+          "The wifi password is 123456 Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+        date: "2024-01-01",
+      },
+    ],
+    guestImage:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    guestName: "Grace Lee",
+    messageStatus: "Todo",
+    channel: "WhatsApp",
+    reservationLabelIds: [3],
+    conversationTagIds: [2],
+    replyStatus: "Response Available",
+    unread: false,
+    tripListingId: 5,
+    reservationStatus: "Inquiry",
+    tripStartDate: "2024-06-21",
+    tripEndDate: "2024-01-08",
+    assignedTo: -1,
+  },
+  {
+    id: 8,
+    workspaceId: 1,
+    name: "Wifi password",
+    messages: [
+      {
+        from: "Guest",
+        message: "What's the wifi password?",
+        date: "2024-01-01",
+      },
+      {
+        from: "Host",
+        message:
+          "The wifi password is 123456 Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+        date: "2024-01-01",
+      },
+    ],
+    guestImage:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    guestName: "Hank Miller",
+    messageStatus: "Todo",
+    channel: "WhatsApp",
+    reservationLabelIds: [3],
+    conversationTagIds: [2, 4],
+    replyStatus: "Response Available",
+    unread: false,
+    tripListingId: 5,
+    reservationStatus: "Current",
+    tripStartDate: "2024-06-21",
+    tripEndDate: "2024-01-08",
+    assignedTo: 2,
+  },
+  {
+    id: 9,
+    workspaceId: 1,
+    name: "Wifi password",
+    messages: [
+      {
+        from: "Guest",
+        message: "What's the wifi password?",
+        date: "2024-01-01",
+      },
+      {
+        from: "Host",
+        message:
+          "The wifi password is 123456 Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+        date: "2024-01-01",
+      },
+    ],
+    guestImage:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    guestName: "Ivy Wilson",
+    messageStatus: "Done",
+    channel: "WhatsApp",
+    reservationLabelIds: [3],
+    conversationTagIds: [2],
+    replyStatus: "Done",
+    unread: false,
+    tripListingId: 5,
+    reservationStatus: "Past",
+    tripStartDate: "2024-06-21",
+    tripEndDate: "2024-01-08",
+    assignedTo: 1,
+  },
+  {
+    id: 10,
+    workspaceId: 1,
+    name: "Wifi password",
+    messages: [
+      {
+        from: "Guest",
+        message: "What's the wifi password?",
+        date: "2024-01-01",
+      },
+      {
+        from: "Host",
+        message:
+          "The wifi password is 123456 Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+        date: "2024-01-01",
+      },
+    ],
+    guestImage:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    guestName: "Jack Taylor",
+    messageStatus: "Done",
+    channel: "WhatsApp",
+    reservationLabelIds: [3],
+    conversationTagIds: [2],
+    replyStatus: "Done",
+    unread: false,
+    tripListingId: 5,
+    reservationStatus: "Past",
+    tripStartDate: "2024-06-21",
+    tripEndDate: "2024-01-08",
+    assignedTo: 2,
+  },
+  {
+    id: 11,
+    workspaceId: 1,
+    name: "Wifi password",
+    messages: [
+      {
+        from: "Guest",
+        message: "What's the wifi password?",
+        date: "2024-01-01",
+      },
+      {
+        from: "Host",
+        message:
+          "The wifi password is 123456 Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+        date: "2024-01-01",
+      },
+    ],
+    guestImage:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    guestName: "Karen Harris",
+    messageStatus: "Done",
+    channel: "WhatsApp",
+    reservationLabelIds: [3],
+    conversationTagIds: [2],
+    replyStatus: "Done",
+    unread: false,
+    tripListingId: 5,
+    reservationStatus: "Past",
+    tripStartDate: "2024-06-21",
+    tripEndDate: "2024-01-08",
+    assignedTo: -1,
+  },
+  {
+    id: 12,
+    workspaceId: 1,
+    name: "Wifi password",
+    messages: [
+      {
+        from: "Guest",
+        message: "What's the wifi password?",
+        date: "2024-01-01",
+      },
+      {
+        from: "Host",
+        message:
+          "The wifi password is 123456 Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+        date: "2024-01-01",
+      },
+    ],
+    guestImage:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    guestName: "Leo Martinez",
+    messageStatus: "Done",
+    channel: "WhatsApp",
+    reservationLabelIds: [3],
+    conversationTagIds: [2],
+    replyStatus: "Done",
+    unread: false,
+    tripListingId: 5,
+    reservationStatus: "Past",
+    tripStartDate: "2024-06-21",
+    tripEndDate: "2024-01-08",
+    assignedTo: -1,
+  },
+];
+
+export type ConversationWithAllData = Conversation & {
+  tripListing: Listing;
+  reservationLabels?: (ReservationLabel | undefined)[];
+  conversationTags?: (ConversationTag | undefined)[];
+  listingGroupData?: ListingGroup;
+  assigneeData?: Member;
+};
+
+export const fakeListingGroupsData: ListingGroup[] = [
+  {
+    id: 1,
+    workspaceId: 1,
+    name: "Big Bear",
+    color: "cyan",
+  },
+  {
+    id: 2,
+    workspaceId: 1,
+    name: "Joshua Tree",
+    color: "green",
+  },
+  {
+    id: 3,
+    workspaceId: 1,
+    name: "San Fransisco",
+    color: "amber",
+  },
+];
+
+export const apiConversationData: ConversationWithAllData[] =
+  fakeConversationData.map((conversation) => {
+    const tripListing = fakeListingsData.find(
+      (listing) => listing.id === conversation.tripListingId
+    ) as Listing;
+
+    const reservationLabels = conversation.reservationLabelIds?.map((labelId) =>
+      fakeReservationLabels.find((label) => label.id === labelId)
+    );
+
+    const conversationTags = conversation.conversationTagIds?.map((tagId) =>
+      fakeConversationTags.find((tag) => tag.id === tagId)
+    );
+
+    const listingGroupData = fakeListingGroupsData.find(
+      (group) => group.id === tripListing.group
+    );
+
+    const assigneeData = fakeMembersData.find(
+      (member) => member.id === conversation.assignedTo
+    );
+
+    return {
+      ...conversation,
+      tripListing,
+      reservationLabels,
+      conversationTags,
+      listingGroupData,
+      assigneeData,
+    };
+  });
+
+export type optionWithData = {
+  id?: number;
+  name: string;
+  image?: string;
+  icon?: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
+  pinned?: boolean;
+  groupId?: number;
+};
+
+export type FilterValue = optionWithData;
+export type FilterValues = { [key: string]: FilterValue[] };
+
+export type AllFilters = {
+  reservationLabels?: {
+    column: "messages";
+    title: "Reservation labels";
+    icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
+    options: FilterValue[];
+  };
+  conversationTags?: {
+    column: "messages";
+    title: "Conversation tags";
+    icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
+    options: FilterValue[];
+  };
+  // listingGroups: ListingGroup[];
+  responseStatus?: {
+    column: "messages";
+    title: "Response status";
+    icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
+    options: FilterValue[];
+  };
+  reservationStatus?: {
+    column: "user";
+    title: "Reservation status";
+    icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
+    options: FilterValue[];
+  };
+
+  checkInDate?: {
+    column: "user";
+    title: "Check-in date";
+    icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
+    options: FilterValue[];
+  };
+  assignee?: {
+    column: "assigneeGroup";
+    title: "Assignee";
+    icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
+    options: FilterValue[];
+  };
+  listings?: {
+    column: "listing";
+    title: "Listings";
+    icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
+    options: FilterValue[];
+  };
+  listingGroups?: {
+    column: "listing";
+    title: "Listing Groups";
+    icon: React.JSXElementConstructor<React.SVGProps<SVGSVGElement>>;
+    options: FilterValue[];
+  };
+};
+
+export const allFilters: AllFilters = {
+  assignee: {
+    column: "assigneeGroup",
+    title: "Assignee",
+    icon: User03Icon,
+    options: [
+      { id: -1, name: "Unassigned", icon: User03Icon }, // Adding Unassigned option
+
+      ...fakeMembersData.map((member) => ({
+        id: member.id!,
+        name: member.name!,
+        image: member.image!,
+      })),
+    ],
+  },
+  reservationStatus: {
+    column: "user",
+    title: "Reservation status",
+    icon: NotificationBox,
+    options: [
+      { id: 1, name: "Current", pinned: false },
+      { id: 2, name: "Inquiry", pinned: false },
+      { id: 3, name: "Past", pinned: true },
+      { id: 4, name: "Cancelled", pinned: false },
+    ],
+  },
+  checkInDate: {
+    column: "user",
+    title: "Check-in date",
+    icon: CalendarIcon,
+    options: [
+      { id: 1, name: "Current Guest", pinned: false },
+      { id: 2, name: "Checking in today", pinned: true },
+      { id: 3, name: "Checking in tomorrow", pinned: false },
+      { id: 4, name: "Checking in this week", pinned: true },
+    ],
+  },
+  responseStatus: {
+    column: "messages",
+    title: "Response status",
+    icon: NavigationPointerIcon,
+    options: [
+      { id: 1, name: "Needs Reply", pinned: true, icon: CornerUpLeftIcon },
+      { id: 2, name: "Response Available", pinned: false, icon: Stars01Icon },
+      { id: 3, name: "Replied to", pinned: false, icon: CornerDownRightIcon },
+    ],
+  },
+  reservationLabels: {
+    column: "messages",
+    title: "Reservation labels",
+    icon: CircleIcon,
+    options: fakeReservationLabels.map((label) => ({
+      id: label.id,
+      name: label.name,
+      pinned: false,
+    })),
+  },
+  conversationTags: {
+    column: "messages",
+    title: "Conversation tags",
+    icon: TagIcon,
+    options: fakeConversationTags.map((tag) => ({
+      id: tag.id,
+      name: tag.name,
+      icon: fakeIconsData.find((icon) => icon.id === tag.iconId)?.icon,
+      pinned: false,
+    })),
+  },
+  listings: {
+    column: "listing",
+    title: "Listings",
+    icon: BuildingIcon,
+    options: fakeListingsData.map((listing) => ({
+      id: listing.id,
+      name: listing.title,
+      image: listing.image,
+      groupId: listing.group,
+    })),
+  },
+  listingGroups: {
+    column: "listing",
+    title: "Listing Groups",
+    icon: BuildingIcon,
+    options: fakeListingGroupsData.map((group) => ({
+      id: group.id,
+      name: group.name,
+      color: group.color,
+    })),
+  },
+};
+
+export type appliedFilters = {
+  reservationStatus?: FilterValue[];
+  checkInDate?: FilterValue[];
+  reservationLabels?: FilterValue[];
+  conversationTags?: FilterValue[];
+  responseStatus?: FilterValue[];
+  assignee?: FilterValue[];
+  listings?: FilterValue[];
+  listingGroups?: FilterValue[];
+};

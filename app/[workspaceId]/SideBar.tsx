@@ -35,7 +35,7 @@ export const SideBar = () => {
             selected={path == "home"}
           />
           <SideBarIcon
-            path={`/${workspace}/inbox`}
+            path={`/${workspace}/inbox/all-conversations`}
             icon={<InboxIcon />}
             selected={path == "inbox"}
           />

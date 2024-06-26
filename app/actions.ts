@@ -22,6 +22,12 @@ import {
   Listing,
   ReservationLabel,
   fakeReservationLabels,
+  Conversation,
+  fakeConversationData,
+  apiConversationData,
+  ConversationWithAllData,
+  fakeListingGroupsData,
+  ListingGroup,
 } from "@/lib/types";
 
 // Action to handle fetching members and adding a delete handler to each member
@@ -264,13 +270,23 @@ export const deleteTeam = async (
 };
 
 export const fetchAvailableMembers = async (
-  workspaceId: number
+  workspaceId: string | number
 ): Promise<Member[]> => {
+  const workspace = fakeWorkspaceData.find(
+    (workspace) =>
+      workspace.slug === workspaceId || workspace.id === workspaceId
+  );
+
+  if (!workspace) {
+    return [];
+  }
+
   // Get all members in the current workspace
   const members = fakeMembersData.filter((member) =>
     member.workspaces?.some(
-      (workspace) =>
-        workspace.id === workspaceId && workspace.status === "Active"
+      (memberWorkspace) =>
+        memberWorkspace.id === workspace.id &&
+        memberWorkspace.status === "Active"
     )
   );
 
@@ -974,6 +990,21 @@ export const saveConversationTag = async (
   return { success: true, message: "Saved" };
 };
 
+export const updateConversationTagVisaibility = async (
+  id: number,
+  visible: boolean
+): Promise<{ success: boolean; message: string }> => {
+  "use server";
+  // add a 2 second wait
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // This is where you would make an API call to update the conversation tag visibility
+
+  console.log("Updated conversation tag visibility", id, visible);
+
+  return { success: true, message: "Updated" };
+};
+
 /*
  * Reservation Label page actions
  */
@@ -1096,5 +1127,220 @@ export const getWorkspace = async (
     success: true,
     message: "Fetched workspace",
     data: workspace,
+  };
+};
+
+/*
+ * Inbox page actions
+ */
+
+export const fetchAllConversations = async (
+  workspaceId: string
+): Promise<{
+  success: boolean;
+  message: string;
+  data?: ConversationWithAllData[];
+}> => {
+  "use server";
+
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  // add a 2 second wait
+
+  const allConversations = apiConversationData;
+
+  return {
+    success: true,
+    message: "Fetched all conversations",
+    data: allConversations,
+  };
+};
+
+// fetch conversations based on assignee
+export const fetchAssignedConversations = async (
+  workspaceId: string,
+  memberId: number
+): Promise<{
+  success: boolean;
+  message: string;
+  data?: ConversationWithAllData[];
+}> => {
+  "use server";
+
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  // add a 2 second wait
+
+  const myConversations = apiConversationData.filter(
+    (conversation) => conversation.assignedTo == memberId
+  );
+
+  return {
+    success: true,
+    message: "Fetched my conversations",
+    data: myConversations,
+  };
+};
+
+// fetch conversations based on reservation label
+export const fetchReservationLabelConversations = async (
+  workspaceId: string,
+  reservationLabelId: string
+): Promise<{
+  success: boolean;
+  message: string;
+  data?: ConversationWithAllData[];
+}> => {
+  "use server";
+
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  console.log("reservationLabelId", reservationLabelId);
+
+  // add a 2 second wait
+
+  const conversations = apiConversationData.filter((conversation) =>
+    // id's are just numbers in my fake data so i convert the string to a number
+    conversation.reservationLabelIds?.includes(parseInt(reservationLabelId))
+  );
+
+  return {
+    success: true,
+    message: "Fetched conversations with reservation label",
+    data: conversations,
+  };
+};
+
+//fetch conversations based on listing group
+export const fetchListingGroupConversations = async (
+  workspaceId: string,
+  listingGroupId: string
+): Promise<{
+  success: boolean;
+  message: string;
+  data?: ConversationWithAllData[];
+}> => {
+  "use server";
+
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  console.log("listingGroupId", listingGroupId);
+
+  // add a 2 second wait
+
+  const conversations = apiConversationData.filter(
+    (conversation) =>
+      // id's are just numbers in my fake data so i convert the string to a number
+      conversation.listingGroupData?.id === parseInt(listingGroupId)
+  );
+
+  return {
+    success: true,
+    message: "Fetched conversations with listing group",
+    data: conversations,
+  };
+};
+
+export const fetchConversation = async (
+  conversationId: string
+): Promise<{ success: boolean; message: string; data?: Conversation }> => {
+  "use server";
+
+  // add a 2 second wait
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // get the conversation with the same id
+  const conversation = fakeConversationData.find(
+    (conversation) => conversation.id === parseInt(conversationId)
+  );
+
+  if (!conversation) {
+    return { success: false, message: "Conversation not found" };
+  }
+
+  return {
+    success: true,
+    message: "Fetched conversation",
+    data: conversation,
+  };
+};
+
+// fetch listing groups
+export const fetchListingGroups = async (
+  workspaceId: string
+): Promise<{
+  success: boolean;
+  message: string;
+  data?: ListingGroup[];
+}> => {
+  "use server";
+
+  const workspace = fakeWorkspaceData.find(
+    (workspace) => workspace.slug === workspaceId
+  );
+
+  if (!workspace) {
+    return { success: false, message: "Workspace not found" };
+  }
+
+  // add a 2 second wait
+
+  const listingGroups = fakeListingGroupsData.filter(
+    (listingGroup) => listingGroup.workspaceId === workspace.id
+  );
+
+  return {
+    success: true,
+    message: "Fetched listing groups",
+    data: listingGroups,
+  };
+};
+
+// fetch listing group
+export const fetchListingGroup = async (
+  listingGroupId: string
+): Promise<{ success: boolean; message: string; data?: ListingGroup }> => {
+  "use server";
+
+  // add a 2 second wait
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // get the listing group with the same id
+  const listingGroup = fakeListingGroupsData.find(
+    (listingGroup) => listingGroup.id === parseInt(listingGroupId)
+  );
+
+  if (!listingGroup) {
+    return { success: false, message: "Listing group not found" };
+  }
+
+  return {
+    success: true,
+    message: "Fetched listing group",
+    data: listingGroup,
   };
 };

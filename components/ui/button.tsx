@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { clsx } from "clsx";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-icon-active focus-visible:ring-offset-2 disabled:pointer-events-none disabled:bg-secondary disabled:text-disabled",
+  "py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-icon-active focus-visible:ring-offset-2 disabled:pointer-events-none disabled:bg-secondary disabled:text-disabled",
   {
     variants: {
       variant: {
@@ -22,10 +22,12 @@ const buttonVariants = cva(
           "text-error underline-offset-4 hover:underline disabled:bg-transparent disabled:text-disabled disabled:underline-none",
       },
       size: {
-        sm: "text-subtitle-xs h-9 px-3",
+        xs: "text-subtitle-2xs h-9 px-4",
+        sm: "text-subtitle-xs h-9 px-4",
         md: "text-subtitle-xs h-10 px-4",
-        lg: "text-subtitle-sm h-11 px-8",
-        xl: "text-subtitle-sm h-12 px-10",
+        lg: "text-subtitle-sm h-11 px-4",
+        xl: "text-subtitle-sm h-12 px-4",
+        iconSm: "h-8 w-8",
         icon: "h-10 w-10",
         iconXs: "h-6 w-6",
       },
