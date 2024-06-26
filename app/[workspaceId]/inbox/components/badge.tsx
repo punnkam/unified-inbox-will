@@ -64,16 +64,17 @@ export const Badge = ({
         loading && "opacity-50"
       )}
       onClick={() => {
-        handleSelect({
-          filter: "conversationTags",
-          label: {
-            id,
-            name: title,
-          },
-          columnId: "messages",
-          columnFilters,
-          setColumnFilters,
-        });
+        !isDialogOpen &&
+          handleSelect({
+            filter: "conversationTags",
+            label: {
+              id,
+              name: title,
+            },
+            columnId: "messages",
+            columnFilters,
+            setColumnFilters,
+          });
       }}
     >
       <div className="flex items-center gap-[28px] justify-between">
@@ -105,7 +106,10 @@ export const Badge = ({
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="text-subtitle-xs">
               <AlertDialogTrigger
-                onClick={() => setIsDialogOpen(true)}
+                onClick={(e) => {
+                  e.stopPropagation(); // prevents the tag from being selected on click
+                  setIsDialogOpen(true);
+                }}
                 className="w-full"
               >
                 <DropdownMenuItem>Remove from dashboard</DropdownMenuItem>
