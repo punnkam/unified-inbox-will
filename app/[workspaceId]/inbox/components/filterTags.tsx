@@ -18,7 +18,7 @@ export const Tag = ({
   return (
     <div className="flex gap-1 justify-center items-center bg-blue-500/10 text-link border border-info rounded-full px-2 py-1 ">
       <IconComponent icon={icon} classNames="size-3 text-info" />
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1 whitespace-nowrap">
         <p className="text-body-sm">{title}:</p>
         <p className="text-subtitle-sm">{value}</p>
       </div>

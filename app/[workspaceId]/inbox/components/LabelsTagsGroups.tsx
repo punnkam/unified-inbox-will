@@ -41,7 +41,7 @@ export const LabelsTagsGroups = ({
         <div className={cn(`w-2 h-2 rounded-full`, colorMap[color])}></div>
       )}
 
-      <p className="text-body-xs">{text}</p>
+      <p className="text-body-xs whitespace-nowrap">{text}</p>
     </div>
   );
 };
