@@ -1,6 +1,8 @@
 import Link from "next/link";
 import cn from "classnames";
 import { colorMap } from "@/lib/types";
+import { useSidebar } from "./SidebarContext";
+import { useWindowSize } from "@/lib/hooks/useWindowSize";
 
 export const InboxSideBarOption = ({
   path,
@@ -21,6 +23,9 @@ export const InboxSideBarOption = ({
   count?: number;
   color?: keyof typeof colorMap;
 }) => {
+  const { toggleSidebar } = useSidebar();
+  const size = useWindowSize();
+
   return (
     <Link href={path}>
       <div
@@ -28,6 +33,11 @@ export const InboxSideBarOption = ({
           "flex items-center justify-between w-full px-2 py-1 h-8 active:bg-pressed rounded-md gap-2",
           selected ? "bg-selected hover:bg-selected" : "hover:bg-hover"
         )}
+        onClick={() => {
+          if (size.width! <= 705) {
+            toggleSidebar();
+          }
+        }}
       >
         <div className="text-subtitle-sm flex items-center gap-2">
           {color && (
