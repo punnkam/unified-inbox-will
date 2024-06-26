@@ -129,7 +129,9 @@ export const InboxSidebar = () => {
           </div>
         </div>
       </div>
-      <SidebarTrigger />
+      <div className="block md:hidden">
+        <SidebarTrigger />
+      </div>
     </div>
   );
 };
