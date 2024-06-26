@@ -1,6 +1,12 @@
 import { HostAiIcon } from "@/components/icons/CustomIcons";
 import { cn } from "@/lib/utils";
-import { colorMap } from "@/lib/types";
+
+// must have this defined in component for tailwind to parse
+export const colorMap = {
+  cyan: "bg-cyan-600",
+  amber: "bg-amber-500",
+  green: "bg-lime-500",
+};
 
 export const LabelsTagsGroups = ({
   text,
