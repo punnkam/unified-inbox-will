@@ -8,6 +8,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { SidebarProvider, useSidebar } from "./SidebarContext";
+import { cn } from "@/lib/utils";
 
 export default function InboxLayout({
   children,
@@ -33,7 +34,14 @@ function InboxLayoutContent({ children }: { children: React.ReactNode }) {
         </CollapsibleContent>
 
         {/* Page Content */}
-        <div className="h-screen flex-grow bg-primary w-full overflow-y-clip relative">
+        <div
+          className={cn(
+            "h-screen flex-grow bg-primary md:overflow-clip relative",
+            isOpen
+              ? "w-0 overflow-hidden sm:w-[calc(100vw-80px-280px)]"
+              : "w-[calc(100vw-80px)]"
+          )}
+        >
           {children}
         </div>
       </div>

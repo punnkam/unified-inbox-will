@@ -98,7 +98,13 @@ export const FilterPopover = ({
   return (
     <div>
       <DropdownMenu open={open} onOpenChange={() => setOpen(!open)}>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger asChild className="flex md:hidden">
+          <Button variant="ghost" size={"icon"} className="w-fit">
+            <FilterLinesIcon className="text-icon-secondary size-[15px] mr-2" />
+          </Button>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuTrigger asChild className="hidden md:flex">
           <Button variant="ghost" size={"md"} className="w-fit">
             <FilterLinesIcon className="text-icon-secondary size-[15px] mr-2" />
             Filters

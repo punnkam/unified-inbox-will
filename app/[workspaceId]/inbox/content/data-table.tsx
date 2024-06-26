@@ -245,13 +245,13 @@ export function DataTable<TData, TValue>({
   return (
     <div className="h-full">
       <div className="flex flex-col bg-primary-subtle h-full">
-        <div className="flex flex-col gap-[28px] px-8 pt-8 pb-3 border-b border-primary">
-          <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-[28px] px-4 md:px-8 pt-8 pb-3 border-b border-primary overflow-y-hidden md:overflow-y-clip">
+          <div className="flex flex-wrap md:flex-nowrap gap-2 items-center justify-between">
             <div className="flex items-center gap-3">
               <SidebarTrigger />
               <p className="text-title-3xl">{title}</p>
             </div>
-            <div className="flex items-center relative">
+            <div className="flex items-center relative w-full sm:w-fit">
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 <SearchIcon className="h-5 w-5 text-gray-400" />
               </span>
@@ -266,13 +266,13 @@ export function DataTable<TData, TValue>({
                     .getColumn("guestName")
                     ?.setFilterValue(event.target.value)
                 }
-                className="pl-10 rounded-xl max-w-sm w-[300px]"
+                className="pl-10 rounded-xl w-full md:max-w-sm md:w-[300px]"
               />
             </div>
           </div>
 
           {/* badges */}
-          <div className="flex gap-4 overflow-x-auto py-1">
+          <div className="flex flex-wrap md:flex-nowrap gap-4 overflow-x-auto px-1 md:py-1 md:px-0">
             {conversationLabels.map((item, index) => {
               return (
                 <Badge
@@ -337,12 +337,19 @@ export function DataTable<TData, TValue>({
 
             <div className="flex items-center gap-2">
               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
+                <DropdownMenuTrigger asChild className="flex md:hidden">
+                  <Button variant="ghost" size={"icon"} className="w-fit">
+                    <AttributesIcon className="text-icon-secondary size-[15px] mr-2" />
+                  </Button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuTrigger asChild className="hidden md:flex">
                   <Button variant="ghost" size={"md"} className="w-fit">
                     <AttributesIcon className="text-icon-secondary size-[15px] mr-2" />
                     Attributes
                   </Button>
                 </DropdownMenuTrigger>
+
                 <DropdownMenuInboxContent align="end">
                   <div className="p-4 flex items-center justify-between w-[284px] border-b border-primary">
                     <p className="text-subtitle-sm">Display attributes</p>
