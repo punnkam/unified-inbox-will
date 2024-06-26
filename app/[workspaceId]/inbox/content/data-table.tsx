@@ -53,6 +53,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
 import { useHotkeys } from "react-hotkeys-hook";
 import { AssignMemberComboBox } from "../components/AssignMemberCombobox";
+import clsx from "clsx";
 
 // Add custom properties TableMeta (to let us see if row is hovered (for now))
 declare module "@tanstack/react-table" {
@@ -301,7 +302,14 @@ export function DataTable<TData, TValue>({
                   onClick={() => handleTabChange("Todo")}
                 >
                   <div className="relative">
-                    <p className="flex items-center gap-2 h-9 text-title-sm">
+                    <p
+                      className={clsx(
+                        "flex items-center gap-2 h-9 text-title-sm",
+                        // Add active styles
+                        table.getColumn("messageStatus")?.getFilterValue() ===
+                          "Todo" && "text-brand"
+                      )}
+                    >
                       Todo
                       <span
                         className={cn(
@@ -316,7 +324,7 @@ export function DataTable<TData, TValue>({
                     </p>
                     {table.getColumn("messageStatus")?.getFilterValue() ===
                       "Todo" && (
-                      <div className="h-[3px] mt-3 right-0 left-0 w-full bg-brand absolute" />
+                      <div className="h-[3px] mt-[11px] right-0 left-0 w-full bg-brand absolute" />
                     )}
                   </div>
                 </TabsTrigger>
@@ -325,10 +333,19 @@ export function DataTable<TData, TValue>({
                   onClick={() => handleTabChange("Done")}
                 >
                   <div className="relative">
-                    <p className="flex items-center h-9 text-title-sm">Done</p>
+                    <p
+                      className={clsx(
+                        "flex items-center h-9 text-title-sm",
+                        // Add active styles
+                        table.getColumn("messageStatus")?.getFilterValue() ===
+                          "Done" && "text-brand"
+                      )}
+                    >
+                      Done
+                    </p>
                     {table.getColumn("messageStatus")?.getFilterValue() ===
                       "Done" && (
-                      <div className="h-[3px] mt-3 right-0 left-0 w-full bg-brand absolute" />
+                      <div className="h-[3px] mt-[11px] right-0 left-0 w-full bg-brand absolute" />
                     )}
                   </div>
                 </TabsTrigger>
