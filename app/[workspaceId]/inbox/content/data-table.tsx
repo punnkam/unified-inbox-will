@@ -57,7 +57,7 @@ import { AssignMemberComboBox } from "../components/AssignMemberCombobox";
 // Add custom properties TableMeta (to let us see if row is hovered (for now))
 declare module "@tanstack/react-table" {
   //allows us to define custom properties for our columns
-  interface TableMeta<TData extends RowData, TValue> {
+  interface TableMeta<TData extends RowData> {
     hoverRow: string | null;
   }
 }
