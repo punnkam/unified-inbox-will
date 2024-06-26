@@ -30,7 +30,7 @@ const IconMap = {
 export const ResponseStatus = ({
   type,
 }: {
-  type: Conversation["tripStatus"];
+  type: Conversation["reservationStatus"];
 }) => {
   return (
     <div
