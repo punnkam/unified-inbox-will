@@ -1691,3 +1691,24 @@ export const CornerDownRightIcon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const MessageCheckCircleIcon = (
+  props: React.SVGProps<SVGSVGElement>
+) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={13}
+    height={12}
+    fill="none"
+    viewBox="0 0 13 12"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.167}
+      d="m5.54 6.208 1.168 1.167L9.333 4.75M7.29 11.167a4.958 4.958 0 1 0-4.7-3.374c.063.187.095.28.1.353a.524.524 0 0 1-.016.19c-.017.07-.057.142-.135.288l-.954 1.766c-.137.252-.205.378-.19.475.014.085.064.16.137.204.084.051.226.036.511.007l2.987-.309c.09-.01.136-.014.177-.012.04.001.07.005.109.014.04.01.09.029.192.068.553.213 1.154.33 1.782.33Z"
+    />
+  </svg>
+);

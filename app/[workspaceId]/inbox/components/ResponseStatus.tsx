@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
-import { HostAiIcon } from "@/components/icons/CustomIcons";
-import { Conversation } from "@/lib/types";
+import { Conversation } from "@/lib/realDataSchema";
 import {
   CheckCircleIcon,
   Home02Icon,
@@ -30,16 +29,16 @@ const IconMap = {
 export const ResponseStatus = ({
   type,
 }: {
-  type: Conversation["reservationStatus"];
+  type: Conversation["reservation"]["status"];
 }) => {
   return (
     <div
       className={cn(
         "flex items-center gap-1 rounded-full text-subtitle-xs px-2 py-1",
-        IconMap[type].classes
+        IconMap[type!].classes
       )}
     >
-      <div className="">{IconMap[type].icon}</div>
+      <div className="">{IconMap[type!].icon}</div>
       {type}
     </div>
   );

@@ -33,7 +33,7 @@ import { SearchIcon, XIcon } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs-inbox";
 import { SidebarTrigger } from "../SidebarTrigger";
 import { cn } from "@/lib/utils";
-import { ConversationTag, ConversationWithAllData, Member } from "@/lib/types";
+import { Conversation, ConversationTag, Member } from "@/lib/realDataSchema";
 import { Button } from "@/components/ui/button";
 import {
   TagIcon,
@@ -90,7 +90,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
     {
       id: "messageStatus",
-      value: "Todo",
+      value: false,
     },
   ]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
@@ -142,7 +142,7 @@ export function DataTable<TData, TValue>({
     }
 
     table.getSelectedRowModel().rows.map((row) => {
-      const rowData = row.original as ConversationWithAllData;
+      const rowData = row.original as Conversation;
       console.log("Mark as unread", rowData);
 
       // Do something with the rows to mark them as unread
@@ -165,7 +165,7 @@ export function DataTable<TData, TValue>({
     }
 
     table.getSelectedRowModel().rows.map((row) => {
-      const rowData = row.original as ConversationWithAllData;
+      const rowData = row.original as Conversation;
       console.log("Mark as done", rowData);
 
       // Do something with the rows to mark them as done
@@ -188,7 +188,7 @@ export function DataTable<TData, TValue>({
     }
 
     table.getSelectedRowModel().rows.map((row) => {
-      const rowData = row.original as ConversationWithAllData;
+      const rowData = row.original as Conversation;
       console.log("Assign", rowData, "to", member);
 
       // Do something with the rows to assign them to a member
@@ -216,7 +216,8 @@ export function DataTable<TData, TValue>({
     });
   };
 
-  const handleTabChange = (tab: "Todo" | "Done") => {
+  const handleTabChange = (tab: boolean) => {
+    console.log("Tab change", tab);
     table.getColumn("messageStatus")?.setFilterValue(tab);
   };
 
@@ -299,7 +300,7 @@ export function DataTable<TData, TValue>({
               <TabsList>
                 <TabsTrigger
                   value="Todo"
-                  onClick={() => handleTabChange("Todo")}
+                  onClick={() => handleTabChange(false)}
                 >
                   <div className="relative">
                     <p
@@ -307,7 +308,7 @@ export function DataTable<TData, TValue>({
                         "flex items-center gap-2 h-9 text-title-sm",
                         // Add active styles
                         table.getColumn("messageStatus")?.getFilterValue() ===
-                          "Todo" && "text-brand"
+                          false && "text-brand"
                       )}
                     >
                       Todo
@@ -315,7 +316,7 @@ export function DataTable<TData, TValue>({
                         className={cn(
                           "h-6 w-[28px] rounded-lg flex items-center justify-center text-tertiary text-subtitle-xs",
                           table.getColumn("messageStatus")?.getFilterValue() ===
-                            "Todo" &&
+                            false &&
                             "text-brand text-subtitle-xs bg-primary border border-primary"
                         )}
                       >
@@ -323,28 +324,25 @@ export function DataTable<TData, TValue>({
                       </span>
                     </p>
                     {table.getColumn("messageStatus")?.getFilterValue() ===
-                      "Todo" && (
+                      false && (
                       <div className="h-[3px] mt-[11px] right-0 left-0 w-full bg-brand absolute" />
                     )}
                   </div>
                 </TabsTrigger>
-                <TabsTrigger
-                  value="done"
-                  onClick={() => handleTabChange("Done")}
-                >
+                <TabsTrigger value="done" onClick={() => handleTabChange(true)}>
                   <div className="relative">
                     <p
                       className={clsx(
                         "flex items-center h-9 text-title-sm",
                         // Add active styles
                         table.getColumn("messageStatus")?.getFilterValue() ===
-                          "Done" && "text-brand"
+                          true && "text-brand"
                       )}
                     >
                       Done
                     </p>
                     {table.getColumn("messageStatus")?.getFilterValue() ===
-                      "Done" && (
+                      true && (
                       <div className="h-[3px] mt-[11px] right-0 left-0 w-full bg-brand absolute" />
                     )}
                   </div>

@@ -17,7 +17,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { fakeListingGroupsData, fakeReservationLabels } from "@/lib/types";
+import {
+  fakeListingGroupsData,
+  fakeReservationLabels,
+} from "@/lib/realDataSchema";
 import { SidebarTrigger } from "./SidebarTrigger";
 
 export const InboxSidebar = () => {
@@ -84,7 +87,6 @@ export const InboxSidebar = () => {
                     Reservation labels
                   </AccordionTrigger>
                   <AccordionContent className="pb-0 pt-2">
-                    {/* Using reglar emojis for now - implement this however */}
                     {fakeReservationLabels.map((label) => (
                       <InboxSideBarOption
                         key={label.id}

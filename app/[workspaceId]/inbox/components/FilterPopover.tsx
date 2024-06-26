@@ -26,7 +26,7 @@ import {
   FilterValue,
   optionWithData,
   FilterValues,
-} from "@/lib/types";
+} from "@/lib/realDataSchema";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useEffect, useState } from "react";
 import { IconComponent } from "@/components/icons/IconComponent";

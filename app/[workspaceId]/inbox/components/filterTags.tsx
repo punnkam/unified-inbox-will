@@ -1,5 +1,5 @@
 import { ColumnFiltersState } from "@tanstack/react-table";
-import { AllFilters, FilterValue, allFilters } from "@/lib/types";
+import { AllFilters, FilterValue, allFilters } from "@/lib/realDataSchema";
 import { Button } from "@/components/ui/button";
 import { XIcon } from "lucide-react";
 import { IconComponent } from "@/components/icons/IconComponent";
