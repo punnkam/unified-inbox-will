@@ -519,8 +519,11 @@ export function DataTable<TData, TValue>({
             <div
               className="px-5 py-4 border-r border-primary whitespace-nowrap hover:cursor-pointer hover:bg-hover"
               onClick={() => {
-                if (table.getIsAllRowsSelected()) {
-                  table.getRowModel().rows.map((row) => {
+                if (
+                  table.getFilteredSelectedRowModel().rows.length ===
+                  table.getFilteredRowModel().rows.length
+                ) {
+                  table.getFilteredRowModel().rows.map((row) => {
                     row.toggleSelected(false);
                   });
                 } else {
