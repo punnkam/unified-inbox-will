@@ -1,5 +1,5 @@
-import { DataTable } from "../../content/data-table";
-import { columns } from "../../content/columns";
+import { InboxLandingPage } from "../../content/inbox-landing/InboxLandingPage";
+import { columns } from "../../content/inbox-landing/columns";
 import {
   fetchAvailableMembers,
   fetchConversationTags,
@@ -62,7 +62,7 @@ export default async function AllConversationsPage({
   const availableMembers = await fetchAvailableMembers(workspaceId);
 
   return (
-    <DataTable
+    <InboxLandingPage
       title={listingGroupData.data.name}
       columns={columns}
       data={data.data}

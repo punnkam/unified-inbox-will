@@ -12,7 +12,7 @@ import {
   VisibilityState,
   RowData,
 } from "@tanstack/react-table";
-import { Badge } from "../components/badge";
+import { Badge } from "../../components/badge";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -31,7 +31,7 @@ import {
 import { useState } from "react";
 import { SearchIcon, XIcon } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs-inbox";
-import { SidebarTrigger } from "../SidebarTrigger";
+import { SidebarTrigger } from "../../SidebarTrigger";
 import { cn } from "@/lib/utils";
 import { Conversation, ConversationTag, Member } from "@/lib/realDataSchema";
 import { Button } from "@/components/ui/button";
@@ -46,13 +46,13 @@ import {
   ContrastIcon,
   CheckCircleIcon,
 } from "@/components/icons/CustomIcons";
-import { FilterPopover } from "../components/FilterPopover";
-import { FilterTags } from "../components/filterTags";
+import { FilterPopover } from "../../components/FilterPopover";
+import { FilterTags } from "../../components/filterTags";
 import { KeyboardShortcut } from "@/components/custom/KeyBoardShortcut";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
 import { useHotkeys } from "react-hotkeys-hook";
-import { AssignMemberComboBox } from "../components/AssignMemberCombobox";
+import { AssignMemberComboBox } from "../../components/AssignMemberCombobox";
 import clsx from "clsx";
 
 // Add custom properties TableMeta (to let us see if row is hovered (for now))
@@ -80,7 +80,7 @@ interface DataTableProps<TData, TValue> {
   title: string;
 }
 
-export function DataTable<TData, TValue>({
+export function InboxLandingPage<TData, TValue>({
   columns,
   data,
   conversationLabels,
