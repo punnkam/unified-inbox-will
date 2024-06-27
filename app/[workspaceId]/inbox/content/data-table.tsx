@@ -274,26 +274,28 @@ export function DataTable<TData, TValue>({
           </div>
 
           {/* badges */}
-          <div className="flex flex-wrap md:flex-nowrap gap-4 overflow-x-auto px-1 md:py-1 md:px-0">
-            {conversationLabels.map((item, index) => {
-              return (
-                <Badge
-                  key={index}
-                  id={item.id!}
-                  title={item.name}
-                  number={item.numberOfUses}
-                  subscipton="Outstanding requests"
-                  icon={item.iconId}
-                  iconType={item.type.color}
-                  percentage={-12}
-                  setColumnFilters={(columnId, value) =>
-                    handleFilterChange(columnId, value)
-                  }
-                  columnFilters={columnFilters}
-                />
-              );
-            })}
-          </div>
+          {conversationLabels.length > 0 && (
+            <div className="flex flex-wrap md:flex-nowrap gap-4 overflow-x-auto px-1 md:py-1 md:px-0">
+              {conversationLabels.map((item, index) => {
+                return (
+                  <Badge
+                    key={index}
+                    id={item.id!}
+                    title={item.name}
+                    number={item.numberOfUses}
+                    subscipton="Outstanding requests"
+                    icon={item.iconId}
+                    iconType={item.type.color}
+                    percentage={-12}
+                    setColumnFilters={(columnId, value) =>
+                      handleFilterChange(columnId, value)
+                    }
+                    columnFilters={columnFilters}
+                  />
+                );
+              })}
+            </div>
+          )}
 
           <div className="flex items-center justify-between">
             <Tabs defaultValue="Todo">
