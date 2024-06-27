@@ -25,7 +25,9 @@ export const LabelsTagsGroups = ({
 }) => {
   return (
     <div className="flex items-center gap-1 rounded-full px-2 py-1 border border-secondary-hover w-fit h-[25px]">
-      {icon && <div>{icon}</div>}
+      {icon && (
+        <div className="h-full flex items-center justify-center">{icon}</div>
+      )}
 
       {showHosty && <HostAiIcon className="w-3 h-3" />}
 
@@ -43,9 +45,7 @@ export const LabelsTagsGroups = ({
         </span>
       )}
 
-      {color && (
-        <div className={cn(`w-2 h-2 rounded-full`, colorMap[color])}></div>
-      )}
+      {color && <div className={cn(`w-2 h-2 rounded-full`, colorMap[color])} />}
 
       <p className="text-body-xs whitespace-nowrap truncate h-full">{text}</p>
     </div>
