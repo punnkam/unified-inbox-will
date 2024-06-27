@@ -53,6 +53,8 @@ export const columns: ColumnDef<Conversation>[] = [
         const endOfWeek = new Date(today);
         endOfWeek.setDate(today.getDate() + (7 - today.getDay()));
 
+        // TODO: these dates are being set in local time, causing 2024-06-26 to show the 25th
+
         const checkInDateMatch = checkInDate.some((option) => {
           const tripStartDate = new Date(
             row.original.reservation.arrivalDate
@@ -339,9 +341,7 @@ export const columns: ColumnDef<Conversation>[] = [
       const listingGroup = filterValue.listingGroups;
       const listings = filterValue.listings;
 
-      if (listingGroup) {
-        if (listingGroup.length === 0) return true;
-
+      if (listingGroup && listingGroup.length > 0) {
         //listing group is an array of listing ids that are in that group
         const isInListingGroup = listingGroup.some(
           (group) => group.id == row.original.reservation.listing.listingId

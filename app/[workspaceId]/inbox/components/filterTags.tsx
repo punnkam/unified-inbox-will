@@ -44,6 +44,7 @@ export const FilterTags = ({
     (filter) =>
       typeof filter.value === "object" &&
       filter.value !== null &&
+      Object.keys(filter.value).length > 0 &&
       Object.values(filter.value).some((filterValue) => filterValue.length > 0)
   );
 
