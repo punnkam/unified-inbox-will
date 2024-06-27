@@ -1407,7 +1407,7 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1008,
       createdAtTimestamp: 1622582400,
-      arrivalDate: "2024-08-10",
+      arrivalDate: "2024-06-30",
       departureDate: "2024-08-15",
       checkInTime: "14:00",
       checkOutTime: "11:00",
