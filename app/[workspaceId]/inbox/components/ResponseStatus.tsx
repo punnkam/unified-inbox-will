@@ -34,12 +34,12 @@ export const ResponseStatus = ({
   return (
     <div
       className={cn(
-        "flex items-center gap-1 rounded-full text-subtitle-xs px-2 py-1",
+        "flex items-center gap-1 rounded-full px-2 py-1 h-[25px]",
         IconMap[type!].classes
       )}
     >
       <div className="">{IconMap[type!].icon}</div>
-      {type}
+      <p className="text-subtitle-xs">{type}</p>
     </div>
   );
 };

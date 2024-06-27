@@ -24,7 +24,7 @@ export const LabelsTagsGroups = ({
   color?: keyof typeof colorMap;
 }) => {
   return (
-    <div className="flex items-center gap-1 rounded-full px-2 py-1 border border-secondary-hover w-fit">
+    <div className="flex items-center gap-1 rounded-full px-2 py-1 border border-secondary-hover w-fit h-[25px]">
       {icon && <div>{icon}</div>}
 
       {showHosty && <HostAiIcon className="w-3 h-3" />}
@@ -33,7 +33,7 @@ export const LabelsTagsGroups = ({
         <img
           src={avatar}
           alt="icon"
-          className="w-4 h-4 rounded-full object-cover"
+          className="w-4 h-4 min-w-4 min-h-4 rounded-full object-cover"
         />
       )}
 
@@ -47,7 +47,7 @@ export const LabelsTagsGroups = ({
         <div className={cn(`w-2 h-2 rounded-full`, colorMap[color])}></div>
       )}
 
-      <p className="text-body-xs whitespace-nowrap">{text}</p>
+      <p className="text-body-xs whitespace-nowrap truncate">{text}</p>
     </div>
   );
 };

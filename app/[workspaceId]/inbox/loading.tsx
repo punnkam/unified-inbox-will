@@ -42,7 +42,7 @@ export default function Loading() {
           return (
             <div
               key={index}
-              className="flex w-[1150px] md:w-full justify-between items-center px-4 md:px-8 border-b border-primary h-[95px]"
+              className="flex min-w-[1150px] w-full justify-between items-center px-4 md:px-8 border-b border-primary h-[95px]"
             >
               <div className="flex gap-3 items-center">
                 <Skeleton className="size-10 min-w-10 min-h-10 rounded-full" />
@@ -50,7 +50,7 @@ export default function Loading() {
                   <Skeleton className="h-[19px] w-28 rounded-full" />
 
                   <div className="flex items-center gap-2">
-                    <Skeleton className="h-[28px] w-[82px] rounded-full" />
+                    <Skeleton className="h-[25px] w-[82px] rounded-full" />
                     <Skeleton className="h-[16px] w-28 rounded-full" />
                   </div>
                 </div>
@@ -58,17 +58,15 @@ export default function Loading() {
               <div className="flex flex-col gap-2 justify-center">
                 <Skeleton className="h-[19px] w-72 rounded-full" />
                 <div className="flex items-center gap-1">
-                  <Skeleton className="h-[26px] w-[90px] rounded-full" />
-                  <Skeleton className="h-[26px] w-[190px] rounded-full" />
-                  <Skeleton className="h-[26px] w-[90px] rounded-full" />
-                  <Skeleton className="h-[26px] w-[120px] rounded-full" />
+                  <Skeleton className="h-[25px] w-[90px] rounded-full" />
+                  <Skeleton className="h-[25px] w-[190px] rounded-full" />
+                  <Skeleton className="h-[25px] w-[90px] rounded-full" />
+                  <Skeleton className="h-[25px] w-[120px] rounded-full" />
                 </div>
               </div>
               <div className="flex flex-col gap-2 justify-center">
                 <Skeleton className="h-[19px] w-32 rounded-full" />
-                <div className="flex items-center gap-1">
-                  <Skeleton className="h-[26px] w-[90px] rounded-full" />
-                </div>
+                <Skeleton className="h-[26px] w-[90px] rounded-full" />
               </div>
               <div className="flex flex-col gap-2 justify-center items-end">
                 <Skeleton className="size-5 min-w-5 min-h-5 rounded-full" />
