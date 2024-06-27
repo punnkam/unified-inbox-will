@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { SlackIcon } from "@/components/icons/CustomIcons";
 import Link from "next/link";
 import { fetchSlackConnections } from "@/app/actions";
-import moment from "moment";
+import { formatDistance } from "date-fns";
 
 export const SlackIntegration = async ({
   workspaceId,
@@ -31,7 +31,10 @@ export const SlackIntegration = async ({
           <div>
             <p className="text-subtitle-xs">{connection.name}</p>
             <p className="text-body-2xs font-normal text-tertiary">
-              Added by you {moment(connection.connectionDate).fromNow()}
+              Added by you{" "}
+              {formatDistance(new Date(connection.connectionDate), new Date(), {
+                addSuffix: true,
+              })}
             </p>
           </div>
         </div>

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { fetchBreezewayConnections } from "@/app/actions";
 import EditBreezewayContent from "./content";
-import moment from "moment";
+import { formatDistance } from "date-fns";
 
 export default async function EditBreezewayPage({
   params: { workspaceId },
@@ -31,7 +31,13 @@ export default async function EditBreezewayPage({
         <p className="text-body-xs font-normal text-tertiary flex items-center gap-1">
           <InfoCircleIcon />
           Added to the {breezewayConnections[0].name} Breezeway account{" "}
-          {moment(breezewayConnections[0].connectionDate).fromNow()}
+          {formatDistance(
+            new Date(breezewayConnections[0].connectionDate),
+            new Date(),
+            {
+              addSuffix: true,
+            }
+          )}
         </p>
       </div>
 

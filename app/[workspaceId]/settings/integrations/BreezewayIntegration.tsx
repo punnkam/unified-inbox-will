@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { BreezewayIcon } from "@/components/icons/CustomIcons";
 import { fetchBreezewayConnections } from "@/app/actions";
 import Link from "next/link";
-import moment from "moment";
+import { formatDistance } from "date-fns";
 import { BreezewayDialog } from "./breezewayDialog";
 
 export const BreezewayIntegration = async ({
@@ -32,7 +32,10 @@ export const BreezewayIntegration = async ({
           <div>
             <p className="text-subtitle-xs">{connection.name}</p>
             <p className="text-body-2xs font-normal text-tertiary">
-              Added by you {moment(connection.connectionDate).fromNow()}
+              Added by you{" "}
+              {formatDistance(new Date(connection.connectionDate), new Date(), {
+                addSuffix: true,
+              })}
             </p>
           </div>
         </div>
