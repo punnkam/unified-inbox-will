@@ -275,7 +275,7 @@ export function InboxLandingPage<TData, TValue>({
 
           {/* badges */}
           {conversationLabels.length > 0 && (
-            <div className="flex flex-col md:flex-row md:flex-nowrap overflow-y-auto md:overflow-y-clip md:overflow-x-auto px-1 md:py-1 md:px-0 relative">
+            <div className="flex flex-col md:flex-row md:flex-nowrap overflow-y-auto md:overflow-y-clip md:overflow-x-auto px-1 md:py-1 md:px-0 md:h-fit">
               {conversationLabels.map((item, index) => {
                 return (
                   <Badge
