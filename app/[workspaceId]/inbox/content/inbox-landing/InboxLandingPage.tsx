@@ -275,7 +275,7 @@ export function InboxLandingPage<TData, TValue>({
 
           {/* badges */}
           {conversationLabels.length > 0 && (
-            <div className="flex flex-wrap md:flex-nowrap gap-4 overflow-x-auto px-1 md:py-1 md:px-0">
+            <div className="flex flex-col md:flex-row md:flex-nowrap overflow-y-auto md:overflow-y-clip md:overflow-x-auto px-1 md:py-1 md:px-0 relative">
               {conversationLabels.map((item, index) => {
                 return (
                   <Badge
@@ -291,6 +291,19 @@ export function InboxLandingPage<TData, TValue>({
                       handleFilterChange(columnId, value)
                     }
                     columnFilters={columnFilters}
+                    className={
+                      conversationLabels.length < 4
+                        ? index === 0
+                          ? "pl-0 md:min-w-[33.3%] md:w-1/3"
+                          : index === conversationLabels.length - 1
+                          ? "pr-0 md:min-w-[33.3%] md:w-1/3"
+                          : "md:min-w-[33.3%] md:w-1/3"
+                        : index === 0
+                        ? "pl-0 md:min-w-[25%] md:w-1/4"
+                        : index === conversationLabels.length - 1
+                        ? "pr-0 md:min-w-[25%] md:w-1/4"
+                        : "md:min-w-[25%] md:w-1/4"
+                    }
                   />
                 );
               })}
@@ -495,7 +508,7 @@ export function InboxLandingPage<TData, TValue>({
                               ? "20px 10px 20px 32px"
                               : index === row.getVisibleCells().length - 1
                               ? "20px 32px 20px 10px"
-                              : "20 10px",
+                              : "20px 10px",
                           maxWidth: cell.column.columnDef.size,
                         }}
                       >
