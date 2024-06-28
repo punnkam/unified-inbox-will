@@ -491,10 +491,12 @@ export function InboxLandingPage<TData, TValue>({
                             cell.column.id == "Listing name" ||
                             cell.column.id == "Assignee"
                               ? "0px"
-                              : index === 0 ||
-                                index === row.getVisibleCells().length - 1
-                              ? "20px 32px"
-                              : "20px",
+                              : index === 0
+                              ? "20px 10px 20px 32px"
+                              : index === row.getVisibleCells().length - 1
+                              ? "20px 32px 20px 10px"
+                              : "20 10px",
+                          maxWidth: cell.column.columnDef.size,
                         }}
                       >
                         {flexRender(

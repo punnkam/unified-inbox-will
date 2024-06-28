@@ -17,12 +17,14 @@ import {
 } from "@/components/icons/CustomIcons";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Conversation, appliedFilters } from "@/lib/realDataSchema";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export const columns: ColumnDef<Conversation>[] = [
   {
     accessorKey: "user",
     header: "User",
     enableHiding: false,
+    size: 175,
     filterFn: (row, columnId, filterValue: appliedFilters) => {
       if (!filterValue) return true;
 
@@ -109,7 +111,7 @@ export const columns: ColumnDef<Conversation>[] = [
 
           {/* If is hovered or is selected then show the checkbox */}
           {isHovered || isSelected ? (
-            <div className="flex items-center justify-center size-10">
+            <div className="flex items-center justify-center size-10 min-w-10 min-h-10">
               <Checkbox
                 checked={isSelected}
                 onCheckedChange={(value) => row.toggleSelected(!!value)}
@@ -135,7 +137,7 @@ export const columns: ColumnDef<Conversation>[] = [
             </div>
           )}
 
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 truncate">
             <p className="text-subtitle-sm text-nowrap">
               {row.original.reservation.guest.name}
             </p>
@@ -183,6 +185,7 @@ export const columns: ColumnDef<Conversation>[] = [
     accessorKey: "messages",
     header: "Messages",
     enableHiding: false,
+    size: 300,
     filterFn: (row, columnId, filterValue: appliedFilters) => {
       if (!filterValue) return true;
 
@@ -262,71 +265,74 @@ export const columns: ColumnDef<Conversation>[] = [
         : null;
 
       return (
-        <div className="flex flex-col gap-2 pl-10">
+        <div className="flex flex-col gap-2">
           <p className="text-secondary text-body-sm font-normal truncate max-w-[80%]">
             {row.original.lastMessage?.text}
           </p>
-          <div className="flex gap-1 items-center">
-            {/* message status */}
-            {replyStatus && (
-              <LabelsTagsGroups
-                text={replyStatus}
-                showHosty={replyStatus === "Response Available"}
-                icon={
-                  (replyStatus === "Replied to" && (
-                    <MessageCheckCircleIcon className="text-icon-tertiary w-3 h-3" />
-                  )) ||
-                  (replyStatus === "Needs Reply" && (
-                    <MessageNotificationIcon className="text-icon-error-alt w-3 h-3" />
-                  )) ||
-                  (replyStatus === "Done" && (
-                    <CheckCircleIcon className="text-icon-success w-3 h-3" />
-                  ))
-                }
-              />
-            )}
-
-            {table.getColumn("Listing name")?.getIsVisible() &&
-              row.original.reservation.listing && (
+          <ScrollArea>
+            <div className="flex gap-1 items-center truncate">
+              {/* message status */}
+              {replyStatus && (
                 <LabelsTagsGroups
-                  text={row.original.reservation.listing.name}
-                  avatar={
-                    row.original.reservation.listing.listingImage as string
+                  text={replyStatus}
+                  showHosty={replyStatus === "Response Available"}
+                  icon={
+                    (replyStatus === "Replied to" && (
+                      <MessageCheckCircleIcon className="text-icon-tertiary w-3 h-3" />
+                    )) ||
+                    (replyStatus === "Needs Reply" && (
+                      <MessageNotificationIcon className="text-icon-error-alt w-3 h-3" />
+                    )) ||
+                    (replyStatus === "Done" && (
+                      <CheckCircleIcon className="text-icon-success w-3 h-3" />
+                    ))
                   }
                 />
               )}
 
-            {table.getColumn("Reservation labels")?.getIsVisible() &&
-              row.original.reservation.reservationLabels &&
-              row.original.reservation.reservationLabels.map((label) => (
-                <LabelsTagsGroups
-                  key={label?.id}
-                  text={label!.name}
-                  emoji={label?.emojiId}
-                />
-              ))}
-
-            {/* list all tags applied */}
-            {table.getColumn("Conversation tags")?.getIsVisible() &&
-              row.original.tags &&
-              row.original.tags.map((tag) => {
-                const icon = fakeIconsData.find(
-                  (icon) => icon.id === tag?.iconId
-                );
-                return (
+              {table.getColumn("Listing name")?.getIsVisible() &&
+                row.original.reservation.listing && (
                   <LabelsTagsGroups
-                    key={tag?.id}
-                    text={tag!.name}
-                    icon={
-                      <IconComponent
-                        icon={icon!.icon}
-                        classNames="size-3 text-tertiary"
-                      />
+                    text={row.original.reservation.listing.name}
+                    avatar={
+                      row.original.reservation.listing.listingImage as string
                     }
                   />
-                );
-              })}
-          </div>
+                )}
+
+              {table.getColumn("Reservation labels")?.getIsVisible() &&
+                row.original.reservation.reservationLabels &&
+                row.original.reservation.reservationLabels.map((label) => (
+                  <LabelsTagsGroups
+                    key={label?.id}
+                    text={label!.name}
+                    emoji={label?.emojiId}
+                  />
+                ))}
+
+              {/* list all tags applied */}
+              {table.getColumn("Conversation tags")?.getIsVisible() &&
+                row.original.tags &&
+                row.original.tags.map((tag) => {
+                  const icon = fakeIconsData.find(
+                    (icon) => icon.id === tag?.iconId
+                  );
+                  return (
+                    <LabelsTagsGroups
+                      key={tag?.id}
+                      text={tag!.name}
+                      icon={
+                        <IconComponent
+                          icon={icon!.icon}
+                          classNames="size-3 text-tertiary"
+                        />
+                      }
+                    />
+                  );
+                })}
+            </div>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
         </div>
       );
     },
@@ -335,6 +341,7 @@ export const columns: ColumnDef<Conversation>[] = [
     accessorKey: "listing",
     header: "Listing",
     enableHiding: false,
+    size: 100,
     filterFn: (row, columnId, filterValue: appliedFilters) => {
       if (!filterValue) return true;
 
@@ -402,6 +409,7 @@ export const columns: ColumnDef<Conversation>[] = [
     accessorKey: "assigneeGroup",
     header: "AssigneeGroup",
     enableHiding: false,
+    size: 80,
     filterFn: (row, columnId, filterValue: appliedFilters) => {
       // filterValue: { assigneeGroup: [{optionWithData}, {optionWithData}, {optionWithData}] }
 
