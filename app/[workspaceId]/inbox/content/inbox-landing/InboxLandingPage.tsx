@@ -294,14 +294,14 @@ export function InboxLandingPage<TData, TValue>({
                     className={
                       conversationLabels.length < 4
                         ? index === 0
-                          ? "pl-0 md:min-w-[33.3%] md:w-1/3"
+                          ? "md:pl-0 md:min-w-[33.3%] md:w-1/3"
                           : index === conversationLabels.length - 1
-                          ? "pr-0 md:min-w-[33.3%] md:w-1/3"
+                          ? "md:pr-0 md:min-w-[33.3%] md:w-1/3"
                           : "md:min-w-[33.3%] md:w-1/3"
                         : index === 0
-                        ? "pl-0 md:min-w-[25%] md:w-1/4"
+                        ? "md:pl-0 md:min-w-[25%] md:w-1/4"
                         : index === conversationLabels.length - 1
-                        ? "pr-0 md:min-w-[25%] md:w-1/4"
+                        ? "md:pr-0 md:min-w-[25%] md:w-1/4"
                         : "md:min-w-[25%] md:w-1/4"
                     }
                   />

@@ -84,7 +84,7 @@ export const Badge = ({
           <div className="flex items-center gap-2">
             <div
               className={clsx(
-                "flex items-center justify-center h-9 w-9 text-white rounded-lg",
+                "flex items-center justify-center h-9 w-9 min-h-9 min-w-9 text-white rounded-lg",
                 iconType === "error" && "bg-error",
                 iconType === "success" && "bg-success",
                 iconType === "active" && "bg-icon-active",

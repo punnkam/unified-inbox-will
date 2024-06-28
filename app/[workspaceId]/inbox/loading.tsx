@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { SidebarTrigger } from "./SidebarTrigger";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -17,13 +18,26 @@ export default function Loading() {
         </div>
 
         {/* badges */}
-        <div className="flex flex-wrap md:flex-nowrap gap-4 overflow-x-auto px-1 md:py-1 md:px-0">
-          {Array.from({ length: 4 }).map((_, index) => {
+        <div className="flex flex-col md:flex-row md:flex-nowrap overflow-y-auto md:overflow-y-clip md:overflow-x-auto px-1 md:py-1 md:px-0 md:h-fit">
+          {Array.from({ length: 4 }).map((_, index, array) => {
             return (
-              <Skeleton
-                key={index}
-                className="rounded-xl h-[157px] w-full min-w-[24%] border border-primary"
-              />
+              <div
+                className={cn(
+                  "py-2 md:px-2 md:py-0",
+                  index === 0
+                    ? "md:pl-0 md:min-w-[25%] md:w-1/4"
+                    : index === array.length - 1
+                    ? "md:pr-0 md:min-w-[25%] md:w-1/4"
+                    : "md:min-w-[25%] md:w-1/4"
+                )}
+              >
+                <Skeleton
+                  key={index}
+                  className={cn(
+                    "rounded-xl h-[157px] w-full min-w-[24%] border border-primary"
+                  )}
+                />
+              </div>
             );
           })}
         </div>
@@ -42,7 +56,7 @@ export default function Loading() {
           return (
             <div
               key={index}
-              className="flex min-w-[1150px] w-full justify-between items-center px-4 md:px-8 border-b border-primary h-[95px]"
+              className="flex w-full justify-between items-center px-4 md:px-8 border-b border-primary h-[95px]"
             >
               <div className="flex gap-3 items-center">
                 <Skeleton className="size-10 min-w-10 min-h-10 rounded-full" />
@@ -51,7 +65,7 @@ export default function Loading() {
 
                   <div className="flex items-center gap-2">
                     <Skeleton className="h-[25px] w-[82px] rounded-full" />
-                    <Skeleton className="h-[16px] w-28 rounded-full" />
+                    <Skeleton className="h-[16px] w-20 rounded-full" />
                   </div>
                 </div>
               </div>
