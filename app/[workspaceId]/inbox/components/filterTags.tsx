@@ -1,5 +1,5 @@
 import { ColumnFiltersState } from "@tanstack/react-table";
-import { AllFilters, FilterValue, allFilters } from "@/lib/types";
+import { AllFilters, FilterValue, allFilters } from "@/lib/realDataSchema";
 import { Button } from "@/components/ui/button";
 import { XIcon } from "lucide-react";
 import { IconComponent } from "@/components/icons/IconComponent";
@@ -44,6 +44,7 @@ export const FilterTags = ({
     (filter) =>
       typeof filter.value === "object" &&
       filter.value !== null &&
+      Object.keys(filter.value).length > 0 &&
       Object.values(filter.value).some((filterValue) => filterValue.length > 0)
   );
 

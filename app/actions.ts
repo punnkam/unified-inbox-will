@@ -17,18 +17,19 @@ import {
   fakeSavedRepliesData,
   SavedReply,
   ConversationTag,
-  fakeConversationTags,
   PersonalNotifications,
   Listing,
-  ReservationLabel,
-  fakeReservationLabels,
+} from "@/lib/types";
+import {
+  fakeWorkspaces,
   Conversation,
-  fakeConversationData,
-  apiConversationData,
-  ConversationWithAllData,
+  mockConversationData,
   fakeListingGroupsData,
   ListingGroup,
-} from "@/lib/types";
+  ReservationLabel,
+  fakeReservationLabels,
+  fakeConversationTags,
+} from "@/lib/realDataSchema";
 
 // Action to handle fetching members and adding a delete handler to each member
 export const fetchMembers = async (
@@ -1134,16 +1135,33 @@ export const getWorkspace = async (
  * Inbox page actions
  */
 
+// External function to add listing group data to each conversation
+const addListingGroupData = (
+  conversations: Conversation[],
+  listingGroups: ListingGroup[]
+): void => {
+  conversations.forEach((conversation) => {
+    const listingGroup = listingGroups.find((listingGroup) =>
+      listingGroup.listingIds.includes(
+        conversation.reservation.listing.listingId
+      )
+    );
+
+    // Add listing group data to the conversation data for easy access
+    conversation.reservation.listing.listingGroupData = listingGroup;
+  });
+};
+
 export const fetchAllConversations = async (
   workspaceId: string
 ): Promise<{
   success: boolean;
   message: string;
-  data?: ConversationWithAllData[];
+  data?: Conversation[];
 }> => {
   "use server";
 
-  const workspace = fakeWorkspaceData.find(
+  const workspace = fakeWorkspaces.find(
     (workspace) => workspace.slug === workspaceId
   );
 
@@ -1153,7 +1171,10 @@ export const fetchAllConversations = async (
 
   // add a 2 second wait
 
-  const allConversations = apiConversationData;
+  const allConversations = mockConversationData;
+
+  // add listing group data to each conversation
+  addListingGroupData(allConversations, fakeListingGroupsData);
 
   return {
     success: true,
@@ -1165,15 +1186,15 @@ export const fetchAllConversations = async (
 // fetch conversations based on assignee
 export const fetchAssignedConversations = async (
   workspaceId: string,
-  memberId: number
+  memberId: number | null
 ): Promise<{
   success: boolean;
   message: string;
-  data?: ConversationWithAllData[];
+  data?: Conversation[];
 }> => {
   "use server";
 
-  const workspace = fakeWorkspaceData.find(
+  const workspace = fakeWorkspaces.find(
     (workspace) => workspace.slug === workspaceId
   );
 
@@ -1183,9 +1204,12 @@ export const fetchAssignedConversations = async (
 
   // add a 2 second wait
 
-  const myConversations = apiConversationData.filter(
-    (conversation) => conversation.assignedTo == memberId
+  const myConversations = mockConversationData.filter(
+    (conversation) => conversation.assignee == memberId
   );
+
+  // add listing group data to each conversation
+  addListingGroupData(myConversations, fakeListingGroupsData);
 
   return {
     success: true,
@@ -1201,11 +1225,11 @@ export const fetchReservationLabelConversations = async (
 ): Promise<{
   success: boolean;
   message: string;
-  data?: ConversationWithAllData[];
+  data?: Conversation[];
 }> => {
   "use server";
 
-  const workspace = fakeWorkspaceData.find(
+  const workspace = fakeWorkspaces.find(
     (workspace) => workspace.slug === workspaceId
   );
 
@@ -1213,14 +1237,17 @@ export const fetchReservationLabelConversations = async (
     return { success: false, message: "Workspace not found" };
   }
 
-  console.log("reservationLabelId", reservationLabelId);
-
   // add a 2 second wait
 
-  const conversations = apiConversationData.filter((conversation) =>
+  const conversations = mockConversationData.filter((conversation) =>
     // id's are just numbers in my fake data so i convert the string to a number
-    conversation.reservationLabelIds?.includes(parseInt(reservationLabelId))
+    conversation.reservation.reservationLabels?.find(
+      (label) => label.id === parseInt(reservationLabelId)
+    )
   );
+
+  // add listing group data to each conversation
+  addListingGroupData(conversations, fakeListingGroupsData);
 
   return {
     success: true,
@@ -1236,11 +1263,11 @@ export const fetchListingGroupConversations = async (
 ): Promise<{
   success: boolean;
   message: string;
-  data?: ConversationWithAllData[];
+  data?: Conversation[];
 }> => {
   "use server";
 
-  const workspace = fakeWorkspaceData.find(
+  const workspace = fakeWorkspaces.find(
     (workspace) => workspace.slug === workspaceId
   );
 
@@ -1248,15 +1275,22 @@ export const fetchListingGroupConversations = async (
     return { success: false, message: "Workspace not found" };
   }
 
-  console.log("listingGroupId", listingGroupId);
-
   // add a 2 second wait
 
-  const conversations = apiConversationData.filter(
-    (conversation) =>
-      // id's are just numbers in my fake data so i convert the string to a number
-      conversation.listingGroupData?.id === parseInt(listingGroupId)
+  const listingGroup = fakeListingGroupsData.find(
+    (group) => group.id.toString() === listingGroupId
   );
+
+  if (!listingGroup) {
+    return { success: false, message: "Listing group not found" };
+  }
+
+  const conversations = mockConversationData.filter((conversation) =>
+    listingGroup.listingIds.includes(conversation.reservation.listing.listingId)
+  );
+
+  // add listing group data to each conversation
+  addListingGroupData(conversations, fakeListingGroupsData);
 
   return {
     success: true,
@@ -1274,7 +1308,7 @@ export const fetchConversation = async (
   // await new Promise((resolve) => setTimeout(resolve, 2000));
 
   // get the conversation with the same id
-  const conversation = fakeConversationData.find(
+  const conversation = mockConversationData.find(
     (conversation) => conversation.id === parseInt(conversationId)
   );
 
@@ -1299,7 +1333,7 @@ export const fetchListingGroups = async (
 }> => {
   "use server";
 
-  const workspace = fakeWorkspaceData.find(
+  const workspace = fakeWorkspaces.find(
     (workspace) => workspace.slug === workspaceId
   );
 

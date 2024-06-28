@@ -12,7 +12,7 @@ import {
   VisibilityState,
   RowData,
 } from "@tanstack/react-table";
-import { Badge } from "../components/badge";
+import { Badge } from "../../components/badge";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -31,9 +31,9 @@ import {
 import { useState } from "react";
 import { SearchIcon, XIcon } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs-inbox";
-import { SidebarTrigger } from "../SidebarTrigger";
+import { SidebarTrigger } from "../../SidebarTrigger";
 import { cn } from "@/lib/utils";
-import { ConversationTag, ConversationWithAllData, Member } from "@/lib/types";
+import { Conversation, ConversationTag, Member } from "@/lib/realDataSchema";
 import { Button } from "@/components/ui/button";
 import {
   TagIcon,
@@ -46,13 +46,14 @@ import {
   ContrastIcon,
   CheckCircleIcon,
 } from "@/components/icons/CustomIcons";
-import { FilterPopover } from "../components/FilterPopover";
-import { FilterTags } from "../components/filterTags";
+import { FilterPopover } from "../../components/FilterPopover";
+import { FilterTags } from "../../components/filterTags";
 import { KeyboardShortcut } from "@/components/custom/KeyBoardShortcut";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
 import { useHotkeys } from "react-hotkeys-hook";
-import { AssignMemberComboBox } from "../components/AssignMemberCombobox";
+import { AssignMemberComboBox } from "../../components/AssignMemberCombobox";
+import clsx from "clsx";
 
 // Add custom properties TableMeta (to let us see if row is hovered (for now))
 declare module "@tanstack/react-table" {
@@ -79,7 +80,7 @@ interface DataTableProps<TData, TValue> {
   title: string;
 }
 
-export function DataTable<TData, TValue>({
+export function InboxLandingPage<TData, TValue>({
   columns,
   data,
   conversationLabels,
@@ -89,7 +90,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
     {
       id: "messageStatus",
-      value: "Todo",
+      value: false,
     },
   ]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
@@ -141,7 +142,7 @@ export function DataTable<TData, TValue>({
     }
 
     table.getSelectedRowModel().rows.map((row) => {
-      const rowData = row.original as ConversationWithAllData;
+      const rowData = row.original as Conversation;
       console.log("Mark as unread", rowData);
 
       // Do something with the rows to mark them as unread
@@ -164,7 +165,7 @@ export function DataTable<TData, TValue>({
     }
 
     table.getSelectedRowModel().rows.map((row) => {
-      const rowData = row.original as ConversationWithAllData;
+      const rowData = row.original as Conversation;
       console.log("Mark as done", rowData);
 
       // Do something with the rows to mark them as done
@@ -187,7 +188,7 @@ export function DataTable<TData, TValue>({
     }
 
     table.getSelectedRowModel().rows.map((row) => {
-      const rowData = row.original as ConversationWithAllData;
+      const rowData = row.original as Conversation;
       console.log("Assign", rowData, "to", member);
 
       // Do something with the rows to assign them to a member
@@ -215,7 +216,8 @@ export function DataTable<TData, TValue>({
     });
   };
 
-  const handleTabChange = (tab: "Todo" | "Done") => {
+  const handleTabChange = (tab: boolean) => {
+    console.log("Tab change", tab);
     table.getColumn("messageStatus")?.setFilterValue(tab);
   };
 
@@ -272,42 +274,64 @@ export function DataTable<TData, TValue>({
           </div>
 
           {/* badges */}
-          <div className="flex flex-wrap md:flex-nowrap gap-4 overflow-x-auto px-1 md:py-1 md:px-0">
-            {conversationLabels.map((item, index) => {
-              return (
-                <Badge
-                  key={index}
-                  id={item.id!}
-                  title={item.name}
-                  number={item.numberOfUses}
-                  subscipton="Outstanding requests"
-                  icon={item.iconId}
-                  iconType={item.type.color}
-                  percentage={-12}
-                  setColumnFilters={(columnId, value) =>
-                    handleFilterChange(columnId, value)
-                  }
-                  columnFilters={columnFilters}
-                />
-              );
-            })}
-          </div>
+          {conversationLabels.length > 0 && (
+            <div className="flex flex-col md:flex-row md:flex-nowrap overflow-y-auto md:overflow-y-clip md:overflow-x-auto px-1 md:py-1 md:px-0 md:h-fit">
+              {conversationLabels.map((item, index) => {
+                return (
+                  <Badge
+                    key={index}
+                    id={item.id!}
+                    title={item.name}
+                    number={item.numberOfUses}
+                    subscipton="Outstanding requests"
+                    icon={item.iconId}
+                    iconType={item.type.color}
+                    percentage={-12}
+                    setColumnFilters={(columnId, value) =>
+                      handleFilterChange(columnId, value)
+                    }
+                    columnFilters={columnFilters}
+                    className={
+                      conversationLabels.length < 4
+                        ? index === 0
+                          ? "md:pl-0 md:min-w-[33.3%] md:w-1/3"
+                          : index === conversationLabels.length - 1
+                          ? "md:pr-0 md:min-w-[33.3%] md:w-1/3"
+                          : "md:min-w-[33.3%] md:w-1/3"
+                        : index === 0
+                        ? "md:pl-0 md:min-w-[25%] md:w-1/4"
+                        : index === conversationLabels.length - 1
+                        ? "md:pr-0 md:min-w-[25%] md:w-1/4"
+                        : "md:min-w-[25%] md:w-1/4"
+                    }
+                  />
+                );
+              })}
+            </div>
+          )}
 
           <div className="flex items-center justify-between">
             <Tabs defaultValue="Todo">
               <TabsList>
                 <TabsTrigger
                   value="Todo"
-                  onClick={() => handleTabChange("Todo")}
+                  onClick={() => handleTabChange(false)}
                 >
                   <div className="relative">
-                    <p className="flex items-center gap-2 h-9 text-title-sm">
+                    <p
+                      className={clsx(
+                        "flex items-center gap-2 h-9 text-title-sm",
+                        // Add active styles
+                        table.getColumn("messageStatus")?.getFilterValue() ===
+                          false && "text-brand"
+                      )}
+                    >
                       Todo
                       <span
                         className={cn(
                           "h-6 w-[28px] rounded-lg flex items-center justify-center text-tertiary text-subtitle-xs",
                           table.getColumn("messageStatus")?.getFilterValue() ===
-                            "Todo" &&
+                            false &&
                             "text-brand text-subtitle-xs bg-primary border border-primary"
                         )}
                       >
@@ -315,20 +339,26 @@ export function DataTable<TData, TValue>({
                       </span>
                     </p>
                     {table.getColumn("messageStatus")?.getFilterValue() ===
-                      "Todo" && (
-                      <div className="h-[3px] mt-3 right-0 left-0 w-full bg-brand absolute" />
+                      false && (
+                      <div className="h-[3px] mt-[11px] right-0 left-0 w-full bg-brand absolute" />
                     )}
                   </div>
                 </TabsTrigger>
-                <TabsTrigger
-                  value="done"
-                  onClick={() => handleTabChange("Done")}
-                >
+                <TabsTrigger value="done" onClick={() => handleTabChange(true)}>
                   <div className="relative">
-                    <p className="flex items-center h-9 text-title-sm">Done</p>
+                    <p
+                      className={clsx(
+                        "flex items-center h-9 text-title-sm",
+                        // Add active styles
+                        table.getColumn("messageStatus")?.getFilterValue() ===
+                          true && "text-brand"
+                      )}
+                    >
+                      Done
+                    </p>
                     {table.getColumn("messageStatus")?.getFilterValue() ===
-                      "Done" && (
-                      <div className="h-[3px] mt-3 right-0 left-0 w-full bg-brand absolute" />
+                      true && (
+                      <div className="h-[3px] mt-[11px] right-0 left-0 w-full bg-brand absolute" />
                     )}
                   </div>
                 </TabsTrigger>
@@ -474,10 +504,12 @@ export function DataTable<TData, TValue>({
                             cell.column.id == "Listing name" ||
                             cell.column.id == "Assignee"
                               ? "0px"
-                              : index === 0 ||
-                                index === row.getVisibleCells().length - 1
-                              ? "20px 32px"
-                              : "20px",
+                              : index === 0
+                              ? "20px 10px 20px 32px"
+                              : index === row.getVisibleCells().length - 1
+                              ? "20px 32px 20px 10px"
+                              : "20px 10px",
+                          maxWidth: cell.column.columnDef.size,
                         }}
                       >
                         {flexRender(

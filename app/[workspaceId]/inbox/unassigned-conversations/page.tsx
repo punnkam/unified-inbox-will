@@ -1,5 +1,5 @@
-import { DataTable } from "../content/data-table";
-import { columns } from "../content/columns";
+import { InboxLandingPage } from "../content/inbox-landing/InboxLandingPage";
+import { columns } from "../content/inbox-landing/columns";
 
 import {
   fetchAllConversations,
@@ -14,8 +14,8 @@ export default async function AllConversationsPage({
 }: {
   params: { workspaceId: string };
 }) {
-  //workspcae id amd user id are passed as parameters (-1 is unnassigned conversations)
-  const data = await fetchAssignedConversations(workspaceId, -1);
+  //workspcae id amd user id are passed as parameters (null is unnassigned conversations)
+  const data = await fetchAssignedConversations(workspaceId, null);
 
   if (!data || !data.success || !data.data) {
     return null;
@@ -41,9 +41,7 @@ export default async function AllConversationsPage({
     const numberOfUses = data.data?.reduce(
       (count, conversation) =>
         count +
-        (conversation.conversationTags?.map((tag) => tag?.id).includes(label.id)
-          ? 1
-          : 0),
+        (conversation.tags?.map((tag) => tag?.id).includes(label.id) ? 1 : 0),
       0
     );
     return { ...label, numberOfUses: numberOfUses };
@@ -52,7 +50,7 @@ export default async function AllConversationsPage({
   const availableMembers = await fetchAvailableMembers(workspaceId);
 
   return (
-    <DataTable
+    <InboxLandingPage
       title="Unassigned Conversations"
       columns={columns}
       data={data.data}

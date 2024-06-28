@@ -73,7 +73,7 @@ export const InboxSideBarOption = ({
         {count && (
           <div
             className={cn(
-              "rounded-lg text-subtitle-xs size-6 flex items-center justify-center",
+              "rounded-lg text-subtitle-xs h-6 w-[28px] flex items-center justify-center",
               selected ? "text-brand bg-primary" : "text-tertiary"
             )}
           >

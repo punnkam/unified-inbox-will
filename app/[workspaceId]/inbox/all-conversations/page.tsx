@@ -1,5 +1,5 @@
-import { DataTable } from "../content/data-table";
-import { columns } from "../content/columns";
+import { InboxLandingPage } from "../content/inbox-landing/InboxLandingPage";
+import { columns } from "../content/inbox-landing/columns";
 
 import {
   fetchAllConversations,
@@ -39,9 +39,7 @@ export default async function AllConversationsPage({
     const numberOfUses = data.data?.reduce(
       (count, conversation) =>
         count +
-        (conversation.conversationTags?.map((tag) => tag?.id).includes(label.id)
-          ? 1
-          : 0),
+        (conversation.tags?.map((tag) => tag?.id).includes(label.id) ? 1 : 0),
       0
     );
     return { ...label, numberOfUses: numberOfUses };
@@ -50,7 +48,7 @@ export default async function AllConversationsPage({
   const availableMembers = await fetchAvailableMembers(workspaceId);
 
   return (
-    <DataTable
+    <InboxLandingPage
       title="All Conversations"
       columns={columns}
       data={data.data}

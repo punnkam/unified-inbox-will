@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { AllFilters, FilterValue, FilterValues } from "@/lib/types";
+import { AllFilters, FilterValue, FilterValues } from "@/lib/realDataSchema";
 import { ColumnFiltersState } from "@tanstack/react-table";
 
 export function cn(...inputs: ClassValue[]) {

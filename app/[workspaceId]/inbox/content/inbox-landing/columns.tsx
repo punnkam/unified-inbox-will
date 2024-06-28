@@ -3,28 +3,28 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { LabelsTagsGroups } from "../components/LabelsTagsGroups";
-import {
-  ConversationWithAllData,
-  fakeIconsData,
-  appliedFilters,
-} from "@/lib/types";
+import { LabelsTagsGroups } from "../../components/LabelsTagsGroups";
+import { fakeIconsData } from "@/lib/types";
 import { IconComponent } from "@/components/icons/IconComponent";
-import { ResponseStatus } from "../components/ResponseStatus";
+import { ResponseStatus } from "../../components/ResponseStatus";
 import {
   CheckCircleIcon,
   MessageNotificationIcon,
   SlackIcon,
   WhatsAppIcon,
   AccountCircleIcon,
+  MessageCheckCircleIcon,
 } from "@/components/icons/CustomIcons";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Conversation, appliedFilters } from "@/lib/realDataSchema";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
-export const columns: ColumnDef<ConversationWithAllData>[] = [
+export const columns: ColumnDef<Conversation>[] = [
   {
     accessorKey: "user",
     header: "User",
     enableHiding: false,
+    size: 175,
     filterFn: (row, columnId, filterValue: appliedFilters) => {
       if (!filterValue) return true;
 
@@ -37,7 +37,7 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
 
         const hasAnySelectedTripStatus = tripStatus.some(
           (selectedStatus) =>
-            selectedStatus.name == row.original.reservationStatus
+            selectedStatus.name == row.original.reservation.status
         );
 
         if (!hasAnySelectedTripStatus) {
@@ -55,9 +55,15 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
         const endOfWeek = new Date(today);
         endOfWeek.setDate(today.getDate() + (7 - today.getDay()));
 
+        // TODO: these dates are being set in local time, causing 2024-06-26 to show the 25th
+
         const checkInDateMatch = checkInDate.some((option) => {
-          const tripStartDate = new Date(row.original.tripStartDate).getTime();
-          const tripEndDate = new Date(row.original.tripEndDate).getTime();
+          const tripStartDate = new Date(
+            row.original.reservation.arrivalDate
+          ).getTime();
+          const tripEndDate = new Date(
+            row.original.reservation.departureDate
+          ).getTime();
           const todayStart = new Date(today).setHours(0, 0, 0, 0);
           const todayEnd = new Date(today).setHours(23, 59, 59, 999);
           const tomorrowStart = new Date(tomorrow).setHours(0, 0, 0, 0);
@@ -99,13 +105,13 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
 
       return (
         <div className={`flex gap-3 items-center w-full`}>
-          {row.original.unread && (
+          {row.original.hasUnreadMessages && (
             <div className="size-2 bg-brand rounded-full absolute top-1/2 -translate-y-1/2 left-[16px] " />
           )}
 
           {/* If is hovered or is selected then show the checkbox */}
           {isHovered || isSelected ? (
-            <div className="flex items-center justify-center size-10">
+            <div className="flex items-center justify-center size-10 min-w-10 min-h-10">
               <Checkbox
                 checked={isSelected}
                 onCheckedChange={(value) => row.toggleSelected(!!value)}
@@ -115,11 +121,11 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
           ) : (
             <div className="relative">
               <img
-                src={row.original.guestImage}
-                alt={row.original.guestName}
+                src={row.original.reservation.guest.imageUrl!}
+                alt={row.original.reservation.guest.name || "Guest"}
                 className="size-10 min-w-10 min-h-10 rounded-full object-cover"
               />
-              {row.original.channel === "WhatsApp" ? (
+              {row.original.conversationType === "whatsapp" ? (
                 <div className="absolute bottom-0 -right-1 w-4 h-4 flex items-center justify-center bg-[#27D045] rounded-full">
                   <WhatsAppIcon className="size-[10px] text-primary-inverse" />
                 </div>
@@ -131,26 +137,29 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
             </div>
           )}
 
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 truncate">
             <p className="text-subtitle-sm text-nowrap">
-              {row.original.guestName}
+              {row.original.reservation.guest.name}
             </p>
             <div className="flex items-center gap-2">
-              <ResponseStatus type={row.original.reservationStatus} />
+              {row.original.reservation.status && (
+                <ResponseStatus type={row.original.reservation.status} />
+              )}
               <div className="flex items-center gap-2 text-secondary text-body-xs text-nowrap">
                 <p>
-                  {new Date(row.original.tripStartDate).toLocaleDateString(
-                    "en-US",
-                    { month: "short", day: "numeric" }
-                  )}{" "}
+                  {new Date(
+                    row.original.reservation.arrivalDate
+                  ).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                  })}{" "}
                   -{" "}
-                  {new Date(row.original.tripEndDate).toLocaleDateString(
-                    "en-US",
-                    {
-                      month: "short",
-                      day: "numeric",
-                    }
-                  )}
+                  {new Date(
+                    row.original.reservation.departureDate
+                  ).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                  })}
                 </p>
               </div>
             </div>
@@ -168,11 +177,15 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
     accessorKey: "messageStatus",
     header: "Message Status",
     enableHiding: false,
+    filterFn: (row, columnId, filterValue: boolean) => {
+      return row.original.archived! == filterValue;
+    },
   },
   {
     accessorKey: "messages",
     header: "Messages",
     enableHiding: false,
+    size: 300,
     filterFn: (row, columnId, filterValue: appliedFilters) => {
       if (!filterValue) return true;
 
@@ -184,9 +197,18 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
         // if the array is empty (no filter applied), return true (show all rows)
         if (responseStatus.length === 0) return true;
 
-        // Check if at least one of the selected labels is present in the row's reservation labels
-        const hasAnySelectedStatus = responseStatus.some((status) =>
-          row.original.replyStatus?.includes(status.name)
+        const replyStatus = row.original.archived
+          ? "Done"
+          : row.original.lastMessage?.author === "guest"
+          ? "Needs Reply"
+          : row.original.hasInboxMessageQueue
+          ? "Response Available"
+          : row.original.lastMessage?.author === "host"
+          ? "Replied to"
+          : null;
+
+        const hasAnySelectedStatus = responseStatus.some(
+          (status) => replyStatus == status.name
         );
 
         // If none of the selected labels are present, return false
@@ -201,7 +223,7 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
 
         // Check if at least one of the selected labels is present in the row's reservation labels
         const hasAnySelectedLabel = reservationLabels.some((label) =>
-          row.original.reservationLabels?.some(
+          row.original.reservation.reservationLabels?.some(
             (reservationLabel) => reservationLabel?.id === label.id
           )
         );
@@ -218,7 +240,7 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
 
         // Check if at least one of the selected tags is present in the row's conversation tags
         const hasAnySelectedTag = conversationTags.some((tag) =>
-          row.original.conversationTags?.some(
+          row.original.tags?.some(
             (conversationTag) => conversationTag?.id === tag.id
           )
         );
@@ -232,69 +254,85 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
       return true;
     },
     cell: ({ table, row }) => {
-      const replyStatus = row.original.replyStatus;
+      const replyStatus = row.original.archived
+        ? "Done"
+        : row.original.lastMessage?.author === "guest"
+        ? "Needs Reply"
+        : row.original.hasInboxMessageQueue
+        ? "Response Available"
+        : row.original.lastMessage?.author === "host"
+        ? "Replied to"
+        : null;
 
       return (
-        <div className="flex flex-col gap-2 pl-10">
+        <div className="flex flex-col gap-2">
           <p className="text-secondary text-body-sm font-normal truncate max-w-[80%]">
-            {row.original.messages[row.original.messages.length - 1].message}
+            {row.original.lastMessage?.text}
           </p>
-          <div className="flex gap-1 items-center">
-            {/* message status */}
-            {replyStatus && (
-              <LabelsTagsGroups
-                text={replyStatus}
-                showHosty={replyStatus == "Response Available"}
-                icon={
-                  (replyStatus === "Done" && (
-                    <CheckCircleIcon className="text-success w-3 h-3" />
-                  )) ||
-                  (replyStatus == "Needs Reply" && (
-                    <MessageNotificationIcon className="text-icon-error-alt w-3 h-3" />
-                  ))
-                }
-              />
-            )}
-
-            {table.getColumn("Listing name")?.getIsVisible() &&
-              row.original.tripListing && (
+          <ScrollArea>
+            <div className="flex gap-1 items-center truncate">
+              {/* message status */}
+              {replyStatus && (
                 <LabelsTagsGroups
-                  text={row.original.tripListing.address}
-                  avatar={row.original.tripListing.image}
+                  text={replyStatus}
+                  showHosty={replyStatus === "Response Available"}
+                  icon={
+                    (replyStatus === "Replied to" && (
+                      <MessageCheckCircleIcon className="text-icon-tertiary w-3 h-3" />
+                    )) ||
+                    (replyStatus === "Needs Reply" && (
+                      <MessageNotificationIcon className="text-icon-error-alt w-3 h-3" />
+                    )) ||
+                    (replyStatus === "Done" && (
+                      <CheckCircleIcon className="text-icon-success w-3 h-3" />
+                    ))
+                  }
                 />
               )}
 
-            {table.getColumn("Reservation labels")?.getIsVisible() &&
-              row.original.reservationLabels &&
-              row.original.reservationLabels.map((label) => (
-                <LabelsTagsGroups
-                  key={label?.id}
-                  text={label!.name}
-                  emoji={label?.emojiId}
-                />
-              ))}
-
-            {/* list all tags applied */}
-            {table.getColumn("Conversation tags")?.getIsVisible() &&
-              row.original.conversationTags &&
-              row.original.conversationTags.map((tag) => {
-                const icon = fakeIconsData.find(
-                  (icon) => icon.id === tag?.iconId
-                );
-                return (
+              {table.getColumn("Listing name")?.getIsVisible() &&
+                row.original.reservation.listing && (
                   <LabelsTagsGroups
-                    key={tag?.id}
-                    text={tag!.name}
-                    icon={
-                      <IconComponent
-                        icon={icon!.icon}
-                        classNames="size-3 text-tertiary"
-                      />
+                    text={row.original.reservation.listing.name}
+                    avatar={
+                      row.original.reservation.listing.listingImage as string
                     }
                   />
-                );
-              })}
-          </div>
+                )}
+
+              {table.getColumn("Reservation labels")?.getIsVisible() &&
+                row.original.reservation.reservationLabels &&
+                row.original.reservation.reservationLabels.map((label) => (
+                  <LabelsTagsGroups
+                    key={label?.id}
+                    text={label!.name}
+                    emoji={label?.emojiId}
+                  />
+                ))}
+
+              {/* list all tags applied */}
+              {table.getColumn("Conversation tags")?.getIsVisible() &&
+                row.original.tags &&
+                row.original.tags.map((tag) => {
+                  const icon = fakeIconsData.find(
+                    (icon) => icon.id === tag?.iconId
+                  );
+                  return (
+                    <LabelsTagsGroups
+                      key={tag?.id}
+                      text={tag!.name}
+                      icon={
+                        <IconComponent
+                          icon={icon!.icon}
+                          classNames="size-3 text-tertiary"
+                        />
+                      }
+                    />
+                  );
+                })}
+            </div>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
         </div>
       );
     },
@@ -303,18 +341,17 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
     accessorKey: "listing",
     header: "Listing",
     enableHiding: false,
+    size: 100,
     filterFn: (row, columnId, filterValue: appliedFilters) => {
       if (!filterValue) return true;
 
       const listingGroup = filterValue.listingGroups;
       const listings = filterValue.listings;
 
-      if (listingGroup) {
-        if (listingGroup.length === 0) return true;
-
-        // Check if the listing is in the listing group
+      if (listingGroup && listingGroup.length > 0) {
+        //listing group is an array of listing ids that are in that group
         const isInListingGroup = listingGroup.some(
-          (group) => group.id == row.original.listingGroupData?.id!
+          (group) => group.id == row.original.reservation.listing.listingId
         );
 
         if (!isInListingGroup) {
@@ -327,7 +364,7 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
 
         // Check if the listing is selected
         const isSelectedListing = listings.some(
-          (listing) => listing.id == row.original.tripListing.id!
+          (listing) => listing.id == row.original.reservation.listing.listingId
         );
 
         if (!isSelectedListing) {
@@ -342,13 +379,13 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
         <div className="flex flex-col gap-2">
           {table.getColumn("Listing name")?.getIsVisible() && (
             <p className="text-body-sm truncate">
-              {row.original.tripListing.title}
+              {row.original.reservation.listing.name}
             </p>
           )}
-          {row.original.listingGroupData && (
+          {row.original.reservation.listing.listingGroupData && (
             <LabelsTagsGroups
-              text={row.original.listingGroupData.name}
-              color={row.original.listingGroupData.color}
+              text={row.original.reservation.listing.listingGroupData.name}
+              color={row.original.reservation.listing.listingGroupData.color}
             />
           )}
         </div>
@@ -372,6 +409,7 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
     accessorKey: "assigneeGroup",
     header: "AssigneeGroup",
     enableHiding: false,
+    size: 80,
     filterFn: (row, columnId, filterValue: appliedFilters) => {
       // filterValue: { assigneeGroup: [{optionWithData}, {optionWithData}, {optionWithData}] }
 
@@ -384,11 +422,11 @@ export const columns: ColumnDef<ConversationWithAllData>[] = [
         if (assigneeGroup.length === 0) return true;
 
         // Check if at least one of the selected members is the current row's assignee
-        // or if the row is unassigned (-1 id)
+        // or if the row is unassigned (null id)
         const hasAnySelectedLabel = assigneeGroup.some(
           (member) =>
             member.id == row.original.assigneeData?.id! ||
-            (member.id == -1 && !row.original.assigneeData)
+            (member.id == null && !row.original.assigneeData)
         );
 
         // If none of the selected labels are present, return false
