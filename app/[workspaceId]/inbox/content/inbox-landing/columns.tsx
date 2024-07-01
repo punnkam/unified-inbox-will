@@ -172,6 +172,11 @@ export const columns: ColumnDef<Conversation>[] = [
     accessorKey: "guestName",
     header: "Guest Name",
     enableHiding: false,
+    filterFn: (row, columnId, filterValue: string) => {
+      return row.original.reservation.guest
+        .name!.toLowerCase()
+        .includes(filterValue.toLowerCase());
+    },
   },
   {
     accessorKey: "messageStatus",
