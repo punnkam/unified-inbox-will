@@ -8,7 +8,7 @@ export default function Loading() {
       <div className="flex flex-col gap-[28px] px-4 md:px-8 pt-8 pb-3 border-b border-primary bg-primary-subtle overflow-y-hidden md:overflow-y-clip">
         <div className="flex flex-wrap md:flex-nowrap gap-2 items-center justify-between">
           <div className="flex items-center gap-3">
-            <SidebarTrigger />
+            <Skeleton className="size-10 min-w-10 min-h-10 rounded-xl" />
 
             <Skeleton className="text-title-3xl h-[38px] w-[200px] md:w-[300px] rounded-lg" />
           </div>

@@ -3,10 +3,10 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { LabelsTagsGroups } from "../../components/LabelsTagsGroups";
+import { LabelsTagsGroups } from "./components/LabelsTagsGroups";
 import { fakeIconsData } from "@/lib/types";
 import { IconComponent } from "@/components/icons/IconComponent";
-import { ResponseStatus } from "../../components/ResponseStatus";
+import { ResponseStatus } from "./components/ResponseStatus";
 import {
   CheckCircleIcon,
   MessageNotificationIcon,
@@ -115,6 +115,10 @@ export const columns: ColumnDef<Conversation>[] = [
               <Checkbox
                 checked={isSelected}
                 onCheckedChange={(value) => row.toggleSelected(!!value)}
+                onClick={(e) => {
+                  // Stop the redirect to conversation page
+                  e.stopPropagation();
+                }}
                 aria-label="Select row"
               />
             </div>
@@ -172,6 +176,11 @@ export const columns: ColumnDef<Conversation>[] = [
     accessorKey: "guestName",
     header: "Guest Name",
     enableHiding: false,
+    filterFn: (row, columnId, filterValue: string) => {
+      return row.original.reservation.guest
+        .name!.toLowerCase()
+        .includes(filterValue.toLowerCase());
+    },
   },
   {
     accessorKey: "messageStatus",
@@ -289,16 +298,6 @@ export const columns: ColumnDef<Conversation>[] = [
                   }
                 />
               )}
-
-              {table.getColumn("Listing name")?.getIsVisible() &&
-                row.original.reservation.listing && (
-                  <LabelsTagsGroups
-                    text={row.original.reservation.listing.name}
-                    avatar={
-                      row.original.reservation.listing.listingImage as string
-                    }
-                  />
-                )}
 
               {table.getColumn("Reservation labels")?.getIsVisible() &&
                 row.original.reservation.reservationLabels &&
