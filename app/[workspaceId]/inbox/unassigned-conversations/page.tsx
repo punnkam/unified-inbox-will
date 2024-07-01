@@ -1,4 +1,4 @@
-import { InboxParent } from "../content/inbox-landing/InboxParent";
+import { InboxLandingView } from "../content/inbox-landing/InboxLandingView";
 import { columns } from "../content/inbox-landing/columns";
 
 import {
@@ -50,9 +50,8 @@ export default async function AllConversationsPage({
   const availableMembers = await fetchAvailableMembers(workspaceId);
 
   return (
-    <InboxParent
+    <InboxLandingView
       title="Unassigned Conversations"
-      view="landing"
       columns={columns}
       data={data.data}
       conversationLabels={

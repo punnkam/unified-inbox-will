@@ -1,4 +1,4 @@
-import { InboxParent } from "../../../content/inbox-landing/InboxParent";
+import { InboxOperationsView } from "../../../content/operations/InboxOperationsView";
 import { columns } from "../../../content/inbox-landing/columns";
 
 import {
@@ -48,9 +48,8 @@ export default async function AllConversationsPage({
   const availableMembers = await fetchAvailableMembers(workspaceId);
 
   return (
-    <InboxParent
+    <InboxOperationsView
       title="All Conversations"
-      view="chat"
       columns={columns}
       data={data.data}
       conversationLabels={

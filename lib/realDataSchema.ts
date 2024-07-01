@@ -13,6 +13,7 @@ import {
   BuildingIcon,
 } from "@/components/icons/CustomIcons";
 import { fakeIconsData } from "./types";
+import { useReactTable } from "@tanstack/react-table";
 
 export interface Conversation {
   id: number | string;
@@ -509,6 +510,9 @@ export const fakeMembersData: Member[] = [
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
 ];
+
+// Type for a table with conversation data
+export type ConversationTable = ReturnType<typeof useReactTable<Conversation>>;
 
 // --------- Generated Data ------------------------------------------
 export const fakeListingsData: Listing[] = [

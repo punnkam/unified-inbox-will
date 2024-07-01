@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { InboxSideBarOption } from "./InboxSideBarOption";
 import {
   ArrowNarrowLeft,
   AtSignIcon,
@@ -23,10 +22,13 @@ import {
   fakeListingGroupsData,
   fakeReservationLabels,
 } from "@/lib/realDataSchema";
-import { SidebarTrigger } from "../../SidebarTrigger";
 import Link from "next/link";
 import { SearchIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import cn from "classnames";
+import { colorMap } from "@/lib/types";
+import { useSidebar } from "../../SidebarContext";
+import { useWindowSize } from "@/lib/hooks/useWindowSize";
 
 export const InboxChatSidebar = () => {
   const pathname = usePathname();
@@ -72,7 +74,7 @@ export const InboxChatSidebar = () => {
         <div className="flex flex-col justify-between">
           <div className="flex flex-col gap-[32px]">
             <div>
-              <InboxSideBarOption
+              <InboxChatSideBarOption
                 path={`/${workspaceId}/inbox/all-conversations`}
                 name="All conversations"
                 selected={pathname.startsWith(
@@ -81,7 +83,7 @@ export const InboxChatSidebar = () => {
                 icon={<MessageChatCircleIcon />}
                 count={13}
               />
-              <InboxSideBarOption
+              <InboxChatSideBarOption
                 path={`/${workspaceId}/inbox/your-conversations`}
                 name="Your conversations"
                 selected={pathname.startsWith(
@@ -89,7 +91,7 @@ export const InboxChatSidebar = () => {
                 )}
                 image="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               />
-              <InboxSideBarOption
+              <InboxChatSideBarOption
                 path={`/${workspaceId}/inbox/unassigned-conversations`}
                 name="Unassigned conversations"
                 selected={pathname.startsWith(
@@ -111,7 +113,7 @@ export const InboxChatSidebar = () => {
                   </AccordionTrigger>
                   <AccordionContent className="pb-0 pt-2">
                     {fakeReservationLabels.map((label) => (
-                      <InboxSideBarOption
+                      <InboxChatSideBarOption
                         key={label.id}
                         path={`/${workspaceId}/inbox/reservation-label/${label.id}`}
                         name={label.name}
@@ -137,7 +139,7 @@ export const InboxChatSidebar = () => {
 
                   <AccordionContent className="pb-0 pt-2">
                     {fakeListingGroupsData.map((group) => (
-                      <InboxSideBarOption
+                      <InboxChatSideBarOption
                         key={group.id}
                         path={`/${workspaceId}/inbox/listing-group/${group.id}`}
                         name={group.name}
@@ -155,5 +157,86 @@ export const InboxChatSidebar = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+export const InboxChatSideBarOption = ({
+  path,
+  name,
+  selected,
+  icon,
+  image,
+  count,
+  color,
+  emoji,
+}: {
+  path: string;
+  name: string;
+  selected: boolean;
+  icon?: React.ReactNode;
+  image?: string;
+  emoji?: string;
+  count?: number;
+  color?: keyof typeof colorMap;
+}) => {
+  const { toggleSidebar } = useSidebar();
+  const size = useWindowSize();
+
+  return (
+    <Link href={path}>
+      <div
+        className={cn(
+          "flex items-center justify-between w-full px-2 py-1 h-8 active:bg-pressed rounded-md gap-2",
+          selected ? "bg-selected hover:bg-selected" : "hover:bg-hover"
+        )}
+        onClick={() => {
+          if (size.width! <= 705) {
+            toggleSidebar();
+          }
+        }}
+      >
+        <div className="text-subtitle-sm flex items-center gap-2">
+          {color && (
+            <div className={cn(`w-2 h-2 rounded-full`, colorMap[color])}></div>
+          )}
+
+          {icon && (
+            <div
+              className={cn(
+                "size-[18px] flex justify-center items-center",
+                selected ? "text-icon-brand" : "text-icon-tertiary"
+              )}
+            >
+              {icon}
+            </div>
+          )}
+
+          {emoji && (
+            <span role="img" aria-label="Emoji" className="text-body-2xs">
+              {String.fromCodePoint(parseInt(emoji, 16))}
+            </span>
+          )}
+
+          {image && (
+            <img
+              src={image}
+              alt="icon"
+              className="size-[18px] rounded-full object-cover"
+            />
+          )}
+          <p>{name}</p>
+        </div>
+        {count && (
+          <div
+            className={cn(
+              "rounded-lg text-subtitle-xs h-6 w-[28px] flex items-center justify-center",
+              selected ? "text-brand bg-primary" : "text-tertiary"
+            )}
+          >
+            {count}
+          </div>
+        )}
+      </div>
+    </Link>
   );
 };

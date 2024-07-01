@@ -30,8 +30,8 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { useEffect, useState } from "react";
 import { IconComponent } from "@/components/icons/IconComponent";
-import { handleSelect } from "@/lib/utils";
-import { ConversationTable } from "../InboxParent";
+import { handleSelect } from "@/lib/tableUtils";
+import { ConversationTable } from "@/lib/realDataSchema";
 
 export const FilterPopover = ({
   columnFilters,
@@ -41,7 +41,10 @@ export const FilterPopover = ({
 }: {
   columnFilters: ColumnFiltersState;
   setColumnFilters: (columnId: string, value: any) => void;
-  clearFilters: (table: ConversationTable) => void;
+  clearFilters: (
+    table: ConversationTable,
+    columnFilters: ColumnFiltersState
+  ) => void;
   table: ConversationTable;
 }) => {
   const [open, setOpen] = useState(false);
@@ -119,7 +122,7 @@ export const FilterPopover = ({
             <XIcon
               className="h-4 w-4 text-icon-tertiary hover:text-icon-secondary hover:cursor-pointer"
               onClick={() => {
-                clearFilters(table);
+                clearFilters(table, columnFilters);
                 setOpen(false);
               }}
             />

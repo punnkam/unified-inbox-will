@@ -1,4 +1,3 @@
-import { InboxParent } from "../../content/inbox-landing/InboxParent";
 import { columns } from "../../content/inbox-landing/columns";
 import {
   fetchAvailableMembers,
@@ -8,6 +7,7 @@ import {
 } from "@/app/actions";
 import { ConversationTag } from "@/lib/types";
 import { redirect } from "next/navigation";
+import { InboxLandingView } from "../../content/inbox-landing/InboxLandingView";
 
 export default async function AllConversationsPage({
   params: { workspaceId, labelId },
@@ -61,9 +61,8 @@ export default async function AllConversationsPage({
   const availableMembers = await fetchAvailableMembers(workspaceId);
 
   return (
-    <InboxParent
+    <InboxLandingView
       title={reservationLabelData.data.name}
-      view="landing"
       columns={columns}
       data={data.data}
       conversationLabels={

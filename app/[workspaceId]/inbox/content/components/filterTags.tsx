@@ -3,7 +3,10 @@ import { AllFilters, FilterValue, allFilters } from "@/lib/realDataSchema";
 import { Button } from "@/components/ui/button";
 import { XIcon } from "lucide-react";
 import { IconComponent } from "@/components/icons/IconComponent";
-import { ConversationTable } from "../InboxParent";
+import { ConversationTable } from "@/lib/realDataSchema";
+import { Dispatch, SetStateAction } from "react";
+import { set } from "date-fns";
+import { useTableContext } from "../../TableContext";
 
 export const Tag = ({
   title,
@@ -32,16 +35,23 @@ export const Tag = ({
 };
 
 export const FilterTags = ({
-  columnFilters,
   clearFilters,
   removeFilter,
   table,
 }: {
-  columnFilters: ColumnFiltersState;
-  clearFilters: (table: ConversationTable) => void;
-  removeFilter: (columnId: string, filterKey: string) => void;
+  clearFilters: (
+    table: ConversationTable,
+    columnFilters: ColumnFiltersState
+  ) => void;
+  removeFilter: (
+    columnId: string,
+    filterKey: string,
+    setColumnFilters: Dispatch<SetStateAction<ColumnFiltersState>>
+  ) => void;
   table: ConversationTable;
 }) => {
+  const { columnFilters, setColumnFilters } = useTableContext();
+
   // Check if any of the filters should be displayed as tags (if not remove excess padding)
   const hasTags = columnFilters.some(
     (filter) =>
@@ -78,7 +88,9 @@ export const FilterTags = ({
                     title={allFilters[key as keyof AllFilters]!.title}
                     icon={allFilters[key as keyof AllFilters]!.icon}
                     value={displayValue}
-                    onRemove={() => removeFilter(filter.id, key)}
+                    onRemove={() =>
+                      removeFilter(filter.id, key, setColumnFilters)
+                    }
                   />
                 );
               }
@@ -88,7 +100,11 @@ export const FilterTags = ({
           return null;
         })}
 
-        <Button variant="ghost" size={"sm"} onClick={() => clearFilters(table)}>
+        <Button
+          variant="ghost"
+          size={"sm"}
+          onClick={() => clearFilters(table, columnFilters)}
+        >
           <p className="text-secondary text-subtitle-sm">Clear All</p>
         </Button>
       </div>

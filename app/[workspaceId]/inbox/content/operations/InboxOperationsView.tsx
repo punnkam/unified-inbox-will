@@ -12,8 +12,7 @@ import {
   VisibilityState,
   RowData,
 } from "@tanstack/react-table";
-import { Badge } from "../inbox-landing/components/badge";
-
+import { Badge } from "../components/badge";
 import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
@@ -28,16 +27,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { SearchIcon, XIcon } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs-inbox";
-import { SidebarTrigger } from "../../SidebarTrigger";
 import { cn } from "@/lib/utils";
 import { Conversation, ConversationTag, Member } from "@/lib/realDataSchema";
 import { Button } from "@/components/ui/button";
 import {
   TagIcon,
-  KeyIcon,
   AttributesIcon,
   EyeIcon,
   EyeOffIcon,
@@ -46,24 +43,26 @@ import {
   ContrastIcon,
   CheckCircleIcon,
 } from "@/components/icons/CustomIcons";
-import { FilterPopover } from "../inbox-landing/components/FilterPopover";
-import { FilterTags } from "../inbox-landing/components/filterTags";
+import { FilterPopover } from "../components/FilterPopover";
+import { FilterTags } from "../components/filterTags";
 import { KeyboardShortcut } from "@/components/custom/KeyBoardShortcut";
 import { AnimatePresence, motion } from "framer-motion";
-import { toast } from "sonner";
 import { useHotkeys } from "react-hotkeys-hook";
-import { AssignMemberComboBox } from "../inbox-landing/components/AssignMemberCombobox";
+import { AssignMemberComboBox } from "../components/AssignMemberCombobox";
 import clsx from "clsx";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-// Add custom properties TableMeta (to let us see if row is hovered (for now))
-declare module "@tanstack/react-table" {
-  //allows us to define custom properties for our columns
-  interface TableMeta<TData extends RowData> {
-    hoverRow: string | null;
-  }
-}
+import { useSidebar } from "../../SidebarContext";
+import {
+  handleMarkDone,
+  handleAssign,
+  handleFilterChange,
+  handleMarkUnread,
+  handleSelect,
+  handleTabChange,
+  removeFilter,
+  clearFilters,
+} from "@/lib/tableUtils";
+import { useTableContext } from "../../TableContext";
 
 const AttributesIconMap = {
   "Reservation labels": <ContrastIcon className="size-4 text-icon-tertiary" />,
@@ -72,45 +71,45 @@ const AttributesIconMap = {
   Assignee: <User03Icon className="size-4 text-icon-tertiary" />,
 };
 
-interface DataTableProps {
-  columns: ColumnDef<Conversation>[];
-  data: Conversation[];
+declare module "@tanstack/react-table" {
+  //allows us to define custom properties for our columns
+  interface TableMeta<TData extends RowData> {
+    hoverRow: string | null;
+  }
+}
+
+export const InboxOperationsView = ({
+  title,
+  conversationLabels,
+  availableMembers,
+  columns,
+  data,
+  conversationPath,
+}: {
+  title: string;
   conversationLabels: (ConversationTag & {
     numberOfUses: number;
   })[];
   availableMembers: Member[];
-  title: string;
+  columns: ColumnDef<Conversation>[];
+  data: Conversation[];
   conversationPath?: string;
-}
-
-export function InboxParent({
-  columns,
-  data,
-  conversationLabels,
-  availableMembers,
-  title,
-  conversationPath,
-}: DataTableProps) {
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
-    {
-      id: "messageStatus",
-      value: false,
-    },
-  ]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
-    messageStatus: false,
-    guestName: false,
-  });
-  const [rowSelection, setRowSelection] = useState({});
-
+}) => {
   const [currentRowHovered, setCurrentRowHovered] = useState<string | null>(
     null
   );
 
-  const router = useRouter();
+  const { columnFilters, setColumnFilters, setView } = useTableContext();
 
-  // hotkey hooks
-  useHotkeys("e", () => handleMarkDone());
+  // Use useEffect to update the context view
+  useEffect(() => {
+    // update the context view so we can handle loading states and sidebar
+    setView("chat");
+  }, [setView]);
+
+  const { isOpen } = useSidebar();
+
+  const router = useRouter();
 
   const table = useReactTable({
     data,
@@ -118,12 +117,8 @@ export function InboxParent({
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
     state: {
       columnFilters,
-      columnVisibility,
-      rowSelection,
     },
     meta: {
       // Pass a hover value so we can access in columns.tsx
@@ -138,117 +133,8 @@ export function InboxParent({
     },
   });
 
-  // API: Function to handle mark selected rows as unread
-  const handleMarkUnread = () => {
-    const count = table.getSelectedRowModel().rows.length;
-
-    // If no rows are selected, return
-    if (count === 0) {
-      return;
-    }
-
-    table.getSelectedRowModel().rows.map((row) => {
-      const rowData = row.original as Conversation;
-      console.log("Mark as unread", rowData);
-
-      // Do something with the rows to mark them as unread
-
-      // Unselect the rows after update (either refresh or this manual way)
-      row.toggleSelected(false);
-    });
-
-    // Placeholder toast message
-    toast.success(`${count} conversations marked as unread`);
-  };
-
-  // API: Function to handle mark selected rows as done
-  const handleMarkDone = () => {
-    const count = table.getSelectedRowModel().rows.length;
-
-    // If no rows are selected, return
-    if (count === 0) {
-      return;
-    }
-
-    table.getSelectedRowModel().rows.map((row) => {
-      const rowData = row.original as Conversation;
-      console.log("Mark as done", rowData);
-
-      // Do something with the rows to mark them as done
-
-      // Unselect the rows after update (either refresh or this manual way)
-      row.toggleSelected(false);
-    });
-
-    // Placeholder toast message
-    toast.success(`${count} conversations marked as done`);
-  };
-
-  // API: Placeholder function to assign a member to selected rows
-  const handleAssign = (member: Member) => {
-    const count = table.getSelectedRowModel().rows.length;
-
-    // If no rows are selected, return
-    if (count === 0) {
-      return;
-    }
-
-    table.getSelectedRowModel().rows.map((row) => {
-      const rowData = row.original as Conversation;
-      console.log("Assign", rowData, "to", member);
-
-      // Do something with the rows to assign them to a member
-
-      // Unselect the rows after update (either refresh or this manual way)
-      row.toggleSelected(false);
-    });
-
-    // Placeholder toast message
-    toast.success(`${count} conversations assigned to ${member.name}`);
-  };
-
-  // Function to clear all filters except for search and tab
-  const clearFilters = () => {
-    columnFilters.forEach((filter) => {
-      if (
-        // guestName comes from search
-        // messageStatus is the tab
-        filter.id === "guestName" ||
-        filter.id === "messageStatus"
-      ) {
-        return;
-      }
-      table.getColumn(filter.id)?.setFilterValue(null);
-    });
-  };
-
-  const handleTabChange = (tab: boolean) => {
-    console.log("Tab change", tab);
-    table.getColumn("messageStatus")?.setFilterValue(tab);
-  };
-
-  // Helper for filtering dropdown
-  const handleFilterChange = (columnId: string, value: string) => {
-    table.getColumn(columnId)?.setFilterValue(value);
-  };
-
-  // Function to remove filter tag groups
-  const removeFilter = (columnId: string, filterKey: string) => {
-    setColumnFilters((prevFilters) =>
-      prevFilters.map((filter) => {
-        if (
-          filter.id === columnId &&
-          typeof filter.value === "object" &&
-          filter.value !== null
-        ) {
-          const newValue = { ...(filter.value as Record<string, unknown>) };
-          delete newValue[filterKey];
-          return { ...filter, value: newValue };
-        }
-        return filter;
-      })
-    );
-  };
+  // hotkey hooks
+  useHotkeys("e", () => handleMarkDone(table));
 
   return (
     <div className="h-full">
@@ -256,7 +142,6 @@ export function InboxParent({
         <div className="flex flex-col gap-[28px] px-4 md:px-8 pt-8 pb-3 border-b border-primary overflow-y-hidden md:overflow-y-clip">
           <div className="flex flex-wrap md:flex-nowrap gap-2 items-center justify-between">
             <div className="flex items-center gap-3">
-              <SidebarTrigger />
               <p className="text-title-3xl">{title}</p>
             </div>
             <div className="flex items-center relative w-full sm:w-fit">
@@ -294,7 +179,7 @@ export function InboxParent({
                     iconType={item.type.color}
                     percentage={-12}
                     setColumnFilters={(columnId, value) =>
-                      handleFilterChange(columnId, value)
+                      handleFilterChange(table, columnId, value)
                     }
                     columnFilters={columnFilters}
                   />
@@ -308,7 +193,7 @@ export function InboxParent({
               <TabsList>
                 <TabsTrigger
                   value="Todo"
-                  onClick={() => handleTabChange(false)}
+                  onClick={() => handleTabChange(table, false)}
                 >
                   <div className="relative">
                     <p
@@ -337,7 +222,10 @@ export function InboxParent({
                     )}
                   </div>
                 </TabsTrigger>
-                <TabsTrigger value="done" onClick={() => handleTabChange(true)}>
+                <TabsTrigger
+                  value="done"
+                  onClick={() => handleTabChange(table, true)}
+                >
                   <div className="relative">
                     <p
                       className={clsx(
@@ -428,18 +316,19 @@ export function InboxParent({
               <FilterPopover
                 columnFilters={columnFilters}
                 setColumnFilters={(columnId, value) =>
-                  handleFilterChange(columnId, value)
+                  handleFilterChange(table, columnId, value)
                 }
                 clearFilters={clearFilters}
+                table={table}
               />
             </div>
           </div>
         </div>
         <div className="bg-primary shadow-inner h-full overflow-y-auto">
           <FilterTags
-            columnFilters={table.getState().columnFilters}
             clearFilters={clearFilters}
             removeFilter={removeFilter}
+            table={table}
           />
           <Table>
             <TableHeader hidden>
@@ -567,7 +456,7 @@ export function InboxParent({
             <div
               className="px-5 py-4 border-r border-primary flex items-center gap-2 whitespace-nowrap hover:cursor-pointer hover:bg-hover"
               onClick={() => {
-                handleMarkUnread();
+                handleMarkUnread(table);
               }}
             >
               <div className="size-[14px] rounded-full bg-icon-tertiary"></div>
@@ -575,7 +464,7 @@ export function InboxParent({
             </div>
             <div
               className="px-5 py-4 border-r border-primary flex items-center gap-3 hover:cursor-pointer hover:bg-hover"
-              onClick={() => handleMarkDone()}
+              onClick={() => handleMarkDone(table)}
             >
               <div className="flex items-center gap-2 whitespace-nowrap">
                 <CheckCircleIcon className="size-[13px] rounded-full text-icon-tertiary" />
@@ -586,7 +475,7 @@ export function InboxParent({
             <AssignMemberComboBox
               availableMembers={availableMembers}
               onAssign={(member) => {
-                handleAssign(member);
+                handleAssign(table, member);
               }}
             />
 
@@ -607,4 +496,4 @@ export function InboxParent({
       </AnimatePresence>
     </div>
   );
-}
+};
