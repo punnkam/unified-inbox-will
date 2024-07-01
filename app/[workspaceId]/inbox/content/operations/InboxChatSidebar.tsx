@@ -50,12 +50,16 @@ export const InboxChatSidebar = () => {
               <h2 className="text-title-lg">All Conversations</h2>
             </div>
           </div>
-          <Button variant={"ghost"} size={"iconSm"}>
-            <FilterLinesIcon className="text-icon-tertiary" />
+          <Button
+            variant={"ghost"}
+            size={"iconSm"}
+            className="size-[28px] max-h-[28px] min-w-[28px]"
+          >
+            <FilterLinesIcon className="text-icon-tertiary h-[10px]" />
           </Button>
         </div>
 
-        <div className="flex items-center relative w-full sm:w-fit">
+        <div className="flex items-center relative w-full">
           <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
             <SearchIcon className="h-5 w-5 text-gray-400" />
           </span>

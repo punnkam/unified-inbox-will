@@ -168,7 +168,7 @@ export const InboxLandingView = ({
                     .getColumn("guestName")
                     ?.setFilterValue(event.target.value)
                 }
-                className="pl-10 rounded-xl w-full md:max-w-sm md:w-[300px]"
+                className="pl-10 rounded-xl w-full md:max-w-sm md:w-[300px] h-12"
               />
             </div>
           </div>
