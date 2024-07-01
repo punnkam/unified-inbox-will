@@ -386,7 +386,7 @@ export const InboxLandingView = ({
                     onClick={() => {
                       // This is ugly way to navigate but what people recommend
                       router.push(
-                        `./${conversationPath}/chat/${row.original.reservation.id}`
+                        `./${conversationPath}/chat?c=${row.original.reservation.id}`
                       );
                     }}
                   >

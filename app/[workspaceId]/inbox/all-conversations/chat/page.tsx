@@ -1,5 +1,5 @@
-import { InboxOperationsView } from "../../../content/operations/InboxOperationsView";
-import { columns } from "../../../content/inbox-landing/columns";
+import { InboxOperationsView } from "../../content/operations/InboxOperationsView";
+import { columns } from "../../content/inbox-landing/columns";
 
 import {
   fetchAllConversations,
@@ -9,10 +9,15 @@ import {
 import { ConversationTag } from "@/lib/types";
 
 export default async function AllConversationsPage({
-  params: { workspaceId, reservationId },
+  params: { workspaceId },
+  searchParams: { c },
 }: {
-  params: { workspaceId: string; reservationId: string };
+  params: { workspaceId: string };
+  searchParams: { c: string };
 }) {
+  console.log("workspaceId", workspaceId);
+  console.log("conersationId", c);
+
   const data = await fetchAllConversations(workspaceId);
 
   if (!data || !data.success || !data.data) {
