@@ -22,6 +22,7 @@ export default function Loading() {
           {Array.from({ length: 4 }).map((_, index, array) => {
             return (
               <div
+                key={index}
                 className={cn(
                   "py-2 md:px-2 md:py-0",
                   index === 0
@@ -32,7 +33,6 @@ export default function Loading() {
                 )}
               >
                 <Skeleton
-                  key={index}
                   className={cn(
                     "rounded-xl h-[157px] w-full min-w-[24%] border border-primary"
                   )}

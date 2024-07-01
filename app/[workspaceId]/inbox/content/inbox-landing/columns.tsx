@@ -172,6 +172,11 @@ export const columns: ColumnDef<Conversation>[] = [
     accessorKey: "guestName",
     header: "Guest Name",
     enableHiding: false,
+    filterFn: (row, columnId, filterValue: string) => {
+      return row.original.reservation.guest
+        .name!.toLowerCase()
+        .includes(filterValue.toLowerCase());
+    },
   },
   {
     accessorKey: "messageStatus",
@@ -289,16 +294,6 @@ export const columns: ColumnDef<Conversation>[] = [
                   }
                 />
               )}
-
-              {table.getColumn("Listing name")?.getIsVisible() &&
-                row.original.reservation.listing && (
-                  <LabelsTagsGroups
-                    text={row.original.reservation.listing.name}
-                    avatar={
-                      row.original.reservation.listing.listingImage as string
-                    }
-                  />
-                )}
 
               {table.getColumn("Reservation labels")?.getIsVisible() &&
                 row.original.reservation.reservationLabels &&
