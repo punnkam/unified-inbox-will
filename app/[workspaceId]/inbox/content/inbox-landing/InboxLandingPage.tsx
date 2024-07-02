@@ -403,7 +403,10 @@ export function InboxLandingPage<TData, TValue>({
                         return (
                           <div
                             key={column.id}
-                            className="p-2 hover:bg-hover rounded-md cursor-pointer"
+                            className={cn(
+                              "p-2 hover:bg-hover rounded-md cursor-pointer",
+                              !column.getIsVisible() && "opacity-50"
+                            )}
                             onClick={() =>
                               column.toggleVisibility(!column.getIsVisible())
                             }
