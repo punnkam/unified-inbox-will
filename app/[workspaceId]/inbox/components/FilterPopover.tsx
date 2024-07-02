@@ -116,7 +116,6 @@ export const FilterPopover = ({
             <XIcon
               className="h-4 w-4 text-icon-tertiary hover:text-icon-secondary hover:cursor-pointer"
               onClick={() => {
-                clearFilters();
                 setOpen(false);
               }}
             />

@@ -103,6 +103,8 @@ export function InboxLandingPage<TData, TValue>({
     null
   );
 
+  const [attributesOpen, setAttributesOpen] = useState(false);
+
   // hotkey hooks
   useHotkeys("e", () => handleMarkDone());
 
@@ -366,7 +368,10 @@ export function InboxLandingPage<TData, TValue>({
             </Tabs>
 
             <div className="flex items-center gap-2">
-              <DropdownMenu>
+              <DropdownMenu
+                open={attributesOpen}
+                onOpenChange={() => setAttributesOpen(!attributesOpen)}
+              >
                 <DropdownMenuTrigger asChild className="flex md:hidden">
                   <Button variant="ghost" size={"icon"} className="w-fit">
                     <AttributesIcon className="text-icon-secondary size-[15px] mr-2" />
@@ -386,12 +391,7 @@ export function InboxLandingPage<TData, TValue>({
                     <XIcon
                       className="h-4 w-4 text-icon-tertiary hover:text-icon-secondary hover:cursor-pointer"
                       onClick={() => {
-                        table
-                          .getAllColumns()
-                          .filter((column) => column.getCanHide())
-                          .map((column) => {
-                            column.toggleVisibility(true);
-                          });
+                        setAttributesOpen(false);
                       }}
                     />
                   </div>
