@@ -15,16 +15,23 @@ export const LabelsTagsGroups = ({
   emoji,
   showHosty,
   color,
+  className,
 }: {
-  text: string;
+  text?: string;
   avatar?: string;
   icon?: React.ReactNode;
   emoji?: string;
   showHosty?: boolean;
   color?: keyof typeof colorMap;
+  className?: string;
 }) => {
   return (
-    <div className="flex items-center gap-1 rounded-full px-2 py-1 border border-secondary-hover w-fit h-[25px]">
+    <div
+      className={cn(
+        "flex items-center gap-1 rounded-full px-2 py-1 border border-secondary-hover w-fit h-[25px]",
+        className
+      )}
+    >
       {icon && (
         <div className="h-full flex items-center justify-center">{icon}</div>
       )}
@@ -47,7 +54,9 @@ export const LabelsTagsGroups = ({
 
       {color && <div className={cn(`w-2 h-2 rounded-full`, colorMap[color])} />}
 
-      <p className="text-body-xs whitespace-nowrap truncate h-full">{text}</p>
+      {text && (
+        <p className="text-body-xs whitespace-nowrap truncate h-full">{text}</p>
+      )}
     </div>
   );
 };

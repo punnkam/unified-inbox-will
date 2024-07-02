@@ -52,7 +52,6 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { AssignMemberComboBox } from "../components/AssignMemberCombobox";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import { useSidebar } from "../../SidebarContext";
 import {
   handleMarkDone,
   handleAssign,
@@ -100,15 +99,16 @@ export const InboxLandingView = ({
     null
   );
 
-  const { columnFilters, setColumnFilters, setView } = useTableContext();
+  const { columnFilters, setColumnFilters, setView, setData, setColumns } =
+    useTableContext();
 
   // Use useEffect to update the context view
   useEffect(() => {
     // update the context view so we can handle loading states and sidebar
     setView("landing");
+    setData(data);
+    setColumns(columns);
   }, [setView]);
-
-  const { isOpen } = useSidebar();
 
   const router = useRouter();
 
@@ -138,14 +138,7 @@ export const InboxLandingView = ({
   useHotkeys("e", () => handleMarkDone(table));
 
   return (
-    <div
-      className={cn(
-        "h-screen flex-grow bg-primary md:overflow-clip relative",
-        isOpen
-          ? "w-0 overflow-hidden sm:w-[calc(100vw-80px-280px)]"
-          : "w-[calc(100vw-80px)]"
-      )}
-    >
+    <div className="h-full">
       <div className="flex flex-col bg-primary-subtle h-full">
         <div className="flex flex-col gap-[28px] px-4 md:px-8 pt-8 pb-3 border-b border-primary overflow-y-hidden md:overflow-y-clip">
           <div className="flex flex-wrap md:flex-nowrap gap-2 items-center justify-between">
@@ -386,7 +379,7 @@ export const InboxLandingView = ({
                     onClick={() => {
                       // This is ugly way to navigate but what people recommend
                       router.push(
-                        `./${conversationPath}/chat?c=${row.original.reservation.id}`
+                        `./${conversationPath}/chat?c=${row.original.id}`
                       );
                     }}
                   >

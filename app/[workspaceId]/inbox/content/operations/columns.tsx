@@ -4,8 +4,6 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { LabelsTagsGroups } from "../components/LabelsTagsGroups";
-import { fakeIconsData } from "@/lib/types";
-import { IconComponent } from "@/components/icons/IconComponent";
 import { ResponseStatus } from "../components/ResponseStatus";
 import {
   CheckCircleIcon,
@@ -15,16 +13,15 @@ import {
   AccountCircleIcon,
   MessageCheckCircleIcon,
 } from "@/components/icons/CustomIcons";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Conversation, appliedFilters } from "@/lib/realDataSchema";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export const columns: ColumnDef<Conversation>[] = [
   {
     accessorKey: "user",
     header: "User",
     enableHiding: false,
-    size: 175,
     filterFn: (row, columnId, filterValue: appliedFilters) => {
       if (!filterValue) return true;
 
@@ -100,73 +97,90 @@ export const columns: ColumnDef<Conversation>[] = [
       return true;
     },
     cell: ({ table, row }) => {
-      const isHovered = table.options.meta?.hoverRow === row.id;
-      const isSelected = row.getIsSelected();
+      const searchParams = useSearchParams();
+      const conversationId = searchParams.get("c");
+
+      console.log("conversationId", conversationId);
+
+      const replyStatus = row.original.archived
+        ? "Done"
+        : row.original.lastMessage?.author === "guest"
+        ? "Needs Reply"
+        : row.original.hasInboxMessageQueue
+        ? "Response Available"
+        : row.original.lastMessage?.author === "host"
+        ? "Replied to"
+        : null;
 
       return (
-        <div className={`flex gap-3 items-center w-full`}>
-          {row.original.hasUnreadMessages && (
-            <div className="size-2 bg-brand rounded-full absolute top-1/2 -translate-y-1/2 left-[16px] " />
+        <div
+          className={cn(
+            "flex flex-col w-full max-w-[300px] gap-3 px-5 py-4",
+            parseInt(conversationId!) === row.original.id
+              ? "bg-primary"
+              : "bg-hover"
           )}
-
-          {/* If is hovered or is selected then show the checkbox */}
-          {isHovered || isSelected ? (
-            <div className="flex items-center justify-center size-10 min-w-10 min-h-10">
-              <Checkbox
-                checked={isSelected}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                onClick={(e) => {
-                  // Stop the redirect to conversation page
-                  e.stopPropagation();
-                }}
-                aria-label="Select row"
-              />
-            </div>
-          ) : (
+        >
+          <div className={`flex gap-3 items-center w-full`}>
             <div className="relative">
               <img
                 src={row.original.reservation.guest.imageUrl!}
                 alt={row.original.reservation.guest.name || "Guest"}
-                className="size-10 min-w-10 min-h-10 rounded-full object-cover"
+                className="size-12 min-w-12 min-h-12 rounded-full object-cover"
               />
-              {row.original.conversationType === "whatsapp" ? (
-                <div className="absolute bottom-0 -right-1 w-4 h-4 flex items-center justify-center bg-[#27D045] rounded-full">
-                  <WhatsAppIcon className="size-[10px] text-primary-inverse" />
-                </div>
-              ) : (
-                <div className="absolute bottom-0 -right-1 w-4 h-4 flex items-center justify-center bg-primary rounded-full">
-                  <SlackIcon className="size-[10px]" />
-                </div>
+              {row.original.hasUnreadMessages && (
+                <div className="size-2 bg-brand rounded-full absolute top-1/2 -translate-y-1/2 -left-[14px] " />
+              )}
+              {replyStatus && (
+                <LabelsTagsGroups
+                  // text={replyStatus}
+                  showHosty={replyStatus === "Response Available"}
+                  icon={
+                    (replyStatus === "Replied to" && (
+                      <MessageCheckCircleIcon className="text-icon-tertiary w-3 h-3" />
+                    )) ||
+                    (replyStatus === "Needs Reply" && (
+                      <MessageNotificationIcon className="text-icon-error-alt w-3 h-3" />
+                    )) ||
+                    (replyStatus === "Done" && (
+                      <CheckCircleIcon className="text-icon-success w-3 h-3" />
+                    ))
+                  }
+                  className="size-[18px] p-0 flex items-center justify-center absolute bottom-0 right-0 bg-white border-primary"
+                />
               )}
             </div>
-          )}
 
-          <div className="flex flex-col gap-2 truncate">
-            <p className="text-subtitle-sm text-nowrap">
-              {row.original.reservation.guest.name}
-            </p>
-            <div className="flex items-center gap-2">
-              {row.original.reservation.status && (
-                <ResponseStatus type={row.original.reservation.status} />
-              )}
-              <div className="flex items-center gap-2 text-secondary text-body-xs text-nowrap">
-                <p>
-                  {new Date(
-                    row.original.reservation.arrivalDate
-                  ).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                  })}{" "}
-                  -{" "}
-                  {new Date(
-                    row.original.reservation.departureDate
-                  ).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                  })}
-                </p>
-              </div>
+            <div className="flex flex-col gap-1 truncate">
+              <p className="text-subtitle-md text-nowrap">
+                {row.original.reservation.guest.name}
+              </p>
+              <p className="text-tertiary text-body-sm font-normal truncate max-w-full h-5">
+                {row.original.lastMessage?.text}
+              </p>
             </div>
+          </div>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-tertiary text-subtitle-xs text-nowrap">
+              <p>
+                {new Date(
+                  row.original.reservation.arrivalDate
+                ).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                })}{" "}
+                -{" "}
+                {new Date(
+                  row.original.reservation.departureDate
+                ).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                })}
+              </p>
+            </div>
+            {row.original.reservation.status && (
+              <ResponseStatus type={row.original.reservation.status} />
+            )}
           </div>
         </div>
       );
@@ -194,7 +208,6 @@ export const columns: ColumnDef<Conversation>[] = [
     accessorKey: "messages",
     header: "Messages",
     enableHiding: false,
-    size: 300,
     filterFn: (row, columnId, filterValue: appliedFilters) => {
       if (!filterValue) return true;
 
@@ -263,84 +276,13 @@ export const columns: ColumnDef<Conversation>[] = [
       return true;
     },
     cell: ({ table, row }) => {
-      const replyStatus = row.original.archived
-        ? "Done"
-        : row.original.lastMessage?.author === "guest"
-        ? "Needs Reply"
-        : row.original.hasInboxMessageQueue
-        ? "Response Available"
-        : row.original.lastMessage?.author === "host"
-        ? "Replied to"
-        : null;
-
-      return (
-        <div className="flex flex-col gap-2">
-          <p className="text-secondary text-body-sm font-normal truncate max-w-[80%]">
-            {row.original.lastMessage?.text}
-          </p>
-          <ScrollArea>
-            <div className="flex gap-1 items-center truncate">
-              {/* message status */}
-              {replyStatus && (
-                <LabelsTagsGroups
-                  text={replyStatus}
-                  showHosty={replyStatus === "Response Available"}
-                  icon={
-                    (replyStatus === "Replied to" && (
-                      <MessageCheckCircleIcon className="text-icon-tertiary w-3 h-3" />
-                    )) ||
-                    (replyStatus === "Needs Reply" && (
-                      <MessageNotificationIcon className="text-icon-error-alt w-3 h-3" />
-                    )) ||
-                    (replyStatus === "Done" && (
-                      <CheckCircleIcon className="text-icon-success w-3 h-3" />
-                    ))
-                  }
-                />
-              )}
-
-              {table.getColumn("Reservation labels")?.getIsVisible() &&
-                row.original.reservation.reservationLabels &&
-                row.original.reservation.reservationLabels.map((label) => (
-                  <LabelsTagsGroups
-                    key={label?.id}
-                    text={label!.name}
-                    emoji={label?.emojiId}
-                  />
-                ))}
-
-              {/* list all tags applied */}
-              {table.getColumn("Conversation tags")?.getIsVisible() &&
-                row.original.tags &&
-                row.original.tags.map((tag) => {
-                  const icon = fakeIconsData.find(
-                    (icon) => icon.id === tag?.iconId
-                  );
-                  return (
-                    <LabelsTagsGroups
-                      key={tag?.id}
-                      text={tag!.name}
-                      icon={
-                        <IconComponent
-                          icon={icon!.icon}
-                          classNames="size-3 text-tertiary"
-                        />
-                      }
-                    />
-                  );
-                })}
-            </div>
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
-        </div>
-      );
+      return null;
     },
   },
   {
     accessorKey: "listing",
     header: "Listing",
     enableHiding: false,
-    size: 100,
     filterFn: (row, columnId, filterValue: appliedFilters) => {
       if (!filterValue) return true;
 
@@ -374,21 +316,7 @@ export const columns: ColumnDef<Conversation>[] = [
       return true;
     },
     cell: ({ table, row }) => {
-      return (
-        <div className="flex flex-col gap-2">
-          {table.getColumn("Listing name")?.getIsVisible() && (
-            <p className="text-body-sm truncate">
-              {row.original.reservation.listing.name}
-            </p>
-          )}
-          {row.original.reservation.listing.listingGroupData && (
-            <LabelsTagsGroups
-              text={row.original.reservation.listing.listingGroupData.name}
-              color={row.original.reservation.listing.listingGroupData.color}
-            />
-          )}
-        </div>
-      );
+      return null;
     },
   },
   // These columns are hidden table columns used for condintional attributes
@@ -408,7 +336,6 @@ export const columns: ColumnDef<Conversation>[] = [
     accessorKey: "assigneeGroup",
     header: "AssigneeGroup",
     enableHiding: false,
-    size: 80,
     filterFn: (row, columnId, filterValue: appliedFilters) => {
       // filterValue: { assigneeGroup: [{optionWithData}, {optionWithData}, {optionWithData}] }
 
@@ -436,34 +363,9 @@ export const columns: ColumnDef<Conversation>[] = [
 
       return true;
     },
-    cell: ({ table, row }) => {
-      // unassigned
-      if (!row.original.assigneeData) {
-        return (
-          <div className="flex items-end flex-col gap-2">
-            {table.getColumn("Assignee")?.getIsVisible() && (
-              <div className="w-5 h-5 rounded-full bg-primary-subtle flex items-center justify-center">
-                <AccountCircleIcon className="text-icon-secondary size-4" />
-              </div>
-            )}
-            <p className="text-body-xs font-normal text-nowrap">12:47 am</p>
-          </div>
-        );
-      }
-
+    cell: () => {
       // assigned
-      return (
-        <div className="flex items-end flex-col gap-2">
-          {table.getColumn("Assignee")?.getIsVisible() && (
-            <img
-              src={row.original.assigneeData?.image}
-              alt={row.original.assigneeData?.name}
-              className="w-5 h-5 rounded-full object-cover"
-            />
-          )}
-          <p className="text-body-xs font-normal text-nowrap">12:47 am</p>
-        </div>
-      );
+      return null;
     },
   },
 ];

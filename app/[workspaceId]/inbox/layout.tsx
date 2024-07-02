@@ -66,7 +66,7 @@ function InboxLayoutContent({ children }: { children: React.ReactNode }) {
             className={cn(
               "h-screen flex-grow bg-primary md:overflow-clip relative",
               isOpen
-                ? "w-0 overflow-hidden sm:w-[calc(100vw-80px-280px)]"
+                ? "w-0 overflow-hidden sm:w-[calc(100vw-80px-300px)]"
                 : "w-[calc(100vw-80px)]"
             )}
           >
