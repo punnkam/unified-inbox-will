@@ -251,7 +251,7 @@ export function InboxLandingPage<TData, TValue>({
           <div className="flex flex-wrap md:flex-nowrap gap-2 items-center justify-between">
             <div className="flex items-center gap-3">
               <SidebarTrigger />
-              <p className="text-title-3xl">{title}</p>
+              <p className="text-title-3xl text-nowrap">{title}</p>
             </div>
             <div className="flex items-center relative w-full sm:w-fit">
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
