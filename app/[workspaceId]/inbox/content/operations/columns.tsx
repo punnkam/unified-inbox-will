@@ -118,7 +118,7 @@ export const columns: ColumnDef<Conversation>[] = [
       return (
         <div
           className={cn(
-            "flex flex-col w-full max-w-[300px] gap-3 px-5 py-4",
+            "flex flex-col w-full max-w-[300px] gap-3 px-5 py-4 hover:bg-hover",
             parseInt(conversationId!) === row.original.id
               ? "bg-primary"
               : "bg-primary-subtle"
