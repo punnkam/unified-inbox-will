@@ -779,7 +779,7 @@ export const mockConversationData: Conversation[] = [
     lastMessage: {
       id: 102,
       text: "Can I have a late check-out?",
-      timestamp: 1622522700,
+      timestamp: 1720043484,
       author: "host",
       isIncoming: true,
       isSeen: false,

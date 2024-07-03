@@ -112,6 +112,11 @@ export const columns: ColumnDef<Conversation>[] = [
         ? "Replied to"
         : null;
 
+      const messageTimestamp = new Date(row.original.lastMessage?.timestamp!);
+      const currentTime = new Date();
+      const timeDifference =
+        currentTime.getTime() / 1000 - messageTimestamp.getTime();
+
       return (
         <div
           className={cn(
@@ -157,7 +162,12 @@ export const columns: ColumnDef<Conversation>[] = [
                   {row.original.reservation.guest.name}
                 </p>
                 <p className="text-body-xs text-tertiary text-nowrap">
-                  Just now
+                  {timeDifference <= 60 * 1000
+                    ? "Just now"
+                    : messageTimestamp.toLocaleTimeString("en-US", {
+                        hour: "numeric",
+                        minute: "numeric",
+                      })}
                 </p>
               </div>
               <p className="text-tertiary text-body-sm font-normal truncate max-w-full h-5">
