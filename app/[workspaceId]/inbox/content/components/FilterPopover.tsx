@@ -132,7 +132,7 @@ export const FilterPopover = ({
             </DropdownMenuTrigger>
           </>
         )}
-        <DropdownMenuInboxContent align="end">
+        <DropdownMenuInboxContent align={view === "chat" ? "start" : "end"}>
           <div className="p-4 flex items-center justify-between w-[284px] border-b border-primary">
             <p className="text-subtitle-sm">Add filter</p>
             <XIcon
