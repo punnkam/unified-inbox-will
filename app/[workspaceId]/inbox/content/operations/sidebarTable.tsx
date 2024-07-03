@@ -76,8 +76,8 @@ export const SidebarTable = () => {
   });
 
   return (
-    <div className="h-full">
-      <div className="flex flex-col gap-5 bg-primary-subtle px-5 pt-8 pb-3">
+    <div className="flex flex-col h-full">
+      <div className="flex flex-col gap-5 bg-primary-subtle px-5 pt-8 pb-3 border-b border-primary">
         <div className="flex items-center justify-between w-full">
           <div className="flex gap-2 items-center">
             <Link
@@ -182,7 +182,7 @@ export const SidebarTable = () => {
           </Tabs>
         </div>
       </div>
-      <ScrollArea className="bg-primary shadow-inner h-full overflow">
+      <ScrollArea className="bg-primary shadow-inner flex-grow overflow-y-auto">
         <Table>
           <TableHeader hidden>
             {table.getHeaderGroups().map((headerGroup) => (
