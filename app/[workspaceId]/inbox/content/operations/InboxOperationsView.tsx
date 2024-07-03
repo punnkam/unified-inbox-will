@@ -19,7 +19,7 @@ export const InboxOperationsView = ({
 
   return (
     <div className="h-full">
-      <p>hi</p>
+      <pre>{JSON.stringify(conversationData, null, 2)}</pre>
     </div>
   );
 };
