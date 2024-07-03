@@ -36,6 +36,7 @@ import { useTableContext } from "../../TableContext";
 import Link from "next/link";
 import { columns } from "./columns";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { mockConversationData } from "@/lib/realDataSchema";
 
 export const InboxChatSidebar = () => {
   const [currentRowHovered, setCurrentRowHovered] = useState<string | null>(
@@ -43,7 +44,17 @@ export const InboxChatSidebar = () => {
   );
 
   // Read our table context
-  const { columnFilters, setColumnFilters, setView, data } = useTableContext();
+  const { columnFilters, setColumnFilters, setView, data, setData } =
+    useTableContext();
+
+  // TODO: need to add some sort of data fetch here or in a parent incase user directly goes to this link
+  useEffect(() => {
+    if (!data || data.length == 0) {
+      setData(mockConversationData);
+    }
+
+    console.log(data);
+  }, []);
 
   // Use useEffect to update the context view
   useEffect(() => {
