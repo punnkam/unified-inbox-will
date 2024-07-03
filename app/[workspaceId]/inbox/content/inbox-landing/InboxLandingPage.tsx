@@ -103,6 +103,8 @@ export function InboxLandingPage<TData, TValue>({
     null
   );
 
+  const [attributesOpen, setAttributesOpen] = useState(false);
+
   // hotkey hooks
   useHotkeys("e", () => handleMarkDone());
 
@@ -251,7 +253,7 @@ export function InboxLandingPage<TData, TValue>({
           <div className="flex flex-wrap md:flex-nowrap gap-2 items-center justify-between">
             <div className="flex items-center gap-3">
               <SidebarTrigger />
-              <p className="text-title-3xl">{title}</p>
+              <p className="text-title-3xl text-nowrap">{title}</p>
             </div>
             <div className="flex items-center relative w-full sm:w-fit">
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
@@ -366,7 +368,10 @@ export function InboxLandingPage<TData, TValue>({
             </Tabs>
 
             <div className="flex items-center gap-2">
-              <DropdownMenu>
+              <DropdownMenu
+                open={attributesOpen}
+                onOpenChange={() => setAttributesOpen(!attributesOpen)}
+              >
                 <DropdownMenuTrigger asChild className="flex md:hidden">
                   <Button variant="ghost" size={"icon"} className="w-fit">
                     <AttributesIcon className="text-icon-secondary size-[15px] mr-2" />
@@ -386,12 +391,7 @@ export function InboxLandingPage<TData, TValue>({
                     <XIcon
                       className="h-4 w-4 text-icon-tertiary hover:text-icon-secondary hover:cursor-pointer"
                       onClick={() => {
-                        table
-                          .getAllColumns()
-                          .filter((column) => column.getCanHide())
-                          .map((column) => {
-                            column.toggleVisibility(true);
-                          });
+                        setAttributesOpen(false);
                       }}
                     />
                   </div>
@@ -403,7 +403,10 @@ export function InboxLandingPage<TData, TValue>({
                         return (
                           <div
                             key={column.id}
-                            className="p-2 hover:bg-hover rounded-md cursor-pointer"
+                            className={cn(
+                              "p-2 hover:bg-hover rounded-md cursor-pointer",
+                              !column.getIsVisible() && "opacity-50"
+                            )}
                             onClick={() =>
                               column.toggleVisibility(!column.getIsVisible())
                             }

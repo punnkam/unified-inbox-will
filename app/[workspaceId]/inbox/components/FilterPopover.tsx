@@ -116,7 +116,6 @@ export const FilterPopover = ({
             <XIcon
               className="h-4 w-4 text-icon-tertiary hover:text-icon-secondary hover:cursor-pointer"
               onClick={() => {
-                clearFilters();
                 setOpen(false);
               }}
             />
@@ -173,21 +172,19 @@ export const FilterPopover = ({
                                       key={filter.id!}
                                       value={filter.name}
                                       className="flex items-center justify-between gap-2 p-2"
+                                      onSelect={() => {
+                                        handleSelect({
+                                          filter:
+                                            pinnedCategory as keyof AllFilters,
+                                          label: filter,
+                                          columnId,
+                                          columnFilters,
+                                          setColumnFilters,
+                                        });
+                                      }}
                                     >
-                                      <div className="flex items-center gap-2 text-subtitle-xs hover:cursor-pointer truncate">
-                                        <Checkbox
-                                          checked={isChecked}
-                                          onCheckedChange={() => {
-                                            handleSelect({
-                                              filter:
-                                                pinnedCategory as keyof AllFilters,
-                                              label: filter,
-                                              columnId,
-                                              columnFilters,
-                                              setColumnFilters,
-                                            });
-                                          }}
-                                        />
+                                      <div className="flex items-center gap-2 text-subtitle-xs hover:cursor-pointer truncate w-full">
+                                        <Checkbox checked={isChecked} />
                                         {filter.icon && (
                                           <div className="flex items-center justify-center size-6">
                                             <IconComponent
@@ -313,21 +310,19 @@ export const FilterPopover = ({
                                   <CommandItem
                                     key={label.id!}
                                     value={label.name}
-                                    className="flex items-center justify-between group gap-2"
+                                    className="flex items-center justify-between group gap-2 w-full"
+                                    onSelect={() =>
+                                      handleSelect({
+                                        filter: filterKey,
+                                        label: label,
+                                        columnId,
+                                        columnFilters,
+                                        setColumnFilters,
+                                      })
+                                    }
                                   >
-                                    <div className="flex items-center gap-2 text-subtitle-xs truncate">
-                                      <Checkbox
-                                        checked={checked}
-                                        onCheckedChange={() =>
-                                          handleSelect({
-                                            filter: filterKey,
-                                            label: label,
-                                            columnId,
-                                            columnFilters,
-                                            setColumnFilters,
-                                          })
-                                        }
-                                      />
+                                    <div className="flex items-center gap-2 text-subtitle-xs hover:cursor-pointer truncate w-full">
+                                      <Checkbox checked={checked} />
                                       {label.icon && (
                                         <div className="flex items-center justify-center size-6">
                                           <IconComponent
@@ -485,21 +480,19 @@ export const FilterPopover = ({
                                     <CommandItem
                                       key={label.id!}
                                       value={label.name}
-                                      className="flex items-center justify-between group gap-2 "
+                                      className="flex items-center justify-between group gap-2"
+                                      onSelect={() =>
+                                        handleSelect({
+                                          filter: filterKey,
+                                          label: label,
+                                          columnId,
+                                          columnFilters,
+                                          setColumnFilters,
+                                        })
+                                      }
                                     >
-                                      <div className="flex items-center gap-2 text-subtitle-xs truncate">
-                                        <Checkbox
-                                          checked={checked}
-                                          onCheckedChange={() =>
-                                            handleSelect({
-                                              filter: filterKey,
-                                              label: label,
-                                              columnId,
-                                              columnFilters,
-                                              setColumnFilters,
-                                            })
-                                          }
-                                        />
+                                      <div className="flex items-center gap-2 text-subtitle-xs hover:cursor-pointer truncate w-full">
+                                        <Checkbox checked={checked} />
                                         {label.icon && (
                                           <div className="flex items-center justify-center size-6">
                                             <IconComponent
@@ -589,20 +582,18 @@ export const FilterPopover = ({
                                 key={label.id!}
                                 value={label.name}
                                 className="flex items-center justify-between group gap-2"
+                                onSelect={() =>
+                                  handleSelect({
+                                    filter: filterKey,
+                                    label: label,
+                                    columnId,
+                                    columnFilters,
+                                    setColumnFilters,
+                                  })
+                                }
                               >
-                                <div className="flex items-center gap-2 text-subtitle-xs truncate">
-                                  <Checkbox
-                                    checked={checked}
-                                    onCheckedChange={() =>
-                                      handleSelect({
-                                        filter: filterKey,
-                                        label: label,
-                                        columnId,
-                                        columnFilters,
-                                        setColumnFilters,
-                                      })
-                                    }
-                                  />
+                                <div className="flex items-center gap-2 text-subtitle-xs hover:cursor-pointer truncate w-full">
+                                  <Checkbox checked={checked} />
                                   {label.icon && (
                                     <div className="flex items-center justify-center size-6">
                                       <IconComponent
