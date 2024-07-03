@@ -118,7 +118,7 @@ export const columns: ColumnDef<Conversation>[] = [
             "flex flex-col w-full max-w-[300px] gap-3 px-5 py-4",
             parseInt(conversationId!) === row.original.id
               ? "bg-primary"
-              : "bg-hover"
+              : "bg-primary-subtle"
           )}
         >
           <div className={`flex gap-3 items-center w-full`}>
@@ -151,10 +151,15 @@ export const columns: ColumnDef<Conversation>[] = [
               )}
             </div>
 
-            <div className="flex flex-col gap-1 truncate">
-              <p className="text-subtitle-md text-nowrap">
-                {row.original.reservation.guest.name}
-              </p>
+            <div className="flex flex-col gap-1 truncate w-full">
+              <div className="w-full flex items-center justify-between">
+                <p className="text-subtitle-md text-nowrap w-full">
+                  {row.original.reservation.guest.name}
+                </p>
+                <p className="text-body-xs text-tertiary text-nowrap">
+                  Just now
+                </p>
+              </div>
               <p className="text-tertiary text-body-sm font-normal truncate max-w-full h-5">
                 {row.original.lastMessage?.text}
               </p>
