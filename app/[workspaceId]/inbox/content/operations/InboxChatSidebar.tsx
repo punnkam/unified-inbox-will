@@ -88,7 +88,10 @@ export const InboxChatSidebar = () => {
 
   return (
     <div className="h-screen flex flex-col justify-between bg-primary-subtle w-[calc(100vw-74px)] md:w-[300px] md:min-w-[300px] border-e border-primary overflow-clip">
-      <div className="flex flex-col gap-5 bg-primary-subtle px-5 pt-8 pb-3 border-b border-primary">
+      <div
+        className="flex flex-col gap-5 bg-primary-subtle px-5 pt-8 pb-3 border-b border-primary z-10"
+        style={{ boxShadow: "0px 4px 40px 0px rgba(0, 0, 0, 0.05)" }}
+      >
         <div className="flex items-center justify-between w-full">
           <div className="flex gap-2 items-center">
             <Link

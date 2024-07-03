@@ -19,7 +19,14 @@ export default function ProtectedPathsLayout({
       <SideBar />
 
       {/* Page Content */}
-      <div className="flex-grow bg-primary overflow-x-clip">{children}</div>
+      <div
+        className="flex-grow bg-primary overflow-x-clip"
+        style={{
+          boxShadow: "-10px 4px 15px 0px rgba(0, 0, 0, 0.02);",
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 }

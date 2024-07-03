@@ -100,8 +100,6 @@ export const columns: ColumnDef<Conversation>[] = [
       const searchParams = useSearchParams();
       const conversationId = searchParams.get("c");
 
-      console.log("conversationId", conversationId);
-
       const replyStatus = row.original.archived
         ? "Done"
         : row.original.lastMessage?.author === "guest"
@@ -125,6 +123,12 @@ export const columns: ColumnDef<Conversation>[] = [
               ? "bg-primary"
               : "bg-primary-subtle"
           )}
+          style={{
+            boxShadow:
+              parseInt(conversationId!) === row.original.id
+                ? "0px 4px 50px 0px rgba(0, 0, 0, 0.05)"
+                : "none",
+          }}
         >
           <div className={`flex gap-3 items-center w-full`}>
             <div className="relative">
