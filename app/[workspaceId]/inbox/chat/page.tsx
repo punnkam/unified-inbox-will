@@ -1,4 +1,6 @@
-import { InboxOperationsView } from "../../content/operations/InboxOperationsView";
+// TODO:Convert this all to a 'use client' page to simulate pages router
+
+import { InboxOperationsView } from "../content/operations/InboxOperationsView";
 import { fetchConversation } from "@/app/actions";
 
 export default async function AllConversationsPage({

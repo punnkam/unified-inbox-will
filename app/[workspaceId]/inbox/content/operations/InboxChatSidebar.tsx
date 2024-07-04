@@ -96,7 +96,8 @@ export const InboxChatSidebar = () => {
           <div className="flex gap-2 items-center">
             <Link
               className="size-5 flex items-center justify-center hover:bg-hover rouneded-xl"
-              href="./"
+              href="./all-conversations"
+              // TODO: this is hardocded to go back to all convos
             >
               <ArrowNarrowLeft className="text-icon-secondary size-3" />
             </Link>
