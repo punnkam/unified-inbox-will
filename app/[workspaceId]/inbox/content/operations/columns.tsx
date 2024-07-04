@@ -151,7 +151,7 @@ export const columns: ColumnDef<Conversation>[] = [
           <ContextMenuTrigger>
             <div
               className={cn(
-                "flex flex-col w-full max-w-[300px] gap-3 px-5 py-4",
+                "flex flex-col justify-center w-full max-w-[300px] h-[125px] gap-3 px-5 py-4",
                 isContextMenuOpen
                   ? "bg-selected"
                   : parseInt(conversationId!) === row.original.id
