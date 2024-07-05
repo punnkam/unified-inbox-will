@@ -22,7 +22,7 @@ export default function ProtectedPathsLayout({
       <div
         className="flex-grow bg-primary overflow-x-clip"
         style={{
-          boxShadow: "-10px 4px 15px 0px rgba(0, 0, 0, 0.02);",
+          boxShadow: "-10px 4px 15px 0px rgba(0, 0, 0, 0.02)",
         }}
       >
         {children}
