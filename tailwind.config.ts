@@ -58,7 +58,7 @@ const config = {
         icon: {
           primary: "#191919",
           secondary: "#4B5563",
-          tertiary: "#71717A",
+          tertiary: "#A1A1AA",
           brand: "#10275B",
           disabled: "#D1D5DB",
           error: "#EF4444",
@@ -137,7 +137,7 @@ const config = {
       textColor: {
         primary: "#191919",
         secondary: "#4B5563",
-        tertiary: "#71717A",
+        tertiary: "#A1A1AA",
         brand: "#10275B",
         disabled: "#A1A1AA",
         placeholder: "#A1A1AA",
