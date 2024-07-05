@@ -26,9 +26,11 @@ import Link from "next/link";
 import cn from "classnames";
 import { colorMap } from "@/lib/types";
 import { useWindowSize } from "@/lib/hooks/useWindowSize";
+import { useSearchParams } from "next/navigation";
 
 export const InboxSidebar = () => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const workspaceId = pathname.split("/")[1];
 
@@ -94,11 +96,14 @@ export const InboxSidebar = () => {
                     {fakeReservationLabels.map((label) => (
                       <InboxSideBarOption
                         key={label.id}
-                        path={`/${workspaceId}/inbox/reservation-label/${label.id}`}
+                        path={`/${workspaceId}/inbox/reservation-label?label=${label.id}`}
                         name={label.name}
-                        selected={pathname.startsWith(
-                          `/${workspaceId}/inbox/reservation-label/${label.id}`
-                        )}
+                        selected={
+                          pathname.startsWith(
+                            `/${workspaceId}/inbox/reservation-label`
+                          ) &&
+                          searchParams.get("label") === label.id?.toString()
+                        }
                         emoji={label.emojiId}
                       />
                     ))}
@@ -120,11 +125,13 @@ export const InboxSidebar = () => {
                     {fakeListingGroupsData.map((group) => (
                       <InboxSideBarOption
                         key={group.id}
-                        path={`/${workspaceId}/inbox/listing-group/${group.id}`}
+                        path={`/${workspaceId}/inbox/listing-group?group=${group.id}`}
                         name={group.name}
-                        selected={pathname.startsWith(
-                          `/${workspaceId}/inbox/listing-group/${group.id}`
-                        )}
+                        selected={
+                          pathname.startsWith(
+                            `/${workspaceId}/inbox/listing-group`
+                          ) && searchParams.get("group") === group.id.toString()
+                        }
                         color={group.color}
                       />
                     ))}

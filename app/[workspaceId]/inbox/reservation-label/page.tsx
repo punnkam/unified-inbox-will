@@ -1,4 +1,4 @@
-import { columns } from "../../content/inbox-landing/columns";
+import { columns } from "../content/inbox-landing/columns";
 import {
   fetchAvailableMembers,
   fetchConversationTags,
@@ -7,14 +7,16 @@ import {
 } from "@/app/actions";
 import { ConversationTag } from "@/lib/types";
 import { redirect } from "next/navigation";
-import { InboxLandingView } from "../../content/inbox-landing/InboxLandingView";
+import { InboxLandingView } from "../content/inbox-landing/InboxLandingView";
 
 export default async function AllConversationsPage({
-  params: { workspaceId, labelId },
+  params: { workspaceId },
+  searchParams: { label },
 }: {
-  params: { workspaceId: string; labelId: string };
+  params: { workspaceId: string };
+  searchParams: { label: string };
 }) {
-  const reservationLabelData = await fetchReservationLabel(labelId);
+  const reservationLabelData = await fetchReservationLabel(label);
 
   if (
     !reservationLabelData ||
@@ -26,7 +28,7 @@ export default async function AllConversationsPage({
   }
 
   // fetch the conversations with the current reservation label
-  const data = await fetchReservationLabelConversations(workspaceId, labelId);
+  const data = await fetchReservationLabelConversations(workspaceId, label);
 
   if (!data || !data.success || !data.data) {
     return null;
