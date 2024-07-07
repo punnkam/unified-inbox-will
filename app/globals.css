@@ -129,3 +129,12 @@
   background: #71717a;
   border-radius: 10px;
 }
+
+/* Placeholder text for empty rich text editors */
+p.is-editor-empty:first-child::before {
+  @apply text-placeholder;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

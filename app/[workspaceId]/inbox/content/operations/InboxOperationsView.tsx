@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { Conversation } from "@/lib/realDataSchema";
 import { useTableContext } from "../../TableContext";
+import { ChatWindow } from "./ChatWindow";
 
 export const InboxOperationsView = ({
   conversationData,
@@ -19,7 +20,7 @@ export const InboxOperationsView = ({
 
   return (
     <div className="h-full">
-      <pre>{JSON.stringify(conversationData, null, 2)}</pre>
+      <ChatWindow conversationData={conversationData} />
     </div>
   );
 };
