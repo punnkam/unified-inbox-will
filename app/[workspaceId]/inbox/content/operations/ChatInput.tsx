@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 export type initialMessageType =
   | "Airbnb"
@@ -257,21 +258,31 @@ export const ChatInput = ({
 
   if (state === "Collapsed") {
     return (
-      <div
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        key={"collapsed"}
         className="p-4 border border-primary rounded-lg text-body-sm text-placeholder h-[52px]"
         onClick={() => {
           setState("Active");
         }}
       >
         Write your reply here . . .
-      </div>
+      </motion.div>
     );
   }
 
   if (state === "Active") {
     if (messageType === "Email") {
       return (
-        <div className={cn("p-4 pt-2 border border-icon-active rounded-lg")}>
+        <motion.div
+          className={cn("p-4 pt-2 border border-icon-active rounded-lg")}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          key={"email"}
+        >
           <div className="flex flex-col gap-[2px]">
             <div className="flex items-center gap-2">
               <p className="text-body-2xs text-tertiary">To</p>
@@ -560,13 +571,19 @@ export const ChatInput = ({
               </Button>
             </div>
           </div>
-        </div>
+        </motion.div>
       );
     }
 
     // everything else
     return (
-      <div className={"p-4 border border-icon-active rounded-lg"}>
+      <motion.div
+        className={"p-4 border border-icon-active rounded-lg"}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        key={"active"}
+      >
         <AutosizeTextarea
           className="w-full rounded-none p-0 outline-0 border-none text-body-sm resize-none h-20"
           placeholder="Write your reply here . . ."
@@ -600,7 +617,7 @@ export const ChatInput = ({
             </Button>
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   }
 

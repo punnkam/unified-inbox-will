@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useHotkeys } from "react-hotkeys-hook";
 import { toast } from "sonner";
 import { ChatInput } from "./ChatInput";
+import { AnimatePresence } from "framer-motion";
 
 export const ChatWindow = ({
   conversationData,
@@ -86,7 +87,9 @@ export const ChatWindow = ({
           <div>
             {/* Chat input */}
             <div className="py-2 px-8">
-              <ChatInput />
+              <AnimatePresence>
+                <ChatInput />
+              </AnimatePresence>
             </div>
 
             {/* Result of the ancient battle of the bottom bar - Jared vs Eli */}
