@@ -34,6 +34,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 export type initialMessageType =
   | "Airbnb"
@@ -176,17 +177,49 @@ export const ChatInput = ({
     console.log("Bcc:", emailState.bccTags);
     console.log("Subject:", subject);
     console.log("Message:", message);
+
+    //reset the state
+    setEmailState((prevState) => ({
+      ...prevState,
+      toTags: [],
+      ccTags: [],
+      bccTags: [],
+      activeToTagIndex: null,
+      activeCcTagIndex: null,
+      activeBccTagIndex: null,
+      options: {
+        cc: false,
+        bcc: false,
+      },
+    }));
+
+    setMessage("");
+    editor?.commands.setContent(""); // Clear the editor state
+    setSubject("");
+
+    toast.success("Email sent successfully");
+
+    setState("Collapsed");
   };
 
   const handleSend = () => {
     console.log("Sending message");
     console.log(messageType);
     console.log("Message:", message);
+
+    //reset the state
+    setMessage("");
+    editor?.commands.setContent(""); // Clear the editor state
+
+    toast.success(messageType + " message sent successfully");
+
+    setState("Collapsed");
   };
 
   const handleTypeChange = (newMessageType: initialMessageType) => {
     setMessageType(newMessageType);
     setMessage("");
+    editor?.commands.setContent(""); // Clear the editor state
   };
 
   // This handles the link button click in rich text editor
