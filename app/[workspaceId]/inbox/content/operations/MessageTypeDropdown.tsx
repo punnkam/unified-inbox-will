@@ -17,13 +17,13 @@ import { Button } from "@/components/ui/button";
 // TODO: this dosnt work - shows same icon for all
 const messageTypes: {
   type: initialMessageType;
-  image: JSX.Element;
+  image: string;
 }[] = [
-  { type: "Airbnb", image: <AirbnbIcon /> },
-  { type: "SMS", image: <SMSImageIcon /> },
-  { type: "Guesty", image: <GuestyImageIcon /> },
-  { type: "WhatsApp", image: <AirbnbIcon /> },
-  { type: "Email", image: <AirbnbIcon /> },
+  { type: "Airbnb", image: "/images/host_airbnb.svg" },
+  { type: "SMS", image: "/images/host_sms.svg" },
+  { type: "Guesty", image: "/images/host_guesty.svg" },
+  { type: "WhatsApp", image: "/images/host_whatsapp.svg" },
+  { type: "Email", image: "/images/host_gmail.svg" },
 ];
 
 export const MessageTypeDropdown = ({
@@ -63,7 +63,18 @@ export const MessageTypeDropdown = ({
             className="hover:cursor-pointer gap-2"
             onClick={(e) => handleSelectMessageType(type.type)}
           >
-            {type.image}
+            <img
+              src={type.image}
+              alt={type.type}
+              className="w-6 h-6 rounded-full"
+              style={
+                type.type == "Guesty"
+                  ? {
+                      boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+                    }
+                  : undefined
+              }
+            />
             <p
               className={`text-subtitle-xs ${
                 selectedMessageType === type.type && "text-primary"
