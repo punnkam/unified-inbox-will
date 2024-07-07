@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { UnifiedConversationType } from "@/lib/realDataSchema";
 
-const messageTypes: {
+export const messageTypes: {
   type: UnifiedConversationType;
   image: string;
 }[] = [

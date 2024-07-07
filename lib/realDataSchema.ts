@@ -20,6 +20,7 @@ export interface Conversation {
   guest: Guest;
   conversationType?: UnifiedConversationType;
   lastMessage?: MessageItem;
+  allMessages?: MessageItem[];
   hasUnreadMessages?: boolean;
   lastMessageReceivedAt?: string | undefined | null;
   lastMessageSentAt?: string | undefined | null;
@@ -517,6 +518,70 @@ export const fakeMembersData: Member[] = [
 export type ConversationTable = ReturnType<typeof useReactTable<Conversation>>;
 
 // --------- Generated Data ------------------------------------------
+
+const fakeAllMessages: MessageItem[] = [
+  {
+    id: 101,
+    text: "What time is check-in?",
+    timestamp: 1622519100,
+    author: "guest",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: "text",
+  },
+  {
+    id: 102,
+    text: "Check-in is at 3pm Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+    timestamp: 1622522700,
+    author: "host",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: "text",
+  },
+  {
+    id: 103,
+    text: "ok great, oh by the way - the dryer is broken, can you fix it?",
+    timestamp: 1622522700,
+    author: "guest",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: "text",
+  },
+  {
+    id: 104,
+    text: "I'll fix it, thanks!",
+    timestamp: 1622522700,
+    author: "host",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: "text",
+  },
+  {
+    id: 105,
+    text: "I'll fix it, thanks!",
+    timestamp: 1622522700,
+    author: "host",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: "text",
+  },
+  {
+    id: 106,
+    text: "Can I check-in early?",
+    timestamp: 1720394655,
+    author: "guest",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: "text",
+  },
+];
+
 export const fakeListingsData: Listing[] = [
   {
     userId: "1",
@@ -681,6 +746,7 @@ export const mockConversationData: Conversation[] = [
       status: "delivered",
       type: "text",
     },
+    allMessages: fakeAllMessages,
     hasUnreadMessages: true,
     lastMessageReceivedAt: "2024-06-24T10:30:00Z",
     lastMessageSentAt: "2024-06-24T10:32:00Z",
@@ -788,6 +854,7 @@ export const mockConversationData: Conversation[] = [
       status: "delivered",
       type: "text",
     },
+    allMessages: fakeAllMessages,
     hasUnreadMessages: true,
     lastMessageReceivedAt: "2024-06-24T11:30:00Z",
     lastMessageSentAt: "2024-06-24T11:35:00Z",

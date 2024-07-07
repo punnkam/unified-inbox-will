@@ -12,6 +12,9 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { toast } from "sonner";
 import { ChatInput } from "./ChatInput";
 import { AnimatePresence } from "framer-motion";
+import { InboundMessage } from "./InboundMessage";
+import { OutboundMessage } from "./OutboundMessage";
+import { format } from "date-fns";
 
 export const ChatWindow = ({
   conversationData,
@@ -78,10 +81,67 @@ export const ChatWindow = ({
       </div>
 
       {/* Body */}
-      <div className="pt-6 flex-grow">
+      <div className="pt-6 flex-grow overflow-y-auto">
         <div className="flex flex-col gap-5 justify-between h-full">
           {/* Chat window */}
-          <div className="h-full">hi</div>
+          <div className="h-full flex flex-col gap-5 px-8 overflow-auto">
+            {conversationData.allMessages?.reduce<React.ReactNode[]>(
+              (acc, message, index, array) => {
+                const previousMessage = array[index - 1];
+                const messageDate = new Date(message.timestamp * 1000);
+                const previousMessageDate = previousMessage
+                  ? new Date(previousMessage.timestamp * 1000)
+                  : null;
+
+                const messageDay = messageDate.toLocaleDateString();
+                const previousMessageDay = previousMessageDate
+                  ? previousMessageDate.toLocaleDateString()
+                  : "";
+
+                if (messageDay !== previousMessageDay) {
+                  const today = new Date().toLocaleDateString();
+                  const yesterday = new Date(
+                    Date.now() - 86400000
+                  ).toLocaleDateString();
+                  let dayHeader =
+                    messageDay === today
+                      ? "Today"
+                      : messageDay === yesterday
+                      ? "Yesterday"
+                      : format(messageDate, "MMMM dd, yyyy");
+
+                  acc.push(
+                    <div
+                      key={message.id + "-date"}
+                      className="text-center text-bold-section text-secondary uppercase"
+                    >
+                      {dayHeader}
+                    </div>
+                  );
+                }
+
+                acc.push(
+                  <div key={message.id} className="flex flex-col gap-2">
+                    {message.author === "guest" ? (
+                      <InboundMessage
+                        message={message}
+                        guestData={conversationData.guest}
+                        type={conversationData.conversationType!}
+                      />
+                    ) : (
+                      <OutboundMessage
+                        message={message}
+                        type={conversationData.conversationType!}
+                      />
+                    )}
+                  </div>
+                );
+
+                return acc;
+              },
+              []
+            )}
+          </div>
 
           {/* Bottom */}
           <div>
