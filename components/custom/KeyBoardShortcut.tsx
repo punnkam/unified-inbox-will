@@ -14,7 +14,7 @@ export const KeyboardShortcut = ({
         className
       )}
     >
-      <p className="text-[10.5px] text-secondary h-full">{shortcut}</p>
+      <p className="text-[10.5px] text-secondary h-auto">{shortcut}</p>
     </div>
   );
 };
