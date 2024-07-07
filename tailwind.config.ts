@@ -195,7 +195,10 @@ const config = {
         "bold-2xs": ["10px", { lineHeight: "14.4px", fontWeight: 900 }],
         "bold-2.5xs": ["11px", { lineHeight: "13.2px", fontWeight: 900 }],
         "bold-3xs": ["10px", { lineHeight: "12px", fontWeight: 900 }],
-        "bold-section": ["10px", { lineHeight: "13.2px", fontWeight: 900 }],
+        "bold-section": [
+          "10px",
+          { lineHeight: "13.2px", fontWeight: 900, letterSpacing: "1px" },
+        ],
       },
       lineHeight: {
         "3xs": "10px",
