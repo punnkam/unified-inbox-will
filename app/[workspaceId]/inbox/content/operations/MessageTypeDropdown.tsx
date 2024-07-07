@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { initialMessageType } from "./ChatInput";
 import {
   AirbnbIcon,
   ChevronDownIcon,
@@ -13,31 +12,34 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { UnifiedConversationType } from "@/lib/realDataSchema";
 
-// TODO: this dosnt work - shows same icon for all
 const messageTypes: {
-  type: initialMessageType;
+  type: UnifiedConversationType;
   image: string;
 }[] = [
-  { type: "Airbnb", image: "/images/host_airbnb.svg" },
-  { type: "SMS", image: "/images/host_sms.svg" },
-  { type: "Guesty", image: "/images/host_guesty.svg" },
-  { type: "WhatsApp", image: "/images/host_whatsapp.svg" },
-  { type: "Email", image: "/images/host_gmail.svg" },
+  { type: UnifiedConversationType.Airbnb, image: "/images/host_airbnb.svg" },
+  { type: UnifiedConversationType.SMS, image: "/images/host_sms.svg" },
+  { type: UnifiedConversationType.Guesty, image: "/images/host_guesty.svg" },
+  {
+    type: UnifiedConversationType.Whatsapp,
+    image: "/images/host_whatsapp.svg",
+  },
+  { type: UnifiedConversationType.Email, image: "/images/host_gmail.svg" },
 ];
 
 export const MessageTypeDropdown = ({
   messageType,
   setMessageType,
 }: {
-  messageType: initialMessageType;
-  setMessageType: (newMessageType: initialMessageType) => void;
+  messageType: UnifiedConversationType;
+  setMessageType: (newMessageType: UnifiedConversationType) => void;
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedMessageType, setSelectedMessageType] =
-    useState<initialMessageType>(messageType);
+    useState<UnifiedConversationType>(messageType);
 
-  const handleSelectMessageType = (messageType: initialMessageType) => {
+  const handleSelectMessageType = (messageType: UnifiedConversationType) => {
     setSelectedMessageType(messageType);
     setMessageType(messageType);
     setIsOpen(false);
@@ -50,7 +52,7 @@ export const MessageTypeDropdown = ({
           onClick={() => setIsOpen(!isOpen)}
           size={"sm"}
           variant={"ghost"}
-          className="text-tertiary flex items-center gap-1 justify-between self-end"
+          className="text-tertiary flex items-center gap-1 justify-between self-end capitalize"
         >
           Via {selectedMessageType}
           <ChevronDownIcon className="text-tertiary size-3" />
@@ -68,7 +70,7 @@ export const MessageTypeDropdown = ({
               alt={type.type}
               className="w-6 h-6 rounded-full"
               style={
-                type.type == "Guesty"
+                type.type == UnifiedConversationType.Guesty
                   ? {
                       boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
                     }
@@ -76,7 +78,7 @@ export const MessageTypeDropdown = ({
               }
             />
             <p
-              className={`text-subtitle-xs ${
+              className={`text-subtitle-xs capitalize ${
                 selectedMessageType === type.type && "text-primary"
               }`}
             >

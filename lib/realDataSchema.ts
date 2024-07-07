@@ -293,6 +293,8 @@ export enum UnifiedConversationType {
   Whatsapp = "whatsapp",
   Voice = "voice",
   Ota = "ota",
+  Guesty = "guesty",
+  Airbnb = "airbnb",
 }
 
 export interface ListingGroup {

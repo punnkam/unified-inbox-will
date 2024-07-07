@@ -4,7 +4,7 @@ import {
   ChevronDownIcon,
   SlackIcon,
 } from "@/components/icons/CustomIcons";
-import { Conversation } from "@/lib/realDataSchema";
+import { Conversation, UnifiedConversationType } from "@/lib/realDataSchema";
 import { NotesButton } from "./NotesButton";
 import { ChatSidebarButton } from "./ChatSidebarButton";
 import { Button } from "@/components/ui/button";
@@ -88,7 +88,12 @@ export const ChatWindow = ({
             {/* Chat input */}
             <div className="py-2 px-8">
               <AnimatePresence>
-                <ChatInput />
+                <ChatInput
+                  initialMessageType={
+                    conversationData.conversationType ||
+                    UnifiedConversationType.Email
+                  }
+                />
               </AnimatePresence>
             </div>
 

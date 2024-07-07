@@ -36,13 +36,8 @@ import {
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { UnifiedConversationType } from "@/lib/realDataSchema";
 
-export type initialMessageType =
-  | "Airbnb"
-  | "SMS"
-  | "Guesty"
-  | "WhatsApp"
-  | "Email";
 export type initialState = "Collapsed" | "Active" | "Inactive";
 
 type Tag = {
@@ -55,11 +50,11 @@ export const ChatInput = ({
   initialMessageType,
 }: {
   initialState?: initialState;
-  initialMessageType?: initialMessageType;
+  initialMessageType?: UnifiedConversationType;
 }) => {
   const [state, setState] = useState<initialState>(initialState || "Collapsed");
-  const [messageType, setMessageType] = useState<initialMessageType>(
-    initialMessageType || "Guesty"
+  const [messageType, setMessageType] = useState<UnifiedConversationType>(
+    initialMessageType || UnifiedConversationType.Email
   );
   const [subject, setSubject] = useState<string>("");
   const [message, setMessage] = useState<string>("");
@@ -217,7 +212,7 @@ export const ChatInput = ({
     setState("Collapsed");
   };
 
-  const handleTypeChange = (newMessageType: initialMessageType) => {
+  const handleTypeChange = (newMessageType: UnifiedConversationType) => {
     setMessageType(newMessageType);
     setMessage("");
     editor?.commands.setContent(""); // Clear the editor state
@@ -274,7 +269,7 @@ export const ChatInput = ({
   }
 
   if (state === "Active") {
-    if (messageType === "Email") {
+    if (messageType === UnifiedConversationType.Email) {
       return (
         <motion.div
           className={cn("p-4 pt-2 border border-icon-active rounded-lg")}
