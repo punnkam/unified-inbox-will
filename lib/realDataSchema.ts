@@ -134,10 +134,17 @@ export interface MessageItem {
   isIncoming: boolean;
   isSeen: boolean;
   status: string;
-  type: string;
-  tags?: ConversationTag[];
+  type: UnifiedConversationType; // updated to be a real type of convo rather than string
+  tags?: ConversationTag[]; // updated to be an array of tags rather than strings
   pictureUrl?: string;
   senderName?: string;
+  emailData?: {
+    // added this to support email
+    to: string[];
+    cc?: string[];
+    bcc?: string[];
+    subject: string;
+  };
 }
 
 export type MessageAuthor = "guest" | "host";
@@ -528,7 +535,7 @@ const fakeAllMessages: MessageItem[] = [
     isIncoming: true,
     isSeen: false,
     status: "delivered",
-    type: "text",
+    type: UnifiedConversationType.Airbnb,
   },
   {
     id: 102,
@@ -538,7 +545,7 @@ const fakeAllMessages: MessageItem[] = [
     isIncoming: true,
     isSeen: false,
     status: "delivered",
-    type: "text",
+    type: UnifiedConversationType.Airbnb,
   },
   {
     id: 103,
@@ -548,7 +555,7 @@ const fakeAllMessages: MessageItem[] = [
     isIncoming: true,
     isSeen: false,
     status: "delivered",
-    type: "text",
+    type: UnifiedConversationType.Airbnb,
   },
   {
     id: 104,
@@ -558,7 +565,7 @@ const fakeAllMessages: MessageItem[] = [
     isIncoming: true,
     isSeen: false,
     status: "delivered",
-    type: "text",
+    type: UnifiedConversationType.Airbnb,
   },
   {
     id: 105,
@@ -568,7 +575,7 @@ const fakeAllMessages: MessageItem[] = [
     isIncoming: true,
     isSeen: false,
     status: "delivered",
-    type: "text",
+    type: UnifiedConversationType.Airbnb,
   },
   {
     id: 106,
@@ -578,7 +585,7 @@ const fakeAllMessages: MessageItem[] = [
     isIncoming: true,
     isSeen: false,
     status: "delivered",
-    type: "text",
+    type: UnifiedConversationType.Airbnb,
   },
   {
     id: 107,
@@ -588,7 +595,7 @@ const fakeAllMessages: MessageItem[] = [
     isIncoming: false,
     isSeen: true,
     status: "delivered",
-    type: "text",
+    type: UnifiedConversationType.Airbnb,
   },
   {
     id: 108,
@@ -598,7 +605,7 @@ const fakeAllMessages: MessageItem[] = [
     isIncoming: true,
     isSeen: false,
     status: "delivered",
-    type: "text",
+    type: UnifiedConversationType.Airbnb,
   },
   {
     id: 109,
@@ -608,7 +615,7 @@ const fakeAllMessages: MessageItem[] = [
     isIncoming: true,
     isSeen: false,
     status: "delivered",
-    type: "text",
+    type: UnifiedConversationType.Airbnb,
   },
   {
     id: 110,
@@ -618,7 +625,7 @@ const fakeAllMessages: MessageItem[] = [
     isIncoming: false,
     isSeen: true,
     status: "delivered",
-    type: "text",
+    type: UnifiedConversationType.Airbnb,
   },
   {
     id: 111,
@@ -628,7 +635,7 @@ const fakeAllMessages: MessageItem[] = [
     isIncoming: true,
     isSeen: false,
     status: "delivered",
-    type: "text",
+    type: UnifiedConversationType.Airbnb,
   },
   {
     id: 112,
@@ -638,7 +645,7 @@ const fakeAllMessages: MessageItem[] = [
     isIncoming: true,
     isSeen: false,
     status: "delivered",
-    type: "text",
+    type: UnifiedConversationType.Airbnb,
     tags: [fakeConversationTags[3]],
   },
   {
@@ -649,7 +656,7 @@ const fakeAllMessages: MessageItem[] = [
     isIncoming: false,
     isSeen: true,
     status: "delivered",
-    type: "text",
+    type: UnifiedConversationType.Airbnb,
   },
   {
     id: 114,
@@ -659,7 +666,7 @@ const fakeAllMessages: MessageItem[] = [
     isIncoming: true,
     isSeen: false,
     status: "delivered",
-    type: "text",
+    type: UnifiedConversationType.Airbnb,
     tags: [
       fakeConversationTags[0],
       fakeConversationTags[2],
@@ -668,13 +675,17 @@ const fakeAllMessages: MessageItem[] = [
   },
   {
     id: 115,
-    text: "Please try this new password: Welcome123",
+    text: `Hello, this is a test email <strong>This is <em>a test</em> email</strong><br/><br/>
+    
+    On Fri, Jun 14, 2024 at 12:01PM Casa Ka’an <info@casakaan.com> wrote:<br></br>
+    
+    <blockquote>Hi Jared, Hope all is well<br/>Can we hop on a call to discuss<br><br>On Thurs, June 13, 2024 at 12:01 PM Jared <jared@hostai.app> wrote:<br></br><blockquote>Hi Nico, <br>Thank you for this information</blockquote></blockquote>`,
     timestamp: 1720427055,
     author: "host",
     isIncoming: false,
     isSeen: true,
     status: "delivered",
-    type: "text",
+    type: UnifiedConversationType.Email,
   },
   {
     id: 116,
@@ -684,7 +695,29 @@ const fakeAllMessages: MessageItem[] = [
     isIncoming: true,
     isSeen: false,
     status: "delivered",
-    type: "text",
+    type: UnifiedConversationType.Airbnb,
+  },
+  //ex of email
+  {
+    id: 117,
+    text: `Hello, this is a test email <strong>This is <em>a test</em> email</strong><br/><br/>
+    
+    On Fri, Jun 14, 2024 at 12:01PM Casa Ka’an <info@casakaan.com> wrote:<br></br>
+    
+    <blockquote>Hi Jared, Hope all is well<br/>Can we hop on a call to discuss<br><br>On Thurs, June 13, 2024 at 12:01 PM Jared <jared@hostai.app> wrote:<br></br><blockquote>Hi Nico, <br>Thank you for this information</blockquote></blockquote>`,
+    timestamp: 1720430655,
+    author: "guest",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: UnifiedConversationType.Email,
+    emailData: {
+      to: ["guest@hostai.app"],
+      cc: ["guest1@hostai.app"],
+      bcc: ["guest2@hostai.app"],
+      subject: "Test email",
+    },
+    tags: [fakeConversationTags[2]],
   },
 ];
 
@@ -850,7 +883,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     allMessages: fakeAllMessages,
     hasUnreadMessages: true,
@@ -958,7 +991,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     allMessages: fakeAllMessages,
     hasUnreadMessages: true,
@@ -1066,7 +1099,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     hasUnreadMessages: false,
     lastMessageReceivedAt: "2024-06-24T12:30:00Z",
@@ -1172,7 +1205,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     hasUnreadMessages: true,
     lastMessageReceivedAt: "2024-06-24T13:30:00Z",
@@ -1279,7 +1312,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     hasUnreadMessages: false,
     lastMessageReceivedAt: "2024-06-24T14:30:00Z",
@@ -1385,7 +1418,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     hasUnreadMessages: true,
     lastMessageReceivedAt: "2024-06-24T15:30:00Z",
@@ -1491,7 +1524,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     hasUnreadMessages: false,
     lastMessageReceivedAt: "2024-06-24T16:30:00Z",
@@ -1597,7 +1630,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     hasUnreadMessages: false,
     lastMessageReceivedAt: "2024-06-24T17:30:00Z",
@@ -1703,7 +1736,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     hasUnreadMessages: false,
     lastMessageReceivedAt: "2024-06-24T18:30:00Z",
@@ -1809,7 +1842,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     hasUnreadMessages: false,
     lastMessageReceivedAt: "2024-06-24T19:30:00Z",

@@ -172,12 +172,16 @@ export const ChatWindow = ({
                         <InboundMessage
                           message={message}
                           guestData={conversationData.guest}
-                          type={conversationData.conversationType!}
+                          type={
+                            message.type || conversationData.conversationType!
+                          }
                         />
                       ) : (
                         <OutboundMessage
                           message={message}
-                          type={conversationData.conversationType!}
+                          type={
+                            message.type || conversationData.conversationType!
+                          }
                         />
                       )}
                     </motion.div>
