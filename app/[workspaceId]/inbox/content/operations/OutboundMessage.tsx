@@ -34,7 +34,7 @@ export const OutboundMessage = ({
               alt={"placeholder for user image"}
               className="size-9 min-w-9 min-h-9 rounded-full object-cover"
             />
-            {message.isIncoming && messageType && (
+            {messageType && (
               <div className="absolute -bottom-[1px] -right-[1px] w-4 h-4 flex items-center justify-center bg-[#27D045] rounded-full">
                 <img src={messageType.image} alt={type} className="w-4 h-4" />
               </div>
@@ -78,7 +78,7 @@ export const OutboundMessage = ({
                 {message.emailData?.to.join(", ")}
               </span>
             </p>
-            {message.emailData?.cc && (
+            {message.emailData?.cc && message.emailData?.cc.length > 0 && (
               <p className="text-body-xs text-tertiary">
                 Cc{" "}
                 <span className="text-secondary">
@@ -86,7 +86,7 @@ export const OutboundMessage = ({
                 </span>
               </p>
             )}
-            {message.emailData?.bcc && (
+            {message.emailData?.bcc && message.emailData?.bcc.length > 0 && (
               <p className="text-body-xs text-tertiary">
                 Bcc{" "}
                 <span className="text-secondary">
