@@ -201,6 +201,11 @@ export const ChatWindow = ({
                 <AiReply
                   reply="Facilisis eu ut molestie elit eget. Sit odio volutpat augue elementum porttitor. Facilisis quis integer orci adipiscing lobortis. Massa habitasse sed aliquam."
                   onSendMessage={addMessage}
+                  messages={
+                    messages.filter((message) => message.author === "guest")
+                    // .slice(0, 1)
+                  }
+                  guestData={conversationData.guest}
                 />
               </div>
             </AnimatePresence>

@@ -9,18 +9,30 @@ import {
   HostAiIcon,
 } from "@/components/icons/CustomIcons";
 import { Button } from "@/components/ui/button";
+import { DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import { MessageItem, UnifiedConversationType } from "@/lib/realDataSchema";
-import { cn } from "@/lib/utils";
+import {
+  Guest,
+  MessageItem,
+  UnifiedConversationType,
+} from "@/lib/realDataSchema";
+import { cn, sanitizeHTML } from "@/lib/utils";
+import { Dialog } from "@radix-ui/react-dialog";
+import { format } from "date-fns";
 import { useState } from "react";
 import { toast } from "sonner";
+import { messageTypes } from "./MessageTypeDropdown";
 
 export const AiReply = ({
   reply,
   onSendMessage,
+  messages,
+  guestData,
 }: {
   reply: string;
   onSendMessage: (message: MessageItem) => void;
+  messages: MessageItem[];
+  guestData: Guest;
 }) => {
   const [replyState, setReplyState] = useState(reply);
   const [editReply, setEditReply] = useState(reply);
@@ -29,6 +41,7 @@ export const AiReply = ({
   const [step, setStep] = useState<
     "initial" | "edit" | "teach" | "pre-approve"
   >("initial");
+  const [messagesModalOpen, setMessagesModalOpen] = useState(false);
 
   const handleDismiss = () => {
     // TODO: handle dismiss in API
@@ -71,6 +84,9 @@ export const AiReply = ({
     toast.success("Teaching HostAI");
   };
 
+  //   do not show the modal if there are no messages being replied to
+  if (!messages || messages.length == 0) return null;
+
   return (
     <div
       className={cn(
@@ -103,11 +119,21 @@ export const AiReply = ({
 
           <div className="flex flex-col gap-2">
             {/* Replying to */}
-            <p className="text-subtitle-sm text-tertiary">
+            <p className="text-subtitle-xs text-tertiary">
               Replying to:{" "}
-              <span className="text-body-xs">
-                Thank you so much for the info
-              </span>
+              {messages.length == 1 ? (
+                <span className="text-body-xs">
+                  {messages[0].text.slice(0, 40) +
+                    (messages[0].text.length > 40 ? "..." : "")}
+                </span>
+              ) : (
+                <span
+                  className="text-body-xs underline hover:cursor-pointer hover:text-primary"
+                  onClick={() => setMessagesModalOpen(true)}
+                >
+                  {messages.length + " messages"}
+                </span>
+              )}
             </p>
             <p className="text-body-sm text-primary">{replyState}</p>
           </div>
@@ -236,6 +262,78 @@ export const AiReply = ({
           </Button>
         </div>
       )}
+
+      {/* messages modal */}
+      <Dialog open={messagesModalOpen} onOpenChange={setMessagesModalOpen}>
+        <DialogContent className="flex flex-col gap-4">
+          <DialogHeader>Replying to</DialogHeader>
+
+          <div className="border-b border-primary" />
+
+          <div className="flex flex-col gap-4 overflow-y-auto h-[70vh]">
+            {messages.map((message) => {
+              // Find the image based on the message type
+              const messageType = messageTypes.find(
+                (msgType) => msgType.type === message.type
+              );
+
+              // sanitize the html
+              const sanitizedHtml = sanitizeHTML(message.text);
+
+              return (
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-3">
+                    {/* Profile picture */}
+                    <div className="relative">
+                      <img
+                        src={guestData.imageUrl!}
+                        alt={guestData.name || "Guest"}
+                        className="size-9 min-w-9 min-h-9 rounded-full object-cover"
+                      />
+                      {messageType && (
+                        <div className="absolute -bottom-[1px] -right-[1px] w-4 h-4 flex items-center justify-center bg-[#27D045] rounded-full">
+                          <img
+                            src={messageType.image}
+                            alt={message.type}
+                            className="w-4 h-4"
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Name */}
+                    <div className="flex flex-col gap-1">
+                      <p className="text-subtitle-md h-5">{guestData.name}</p>
+                      <div className="flex items-center gap-[6px]">
+                        <p className="text-body-xs text-tertiary">
+                          Listing Time:{" "}
+                          <span className="text-secondary">
+                            {format(message.timestamp, "h:mm a")}
+                          </span>
+                        </p>
+                        <div className="size-[3px] bg-icon-tertiary rounded-full"></div>
+                        <p className="text-body-xs text-tertiary">
+                          Your Time:{" "}
+                          <span className="text-secondary">
+                            {format(message.timestamp, "h:mm a")}
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p
+                    className="text-body-sm"
+                    dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+                  />
+
+                  <div className="border-b border-primary" />
+                </div>
+              );
+            })}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
