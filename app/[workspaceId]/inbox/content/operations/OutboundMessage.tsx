@@ -3,6 +3,8 @@ import { MessageItem, UnifiedConversationType } from "@/lib/realDataSchema";
 import { format } from "date-fns";
 import { LabelsTagsGroups } from "../components/LabelsTagsGroups";
 import { sanitizeHTML } from "@/lib/utils";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 export const OutboundMessage = ({
   message,
@@ -11,6 +13,8 @@ export const OutboundMessage = ({
   message: MessageItem;
   type: UnifiedConversationType;
 }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   // Find the image based on the message type
   const messageType = messageTypes.find((msgType) => msgType.type === type);
 
@@ -65,10 +69,64 @@ export const OutboundMessage = ({
           className="bg-primary border-0"
         />
       </div>
-      <p
-        className="text-subtitle-sm min-h-5"
-        dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
-      />
+      {type === UnifiedConversationType.Email ? (
+        <div className="flex flex-col gap-4 justify-between">
+          <div className="flex flex-wrap items-center gap-1">
+            <p className="text-body-xs text-tertiary">
+              To{" "}
+              <span className="text-secondary">
+                {message.emailData?.to.join(", ")}
+              </span>
+            </p>
+            {message.emailData?.cc && (
+              <p className="text-body-xs text-tertiary">
+                Cc{" "}
+                <span className="text-secondary">
+                  {message.emailData?.cc.join(", ")}
+                </span>
+              </p>
+            )}
+            {message.emailData?.bcc && (
+              <p className="text-body-xs text-tertiary">
+                Bcc{" "}
+                <span className="text-secondary">
+                  {message.emailData?.bcc.join(", ")}
+                </span>
+              </p>
+            )}
+          </div>
+          <div className="border-b border-primary"></div>
+          <div className="flex flex-col gap-4">
+            <p className="text-subtitle-sm">{message.emailData?.subject}</p>
+            <div
+              className={`relative overflow-hidden transition-all duration-300 ease-in-out ${
+                isExpanded ? "max-h-full" : "max-h-[200px]"
+              }`}
+            >
+              <p
+                className="text-body-sm min-h-5"
+                dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+              />
+              {!isExpanded && (
+                <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-selected-subtle to-transparent" />
+              )}
+            </div>
+            <Button
+              size="xs"
+              variant="outline"
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="self-center !h-6"
+            >
+              {isExpanded ? "See less" : "See more"}
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <p
+          className="text-body-sm min-h-5"
+          dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+        />
+      )}
     </div>
   );
 };

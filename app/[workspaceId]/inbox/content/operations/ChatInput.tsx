@@ -185,6 +185,12 @@ export const ChatInput = ({
       status: "delivered",
       type: messageType,
       timestamp: Math.floor(Date.now() / 1000),
+      emailData: {
+        to: emailState.toTags.map((tag) => tag.text),
+        cc: emailState.ccTags.map((tag) => tag.text),
+        bcc: emailState.bccTags.map((tag) => tag.text),
+        subject: subject,
+      },
     };
 
     onSendMessage(newMessage);

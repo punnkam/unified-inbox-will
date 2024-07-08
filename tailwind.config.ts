@@ -238,6 +238,7 @@ const config = {
       },
       gradientColorStops: {
         "primary-subtle": "#F9FAFB",
+        "selected-subtle": "#F1F6FF",
       },
     },
   },
