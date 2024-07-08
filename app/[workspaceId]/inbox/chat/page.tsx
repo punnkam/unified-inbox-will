@@ -1,6 +1,6 @@
 // TODO:Convert this all to a 'use client' page to simulate pages router
 
-import { InboxOperationsView } from "../content/operations/InboxOperationsView";
+import { ChatWindow } from "../content/operations/ChatWindow";
 import { fetchConversation } from "@/app/actions";
 
 export default async function AllConversationsPage({
@@ -16,5 +16,5 @@ export default async function AllConversationsPage({
     return null;
   }
 
-  return <InboxOperationsView conversationData={data.data} />;
+  return <ChatWindow conversationData={data.data} />;
 }

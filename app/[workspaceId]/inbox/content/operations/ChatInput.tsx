@@ -35,8 +35,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { motion } from "framer-motion";
-import { UnifiedConversationType } from "@/lib/realDataSchema";
+import { MessageItem, UnifiedConversationType } from "@/lib/realDataSchema";
 
 export type initialState = "Collapsed" | "Active" | "Inactive";
 
@@ -48,9 +47,11 @@ type Tag = {
 export const ChatInput = ({
   initialState,
   initialMessageType,
+  onSendMessage,
 }: {
   initialState?: initialState;
   initialMessageType?: UnifiedConversationType;
+  onSendMessage: (message: MessageItem) => void;
 }) => {
   const [state, setState] = useState<initialState>(initialState || "Collapsed");
   const [messageType, setMessageType] = useState<UnifiedConversationType>(
@@ -174,6 +175,20 @@ export const ChatInput = ({
     console.log("Subject:", subject);
     console.log("Message:", message);
 
+    // create a new message object
+    const newMessage: MessageItem = {
+      id: Date.now().toString(),
+      author: "host",
+      text: message,
+      isIncoming: false,
+      isSeen: false,
+      status: "delivered",
+      type: messageType,
+      timestamp: Math.floor(Date.now() / 1000),
+    };
+
+    onSendMessage(newMessage);
+
     //reset the state
     setEmailState((prevState) => ({
       ...prevState,
@@ -199,9 +214,19 @@ export const ChatInput = ({
   };
 
   const handleSend = () => {
-    console.log("Sending message");
-    console.log(messageType);
-    console.log("Message:", message);
+    // create a new message object
+    const newMessage: MessageItem = {
+      id: Date.now().toString(),
+      author: "host",
+      text: message,
+      isIncoming: false,
+      isSeen: false,
+      status: "delivered",
+      type: messageType,
+      timestamp: Math.floor(Date.now() / 1000),
+    };
+
+    onSendMessage(newMessage);
 
     //reset the state
     setMessage("");
@@ -251,370 +276,352 @@ export const ChatInput = ({
     setIsLinkDialogOpen(true);
   };
 
-  if (state === "Collapsed") {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        key={"collapsed"}
-        className="p-4 border border-primary rounded-lg text-body-sm text-placeholder h-[52px]"
-        onClick={() => {
-          setState("Active");
-        }}
-      >
-        Write your reply here . . .
-      </motion.div>
-    );
-  }
-
-  if (state === "Active") {
-    if (messageType === UnifiedConversationType.Email) {
-      return (
-        <motion.div
-          className={cn("p-4 pt-2 border border-icon-active rounded-lg")}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          key={"email"}
+  return (
+    <div>
+      {state === "Collapsed" && (
+        <div
+          className="p-4 border border-primary rounded-lg text-body-sm text-placeholder h-[52px]"
+          onClick={() => {
+            setState("Active");
+          }}
         >
-          <div className="flex flex-col gap-[2px]">
-            <div className="flex items-center gap-2">
-              <p className="text-body-2xs text-tertiary">To</p>
-              <TagInput
-                tags={emailState.toTags}
-                setTags={(newTags) => {
-                  setEmailState((prevState) => ({
-                    ...prevState,
-                    toTags: newTags as Tag[],
-                  }));
-                }}
-                activeTagIndex={emailState.activeToTagIndex}
-                setActiveTagIndex={(index) =>
-                  setEmailState((prevState) => ({
-                    ...prevState,
-                    activeToTagIndex: index as number,
-                  }))
-                }
-                styleClasses={{
-                  inlineTagsContainer:
-                    "border-none h-8 p-0 gap-1 h-full place-content-center place-content-center",
-                  input: "p-0 shadow-none h-8 !text-body-xs text-primary",
-                  tag: {
-                    body: "p-2 bg-primary-subtle text-primary !text-body-xs border-none rounded-sm",
-                    closeButton:
-                      "pr-0 pl-2 text-icon-tertiary hover:text-icon-primary",
-                  },
-                }}
-              />
-            </div>
-            {emailState.options.cc && (
-              <div className="flex items-start gap-2 min-h-8">
-                <p className="text-body-2xs text-tertiary h-8 flex items-center">
-                  Cc
-                </p>
-                <TagInput
-                  tags={emailState.ccTags}
-                  setTags={(newTags) => {
-                    setEmailState((prevState) => ({
-                      ...prevState,
-                      ccTags: newTags as Tag[],
-                    }));
-                  }}
-                  activeTagIndex={emailState.activeCcTagIndex}
-                  setActiveTagIndex={(index) =>
-                    setEmailState((prevState) => ({
-                      ...prevState,
-                      activeCcTagIndex: index as number,
-                    }))
-                  }
-                  styleClasses={{
-                    inlineTagsContainer:
-                      "border-none h-8 p-0 gap-1 h-full place-content-center place-content-center",
-                    input: "p-0 shadow-none h-8 !text-body-xs text-primary",
-                    tag: {
-                      body: "p-2 bg-primary-subtle text-primary !text-body-xs border-none rounded-sm",
-                      closeButton:
-                        "pr-0 pl-2 text-icon-tertiary hover:text-icon-primary",
-                    },
-                  }}
-                />
-              </div>
-            )}
-            {emailState.options.bcc && (
-              <div className="flex items-start gap-2 min-h-8">
-                <p className="text-body-2xs text-tertiary h-8 flex items-center">
-                  Bcc
-                </p>
-                <TagInput
-                  tags={emailState.bccTags}
-                  setTags={(newTags) => {
-                    setEmailState((prevState) => ({
-                      ...prevState,
-                      bccTags: newTags as Tag[],
-                    }));
-                  }}
-                  activeTagIndex={emailState.activeBccTagIndex}
-                  setActiveTagIndex={(index) =>
-                    setEmailState((prevState) => ({
-                      ...prevState,
-                      activeBccTagIndex: index as number,
-                    }))
-                  }
-                  styleClasses={{
-                    inlineTagsContainer:
-                      "border-none h-8 p-0 gap-1 h-full place-content-center place-content-center",
-                    input: "p-0 shadow-none h-8 !text-body-xs text-primary",
-                    tag: {
-                      body: "p-2 bg-primary-subtle text-primary !text-body-xs border-none rounded-sm",
-                      closeButton:
-                        "pr-0 pl-2 text-icon-tertiary hover:text-icon-primary",
-                    },
-                  }}
-                />
-              </div>
-            )}
-            <div className="flex items-center">
-              <Input
-                className="w-full text-subtitle-sm outline-0 border-none p-0 h-[39px]"
-                placeholder="Subject"
-                value={subject}
-                onChange={(e) => setSubject(e.target.value)}
-              />
-              <div className="text-tertiary text-body-2xs flex">
-                <div
-                  className={cn(
-                    "hover:text-primary hover:cursor-pointer p-1",
-                    emailState.options.cc && "text-primary"
-                  )}
-                  onClick={() =>
-                    setEmailState((prevState) => ({
-                      ...prevState,
-                      options: {
-                        ...prevState.options,
-                        cc: !prevState.options.cc,
-                      },
-                    }))
-                  }
-                >
-                  Cc
-                </div>
-                <div
-                  className={cn(
-                    "hover:text-primary hover:cursor-pointer p-1",
-                    emailState.options.bcc && "text-primary"
-                  )}
-                  onClick={() =>
-                    setEmailState((prevState) => ({
-                      ...prevState,
-                      options: {
-                        ...prevState.options,
-                        bcc: !prevState.options.bcc,
-                      },
-                    }))
-                  }
-                >
-                  Bcc
-                </div>
-              </div>
-            </div>
-          </div>
-          <RichTextEditor
-            editor={editor}
-            onFileUpload={(file) => {
-              console.log("File uploaded", file);
-            }}
-          />
-          <div className="flex justify-between items-center">
-            <div className="flex gap-2">
-              {/* Zap? */}
-              <Tooltip>
-                <TooltipTrigger>
-                  <Button size={"iconSm"} variant={"ghost"}>
-                    <ZapIcon className="h-[15px] text-icon-tertiary" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent className="px-3 py-[6px]">
-                  <p className="text-subtitle-2xs">Zap</p>
-                </TooltipContent>
-              </Tooltip>
-
-              {/* Formatting */}
-              <DropdownMenu>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <DropdownMenuTrigger asChild>
-                      <Button size={"iconSm"} variant={"ghost"}>
-                        <Type01Icon className="size-3 text-icon-tertiary" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                  </TooltipTrigger>
-                  <TooltipContent className="px-3 py-[6px]">
-                    <p className="text-subtitle-2xs">Formatting</p>
-                  </TooltipContent>
-                </Tooltip>
-                <DropdownMenuContent side="top" align="start">
-                  {editor && <RichTextEditorToolbar editor={editor} />}
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              {/* Link */}
-              <Tooltip>
-                <TooltipTrigger>
-                  <Button
-                    size={"iconSm"}
-                    variant={"ghost"}
-                    onClick={handleLinkButtonClick}
-                    className={editor?.isActive("link") ? "bg-hover" : ""}
-                  >
-                    <Link01Icon className="size-[15px] text-icon-tertiary" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent className="px-3 py-[6px]">
-                  <p className="text-subtitle-2xs">Link</p>
-                </TooltipContent>
-              </Tooltip>
-
-              <Dialog
-                open={isLinkDialogOpen}
-                onOpenChange={setIsLinkDialogOpen}
-              >
-                <DialogContent>
-                  <DialogHeader>
-                    {editor?.isActive("link") ? "Edit" : "Add"} Link
-                  </DialogHeader>
-                  <p className="text-subtitle-sm">Text</p>
-                  <Input
-                    defaultValue={selectedText}
-                    onChange={(e) => {
-                      setSelectedText(e.target.value);
-                    }}
-                  />
-                  <p className="text-subtitle-sm">URL</p>
-                  <Input
-                    placeholder="Enter URL"
-                    value={linkValue || ""}
-                    onChange={(e) => {
-                      setLinkValue(e.target.value);
-                    }}
-                  />
-
-                  <div className="flex justify-end gap-2 mt-4">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        if (editor?.isActive("link")) {
-                          editor
-                            ?.chain()
-                            .focus()
-                            .extendMarkRange("link")
-                            .unsetLink()
-                            .run();
-                        }
-
-                        setIsLinkDialogOpen(false);
-                      }}
-                    >
-                      {editor?.isActive("link") ? "Remove" : "Cancel"}
-                    </Button>
-                    <Button size="sm" onClick={setLink}>
-                      Done
-                    </Button>
-                  </div>
-                </DialogContent>
-              </Dialog>
-
-              {/* Attachemnt */}
-              <Tooltip>
-                <TooltipTrigger>
-                  <Button size={"iconSm"} variant={"ghost"}>
-                    <Attachemnt02Icon className="h-[15px] text-icon-tertiary" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent className="px-3 py-[6px]">
-                  <p className="text-subtitle-2xs">Attachment</p>
-                </TooltipContent>
-              </Tooltip>
-            </div>
-
-            <div className="flex items-center gap-1">
-              <MessageTypeDropdown
-                messageType={messageType}
-                setMessageType={handleTypeChange}
-              />
-              <Button
-                onClick={handleSendEmail}
-                size={"sm"}
-                className="flex items-center gap-2 disabled:!bg-brand disabled:!bg-opacity-50 disabled:text-primary-inverse"
-                disabled={
-                  emailState.toTags.length == 0 ||
-                  !subject ||
-                  !message ||
-                  message === "<p></p>"
-                }
-              >
-                Send
-                <div className="flex gap-1 items-center">
-                  <div className="flex items-center justify-center size-4">
-                    <p>⌘</p>
-                  </div>
-                  <div className="flex items-center justify-center size-4">
-                    <CornerDownLeftIcon className="size-[12px]" />
-                  </div>
-                </div>
-              </Button>
-            </div>
-          </div>
-        </motion.div>
-      );
-    }
-
-    // everything else
-    return (
-      <motion.div
-        className={"p-4 border border-icon-active rounded-lg"}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        key={"active"}
-      >
-        <AutosizeTextarea
-          className="w-full rounded-none p-0 outline-0 border-none text-body-sm resize-none h-20"
-          placeholder="Write your reply here . . ."
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          maxHeight={300}
-          minHeight={80}
-          autoFocus
-        />
-        <div className="flex justify-end items-center">
-          <div className="flex items-center gap-1">
-            <MessageTypeDropdown
-              messageType={messageType}
-              setMessageType={handleTypeChange}
-            />
-            <Button
-              onClick={handleSend}
-              size={"sm"}
-              className="flex items-center gap-2 disabled:!bg-brand disabled:!bg-opacity-50 disabled:text-primary-inverse"
-              disabled={!message}
-            >
-              Send
-              <div className="flex gap-1 items-center">
-                <div className="flex items-center justify-center size-4">
-                  <p>⌘</p>
-                </div>
-                <div className="flex items-center justify-center size-4">
-                  <CornerDownLeftIcon className="size-[12px]" />
-                </div>
-              </div>
-            </Button>
-          </div>
+          Write your reply here . . .
         </div>
-      </motion.div>
-    );
-  }
+      )}
+      {state === "Active" && (
+        <div>
+          {messageType === UnifiedConversationType.Email ? (
+            <div
+              className={cn("p-4 pt-2 border border-icon-active rounded-lg")}
+            >
+              <div className="flex flex-col gap-[2px]">
+                <div className="flex items-center gap-2">
+                  <p className="text-body-2xs text-tertiary">To</p>
+                  <TagInput
+                    tags={emailState.toTags}
+                    setTags={(newTags) => {
+                      setEmailState((prevState) => ({
+                        ...prevState,
+                        toTags: newTags as Tag[],
+                      }));
+                    }}
+                    activeTagIndex={emailState.activeToTagIndex}
+                    setActiveTagIndex={(index) =>
+                      setEmailState((prevState) => ({
+                        ...prevState,
+                        activeToTagIndex: index as number,
+                      }))
+                    }
+                    styleClasses={{
+                      inlineTagsContainer:
+                        "border-none h-8 p-0 gap-1 h-full place-content-center place-content-center",
+                      input: "p-0 shadow-none h-8 !text-body-xs text-primary",
+                      tag: {
+                        body: "p-2 bg-primary-subtle text-primary !text-body-xs border-none rounded-sm",
+                        closeButton:
+                          "pr-0 pl-2 text-icon-tertiary hover:text-icon-primary",
+                      },
+                    }}
+                  />
+                </div>
+                {emailState.options.cc && (
+                  <div className="flex items-start gap-2 min-h-8">
+                    <p className="text-body-2xs text-tertiary h-8 flex items-center">
+                      Cc
+                    </p>
+                    <TagInput
+                      tags={emailState.ccTags}
+                      setTags={(newTags) => {
+                        setEmailState((prevState) => ({
+                          ...prevState,
+                          ccTags: newTags as Tag[],
+                        }));
+                      }}
+                      activeTagIndex={emailState.activeCcTagIndex}
+                      setActiveTagIndex={(index) =>
+                        setEmailState((prevState) => ({
+                          ...prevState,
+                          activeCcTagIndex: index as number,
+                        }))
+                      }
+                      styleClasses={{
+                        inlineTagsContainer:
+                          "border-none h-8 p-0 gap-1 h-full place-content-center place-content-center",
+                        input: "p-0 shadow-none h-8 !text-body-xs text-primary",
+                        tag: {
+                          body: "p-2 bg-primary-subtle text-primary !text-body-xs border-none rounded-sm",
+                          closeButton:
+                            "pr-0 pl-2 text-icon-tertiary hover:text-icon-primary",
+                        },
+                      }}
+                    />
+                  </div>
+                )}
+                {emailState.options.bcc && (
+                  <div className="flex items-start gap-2 min-h-8">
+                    <p className="text-body-2xs text-tertiary h-8 flex items-center">
+                      Bcc
+                    </p>
+                    <TagInput
+                      tags={emailState.bccTags}
+                      setTags={(newTags) => {
+                        setEmailState((prevState) => ({
+                          ...prevState,
+                          bccTags: newTags as Tag[],
+                        }));
+                      }}
+                      activeTagIndex={emailState.activeBccTagIndex}
+                      setActiveTagIndex={(index) =>
+                        setEmailState((prevState) => ({
+                          ...prevState,
+                          activeBccTagIndex: index as number,
+                        }))
+                      }
+                      styleClasses={{
+                        inlineTagsContainer:
+                          "border-none h-8 p-0 gap-1 h-full place-content-center place-content-center",
+                        input: "p-0 shadow-none h-8 !text-body-xs text-primary",
+                        tag: {
+                          body: "p-2 bg-primary-subtle text-primary !text-body-xs border-none rounded-sm",
+                          closeButton:
+                            "pr-0 pl-2 text-icon-tertiary hover:text-icon-primary",
+                        },
+                      }}
+                    />
+                  </div>
+                )}
+                <div className="flex items-center">
+                  <Input
+                    className="w-full text-subtitle-sm outline-0 border-none p-0 h-[39px]"
+                    placeholder="Subject"
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
+                  />
+                  <div className="text-tertiary text-body-2xs flex">
+                    <div
+                      className={cn(
+                        "hover:text-primary hover:cursor-pointer p-1",
+                        emailState.options.cc && "text-primary"
+                      )}
+                      onClick={() =>
+                        setEmailState((prevState) => ({
+                          ...prevState,
+                          options: {
+                            ...prevState.options,
+                            cc: !prevState.options.cc,
+                          },
+                        }))
+                      }
+                    >
+                      Cc
+                    </div>
+                    <div
+                      className={cn(
+                        "hover:text-primary hover:cursor-pointer p-1",
+                        emailState.options.bcc && "text-primary"
+                      )}
+                      onClick={() =>
+                        setEmailState((prevState) => ({
+                          ...prevState,
+                          options: {
+                            ...prevState.options,
+                            bcc: !prevState.options.bcc,
+                          },
+                        }))
+                      }
+                    >
+                      Bcc
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <RichTextEditor
+                editor={editor}
+                onFileUpload={(file) => {
+                  console.log("File uploaded", file);
+                }}
+              />
+              <div className="flex justify-between items-center">
+                <div className="flex gap-2">
+                  {/* Zap? */}
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Button size={"iconSm"} variant={"ghost"}>
+                        <ZapIcon className="h-[15px] text-icon-tertiary" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent className="px-3 py-[6px]">
+                      <p className="text-subtitle-2xs">Zap</p>
+                    </TooltipContent>
+                  </Tooltip>
 
-  return null;
+                  {/* Formatting */}
+                  <DropdownMenu>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <DropdownMenuTrigger asChild>
+                          <Button size={"iconSm"} variant={"ghost"}>
+                            <Type01Icon className="size-3 text-icon-tertiary" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent className="px-3 py-[6px]">
+                        <p className="text-subtitle-2xs">Formatting</p>
+                      </TooltipContent>
+                    </Tooltip>
+                    <DropdownMenuContent side="top" align="start">
+                      {editor && <RichTextEditorToolbar editor={editor} />}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+
+                  {/* Link */}
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Button
+                        size={"iconSm"}
+                        variant={"ghost"}
+                        onClick={handleLinkButtonClick}
+                        className={editor?.isActive("link") ? "bg-hover" : ""}
+                      >
+                        <Link01Icon className="size-[15px] text-icon-tertiary" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent className="px-3 py-[6px]">
+                      <p className="text-subtitle-2xs">Link</p>
+                    </TooltipContent>
+                  </Tooltip>
+
+                  <Dialog
+                    open={isLinkDialogOpen}
+                    onOpenChange={setIsLinkDialogOpen}
+                  >
+                    <DialogContent>
+                      <DialogHeader>
+                        {editor?.isActive("link") ? "Edit" : "Add"} Link
+                      </DialogHeader>
+                      <p className="text-subtitle-sm">Text</p>
+                      <Input
+                        defaultValue={selectedText}
+                        onChange={(e) => {
+                          setSelectedText(e.target.value);
+                        }}
+                      />
+                      <p className="text-subtitle-sm">URL</p>
+                      <Input
+                        placeholder="Enter URL"
+                        value={linkValue || ""}
+                        onChange={(e) => {
+                          setLinkValue(e.target.value);
+                        }}
+                      />
+
+                      <div className="flex justify-end gap-2 mt-4">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            if (editor?.isActive("link")) {
+                              editor
+                                ?.chain()
+                                .focus()
+                                .extendMarkRange("link")
+                                .unsetLink()
+                                .run();
+                            }
+
+                            setIsLinkDialogOpen(false);
+                          }}
+                        >
+                          {editor?.isActive("link") ? "Remove" : "Cancel"}
+                        </Button>
+                        <Button size="sm" onClick={setLink}>
+                          Done
+                        </Button>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
+                  {/* Attachemnt */}
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Button size={"iconSm"} variant={"ghost"}>
+                        <Attachemnt02Icon className="h-[15px] text-icon-tertiary" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent className="px-3 py-[6px]">
+                      <p className="text-subtitle-2xs">Attachment</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
+
+                <div className="flex items-center gap-1">
+                  <MessageTypeDropdown
+                    messageType={messageType}
+                    setMessageType={handleTypeChange}
+                  />
+                  <Button
+                    onClick={handleSendEmail}
+                    size={"sm"}
+                    className="flex items-center gap-2 disabled:!bg-brand disabled:!bg-opacity-50 disabled:text-primary-inverse"
+                    disabled={
+                      emailState.toTags.length == 0 ||
+                      !subject ||
+                      !message ||
+                      message === "<p></p>"
+                    }
+                  >
+                    Send
+                    <div className="flex gap-1 items-center">
+                      <div className="flex items-center justify-center size-4">
+                        <p>⌘</p>
+                      </div>
+                      <div className="flex items-center justify-center size-4">
+                        <CornerDownLeftIcon className="size-[12px]" />
+                      </div>
+                    </div>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className={"p-4 border border-icon-active rounded-lg"}>
+              <AutosizeTextarea
+                className="w-full rounded-none p-0 outline-0 border-none text-body-sm resize-none h-20"
+                placeholder="Write your reply here . . ."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                maxHeight={300}
+                minHeight={80}
+                autoFocus
+              />
+              <div className="flex justify-end items-center">
+                <div className="flex items-center gap-1">
+                  <MessageTypeDropdown
+                    messageType={messageType}
+                    setMessageType={handleTypeChange}
+                  />
+                  <Button
+                    onClick={handleSend}
+                    size={"sm"}
+                    className="flex items-center gap-2 disabled:!bg-brand disabled:!bg-opacity-50 disabled:text-primary-inverse"
+                    disabled={!message}
+                  >
+                    Send
+                    <div className="flex gap-1 items-center">
+                      <div className="flex items-center justify-center size-4">
+                        <p>⌘</p>
+                      </div>
+                      <div className="flex items-center justify-center size-4">
+                        <CornerDownLeftIcon className="size-[12px]" />
+                      </div>
+                    </div>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
 };

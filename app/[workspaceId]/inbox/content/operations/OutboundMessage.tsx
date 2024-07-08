@@ -2,6 +2,7 @@ import { messageTypes } from "./MessageTypeDropdown";
 import { MessageItem, UnifiedConversationType } from "@/lib/realDataSchema";
 import { format } from "date-fns";
 import { LabelsTagsGroups } from "../components/LabelsTagsGroups";
+import { sanitizeHTML } from "@/lib/utils";
 
 export const OutboundMessage = ({
   message,
@@ -12,6 +13,9 @@ export const OutboundMessage = ({
 }) => {
   // Find the image based on the message type
   const messageType = messageTypes.find((msgType) => msgType.type === type);
+
+  // sanitize the html
+  const sanitizedHtml = sanitizeHTML(message.text);
 
   return (
     <div className="self-end flex flex-col gap-4 p-4 bg-selected-subtle min-w-[260px] max-w-[540px] w-fit rounded-l-xl rounded-b-xl">
@@ -61,7 +65,10 @@ export const OutboundMessage = ({
           className="bg-primary border-0"
         />
       </div>
-      <p className="text-subtitle-sm min-h-5">{message.text}</p>
+      <p
+        className="text-subtitle-sm min-h-5"
+        dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+      />
     </div>
   );
 };

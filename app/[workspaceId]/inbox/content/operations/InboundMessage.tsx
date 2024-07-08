@@ -4,6 +4,7 @@ import {
   MessageItem,
   UnifiedConversationType,
 } from "@/lib/realDataSchema";
+import { sanitizeHTML } from "@/lib/utils";
 import { format } from "date-fns";
 
 export const InboundMessage = ({
@@ -17,6 +18,9 @@ export const InboundMessage = ({
 }) => {
   // Find the image based on the message type
   const messageType = messageTypes.find((msgType) => msgType.type === type);
+
+  // sanitize the html
+  const sanitizedHtml = sanitizeHTML(message.text);
 
   return (
     <div className="flex flex-col gap-4 p-4 bg-primary-subtle min-w-[260px] max-w-[540px] w-fit rounded-r-xl rounded-b-xl">
@@ -56,7 +60,10 @@ export const InboundMessage = ({
           </div>
         </div>
       </div>
-      <p className="text-subtitle-sm min-h-5">{message.text}</p>
+      <p
+        className="text-subtitle-sm min-h-5"
+        dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+      />
     </div>
   );
 };

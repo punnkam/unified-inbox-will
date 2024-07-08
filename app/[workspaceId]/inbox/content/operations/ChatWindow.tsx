@@ -1,26 +1,43 @@
+"use client";
+
 import { KeyboardShortcut } from "@/components/custom/KeyBoardShortcut";
 import {
   CheckCircleIcon,
   ChevronDownIcon,
   SlackIcon,
 } from "@/components/icons/CustomIcons";
-import { Conversation, UnifiedConversationType } from "@/lib/realDataSchema";
+import {
+  Conversation,
+  MessageItem,
+  UnifiedConversationType,
+} from "@/lib/realDataSchema";
 import { NotesButton } from "./NotesButton";
 import { ChatSidebarButton } from "./ChatSidebarButton";
 import { Button } from "@/components/ui/button";
 import { useHotkeys } from "react-hotkeys-hook";
 import { toast } from "sonner";
 import { ChatInput } from "./ChatInput";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { InboundMessage } from "./InboundMessage";
 import { OutboundMessage } from "./OutboundMessage";
 import { format } from "date-fns";
+import { useEffect, useRef, useState } from "react";
+import { useTableContext } from "../../TableContext";
 
 export const ChatWindow = ({
   conversationData,
 }: {
   conversationData: Conversation;
 }) => {
+  // local state for messages
+  const [messages, setMessages] = useState<MessageItem[]>([]);
+  const lastMessageRef = useRef<HTMLDivElement>(null);
+  const { setView } = useTableContext();
+
+  const addMessage = (newMessage: MessageItem) => {
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+  };
+
   // API: handle on backend if needed
   const handleTrainAI = () => {
     // TODO: I assume this should open a modal or something
@@ -36,6 +53,24 @@ export const ChatWindow = ({
 
   useHotkeys("K", handleTrainAI);
   useHotkeys("E", handleMarkAsDone);
+
+  // Use useEffect to load the messages state
+  useEffect(() => {
+    setMessages(conversationData.allMessages || []);
+  }, [conversationData]);
+
+  // Use useEffect to update the context view
+  useEffect(() => {
+    // update the context view so we can handle loading states and sidebar
+    setView("chat");
+  }, [setView]);
+
+  useEffect(() => {
+    if (lastMessageRef.current) {
+      // Remove behavior smooth if you want to disable smooth scrolling animation on load
+      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   return (
     <div className="h-full flex flex-col">
@@ -84,77 +119,88 @@ export const ChatWindow = ({
       <div className="pt-6 flex-grow overflow-y-auto">
         <div className="flex flex-col gap-5 justify-between h-full">
           {/* Chat window */}
-          <div className="h-full flex flex-col gap-5 px-8 overflow-auto">
-            {conversationData.allMessages?.reduce<React.ReactNode[]>(
-              (acc, message, index, array) => {
-                const previousMessage = array[index - 1];
-                const messageDate = new Date(message.timestamp * 1000);
-                const previousMessageDate = previousMessage
-                  ? new Date(previousMessage.timestamp * 1000)
-                  : null;
+          <AnimatePresence initial={false}>
+            <div className="h-full flex flex-col gap-5 px-8 overflow-auto">
+              {messages?.reduce<React.ReactNode[]>(
+                (acc, message, index, array) => {
+                  const previousMessage = array[index - 1];
+                  const messageDate = new Date(message.timestamp * 1000);
+                  const previousMessageDate = previousMessage
+                    ? new Date(previousMessage.timestamp * 1000)
+                    : null;
 
-                const messageDay = messageDate.toLocaleDateString();
-                const previousMessageDay = previousMessageDate
-                  ? previousMessageDate.toLocaleDateString()
-                  : "";
+                  const messageDay = messageDate.toLocaleDateString();
+                  const previousMessageDay = previousMessageDate
+                    ? previousMessageDate.toLocaleDateString()
+                    : "";
 
-                if (messageDay !== previousMessageDay) {
-                  const today = new Date().toLocaleDateString();
-                  const yesterday = new Date(
-                    Date.now() - 86400000
-                  ).toLocaleDateString();
-                  let dayHeader =
-                    messageDay === today
-                      ? "Today"
-                      : messageDay === yesterday
-                      ? "Yesterday"
-                      : format(messageDate, "MMMM dd, yyyy");
+                  if (messageDay !== previousMessageDay) {
+                    const today = new Date().toLocaleDateString();
+                    const yesterday = new Date(
+                      Date.now() - 86400000
+                    ).toLocaleDateString();
+                    let dayHeader =
+                      messageDay === today
+                        ? "Today"
+                        : messageDay === yesterday
+                        ? "Yesterday"
+                        : format(messageDate, "MMMM dd, yyyy");
+
+                    acc.push(
+                      <motion.div
+                        key={message.id + "-date"}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="text-center text-bold-section text-secondary uppercase"
+                      >
+                        {dayHeader}
+                      </motion.div>
+                    );
+                  }
 
                   acc.push(
-                    <div
-                      key={message.id + "-date"}
-                      className="text-center text-bold-section text-secondary uppercase"
+                    <motion.div
+                      key={message.id}
+                      className="flex flex-col gap-2"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      ref={index === array.length - 1 ? lastMessageRef : null}
                     >
-                      {dayHeader}
-                    </div>
+                      {message.author === "guest" ? (
+                        <InboundMessage
+                          message={message}
+                          guestData={conversationData.guest}
+                          type={conversationData.conversationType!}
+                        />
+                      ) : (
+                        <OutboundMessage
+                          message={message}
+                          type={conversationData.conversationType!}
+                        />
+                      )}
+                    </motion.div>
                   );
-                }
 
-                acc.push(
-                  <div key={message.id} className="flex flex-col gap-2">
-                    {message.author === "guest" ? (
-                      <InboundMessage
-                        message={message}
-                        guestData={conversationData.guest}
-                        type={conversationData.conversationType!}
-                      />
-                    ) : (
-                      <OutboundMessage
-                        message={message}
-                        type={conversationData.conversationType!}
-                      />
-                    )}
-                  </div>
-                );
-
-                return acc;
-              },
-              []
-            )}
-          </div>
+                  return acc;
+                },
+                []
+              )}
+            </div>
+          </AnimatePresence>
 
           {/* Bottom */}
           <div>
             {/* Chat input */}
             <div className="py-2 px-8">
-              <AnimatePresence>
-                <ChatInput
-                  initialMessageType={
-                    conversationData.conversationType ||
-                    UnifiedConversationType.Email
-                  }
-                />
-              </AnimatePresence>
+              <ChatInput
+                initialMessageType={
+                  conversationData.conversationType ||
+                  UnifiedConversationType.Email
+                }
+                onSendMessage={addMessage}
+              />
             </div>
 
             {/* Result of the ancient battle of the bottom bar - Jared vs Eli */}
