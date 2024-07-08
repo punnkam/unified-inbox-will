@@ -110,7 +110,7 @@ export const ChatWindow = ({
           <div className="flex gap-2">
             {/* TODO: Add logic for when the new notes is true + when selected */}
             <NotesButton newNotes={true} />
-            <ChatSidebarButton newNotes={true} />
+            <ChatSidebarButton selected={true} />
           </div>
         </div>
       </div>

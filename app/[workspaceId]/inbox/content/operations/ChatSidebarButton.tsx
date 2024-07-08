@@ -1,13 +1,7 @@
 import { LayoutRightIcon } from "@/components/icons/CustomIcons";
 import { cn } from "@/lib/utils";
 
-export const ChatSidebarButton = ({
-  newNotes,
-  selected,
-}: {
-  newNotes: boolean;
-  selected?: boolean;
-}) => {
+export const ChatSidebarButton = ({ selected }: { selected?: boolean }) => {
   return (
     <div
       className={cn(
@@ -15,11 +9,8 @@ export const ChatSidebarButton = ({
         selected && "bg-primary border border-secondary"
       )}
     >
-      <div className="size-6 min-w-6 min-h-6 flex items-center justify-center relative">
+      <div className="size-6 min-w-6 min-h-6 flex items-center justify-center">
         <LayoutRightIcon className="text-icon-brand" />
-        {newNotes && (
-          <div className="absolute top-0 left-0 size-[10px] bg-icon-active rounded-full border border-[#FAFBFC]"></div>
-        )}
       </div>
     </div>
   );
