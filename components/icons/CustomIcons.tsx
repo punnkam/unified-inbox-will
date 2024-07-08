@@ -1981,3 +1981,22 @@ export const HorizontalDotsIcon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const GraduationHatIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={18}
+    height={15}
+    fill="none"
+    viewBox="0 0 18 15"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.33}
+      d="M3.4 5.904v4.809c0 .287 0 .43.044.557a.8.8 0 0 0 .184.3c.094.095.223.16.48.287l4.32 2.16c.21.106.314.158.424.179a.8.8 0 0 0 .296 0c.11-.021.215-.073.424-.178l4.32-2.16c.257-.129.386-.193.48-.289a.8.8 0 0 0 .184-.299c.044-.127.044-.27.044-.557v-4.81M1 4.704 8.714.848c.105-.053.157-.079.212-.09a.4.4 0 0 1 .148 0c.055.011.107.037.212.09L17 4.704 9.286 8.56a.87.87 0 0 1-.212.089.4.4 0 0 1-.148 0 .87.87 0 0 1-.212-.09L1 4.705Z"
+    />
+  </svg>
+);

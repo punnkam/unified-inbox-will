@@ -24,6 +24,7 @@ import { format } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import { useTableContext } from "../../TableContext";
 import { OperationsLeftSidebar } from "./OperationsLeftSidebar";
+import { AiReply } from "./AiReply";
 
 export const ChatWindow = ({
   conversationData,
@@ -122,7 +123,7 @@ export const ChatWindow = ({
 
         {/* Body */}
         <div className="pt-6 flex-grow overflow-y-auto">
-          <div className="flex flex-col gap-5 justify-between h-full">
+          <div className="flex flex-col gap-5 justify-between h-full pb-2">
             {/* Chat window */}
             <AnimatePresence initial={false}>
               <div className="h-full flex flex-col gap-5 px-8 overflow-auto">
@@ -196,6 +197,11 @@ export const ChatWindow = ({
                   },
                   []
                 )}
+
+                <AiReply
+                  reply="Facilisis eu ut molestie elit eget. Sit odio volutpat augue elementum porttitor. Facilisis quis integer orci adipiscing lobortis. Massa habitasse sed aliquam."
+                  onSendMessage={addMessage}
+                />
               </div>
             </AnimatePresence>
 
