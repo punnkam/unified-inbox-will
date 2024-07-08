@@ -190,14 +190,14 @@ const config = {
         "body-3xs": ["10px", { lineHeight: "12px", fontWeight: 400 }],
 
         // Bold - bold weight
-        "bold-sm": ["14px", { lineHeight: "19.2px", fontWeight: 900 }],
-        "bold-xs": ["12px", { lineHeight: "16.8px", fontWeight: 900 }],
-        "bold-2xs": ["10px", { lineHeight: "14.4px", fontWeight: 900 }],
-        "bold-2.5xs": ["11px", { lineHeight: "13.2px", fontWeight: 900 }],
-        "bold-3xs": ["10px", { lineHeight: "12px", fontWeight: 900 }],
+        "bold-sm": ["14px", { lineHeight: "19.2px", fontWeight: 700 }],
+        "bold-xs": ["12px", { lineHeight: "16.8px", fontWeight: 700 }],
+        "bold-2xs": ["10px", { lineHeight: "14.4px", fontWeight: 700 }],
+        "bold-2.5xs": ["11px", { lineHeight: "13.2px", fontWeight: 700 }],
+        "bold-3xs": ["10px", { lineHeight: "12px", fontWeight: 700 }],
         "bold-section": [
           "10px",
-          { lineHeight: "13.2px", fontWeight: 900, letterSpacing: "1px" },
+          { lineHeight: "13.2px", fontWeight: 700, letterSpacing: "1px" },
         ],
       },
       lineHeight: {
