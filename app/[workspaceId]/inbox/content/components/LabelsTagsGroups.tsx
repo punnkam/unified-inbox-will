@@ -1,4 +1,6 @@
 import { HostAiIcon } from "@/components/icons/CustomIcons";
+import { IconComponent } from "@/components/icons/IconComponent";
+import { fakeIconsData } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 // must have this defined in component for tailwind to parse
@@ -19,7 +21,7 @@ export const LabelsTagsGroups = ({
 }: {
   text?: string;
   avatar?: string;
-  icon?: React.ReactNode;
+  icon?: React.ReactNode | number;
   emoji?: string;
   showHosty?: boolean;
   color?: keyof typeof colorMap;
@@ -32,8 +34,21 @@ export const LabelsTagsGroups = ({
         className
       )}
     >
-      {icon && (
-        <div className="h-full flex items-center justify-center">{icon}</div>
+      {typeof icon === "number" ? (
+        <div className="h-full flex items-center justify-center">
+          {fakeIconsData.find((iconData) => iconData.id === icon)?.icon && (
+            <IconComponent
+              icon={
+                fakeIconsData.find((iconData) => iconData.id === icon)!.icon
+              }
+              classNames="size-3 text-tertiary"
+            />
+          )}
+        </div>
+      ) : (
+        icon && (
+          <div className="h-full flex items-center justify-center">{icon}</div>
+        )
       )}
 
       {showHosty && <HostAiIcon className="w-3 h-3" />}

@@ -135,7 +135,7 @@ export interface MessageItem {
   isSeen: boolean;
   status: string;
   type: string;
-  tags?: string[];
+  tags?: ConversationTag[];
   pictureUrl?: string;
   senderName?: string;
 }
@@ -639,6 +639,7 @@ const fakeAllMessages: MessageItem[] = [
     isSeen: false,
     status: "delivered",
     type: "text",
+    tags: [fakeConversationTags[3]],
   },
   {
     id: 113,
@@ -659,6 +660,11 @@ const fakeAllMessages: MessageItem[] = [
     isSeen: false,
     status: "delivered",
     type: "text",
+    tags: [
+      fakeConversationTags[0],
+      fakeConversationTags[2],
+      fakeConversationTags[3],
+    ],
   },
   {
     id: 115,

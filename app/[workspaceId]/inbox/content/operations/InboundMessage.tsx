@@ -6,6 +6,7 @@ import {
 } from "@/lib/realDataSchema";
 import { sanitizeHTML } from "@/lib/utils";
 import { format } from "date-fns";
+import { LabelsTagsGroups } from "../components/LabelsTagsGroups";
 
 export const InboundMessage = ({
   message,
@@ -58,6 +59,23 @@ export const InboundMessage = ({
               </p>
             </div>
           </div>
+        </div>
+        <div className="flex items-center">
+          {message.tags && message.tags.length > 0 && (
+            <>
+              <LabelsTagsGroups
+                key={message.tags[0].id}
+                text={message.tags[0].name}
+                icon={message.tags[0].iconId}
+                className="bg-primary border-0"
+              />
+              {message.tags.length > 1 && (
+                <p className="text-body-xs text-primary px-2 py-1">
+                  +{message.tags.length - 1} more
+                </p>
+              )}
+            </>
+          )}
         </div>
       </div>
       <p
