@@ -523,6 +523,7 @@ export const ChatInput = ({
                         onChange={(e) => {
                           setSelectedText(e.target.value);
                         }}
+                        className="text-body-xs"
                       />
                       <p className="text-subtitle-sm">URL</p>
                       <Input
@@ -531,6 +532,7 @@ export const ChatInput = ({
                         onChange={(e) => {
                           setLinkValue(e.target.value);
                         }}
+                        className="text-body-xs"
                       />
 
                       <div className="flex justify-end gap-2 mt-4">
@@ -553,7 +555,7 @@ export const ChatInput = ({
                           {editor?.isActive("link") ? "Remove" : "Cancel"}
                         </Button>
                         <Button size="sm" onClick={setLink}>
-                          Done
+                          Save
                         </Button>
                       </div>
                     </DialogContent>
