@@ -1,14 +1,19 @@
 "use client";
 
 import {
+  ArrowNarrowLeft,
+  CalendarCheckIcon,
   Edit05Icon,
   GraduationHatIcon,
+  HostAiGraduationIcon,
   HostAiIcon,
 } from "@/components/icons/CustomIcons";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { MessageItem, UnifiedConversationType } from "@/lib/realDataSchema";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export const AiReply = ({
   reply,
@@ -17,7 +22,13 @@ export const AiReply = ({
   reply: string;
   onSendMessage: (message: MessageItem) => void;
 }) => {
+  const [replyState, setReplyState] = useState(reply);
+  const [editReply, setEditReply] = useState(reply);
+  const [teachReply, setTeachReply] = useState("");
   const [isOpen, setIsOpen] = useState(true);
+  const [step, setStep] = useState<
+    "initial" | "edit" | "teach" | "pre-approve"
+  >("initial");
 
   const handleDismiss = () => {
     // TODO: handle dismiss in API
@@ -33,12 +44,31 @@ export const AiReply = ({
       id: Date.now().toString(),
       timestamp: Math.floor(Date.now() / 1000),
       author: "host",
-      text: reply,
+      text: replyState,
       isIncoming: false,
       isSeen: false,
       status: "delivered",
       type: UnifiedConversationType.Airbnb,
     });
+  };
+
+  const handleDismissApprove = () => {
+    // TODO: handle dismiss in API
+    setIsOpen(false);
+    toast.success("Reservation dismissed");
+  };
+
+  const handleApprove = () => {
+    // TODO: handle approve in API
+    setIsOpen(false);
+    toast.success("Reservation approved");
+  };
+
+  const handleTeach = () => {
+    // TODO: handle teach in API
+    console.log("Teaching HostAI", teachReply);
+    setIsOpen(false);
+    toast.success("Teaching HostAI");
   };
 
   return (
@@ -48,51 +78,164 @@ export const AiReply = ({
         !isOpen && "hidden"
       )}
     >
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-[6px]">
-            <HostAiIcon className="size-[17px]" />
-            <p className="text-subtitle-sm">Proposed reply</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <div>
-              <GraduationHatIcon className="h-[13.46px] text-icon-tertiary hover:text-icon-primary cursor-pointer" />
+      {step === "initial" && (
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-[6px]">
+              <HostAiIcon className="size-[17px]" />
+              <p className="text-subtitle-sm">Proposed reply</p>
             </div>
-            <div>
-              <Edit05Icon className="h-[13.41px] text-icon-tertiary hover:text-icon-primary cursor-pointer" />
+            <div className="flex items-center gap-3">
+              <div>
+                <GraduationHatIcon
+                  className="h-[13.46px] text-icon-tertiary hover:text-icon-primary cursor-pointer"
+                  onClick={() => setStep("teach")}
+                />
+              </div>
+              <div>
+                <Edit05Icon
+                  className="h-[13.41px] text-icon-tertiary hover:text-icon-primary cursor-pointer"
+                  onClick={() => setStep("edit")}
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="flex flex-col gap-2">
-          {/* Replying to */}
-          <p className="text-subtitle-sm text-tertiary">
-            Replying to:{" "}
-            <span className="text-body-xs">Thank you so much for the info</span>
-          </p>
-          <p className="text-body-sm text-primary">{reply}</p>
+          <div className="flex flex-col gap-2">
+            {/* Replying to */}
+            <p className="text-subtitle-sm text-tertiary">
+              Replying to:{" "}
+              <span className="text-body-xs">
+                Thank you so much for the info
+              </span>
+            </p>
+            <p className="text-body-sm text-primary">{replyState}</p>
+          </div>
         </div>
-      </div>
+      )}
+
+      {step === "edit" && (
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-[6px]">
+              <ArrowNarrowLeft
+                className="h-[7px] text-icon-tertiary hover:text-icon-primary cursor-pointer"
+                onClick={() => {
+                  setStep("initial");
+                }}
+              />
+              <HostAiIcon className="size-[17px]" />
+              <p className="text-subtitle-sm">Edit reply</p>
+            </div>
+            {/* TODO: add variable list here */}
+            <p className="text-secondary text-subtitle-sm">Add variables</p>
+          </div>
+          <Textarea
+            placeholder="Edit your reply here"
+            value={editReply}
+            onChange={(e) => setEditReply(e.target.value)}
+            className="h-28 text-body-sm resize-none"
+          />
+        </div>
+      )}
+
+      {step === "teach" && (
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-[6px]">
+            <ArrowNarrowLeft
+              className="h-[7px] text-icon-tertiary hover:text-icon-primary cursor-pointer"
+              onClick={() => {
+                setStep("initial");
+              }}
+            />
+            <HostAiGraduationIcon className="size-fit" />
+            <p className="text-subtitle-sm">Teach</p>
+          </div>
+          <Textarea
+            placeholder="Teach HostAI how to improve this message"
+            value={teachReply}
+            onChange={(e) => setTeachReply(e.target.value)}
+            className="h-28 text-body-sm resize-none"
+          />
+        </div>
+      )}
+
+      {step === "pre-approve" && (
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-[6px]">
+            <div className="flex items-center justify-center rounded-full bg-success-subtle size-5">
+              <CalendarCheckIcon className="size-fit text-icon-success" />
+            </div>
+            <p className="text-subtitle-sm">Pre-approve reservation</p>
+          </div>
+          <p className="text-body-sm">This reservation isn’t confirmed.</p>
+        </div>
+      )}
 
       {/* Reply actions */}
-      <div className="flex gap-3">
-        <Button
-          variant="secondary"
-          size="sm"
-          className="w-full"
-          onClick={handleDismiss}
-        >
-          Dismiss
-        </Button>
+      {step === "initial" && (
+        <div className="flex gap-3">
+          <Button
+            variant="secondary"
+            size="sm"
+            className="w-full"
+            onClick={handleDismiss}
+          >
+            Dismiss
+          </Button>
+          <Button
+            variant="default"
+            size="sm"
+            className="w-full"
+            onClick={handleSend}
+          >
+            Send
+          </Button>
+        </div>
+      )}
+      {step === "edit" && (
         <Button
           variant="default"
           size="sm"
           className="w-full"
-          onClick={handleSend}
+          onClick={() => {
+            setReplyState(editReply);
+            setStep("initial");
+          }}
         >
-          Send
+          Save
         </Button>
-      </div>
+      )}
+      {step === "teach" && (
+        <Button
+          variant="default"
+          size="sm"
+          className="w-full"
+          onClick={handleTeach}
+        >
+          Teach
+        </Button>
+      )}
+      {step === "pre-approve" && (
+        <div className="flex gap-3">
+          <Button
+            variant="secondary"
+            size="sm"
+            className="w-full"
+            onClick={handleDismissApprove}
+          >
+            Dismiss
+          </Button>
+          <Button
+            variant="default"
+            size="sm"
+            className="w-full"
+            onClick={handleApprove}
+          >
+            Pre-approve
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
