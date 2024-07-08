@@ -466,7 +466,19 @@ export const ChatInput = ({
                     <Tooltip>
                       <TooltipTrigger>
                         <DropdownMenuTrigger asChild>
-                          <Button size={"iconSm"} variant={"ghost"}>
+                          <Button
+                            size={"iconSm"}
+                            variant={"ghost"}
+                            className={
+                              editor?.isActive("bold") ||
+                              editor?.isActive("italic") ||
+                              editor?.isActive("strike") ||
+                              editor?.isActive("bulletList") ||
+                              editor?.isActive("orderedList")
+                                ? "bg-hover"
+                                : ""
+                            }
+                          >
                             <Type01Icon className="size-3 text-icon-tertiary" />
                           </Button>
                         </DropdownMenuTrigger>
