@@ -57,7 +57,7 @@ const config = {
         // Custom colors
         icon: {
           primary: "#191919",
-          secondary: "#4B5563",
+          secondary: "#6B7280",
           tertiary: "#A1A1AA",
           brand: "#10275B",
           disabled: "#D1D5DB",
