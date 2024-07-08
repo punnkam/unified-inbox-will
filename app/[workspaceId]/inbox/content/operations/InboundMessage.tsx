@@ -83,6 +83,7 @@ export const InboundMessage = ({
               </>
             )}
           </div>
+          {/* TODO: this does nothing rn - not sure what it will do */}
           {type === UnifiedConversationType.Email && (
             <div className="size-[18px] min-w-[18px] flex items-center text-icon-secondary hover:text-icon-primary hover:cursor-pointer">
               <HorizontalDotsIcon />
