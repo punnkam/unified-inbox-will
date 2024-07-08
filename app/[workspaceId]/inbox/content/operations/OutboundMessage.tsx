@@ -5,6 +5,7 @@ import { LabelsTagsGroups } from "../components/LabelsTagsGroups";
 import { sanitizeHTML } from "@/lib/utils";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { HorizontalDotsIcon } from "@/components/icons/CustomIcons";
 
 export const OutboundMessage = ({
   message,
@@ -63,11 +64,19 @@ export const OutboundMessage = ({
             </div>
           </div>
         </div>
-        <LabelsTagsGroups
-          text="Sent by HostAI"
-          showHosty={true}
-          className="bg-primary border-0"
-        />
+
+        <div className="flex items-center gap-3">
+          <LabelsTagsGroups
+            text="Sent by HostAI"
+            showHosty={true}
+            className="bg-primary border-0"
+          />
+          {type === UnifiedConversationType.Email && (
+            <div className="size-[18px] min-w-[18px] flex items-center text-icon-secondary hover:text-icon-primary hover:cursor-pointer">
+              <HorizontalDotsIcon />
+            </div>
+          )}
+        </div>
       </div>
       {type === UnifiedConversationType.Email ? (
         <div className="flex flex-col gap-4 justify-between">

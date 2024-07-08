@@ -9,6 +9,7 @@ import { format } from "date-fns";
 import { LabelsTagsGroups } from "../components/LabelsTagsGroups";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { HorizontalDotsIcon } from "@/components/icons/CustomIcons";
 
 export const InboundMessage = ({
   message,
@@ -64,21 +65,28 @@ export const InboundMessage = ({
             </div>
           </div>
         </div>
-        <div className="flex items-center">
-          {message.tags && message.tags.length > 0 && (
-            <>
-              <LabelsTagsGroups
-                key={message.tags[0].id}
-                text={message.tags[0].name}
-                icon={message.tags[0].iconId}
-                className="bg-primary border-0"
-              />
-              {message.tags.length > 1 && (
-                <p className="text-body-xs text-primary px-2 py-1">
-                  +{message.tags.length - 1} more
-                </p>
-              )}
-            </>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center">
+            {message.tags && message.tags.length > 0 && (
+              <>
+                <LabelsTagsGroups
+                  key={message.tags[0].id}
+                  text={message.tags[0].name}
+                  icon={message.tags[0].iconId}
+                  className="bg-primary border-0"
+                />
+                {message.tags.length > 1 && (
+                  <p className="text-body-xs text-primary px-2 py-1">
+                    +{message.tags.length - 1} more
+                  </p>
+                )}
+              </>
+            )}
+          </div>
+          {type === UnifiedConversationType.Email && (
+            <div className="size-[18px] min-w-[18px] flex items-center text-icon-secondary hover:text-icon-primary hover:cursor-pointer">
+              <HorizontalDotsIcon />
+            </div>
           )}
         </div>
       </div>

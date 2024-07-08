@@ -1963,3 +1963,21 @@ export const Attachemnt02Icon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const HorizontalDotsIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={14}
+    height={3}
+    fill="none"
+    viewBox="0 0 14 3"
+    {...props}
+  >
+    <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M5.5 1.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM10.75 1.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM.25 1.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
