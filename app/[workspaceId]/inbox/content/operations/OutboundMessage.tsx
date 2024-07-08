@@ -100,7 +100,7 @@ export const OutboundMessage = ({
             <p className="text-subtitle-sm">{message.emailData?.subject}</p>
             <div
               className={`relative overflow-hidden transition-all duration-300 ease-in-out ${
-                isExpanded ? "max-h-full" : "max-h-[200px]"
+                isExpanded ? "max-h-full" : "max-h-[150px]"
               }`}
             >
               <p
