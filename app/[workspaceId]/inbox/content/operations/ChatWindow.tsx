@@ -198,6 +198,7 @@ export const ChatWindow = ({
                   []
                 )}
 
+                {/* show an AI reply */}
                 <AiReply
                   reply="Facilisis eu ut molestie elit eget. Sit odio volutpat augue elementum porttitor. Facilisis quis integer orci adipiscing lobortis. Massa habitasse sed aliquam."
                   onSendMessage={addMessage}
@@ -205,6 +206,7 @@ export const ChatWindow = ({
                     messages.filter((message) => message.author === "guest")
                     // .slice(0, 1)
                   }
+                  AiStep="initial"
                   guestData={conversationData.guest}
                 />
               </div>

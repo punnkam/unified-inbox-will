@@ -28,11 +28,13 @@ export const AiReply = ({
   onSendMessage,
   messages,
   guestData,
+  AiStep,
 }: {
   reply: string;
   onSendMessage: (message: MessageItem) => void;
   messages: MessageItem[];
   guestData: Guest;
+  AiStep?: "initial" | "edit" | "teach" | "pre-approve";
 }) => {
   const [replyState, setReplyState] = useState(reply);
   const [editReply, setEditReply] = useState(reply);
@@ -40,7 +42,7 @@ export const AiReply = ({
   const [isOpen, setIsOpen] = useState(true);
   const [step, setStep] = useState<
     "initial" | "edit" | "teach" | "pre-approve"
-  >("initial");
+  >(AiStep || "initial");
   const [messagesModalOpen, setMessagesModalOpen] = useState(false);
 
   const handleDismiss = () => {
