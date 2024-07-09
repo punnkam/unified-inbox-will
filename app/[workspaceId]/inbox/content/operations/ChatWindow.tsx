@@ -33,7 +33,7 @@ export const ChatWindow = ({
 }) => {
   // local state for messages
   const [messages, setMessages] = useState<MessageItem[]>([]);
-  const lastMessageRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const { setView } = useTableContext();
 
   const addMessage = (newMessage: MessageItem) => {
@@ -68,9 +68,9 @@ export const ChatWindow = ({
   }, [setView]);
 
   useEffect(() => {
-    if (lastMessageRef.current) {
-      // Remove behavior smooth if you want to disable smooth scrolling animation on load
-      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
     }
   }, [messages]);
 
@@ -126,7 +126,10 @@ export const ChatWindow = ({
           <div className="flex flex-col gap-5 justify-between h-full pb-2">
             {/* Chat window */}
             <AnimatePresence initial={false}>
-              <div className="h-full flex flex-col gap-5 px-8 overflow-auto">
+              <div
+                className="h-full flex flex-col gap-5 px-8 overflow-auto"
+                ref={chatContainerRef}
+              >
                 {messages?.reduce<React.ReactNode[]>(
                   (acc, message, index, array) => {
                     const previousMessage = array[index - 1];
@@ -172,7 +175,6 @@ export const ChatWindow = ({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        ref={index === array.length - 1 ? lastMessageRef : null}
                       >
                         {message.author === "guest" ? (
                           <InboundMessage
