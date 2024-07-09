@@ -414,7 +414,8 @@ export const fakeConversationTags: ConversationTag[] = [
     workspaceId: 1,
     iconId: 0,
     name: "Early Check-In",
-    description: "This conversation needs immediate attention",
+    description:
+      "This conversation needs immediate attention reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeealllly long description",
     type: conversationTagTypes[0],
     actionItem: "Mark as done",
     inboxDashboard: true,
