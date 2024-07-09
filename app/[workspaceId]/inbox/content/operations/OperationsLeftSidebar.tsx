@@ -100,7 +100,10 @@ export const OperationsLeftSidebar = ({
             <p className="text-body-xs text-secondary">Assignee</p>
 
             {/* Assignee */}
-            <Assignee assigneeData={conversationData.assigneeData} />
+            <Assignee
+              assigneeData={conversationData.assigneeData}
+              conversationId={conversationData.id}
+            />
           </div>
 
           {conversationData.tags && (

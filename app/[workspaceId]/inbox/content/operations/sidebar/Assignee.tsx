@@ -1,12 +1,14 @@
 import { KeyboardShortcut } from "@/components/custom/KeyBoardShortcut";
 import { Avatar } from "./Avatar";
-import { Member, fakeMembersData } from "@/lib/realDataSchema";
+import { Conversation, Member, fakeMembersData } from "@/lib/realDataSchema";
 import { AssignMemberComboBox } from "../../components/AssignMemberCombobox";
 
 export const Assignee = ({
   assigneeData,
+  conversationId,
 }: {
   assigneeData: Member | undefined;
+  conversationId: Conversation["id"];
 }) => {
   // fetch the available members data from the workspace
   const availableMembers = fakeMembersData;
@@ -14,6 +16,7 @@ export const Assignee = ({
   // TODO API: handle assigning a member
   const handleAssign = (member: Member) => {
     console.log("assign", member);
+    console.log("conversationId", conversationId);
   };
 
   return (
