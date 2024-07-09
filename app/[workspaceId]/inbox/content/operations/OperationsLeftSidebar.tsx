@@ -6,6 +6,13 @@ import { Conversation, ConversationTag } from "@/lib/realDataSchema";
 import { Assignee } from "./sidebar/Assignee";
 import { ConversationTagItem } from "./sidebar/ConversationTag";
 import { ScrollBar, ScrollArea } from "@/components/ui/scroll-area";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
 
 export const OperationsLeftSidebar = ({
   conversationData,
@@ -20,6 +27,18 @@ export const OperationsLeftSidebar = ({
   const handleTagClick = (tag: ConversationTag) => {
     // call the onTagClick function for parent to handle
     onTagClick(tag.id);
+  };
+
+  const handlePauseAi = (time: "30min" | "1hr" | "indefinitely") => {
+    if (time === "30min") {
+      // TODO API: handle pause ai for 30 min
+    } else if (time === "1hr") {
+      // TODO API: handle pause ai for 1 hr
+    } else if (time === "indefinitely") {
+      // TODO API: handle pause ai indefinitely
+    }
+
+    toast.success("AI paused successfully: " + time);
   };
 
   return (
@@ -88,9 +107,24 @@ export const OperationsLeftSidebar = ({
             <Button variant={"ghost"} size={"iconMd"}>
               <PhoneIcon className="text-icon-brand size-[15px]" />
             </Button>
-            <Button variant={"ghost"} size={"iconMd"}>
-              <PauseSqareIcon className="text-icon-brand size-[15px]" />
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant={"ghost"} size={"iconMd"}>
+                  <PauseSqareIcon className="text-icon-brand size-[15px]" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="text-subtitle-xs">
+                <DropdownMenuItem onClick={() => handlePauseAi("30min")}>
+                  Pause AI for 30 min
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handlePauseAi("1hr")}>
+                  Pause AI for 1 hr
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handlePauseAi("indefinitely")}>
+                  Pause AI indefinitely
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
 
