@@ -169,6 +169,7 @@ const config = {
         "title-3xl": ["30px", { lineHeight: "38.4px", fontWeight: 500 }],
         "title-2xl": ["24px", { lineHeight: "33.6px", fontWeight: 500 }],
         "title-xl": ["22px", { lineHeight: "28.8px", fontWeight: 500 }],
+        "title-0.5xl": ["20px", { lineHeight: "28.8px", fontWeight: 500 }],
         "title-lg": ["18px", { lineHeight: "24px", fontWeight: 500 }],
         "title-md": ["16px", { lineHeight: "21.6px", fontWeight: 500 }],
         "title-sm": ["14px", { lineHeight: "19.2px", fontWeight: 500 }],
