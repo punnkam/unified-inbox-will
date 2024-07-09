@@ -197,7 +197,7 @@ export const InboxChatSidebar = () => {
           </Tabs>
         </div>
       </div>
-      <ScrollArea className="bg-primary shadow-inner flex-grow overflow-y-auto">
+      <ScrollArea className="bg-primary flex-grow overflow-y-auto">
         <Table>
           <TableHeader hidden>
             {table.getHeaderGroups().map((headerGroup) => (
