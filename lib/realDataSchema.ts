@@ -616,6 +616,7 @@ const fakeAllMessages: MessageItem[] = [
     isSeen: false,
     status: "delivered",
     type: UnifiedConversationType.Airbnb,
+    tags: [fakeConversationTags[1]],
   },
   {
     id: 110,
@@ -667,11 +668,7 @@ const fakeAllMessages: MessageItem[] = [
     isSeen: false,
     status: "delivered",
     type: UnifiedConversationType.Airbnb,
-    tags: [
-      fakeConversationTags[0],
-      fakeConversationTags[2],
-      fakeConversationTags[3],
-    ],
+    tags: [fakeConversationTags[0], fakeConversationTags[2]],
   },
   {
     id: 115,
@@ -717,7 +714,6 @@ const fakeAllMessages: MessageItem[] = [
       bcc: ["guest2@hostai.app"],
       subject: "Test email",
     },
-    tags: [fakeConversationTags[2]],
   },
 ];
 
@@ -1064,7 +1060,7 @@ export const mockConversationData: Conversation[] = [
     hasInboxMessageQueue: false,
     archived: false,
     timezone: "America/Denver",
-    tags: [fakeConversationTags[1]],
+    tags: fakeAllMessages.map((message) => message.tags!).flat(),
     conversationDetails: {
       showSummary: true,
       summary: {
