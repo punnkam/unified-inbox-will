@@ -2,6 +2,7 @@ import { KeyboardShortcut } from "@/components/custom/KeyBoardShortcut";
 import { Avatar } from "./Avatar";
 import { Conversation, Member, fakeMembersData } from "@/lib/realDataSchema";
 import { AssignMemberComboBox } from "../../components/AssignMemberCombobox";
+import { cn } from "@/lib/utils";
 
 export const Assignee = ({
   assigneeData,
@@ -25,7 +26,12 @@ export const Assignee = ({
       onAssign={handleAssign}
       alignPopover="center"
       customTrigger={
-        <div className="flex items-center gap-3 px-5 py-4 border border-secondary rounded-lg">
+        <div
+          className={cn(
+            "flex items-center gap-3 px-5 py-4 border border-secondary rounded-lg",
+            assigneeData && "bg-primary"
+          )}
+        >
           <Avatar size={"medium"} image={assigneeData && assigneeData.image} />
           <div className="flex items-center justify-between w-full">
             <p className="text-subtitle-sm">
