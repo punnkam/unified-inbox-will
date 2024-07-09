@@ -21,9 +21,13 @@ import { useHotkeys } from "react-hotkeys-hook";
 export function AssignMemberComboBox({
   availableMembers,
   onAssign,
+  customTrigger,
+  alignPopover = "end",
 }: {
   availableMembers: Member[];
   onAssign: (member: Member) => void;
+  customTrigger?: React.ReactNode;
+  alignPopover?: "start" | "end" | "center";
 }) {
   const [open, setOpen] = useState(false);
 
@@ -42,14 +46,19 @@ export function AssignMemberComboBox({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <div className="px-5 py-4 flex items-center gap-2 hover:cursor-pointer hover:bg-hover">
-          <div className="flex items-center gap-2">
-            <p>Assign</p>
+        {customTrigger ? (
+          customTrigger
+        ) : (
+          // default trigger
+          <div className="px-5 py-4 flex items-center gap-2 hover:cursor-pointer hover:bg-hover">
+            <div className="flex items-center gap-2">
+              <p>Assign</p>
+            </div>
+            <KeyboardShortcut shortcut="A" />
           </div>
-          <KeyboardShortcut shortcut="A" />
-        </div>
+        )}
       </PopoverTrigger>
-      <PopoverContent className="w-[250px] p-0" align="end">
+      <PopoverContent className="w-[250px] p-0" align={alignPopover}>
         <Command>
           <CommandList>
             <CommandInput placeholder="Search Members" />
