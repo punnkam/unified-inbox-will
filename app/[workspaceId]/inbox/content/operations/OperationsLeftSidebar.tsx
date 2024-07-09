@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
+import { GuestJourney } from "./sidebar/GuestJourney";
 
 export const OperationsLeftSidebar = ({
   conversationData,
@@ -48,35 +49,10 @@ export const OperationsLeftSidebar = ({
 
         <div className="flex flex-col gap-2 px-6">
           {/* Guest Journey Card */}
-          <div className="px-5 py-4 flex flex-col gap-4 bg-primary rounded-lg border border-primary">
-            <div className="flex items-center justify-between">
-              <p className="text-title-md">During Stay</p>
-              <p className="text-subtitle-xs text-secondary">Aug 12 - Sep 23</p>
-            </div>
-
-            {/* Guest Journey Progress */}
-            <div className="flex gap-3">
-              {/* Before */}
-              <div className="flex flex-col gap-2 w-full">
-                <div className="h-1 w-full bg-brand rounded-sm" />
-                <p className="text-bold-section text-brand uppercase">Before</p>
-              </div>
-
-              {/* During */}
-              <div className="flex flex-col gap-2 w-full">
-                <div className="h-1 w-full bg-brand rounded-sm" />
-                <p className="text-bold-section text-brand uppercase">During</p>
-              </div>
-
-              {/* After */}
-              <div className="flex flex-col gap-2 w-full">
-                <div className="h-1 w-full bg-[#EFEFEF] rounded-sm" />
-                <p className="text-bold-section text-disabled uppercase">
-                  After
-                </p>
-              </div>
-            </div>
-          </div>
+          <GuestJourney
+            arrivalDate={conversationData.reservation.arrivalDate}
+            departureDate={conversationData.reservation.departureDate}
+          />
 
           {/* Conversation Summary */}
           <ConvoSummary
