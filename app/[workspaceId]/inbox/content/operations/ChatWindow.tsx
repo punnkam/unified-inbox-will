@@ -8,6 +8,7 @@ import {
 } from "@/components/icons/CustomIcons";
 import {
   Conversation,
+  ConversationTag,
   MessageItem,
   UnifiedConversationType,
 } from "@/lib/realDataSchema";
@@ -33,7 +34,10 @@ export const ChatWindow = ({
 }) => {
   // local state for messages
   const [messages, setMessages] = useState<MessageItem[]>([]);
+  const [selectedTagId, setSelectedTagId] = useState<number | null>(null);
+
   const chatContainerRef = useRef<HTMLDivElement>(null);
+
   const { setView } = useTableContext();
 
   const addMessage = (newMessage: MessageItem) => {
@@ -67,12 +71,31 @@ export const ChatWindow = ({
     setView("chat");
   }, [setView]);
 
+  // Scroll to the bottom of the chat on mount/new messages
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
     }
   }, [messages]);
+
+  // handle when a tag is clicked
+  const handleTagClick = (tagId: ConversationTag["id"]) => {
+    setSelectedTagId(tagId || null);
+
+    //fidn the message with the selected tag id
+    const message = messages?.find((m) => m.tags?.find((t) => t.id === tagId));
+
+    console.log("Tag clicked convo id: ", tagId, message);
+
+    if (message) {
+      document.getElementById("message-" + message.id)?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "nearest",
+      });
+    }
+  };
 
   return (
     <div className="h-full flex">
@@ -171,6 +194,7 @@ export const ChatWindow = ({
                     acc.push(
                       <motion.div
                         key={message.id}
+                        id={`message-${message.id}`}
                         className="flex flex-col gap-2"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -256,7 +280,11 @@ export const ChatWindow = ({
           </div>
         </div>
       </div>
-      <OperationsLeftSidebar />
+      <OperationsLeftSidebar
+        conversationData={conversationData}
+        onTagClick={handleTagClick}
+        selectedTagId={selectedTagId}
+      />
     </div>
   );
 };
