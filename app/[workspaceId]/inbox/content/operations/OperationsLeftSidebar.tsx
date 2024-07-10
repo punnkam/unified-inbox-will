@@ -14,6 +14,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 import { GuestJourney } from "./sidebar/GuestJourney";
+import {
+  CustomTabs,
+  CustomTabsContent,
+  CustomTabsList,
+  CustomTabsTrigger,
+} from "@/components/ui/custom-tabs";
+import { ListingCard } from "../components/ListingCard";
 
 export const OperationsLeftSidebar = ({
   conversationData,
@@ -43,95 +50,121 @@ export const OperationsLeftSidebar = ({
   };
 
   return (
-    <ScrollArea className="w-[400px] min-w-[400px] bg-primary-subtle pb-6 overflow-y-auto">
-      <div className="pt-3 pb-6 border-b border-primary">
-        <p className="px-6 py-5 text-title-0.5xl">At a glance</p>
+    <ScrollArea>
+      <div className="w-[400px] min-w-[400px] bg-primary-subtle pb-6 overflow-y-auto">
+        <div className="pt-3 pb-6 border-b border-primary">
+          <p className="px-6 py-5 text-title-0.5xl">At a glance</p>
 
-        <div className="flex flex-col gap-2 px-6">
-          {/* Guest Journey Card */}
-          <GuestJourney
-            arrivalDate={conversationData.reservation.arrivalDate}
-            departureDate={conversationData.reservation.departureDate}
-          />
-
-          {/* Conversation Summary */}
-          <ConvoSummary
-            title="Robb is doing pretty well."
-            summary="The Lannister scouts thought Robb only had twenty thousand troops in his batallion."
-          />
-        </div>
-      </div>
-
-      {/* Conversation */}
-      <div className="flex flex-col gap-4 pt-6 pb-8">
-        <div className="flex items-center gap-[10px] px-6">
-          <div className="flex items-center justify-between w-full">
-            <p className="text-title-0.5xl">Conversation</p>
-
-            {/* Avatar in chat */}
-            <Avatar
-              size={"small"}
-              image={
-                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              }
-              greenDot={true}
-            />
-          </div>
-
-          {/* Actions */}
-          <div className="flex items-center gap-2">
-            <Button variant={"ghost"} size={"iconMd"}>
-              <PhoneIcon className="text-icon-brand size-[15px]" />
-            </Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant={"ghost"} size={"iconMd"}>
-                  <PauseSqareIcon className="text-icon-brand size-[15px]" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="text-subtitle-xs">
-                <DropdownMenuItem onClick={() => handlePauseAi("30min")}>
-                  Pause AI for 30 min
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handlePauseAi("1hr")}>
-                  Pause AI for 1 hr
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handlePauseAi("indefinitely")}>
-                  Pause AI indefinitely
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-
-        {/* Conversation Stuff */}
-        <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2 px-6">
-            <p className="text-body-xs text-secondary">Assignee</p>
+            {/* Guest Journey Card */}
+            <GuestJourney
+              arrivalDate={conversationData.reservation.arrivalDate}
+              departureDate={conversationData.reservation.departureDate}
+            />
 
-            {/* Assignee */}
-            <Assignee
-              assigneeData={conversationData.assigneeData}
-              conversationId={conversationData.id}
+            {/* Conversation Summary */}
+            <ConvoSummary
+              title="Robb is doing pretty well."
+              summary="The Lannister scouts thought Robb only had twenty thousand troops in his batallion."
             />
           </div>
-
-          {conversationData.tags && (
-            <div className="flex flex-col gap-2 px-6">
-              <p className="text-body-xs text-secondary">Conversation Tags</p>
-
-              {/* Conversation Tags */}
-              {conversationData.tags!.map((tag) => (
-                <ConversationTagItem
-                  key={tag.id}
-                  tag={tag}
-                  onTagClick={handleTagClick}
-                  selected={selectedTagId === tag.id}
-                />
-              ))}
-            </div>
-          )}
         </div>
+
+        {/* Conversation */}
+        <div className="flex flex-col gap-4 pt-6 pb-8">
+          <div className="flex items-center gap-[10px] px-6">
+            <div className="flex items-center justify-between w-full">
+              <p className="text-title-0.5xl">Conversation</p>
+
+              {/* Avatar in chat */}
+              <Avatar
+                size={"small"}
+                image={
+                  "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                }
+                greenDot={true}
+              />
+            </div>
+
+            {/* Actions */}
+            <div className="flex items-center gap-2">
+              <Button variant={"ghost"} size={"iconMd"}>
+                <PhoneIcon className="text-icon-brand size-[15px]" />
+              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant={"ghost"} size={"iconMd"}>
+                    <PauseSqareIcon className="text-icon-brand size-[15px]" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="text-subtitle-xs">
+                  <DropdownMenuItem onClick={() => handlePauseAi("30min")}>
+                    Pause AI for 30 min
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handlePauseAi("1hr")}>
+                    Pause AI for 1 hr
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => handlePauseAi("indefinitely")}
+                  >
+                    Pause AI indefinitely
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+
+          {/* Conversation Stuff */}
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2 px-6">
+              <p className="text-body-xs text-secondary">Assignee</p>
+
+              {/* Assignee */}
+              <Assignee
+                assigneeData={conversationData.assigneeData}
+                conversationId={conversationData.id}
+              />
+            </div>
+
+            {conversationData.tags && (
+              <div className="flex flex-col gap-2 px-6">
+                <p className="text-body-xs text-secondary">Conversation Tags</p>
+
+                {/* Conversation Tags */}
+                {conversationData.tags!.map((tag) => (
+                  <ConversationTagItem
+                    key={tag.id}
+                    tag={tag}
+                    onTagClick={handleTagClick}
+                    selected={selectedTagId === tag.id}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Tabs */}
+        <CustomTabs className="flex flex-col" defaultValue="booking">
+          <CustomTabsList>
+            <CustomTabsTrigger value="booking">Booking</CustomTabsTrigger>
+            <CustomTabsTrigger value="upsells">Upsells</CustomTabsTrigger>
+            <CustomTabsTrigger value="tasks">Tasks</CustomTabsTrigger>
+            <CustomTabsTrigger value="calls">Calls</CustomTabsTrigger>
+          </CustomTabsList>
+          <CustomTabsContent value="booking">
+            <ListingCard listingData={conversationData.reservation.listing} />
+          </CustomTabsContent>
+          <CustomTabsContent value="upsells">
+            <p>upsells</p>
+          </CustomTabsContent>
+          <CustomTabsContent value="tasks">
+            <p>tasks</p>
+          </CustomTabsContent>
+          <CustomTabsContent value="calls">
+            <p>calls</p>
+          </CustomTabsContent>
+        </CustomTabs>
       </div>
       <ScrollBar orientation="vertical" />
     </ScrollArea>
