@@ -116,8 +116,7 @@ export const BookingInfoTab = ({
   };
 
   const handleSelectReservationLabel = (label: ReservationLabel) => {
-    console.log("Selected reservation label:", label);
-
+    // update the reservation labels state
     setReservationLabels((prevLabels) => {
       const isLabelPresent = prevLabels.some(
         (reservationLabel) => reservationLabel.id === label.id
