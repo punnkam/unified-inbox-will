@@ -670,7 +670,7 @@ const fakeAllMessages: MessageItem[] = [
     isSeen: false,
     status: "delivered",
     type: UnifiedConversationType.Airbnb,
-    tags: [fakeConversationTags[0], fakeConversationTags[2]],
+    // tags: [fakeConversationTags[0], fakeConversationTags[2]],
   },
   {
     id: 115,
