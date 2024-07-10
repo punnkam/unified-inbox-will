@@ -324,7 +324,7 @@ export const BookingInfoTab = ({
             <Button
               variant="outline"
               size="xs"
-              className="w-full bg-transparent h-[28px]"
+              className="w-full bg-transparent h-[28px] text-subtitle-xs"
               onClick={handleCancel}
             >
               Cancel
@@ -332,7 +332,7 @@ export const BookingInfoTab = ({
             <Button
               variant="outline"
               size="xs"
-              className="w-full h-[28px]"
+              className="w-full h-[28px] text-subtitle-xs"
               onClick={handleSave}
             >
               Save
