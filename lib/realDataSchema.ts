@@ -735,6 +735,7 @@ export const fakeListingsData: Listing[] = [
     formData: {},
     faqData: {},
     lastDynamicLearning: 1622518800,
+    automated: true,
   },
   {
     userId: "2",
@@ -752,6 +753,7 @@ export const fakeListingsData: Listing[] = [
     formData: {},
     faqData: {},
     lastDynamicLearning: 1622522400,
+    automated: true,
   },
   {
     userId: "3",
@@ -786,6 +788,7 @@ export const fakeListingsData: Listing[] = [
     formData: {},
     faqData: {},
     lastDynamicLearning: 1622542400,
+    automated: true,
   },
   {
     userId: "4",
