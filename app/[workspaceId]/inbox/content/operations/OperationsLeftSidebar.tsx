@@ -20,7 +20,7 @@ import {
   CustomTabsList,
   CustomTabsTrigger,
 } from "@/components/ui/custom-tabs";
-import { ListingCard } from "../components/ListingCard";
+import { BookingInfoTab } from "../components/BookingInfoTab";
 
 export const OperationsLeftSidebar = ({
   conversationData,
@@ -152,8 +152,8 @@ export const OperationsLeftSidebar = ({
             <CustomTabsTrigger value="tasks">Tasks</CustomTabsTrigger>
             <CustomTabsTrigger value="calls">Calls</CustomTabsTrigger>
           </CustomTabsList>
-          <CustomTabsContent value="booking">
-            <ListingCard listingData={conversationData.reservation.listing} />
+          <CustomTabsContent value="booking" className="px-0">
+            <BookingInfoTab conversationData={conversationData} />
           </CustomTabsContent>
           <CustomTabsContent value="upsells">
             <p>upsells</p>
