@@ -893,10 +893,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1001,
       createdAtTimestamp: 1622518800,
-      arrivalDate: "2024-06-22",
-      departureDate: "2024-06-29",
-      checkInTime: "15:00",
-      checkOutTime: "11:00",
+      arrivalDate: "2024-06-22T00:00:00.000Z",
+      departureDate: "2024-06-29T00:00:00.000Z",
+      checkInTime: "2024-06-22T15:00:00.000Z",
+      checkOutTime: "2024-06-29T11:00:00.000Z",
       guest: {
         name: "Alice Smith",
         firstName: "Alice",
@@ -1001,10 +1001,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1002,
       createdAtTimestamp: 1622522400,
-      arrivalDate: "2024-07-12",
-      departureDate: "2024-07-20",
-      checkInTime: "15:00",
-      checkOutTime: "11:00",
+      arrivalDate: "2024-07-12T00:00:00.000Z",
+      departureDate: "2024-07-20T00:00:00.000Z",
+      checkInTime: "2024-07-12T15:00:00.000Z",
+      checkOutTime: "2024-07-20T11:00:00.000Z",
       guest: {
         name: "Bob Johnson",
         firstName: "Bob",
@@ -1108,10 +1108,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1003,
       createdAtTimestamp: 1622532400,
-      arrivalDate: "2024-06-26",
-      departureDate: "2024-07-05",
-      checkInTime: "14:00",
-      checkOutTime: "10:00",
+      arrivalDate: "2024-06-26T00:00:00.000Z",
+      departureDate: "2024-07-05T00:00:00.000Z",
+      checkInTime: "2024-06-26T14:00:00.000Z",
+      checkOutTime: "2024-07-05T10:00:00.000Z",
       guest: {
         name: "Charlie Brown",
         firstName: "Charlie",
@@ -1214,10 +1214,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1004,
       createdAtTimestamp: 1622542400,
-      arrivalDate: "2024-06-27",
-      departureDate: "2024-07-15",
-      checkInTime: "16:00",
-      checkOutTime: "12:00",
+      arrivalDate: "2024-06-27T00:00:00.000Z",
+      departureDate: "2024-07-15T00:00:00.000Z",
+      checkInTime: "2024-06-27T16:00:00.000Z",
+      checkOutTime: "2024-07-15T12:00:00.000Z",
       guest: {
         name: "David Wilson",
         firstName: "David",
@@ -1321,10 +1321,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1005,
       createdAtTimestamp: 1622552400,
-      arrivalDate: "2024-07-15",
-      departureDate: "2024-07-20",
-      checkInTime: "15:00",
-      checkOutTime: "11:00",
+      arrivalDate: "2024-07-15T00:00:00.000Z",
+      departureDate: "2024-07-20T00:00:00.000Z",
+      checkInTime: "2024-07-15T15:00:00.000Z",
+      checkOutTime: "2024-07-20T11:00:00.000Z",
       guest: {
         name: "Eva Green",
         firstName: "Eva",
@@ -1427,10 +1427,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1006,
       createdAtTimestamp: 1622562400,
-      arrivalDate: "2024-07-20",
-      departureDate: "2024-07-25",
-      checkInTime: "13:00",
-      checkOutTime: "10:00",
+      arrivalDate: "2024-07-20T00:00:00.000Z",
+      departureDate: "2024-07-25T00:00:00.000Z",
+      checkInTime: "2024-07-20T13:00:00.000Z",
+      checkOutTime: "2024-07-25T10:00:00.000Z",
       guest: {
         name: "Franklin White",
         firstName: "Franklin",
@@ -1533,10 +1533,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1007,
       createdAtTimestamp: 1622572400,
-      arrivalDate: "2024-08-01",
-      departureDate: "2024-08-05",
-      checkInTime: "12:00",
-      checkOutTime: "11:00",
+      arrivalDate: "2024-08-01T00:00:00.000Z",
+      departureDate: "2024-08-05T00:00:00.000Z",
+      checkInTime: "2024-08-01T12:00:00.000Z",
+      checkOutTime: "2024-08-05T11:00:00.000Z",
       guest: {
         name: "Grace Lee",
         firstName: "Grace",
@@ -1639,10 +1639,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1008,
       createdAtTimestamp: 1622582400,
-      arrivalDate: "2024-06-30",
-      departureDate: "2024-08-15",
-      checkInTime: "14:00",
-      checkOutTime: "11:00",
+      arrivalDate: "2024-06-30T00:00:00.000Z",
+      departureDate: "2024-08-15T00:00:00.000Z",
+      checkInTime: "2024-06-30T14:00:00.000Z",
+      checkOutTime: "2024-08-15T11:00:00.000Z",
       guest: {
         name: "Henry Ford",
         firstName: "Henry",
@@ -1745,10 +1745,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1009,
       createdAtTimestamp: 1622592400,
-      arrivalDate: "2024-08-15",
-      departureDate: "2024-08-20",
-      checkInTime: "14:00",
-      checkOutTime: "11:00",
+      arrivalDate: "2024-08-15T00:00:00.000Z",
+      departureDate: "2024-08-20T00:00:00.000Z",
+      checkInTime: "2024-08-15T14:00:00.000Z",
+      checkOutTime: "2024-08-20T11:00:00.000Z",
       guest: {
         name: "Irene Adler",
         firstName: "Irene",
@@ -1851,10 +1851,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1010,
       createdAtTimestamp: 1622602400,
-      arrivalDate: "2024-08-20",
-      departureDate: "2024-08-25",
-      checkInTime: "15:00",
-      checkOutTime: "11:00",
+      arrivalDate: "2024-08-20T00:00:00.000Z",
+      departureDate: "2024-08-25T00:00:00.000Z",
+      checkInTime: "2024-08-20T15:00:00.000Z",
+      checkOutTime: "2024-08-25T11:00:00.000Z",
       guest: {
         name: "Jake Black",
         firstName: "Jake",

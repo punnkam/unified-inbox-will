@@ -58,9 +58,7 @@ export const BookingInfo = ({
               <ChevronDownIcon className="size-fit text-icon-tertiary pe-1" />
             </div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" asChild>
-            <div className="!p-0">{dropdownContent}</div>
-          </DropdownMenuContent>
+          {dropdownContent}
         </DropdownMenu>
       </div>
     );
