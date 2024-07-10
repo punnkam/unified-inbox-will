@@ -26,7 +26,7 @@ const IconMap = {
   },
 };
 
-export const ResponseStatus = ({
+export const ReservationStatus = ({
   type,
 }: {
   type: Conversation["reservation"]["status"];
@@ -34,7 +34,7 @@ export const ResponseStatus = ({
   return (
     <div
       className={cn(
-        "flex items-center gap-1 rounded-full px-2 py-1 h-[25px]",
+        "flex items-center gap-1 rounded-full px-2 py-1 h-[25px] w-fit",
         IconMap[type!].classes
       )}
     >

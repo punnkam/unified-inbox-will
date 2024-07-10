@@ -4,7 +4,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { LabelsTagsGroups } from "../components/LabelsTagsGroups";
-import { ResponseStatus } from "../components/ResponseStatus";
+import { ReservationStatus } from "../components/ReservationStatus";
 import {
   CheckCircleIcon,
   MessageNotificationIcon,
@@ -233,7 +233,7 @@ export const columns: ColumnDef<Conversation>[] = [
                   </p>
                 </div>
                 {row.original.reservation.status && (
-                  <ResponseStatus type={row.original.reservation.status} />
+                  <ReservationStatus type={row.original.reservation.status} />
                 )}
               </div>
             </div>
@@ -287,13 +287,13 @@ export const columns: ColumnDef<Conversation>[] = [
     filterFn: (row, columnId, filterValue: appliedFilters) => {
       if (!filterValue) return true;
 
-      const responseStatus = filterValue.responseStatus;
+      const ReservationStatus = filterValue.ReservationStatus;
       const reservationLabels = filterValue.reservationLabels;
       const conversationTags = filterValue.conversationTags;
 
-      if (responseStatus) {
+      if (ReservationStatus) {
         // if the array is empty (no filter applied), return true (show all rows)
-        if (responseStatus.length === 0) return true;
+        if (ReservationStatus.length === 0) return true;
 
         const replyStatus = row.original.archived
           ? "Done"
@@ -305,7 +305,7 @@ export const columns: ColumnDef<Conversation>[] = [
           ? "Replied to"
           : null;
 
-        const hasAnySelectedStatus = responseStatus.some(
+        const hasAnySelectedStatus = ReservationStatus.some(
           (status) => replyStatus == status.name
         );
 
