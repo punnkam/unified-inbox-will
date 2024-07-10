@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ListingCard } from "./ListingCard";
 import { PlusIcon } from "lucide-react";
-import { Conversation } from "@/lib/realDataSchema";
+import {
+  Conversation,
+  ReservationLabel,
+  fakeReservationLabels,
+} from "@/lib/realDataSchema";
 import { LabelsTagsGroups } from "./LabelsTagsGroups";
 import { BookingInfo } from "./BookingInfo";
 import { format } from "date-fns";
@@ -14,8 +18,10 @@ import {
   handleValueChange,
 } from "@/lib/utils";
 import {
+  DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
   Accordion,
@@ -23,6 +29,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const timeOptions = generateTimeOptions();
 
@@ -43,6 +58,9 @@ export const BookingInfoTab = ({
   const [selectedCheckOutTime, setSelectedCheckOutTime] = useState<Date>(
     new Date(conversationData.reservation.checkOutTime)
   );
+  const [reservationLabels, setReservationLabels] = useState<
+    ReservationLabel[]
+  >(conversationData.reservation.reservationLabels || []);
 
   // Rerendrer when the times when the conversation data changes
   useEffect(() => {
@@ -52,6 +70,8 @@ export const BookingInfoTab = ({
     setSelectedCheckOutTime(
       new Date(conversationData.reservation.checkOutTime)
     );
+
+    setReservationLabels(conversationData.reservation.reservationLabels || []);
   }, [conversationData]);
 
   const handleCheckInDate = (date: Date | undefined) => {
@@ -72,24 +92,6 @@ export const BookingInfoTab = ({
     }
 
     setCheckOutDate(date);
-  };
-
-  const handleCheckInTime = (selectedTime: Date) => {
-    console.log("Selected time:", selectedTime);
-    // Here you can store the selectedTime in your database
-
-    setSelectedCheckInTime(selectedTime);
-  };
-
-  const handleCheckOutTime = (selectedTime: Date) => {
-    // Here you can store the selectedTime in your database
-
-    if (selectedTime === selectedCheckOutTime) return;
-    console.log("Selected time:", selectedTime);
-
-    setSelectedCheckOutTime(selectedTime);
-
-    console.log("Selected time:", selectedCheckOutTime);
   };
 
   const handleSave = () => {
@@ -113,6 +115,27 @@ export const BookingInfoTab = ({
     );
   };
 
+  const handleSelectReservationLabel = (label: ReservationLabel) => {
+    console.log("Selected reservation label:", label);
+
+    setReservationLabels((prevLabels) => {
+      const isLabelPresent = prevLabels.some(
+        (reservationLabel) => reservationLabel.id === label.id
+      );
+      if (isLabelPresent) {
+        return prevLabels.filter(
+          (reservationLabel) => reservationLabel.id !== label.id
+        );
+      } else {
+        return [...prevLabels, label];
+      }
+    });
+
+    // TODO API: handle updating reservation labels
+
+    toast.success("Reservation labels updated successfully");
+  };
+
   return (
     <div className="flex flex-col gap-5">
       {/* Listing Card + Reservation Labels */}
@@ -123,7 +146,7 @@ export const BookingInfoTab = ({
             Reservation labels
           </p>
           <div className="flex items-center gap-1 py-1">
-            {conversationData.reservation.reservationLabels?.map((label) => (
+            {reservationLabels.map((label) => (
               <LabelsTagsGroups
                 key={label?.id}
                 text={label!.name}
@@ -133,9 +156,61 @@ export const BookingInfoTab = ({
             ))}
 
             {/* TODO: add logic for adding a new label */}
-            <Button variant="ghost" size={"iconXs"}>
-              <PlusIcon className="text-icon-secondary size-3" />
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size={"iconXs"}>
+                  <PlusIcon className="text-icon-secondary size-3" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="center"
+                className="text-subtitle-xs p-0"
+              >
+                <Command>
+                  <CommandInput
+                    placeholder={`Search reservation labels`}
+                    autoFocus={true}
+                  />
+                  <CommandList>
+                    <CommandEmpty>No filter found.</CommandEmpty>
+                    <CommandGroup>
+                      {fakeReservationLabels.map((label) => {
+                        const isChecked = reservationLabels.some(
+                          (reservationLabel) =>
+                            reservationLabel?.id === label.id
+                        );
+
+                        return (
+                          <CommandItem
+                            key={label.id!}
+                            value={label.name}
+                            onSelect={() => {
+                              handleSelectReservationLabel(label);
+                            }}
+                            className="hover:cursor-pointer"
+                          >
+                            <div className="flex items-center gap-2 text-subtitle-xs truncate">
+                              <Checkbox checked={isChecked} />
+                              <span
+                                role="img"
+                                aria-label="Emoji"
+                                className="text-body-2xs"
+                              >
+                                {String.fromCodePoint(
+                                  parseInt(label.emojiId, 16)
+                                )}
+                              </span>
+
+                              <p className="truncate">{label.name}</p>
+                            </div>
+                          </CommandItem>
+                        );
+                      })}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>
