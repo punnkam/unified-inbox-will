@@ -303,6 +303,34 @@ export const BookingInfoTab = ({
           />
         </div>
       </div>
+
+      <div className="border-b border-primary"></div>
+
+      {/* Contact info */}
+      <div className="px-[28px] flex flex-col gap-4">
+        <div className="flex items-center gap-4">
+          {conversationData.reservation.guest.phone && (
+            <BookingInfo
+              title="Guest phone number"
+              description={conversationData.reservation.guest.phone}
+            />
+          )}
+          {conversationData.reservation.guest.email && (
+            <BookingInfo
+              title="Guest email"
+              description={conversationData.reservation.guest.email}
+            />
+          )}
+        </div>
+        <div className="flex items-center gap-4">
+          {conversationData.reservation.guest.whatsapp && (
+            <BookingInfo
+              title="Whatsapp"
+              description={conversationData.reservation.guest.whatsapp}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 };

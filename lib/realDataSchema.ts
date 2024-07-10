@@ -292,6 +292,7 @@ export interface Guest {
   imageUrl?: string | null;
   email?: string | null;
   phone?: string | null;
+  whatsapp?: string | null;
 }
 
 export enum UnifiedConversationType {
@@ -981,6 +982,7 @@ export const mockConversationData: Conversation[] = [
         "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       email: "bob@example.com",
       phone: "987-654-3210",
+      whatsapp: "987-654-3210",
     },
     conversationType: UnifiedConversationType.Whatsapp,
     lastMessage: {
@@ -1013,6 +1015,7 @@ export const mockConversationData: Conversation[] = [
           "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         email: "bob@example.com",
         phone: "987-654-3210",
+        whatsapp: "987-654-3210",
       },
       numberOfGuests: 4,
       listing: fakeListingsData[1],
