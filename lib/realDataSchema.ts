@@ -1040,6 +1040,32 @@ export const mockConversationData: Conversation[] = [
           country: "USA",
         },
       },
+      customFields: [
+        {
+          field: "Arbio Reservation ID",
+          value: "rsv-asfkl78",
+        },
+        {
+          field: "Guest Favorite Color",
+          value: "Blue",
+        },
+        {
+          field: "Special Requests",
+          value: "Extra pillows",
+        },
+        {
+          field: "Preferred Language",
+          value: "English",
+        },
+        {
+          field: "VIP Status",
+          value: "Gold",
+        },
+        {
+          field: "Dietary Restrictions",
+          value: "Vegetarian",
+        },
+      ],
       pmsPlatform: PMSPlatformEnum.HOSTAWAY,
       status: "Current",
       channel: BookingChannel.Vrbo,

@@ -17,6 +17,12 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const timeOptions = generateTimeOptions();
 
@@ -331,6 +337,39 @@ export const BookingInfoTab = ({
           )}
         </div>
       </div>
+
+      {conversationData.reservation.customFields && (
+        <div className="flex flex-col gap-5">
+          <div className="border-b border-primary"></div>
+
+          {/* Custom fields */}
+          <div className="px-[28px] flex flex-col gap-4">
+            <Accordion
+              type="single"
+              collapsible
+              defaultValue="reservation-labels"
+            >
+              <AccordionItem value="custom-fields">
+                <AccordionTrigger className="px-1 rounded-md py-0.5">
+                  Custom fields
+                </AccordionTrigger>
+                <AccordionContent className="pb-0 pt-2">
+                  <div className="flex flex-wrap gap-y-4">
+                    {conversationData.reservation.customFields.map((field) => (
+                      <div className="w-1/2">
+                        <BookingInfo
+                          title={field.field}
+                          description={field.value}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
