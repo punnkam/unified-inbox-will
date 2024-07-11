@@ -1,19 +1,10 @@
 import React, { useState } from "react";
-import {
-  Conversation,
-  MessageItem,
-  Guest,
-  UpsellStatusEnum,
-  UpsellItem,
-} from "@/lib/realDataSchema";
+import { UpsellStatusEnum, UpsellItem } from "@/lib/realDataSchema";
 import { ReusableCard } from "./ReusableCard";
 
 export const UpsellsTab = ({
   upsells,
   updateUpsellData,
-  onSendMessage,
-  messages,
-  guestData,
 }: {
   upsells: UpsellItem[];
   updateUpsellData: (
@@ -21,9 +12,6 @@ export const UpsellsTab = ({
     key: keyof UpsellItem,
     value: UpsellItem[keyof UpsellItem]
   ) => void;
-  onSendMessage?: (message: MessageItem) => void;
-  messages?: MessageItem[];
-  guestData?: Guest;
 }) => {
   // Filter out the upsells that are sent vs suggested
   const sentUpsells = upsells.filter(
