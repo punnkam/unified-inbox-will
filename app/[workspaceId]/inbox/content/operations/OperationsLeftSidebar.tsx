@@ -21,6 +21,7 @@ import {
   CustomTabsTrigger,
 } from "@/components/ui/custom-tabs";
 import { BookingInfoTab } from "../components/BookingInfoTab";
+import { UpsellsTab } from "../components/UpsellsTab";
 
 export const OperationsLeftSidebar = ({
   conversationData,
@@ -50,8 +51,8 @@ export const OperationsLeftSidebar = ({
   };
 
   return (
-    <ScrollArea>
-      <div className="w-[400px] min-w-[400px] bg-primary-subtle pb-6 overflow-y-auto">
+    <ScrollArea className="bg-primary-subtle">
+      <div className="w-[400px] min-w-[400px] pb-6 overflow-y-auto">
         <div className="pt-3 pb-6 border-b border-primary">
           <p className="px-6 py-5 text-title-0.5xl">At a glance</p>
 
@@ -156,7 +157,7 @@ export const OperationsLeftSidebar = ({
             <BookingInfoTab conversationData={conversationData} />
           </CustomTabsContent>
           <CustomTabsContent value="upsells">
-            <p>upsells</p>
+            <UpsellsTab conversationData={conversationData} />
           </CustomTabsContent>
           <CustomTabsContent value="tasks">
             <p>tasks</p>

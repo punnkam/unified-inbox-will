@@ -1086,6 +1086,41 @@ export const mockConversationData: Conversation[] = [
           finalMessage:
             "Would you like an early check-in for an additional $40?",
         },
+        {
+          id: "3",
+          type: "Late Check-out",
+          status: UpsellStatusEnum.GuestAccepted,
+          totalPriceWithDiscount: 50,
+          currency: "USD",
+          finalMessage:
+            "Would you like a late check-out for an additional $50?",
+        },
+        {
+          id: "4",
+          type: "Room Upgrade",
+          status: UpsellStatusEnum.NotSent,
+          totalPriceWithDiscount: 100,
+          currency: "USD",
+          finalMessage:
+            "Would you like to upgrade your room for an additional $100?",
+        },
+        {
+          id: "5",
+          type: "Airport Transfer",
+          status: UpsellStatusEnum.GuestAccepted,
+          totalPriceWithDiscount: 30,
+          currency: "USD",
+          finalMessage:
+            "Would you like an airport transfer for an additional $30?",
+        },
+        {
+          id: "6",
+          type: "Spa Package",
+          status: UpsellStatusEnum.GuestDeclined,
+          totalPriceWithDiscount: 70,
+          currency: "USD",
+          finalMessage: "Would you like a spa package for an additional $70?",
+        },
       ],
       reservationLabels: [fakeReservationLabels[1]],
     },
