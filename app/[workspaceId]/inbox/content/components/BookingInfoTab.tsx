@@ -429,14 +429,16 @@ export const BookingInfoTab = ({
                 </AccordionTrigger>
                 <AccordionContent className="pb-0 pt-2">
                   <div className="flex flex-wrap gap-y-4">
-                    {conversationData.reservation.customFields.map((field) => (
-                      <div className="w-1/2">
-                        <BookingInfo
-                          title={field.field}
-                          description={field.value}
-                        />
-                      </div>
-                    ))}
+                    {conversationData.reservation.customFields.map(
+                      (field, i) => (
+                        <div className="w-1/2" key={i}>
+                          <BookingInfo
+                            title={field.field}
+                            description={field.value}
+                          />
+                        </div>
+                      )
+                    )}
                   </div>
                 </AccordionContent>
               </AccordionItem>
