@@ -255,7 +255,7 @@ export const OperationsRightSidebar = ({
               <CustomTabsList>
                 <CustomTabsTrigger value="booking">Booking</CustomTabsTrigger>
                 <CustomTabsTrigger value="upsells">
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1 h-[19.2px]">
                     Upsells
                     <CountBadge
                       todo
@@ -265,7 +265,7 @@ export const OperationsRightSidebar = ({
                   </div>
                 </CustomTabsTrigger>
                 <CustomTabsTrigger value="tasks">
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1 h-[19.2px]">
                     Tasks
                     <CountBadge
                       todo
@@ -275,7 +275,7 @@ export const OperationsRightSidebar = ({
                   </div>
                 </CustomTabsTrigger>
                 <CustomTabsTrigger value="calls">
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1 h-[19.2px]">
                     Calls
                     <CountBadge
                       todo
