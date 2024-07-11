@@ -79,7 +79,10 @@ export const ReusableCard = ({
               </div>
             </div>
           </DropdownMenuTrigger>
-          <StatusDropdown onUpdateStatus={handleUpdateUpsellAcceptStatus} />
+          <StatusDropdown
+            align="start"
+            onUpdateStatus={handleUpdateUpsellAcceptStatus}
+          />
         </DropdownMenu>
       )}
 

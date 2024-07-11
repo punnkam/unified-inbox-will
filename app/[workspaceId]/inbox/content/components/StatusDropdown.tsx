@@ -16,8 +16,10 @@ import {
 
 // New custom StatusDropdown component
 export const StatusDropdown = ({
+  align = "end",
   onUpdateStatus,
 }: {
+  align?: "start" | "end" | "center";
   onUpdateStatus: (status: UpsellStatusEnum) => void;
 }) => {
   const handleUpdateStatus = (newStatus: UpsellStatusEnum) => {
@@ -25,7 +27,7 @@ export const StatusDropdown = ({
   };
 
   return (
-    <DropdownMenuContent align="end" className="text-subtitle-xs p-0">
+    <DropdownMenuContent align={align} className="text-subtitle-xs p-0">
       <Command>
         <CommandInput placeholder={`Search`} autoFocus={true} />
         <CommandList>
