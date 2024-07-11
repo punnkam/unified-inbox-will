@@ -10,7 +10,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <textarea
         className={cn(
-          "flex min-h-[80px] w-full rounded-md border outline-active px-3 py-2 text-body-xs font-normal focused:border-active placeholder:text-placeholder disabled:cursor-not-allowed disabled:opacity-50",
+          "flex min-h-[80px] w-full rounded-md border outline-active px-3 py-2 text-body-xs font-normal focused:border-active placeholder:text-placeholder disabled:cursor-not-allowed disabled:text-placeholder",
           className
         )}
         ref={ref}
@@ -118,7 +118,7 @@ export const AutosizeTextarea = React.forwardRef<
         value={value}
         ref={textAreaRef}
         className={cn(
-          "flex min-h-[80px] w-full rounded-md border outline-active px-3 py-2 text-body-xs font-normal focused:border-active placeholder:text-placeholder disabled:cursor-not-allowed disabled:opacity-50",
+          "flex min-h-[80px] w-full rounded-md border outline-active px-3 py-2 text-body-xs font-normal focused:border-active placeholder:text-placeholder disabled:cursor-not-allowed disabled:text-placeholder",
           className
         )}
         onChange={(e) => {
