@@ -284,6 +284,7 @@ export const ChatWindow = ({
         conversationData={conversationData}
         onTagClick={handleTagClick}
         selectedTagId={selectedTagId}
+        addMessage={addMessage}
       />
     </div>
   );

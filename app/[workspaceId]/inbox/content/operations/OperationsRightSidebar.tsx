@@ -10,6 +10,8 @@ import { Avatar } from "./sidebar/Avatar";
 import {
   Conversation,
   ConversationTag,
+  MessageItem,
+  UnifiedConversationType,
   UpsellItem,
   UpsellStatusEnum,
 } from "@/lib/realDataSchema";
@@ -45,10 +47,12 @@ export const OperationsRightSidebar = ({
   conversationData,
   onTagClick,
   selectedTagId,
+  addMessage,
 }: {
   conversationData: Conversation;
   onTagClick: (tagId: ConversationTag["id"]) => void;
   selectedTagId: number | null;
+  addMessage: (message: MessageItem) => void;
 }) => {
   const { selectedTab, setSelectedTab } = useOpsRightSidebar();
 
@@ -126,6 +130,18 @@ export const OperationsRightSidebar = ({
 
     // update the status to sent
     updateUpsellData(selectedTab.data.id, "status", UpsellStatusEnum.Awaiting);
+
+    // TODO API: add the message to the conversation
+    addMessage({
+      id: Date.now().toString(),
+      author: "host",
+      text: editedUpsellText!,
+      isIncoming: false,
+      isSeen: false,
+      status: "delivered",
+      type: UnifiedConversationType.Airbnb,
+      timestamp: Math.floor(Date.now() / 1000),
+    });
   };
 
   const handleDeleteUpsell = () => {
