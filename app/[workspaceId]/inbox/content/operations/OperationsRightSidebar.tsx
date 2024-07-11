@@ -253,16 +253,7 @@ export const OperationsRightSidebar = ({
               }}
             >
               <CustomTabsList>
-                <CustomTabsTrigger value="booking">
-                  <div className="flex items-center gap-1">
-                    Booking
-                    <CountBadge
-                      todo
-                      count={0}
-                      selected={lastSelectedTab === "booking"}
-                    />
-                  </div>
-                </CustomTabsTrigger>
+                <CustomTabsTrigger value="booking">Booking</CustomTabsTrigger>
                 <CustomTabsTrigger value="upsells">
                   <div className="flex items-center gap-1">
                     Upsells
