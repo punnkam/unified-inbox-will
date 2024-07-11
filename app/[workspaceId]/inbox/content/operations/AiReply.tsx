@@ -283,7 +283,7 @@ export const AiReply = ({
               const sanitizedHtml = sanitizeHTML(message.text);
 
               return (
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4" key={message.id}>
                   <div className="flex items-center gap-3">
                     {/* Profile picture */}
                     <div className="relative">
