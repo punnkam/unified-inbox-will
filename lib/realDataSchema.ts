@@ -1079,12 +1079,14 @@ export const mockConversationData: Conversation[] = [
       upsells: [
         {
           id: "2",
-          type: "Early Check-in",
+          type: "Post-Stay Gap Night",
           status: UpsellStatusEnum.Awaiting,
-          totalPriceWithDiscount: 40,
+          totalPriceWithDiscount: 400.5,
           currency: "USD",
           finalMessage:
-            "Would you like an early check-in for an additional $40?",
+            "Hi Robb, I’m reaching out about your stay with us in King’s Landing. We have 1 night that opened up right after your check-out date I’d like to offer to you at a 20% discount if you have the flexibility in your travel schedule. I’m happy to extend your reservation for you to stay a day later. Just let me know.",
+          newCheckInDate: "2024-07-12T00:00:00.000Z",
+          newCheckOutDate: "2024-07-21T00:00:00.000Z",
         },
         {
           id: "3",

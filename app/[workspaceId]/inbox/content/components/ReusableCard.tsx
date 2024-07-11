@@ -1,36 +1,31 @@
 import { CurrencyDollarIcon } from "@/components/icons/CustomIcons";
-import { UpsellStatusEnum } from "@/lib/realDataSchema";
+import { UpsellItem, UpsellStatusEnum } from "@/lib/realDataSchema";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useOpsRightSidebar } from "../../OpsRightSidebarContext";
+import { StatusDropdown } from "./StatusDropdown";
 
 export const ReusableCard = ({
   title,
   description,
   type,
-  upsellAcceptStatus,
+  upsellData,
   onUpdateStatus,
 }: {
   title: string;
   description: string;
   type: "upsell" | "task" | "phone";
-  upsellAcceptStatus?: UpsellStatusEnum;
+  upsellData?: UpsellItem;
   onUpdateStatus?: (status: UpsellStatusEnum) => void;
 }) => {
   const [isIconHovered, setIsIconHovered] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const { selectedTab, setSelectedTab } = useOpsRightSidebar();
 
   const handleUpdateUpsellAcceptStatus = (status: UpsellStatusEnum) => {
     if (onUpdateStatus) {
@@ -50,6 +45,11 @@ export const ReusableCard = ({
           : "bg-primary hover:bg-hover active:bg-pressed hover:cursor-pointer"
       )}
       style={{ boxShadow: "0px 4px 50px 0px rgba(0, 0, 0, 0.03)" }}
+      onClick={() => {
+        if (type === "upsell") {
+          setSelectedTab({ type: "upsell", data: upsellData });
+        }
+      }}
     >
       {type === "upsell" && (
         <DropdownMenu
@@ -65,13 +65,13 @@ export const ReusableCard = ({
               <div
                 className={cn(
                   "flex items-center justify-center size-[25px] min-w-[25px] min-h-[25px] rounded-full",
-                  upsellAcceptStatus === UpsellStatusEnum.Awaiting &&
+                  upsellData?.status === UpsellStatusEnum.Awaiting &&
                     "bg-amber-100 text-amber-600",
-                  upsellAcceptStatus === UpsellStatusEnum.GuestAccepted &&
+                  upsellData?.status === UpsellStatusEnum.GuestAccepted &&
                     "bg-success-subtle text-green-600",
-                  upsellAcceptStatus === UpsellStatusEnum.GuestDeclined &&
+                  upsellData?.status === UpsellStatusEnum.GuestDeclined &&
                     "bg-error-subtle text-error",
-                  upsellAcceptStatus === UpsellStatusEnum.NotSent &&
+                  upsellData?.status === UpsellStatusEnum.NotSent &&
                     "bg-gray-200 text-gray-600"
                 )}
               >
@@ -79,80 +79,7 @@ export const ReusableCard = ({
               </div>
             </div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="text-subtitle-xs p-0">
-            <Command>
-              <CommandInput placeholder={`Search`} autoFocus={true} />
-              <CommandList>
-                <CommandEmpty>No matches.</CommandEmpty>
-                <CommandGroup>
-                  <CommandItem
-                    key={"not-sent"}
-                    value={"Not sent"}
-                    onSelect={() => {
-                      handleUpdateUpsellAcceptStatus(UpsellStatusEnum.NotSent);
-                    }}
-                    className="hover:cursor-pointer"
-                  >
-                    <div className="flex items-center gap-2 text-subtitle-xs">
-                      <div className="flex items-center justify-center size-6 min-w-6 min-h-6 rounded-full text-gray-600">
-                        <CurrencyDollarIcon className="h-[13.3px] w-fit" />
-                      </div>
-                      <p>Not Sent</p>
-                    </div>
-                  </CommandItem>
-                  <CommandItem
-                    key={"sent"}
-                    value={"sent"}
-                    onSelect={() => {
-                      handleUpdateUpsellAcceptStatus(UpsellStatusEnum.Awaiting);
-                    }}
-                    className="hover:cursor-pointer"
-                  >
-                    <div className="flex items-center gap-2 text-subtitle-xs">
-                      <div className="flex items-center justify-center size-6 min-w-6 min-h-6 rounded-full text-amber-600 bg-amber-100">
-                        <CurrencyDollarIcon className="h-[13.3px] w-fit" />
-                      </div>
-                      <p>Sent</p>
-                    </div>
-                  </CommandItem>
-                  <CommandItem
-                    key={"guest-accepted"}
-                    value={"Guest accepted"}
-                    onSelect={() => {
-                      handleUpdateUpsellAcceptStatus(
-                        UpsellStatusEnum.GuestAccepted
-                      );
-                    }}
-                    className="hover:cursor-pointer"
-                  >
-                    <div className="flex items-center gap-2 text-subtitle-xs">
-                      <div className="flex items-center justify-center size-6 min-w-6 min-h-6 rounded-full text-green-600 bg-success-subtle">
-                        <CurrencyDollarIcon className="h-[13.3px] w-fit" />
-                      </div>
-                      <p>Accepted</p>
-                    </div>
-                  </CommandItem>
-                  <CommandItem
-                    key={"guest-declined"}
-                    value={"Guest declined"}
-                    onSelect={() => {
-                      handleUpdateUpsellAcceptStatus(
-                        UpsellStatusEnum.GuestDeclined
-                      );
-                    }}
-                    className="hover:cursor-pointer"
-                  >
-                    <div className="flex items-center gap-2 text-subtitle-xs">
-                      <div className="flex items-center justify-center size-6 min-w-6 min-h-6 rounded-full text-error bg-error-subtle">
-                        <CurrencyDollarIcon className="h-[13.3px] w-fit" />
-                      </div>
-                      <p>Declined</p>
-                    </div>
-                  </CommandItem>
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </DropdownMenuContent>
+          <StatusDropdown onUpdateStatus={handleUpdateUpsellAcceptStatus} />
         </DropdownMenu>
       )}
 

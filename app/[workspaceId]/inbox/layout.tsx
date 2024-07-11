@@ -8,6 +8,7 @@ import { InboxSidebar } from "./content/inbox-landing/InboxSidebar";
 import { cn } from "@/lib/utils";
 import { useTableContext } from "./TableContext";
 import { InboxChatSidebar } from "./content/operations/InboxChatSidebar";
+import { OpsRightSidebarProvider } from "./OpsRightSidebarContext";
 
 export default function InboxLayout({
   children,
@@ -16,9 +17,11 @@ export default function InboxLayout({
 }>) {
   return (
     <TableProvider>
-      <SidebarProvider>
-        <InboxLayoutContent>{children}</InboxLayoutContent>
-      </SidebarProvider>
+      <OpsRightSidebarProvider>
+        <SidebarProvider>
+          <InboxLayoutContent>{children}</InboxLayoutContent>
+        </SidebarProvider>
+      </OpsRightSidebarProvider>
     </TableProvider>
   );
 }
