@@ -54,7 +54,7 @@ export const OperationsLeftSidebar = ({
     <ScrollArea className="bg-primary-subtle">
       <div className="w-[400px] min-w-[400px] pb-6 overflow-y-auto">
         <div className="pt-3 pb-6 border-b border-primary">
-          <p className="px-6 py-5 text-title-0.5xl">At a glance</p>
+          <p className="px-6 py-5 text-title-05xl">At a glance</p>
 
           <div className="flex flex-col gap-2 px-6">
             {/* Guest Journey Card */}
@@ -75,7 +75,7 @@ export const OperationsLeftSidebar = ({
         <div className="flex flex-col gap-4 pt-6 pb-8">
           <div className="flex items-center gap-[10px] px-6">
             <div className="flex items-center justify-between w-full">
-              <p className="text-title-0.5xl">Conversation</p>
+              <p className="text-title-05xl">Conversation</p>
 
               {/* Avatar in chat */}
               <Avatar
