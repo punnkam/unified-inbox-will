@@ -25,15 +25,16 @@ export const UpsellsTab = ({
   );
 
   // handler to update an upsell status
-  const updateUpsellStatus = (
+  const updateUpsellData = (
     upsellId: string,
-    newStatus: UpsellStatusEnum
+    key: keyof UpsellItem,
+    value: UpsellItem[keyof UpsellItem]
   ) => {
-    // TODO API: handle updating an upsell status pn backend
+    // TODO API: handle updating an upsell status on backend
 
     setUpsells((prevUpsells) =>
       prevUpsells.map((upsell) =>
-        upsell.id === upsellId ? { ...upsell, status: newStatus } : upsell
+        upsell.id === upsellId ? { ...upsell, [key]: value } : upsell
       )
     );
   };
@@ -58,7 +59,7 @@ export const UpsellsTab = ({
             type="upsell"
             upsellAcceptStatus={upsell.status}
             onUpdateStatus={(newStatus: UpsellStatusEnum) =>
-              updateUpsellStatus(upsell.id, newStatus)
+              updateUpsellData(upsell.id, "status", newStatus)
             }
           />
         ))}
@@ -73,7 +74,7 @@ export const UpsellsTab = ({
             type="upsell"
             upsellAcceptStatus={upsell.status}
             onUpdateStatus={(newStatus: UpsellStatusEnum) =>
-              updateUpsellStatus(upsell.id, newStatus)
+              updateUpsellData(upsell.id, "status", newStatus)
             }
           />
         ))}
