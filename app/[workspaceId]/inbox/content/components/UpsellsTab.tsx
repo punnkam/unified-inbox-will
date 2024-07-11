@@ -1,8 +1,10 @@
+import React, { useState } from "react";
 import {
   Conversation,
   MessageItem,
   Guest,
   UpsellStatusEnum,
+  UpsellItem,
 } from "@/lib/realDataSchema";
 import { ReusableCard } from "./ReusableCard";
 
@@ -17,18 +19,32 @@ export const UpsellsTab = ({
   messages?: MessageItem[];
   guestData?: Guest;
 }) => {
-  const upsells = conversationData.reservation.upsells || [];
+  // Store the upsells in state so we can update them live
+  const [upsells, setUpsells] = useState<UpsellItem[]>(
+    conversationData.reservation.upsells || []
+  );
 
-  let sentUpsells: any[] = [];
-  let suggestedUpsells: any[] = [];
+  // handler to update an upsell status
+  const updateUpsellStatus = (
+    upsellId: string,
+    newStatus: UpsellStatusEnum
+  ) => {
+    // TODO API: handle updating an upsell status pn backend
 
-  upsells.forEach((upsell) => {
-    if (upsell.status == UpsellStatusEnum.NotSent) {
-      suggestedUpsells.push(upsell);
-    } else {
-      sentUpsells.push(upsell);
-    }
-  });
+    setUpsells((prevUpsells) =>
+      prevUpsells.map((upsell) =>
+        upsell.id === upsellId ? { ...upsell, status: newStatus } : upsell
+      )
+    );
+  };
+
+  // Filter out the upsells that are sent vs suggested
+  const sentUpsells = upsells.filter(
+    (upsell) => upsell.status !== UpsellStatusEnum.NotSent
+  );
+  const suggestedUpsells = upsells.filter(
+    (upsell) => upsell.status === UpsellStatusEnum.NotSent
+  );
 
   return (
     <div className="flex flex-col gap-5">
@@ -41,6 +57,9 @@ export const UpsellsTab = ({
             description={upsell.finalMessage}
             type="upsell"
             upsellAcceptStatus={upsell.status}
+            onUpdateStatus={(newStatus: UpsellStatusEnum) =>
+              updateUpsellStatus(upsell.id, newStatus)
+            }
           />
         ))}
       </div>
@@ -53,6 +72,9 @@ export const UpsellsTab = ({
             description={upsell.finalMessage}
             type="upsell"
             upsellAcceptStatus={upsell.status}
+            onUpdateStatus={(newStatus: UpsellStatusEnum) =>
+              updateUpsellStatus(upsell.id, newStatus)
+            }
           />
         ))}
       </div>
