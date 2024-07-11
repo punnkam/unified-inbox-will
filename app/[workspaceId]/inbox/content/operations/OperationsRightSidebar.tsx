@@ -38,6 +38,8 @@ import { format, set } from "date-fns";
 import { StatusDropdown } from "../components/StatusDropdown";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { AutosizeTextarea } from "@/components/ui/textarea";
+import CountBadge from "@/components/custom/CountBadge";
 
 export const OperationsRightSidebar = ({
   conversationData,
@@ -48,6 +50,8 @@ export const OperationsRightSidebar = ({
   onTagClick: (tagId: ConversationTag["id"]) => void;
   selectedTagId: number | null;
 }) => {
+  const { selectedTab, setSelectedTab } = useOpsRightSidebar();
+
   const [lastSelectedTab, setLastSelectedTab] = useState<
     "booking" | "upsells" | "tasks" | "calls"
   >("booking");
@@ -55,11 +59,20 @@ export const OperationsRightSidebar = ({
     conversationData.reservation.upsells || []
   );
 
+  // useState to store the edited upsell text
+  const [editedUpsellText, setEditedUpsellText] = useState<string | null>("");
+
   // useEffect to update the state data when the conversation id
   useEffect(() => {
     setUpsells(conversationData.reservation.upsells || []);
     setSelectedTab("default");
   }, [conversationData.id]);
+
+  useEffect(() => {
+    setEditedUpsellText(
+      selectedTab.data ? selectedTab.data.finalMessage : null
+    );
+  }, [selectedTab]);
 
   // handler to update an upsell status
   const updateUpsellData = (
@@ -102,7 +115,31 @@ export const OperationsRightSidebar = ({
     toast.success("AI paused successfully: " + time);
   };
 
-  const { selectedTab, setSelectedTab } = useOpsRightSidebar();
+  const handleSendUpsell = () => {
+    console.log("Send upsell", editedUpsellText);
+    toast.success("Upsell sent successfully");
+
+    // TODO API: handle send upsell
+
+    // update the finaltext to the original text
+    updateUpsellData(selectedTab.data.id, "finalMessage", editedUpsellText!);
+
+    // update the status to sent
+    updateUpsellData(selectedTab.data.id, "status", UpsellStatusEnum.Awaiting);
+  };
+
+  const handleDeleteUpsell = () => {
+    console.log("Delete upsell", selectedTab.data.id);
+    toast.success("Upsell deleted successfully");
+
+    // TODO API: handle delete upsell
+
+    // go back to the default tab (since we deleted the upsell we are on)
+    setSelectedTab("default");
+
+    // remove the upsell from the state
+    setUpsells(upsells.filter((upsell) => upsell.id !== selectedTab.data.id));
+  };
 
   return (
     <ScrollArea className="bg-primary-subtle">
@@ -216,10 +253,46 @@ export const OperationsRightSidebar = ({
               }}
             >
               <CustomTabsList>
-                <CustomTabsTrigger value="booking">Booking</CustomTabsTrigger>
-                <CustomTabsTrigger value="upsells">Upsells</CustomTabsTrigger>
-                <CustomTabsTrigger value="tasks">Tasks</CustomTabsTrigger>
-                <CustomTabsTrigger value="calls">Calls</CustomTabsTrigger>
+                <CustomTabsTrigger value="booking">
+                  <div className="flex items-center gap-1">
+                    Booking
+                    <CountBadge
+                      todo
+                      count={0}
+                      selected={lastSelectedTab === "booking"}
+                    />
+                  </div>
+                </CustomTabsTrigger>
+                <CustomTabsTrigger value="upsells">
+                  <div className="flex items-center gap-1">
+                    Upsells
+                    <CountBadge
+                      todo
+                      count={upsells.length}
+                      selected={lastSelectedTab === "upsells"}
+                    />
+                  </div>
+                </CustomTabsTrigger>
+                <CustomTabsTrigger value="tasks">
+                  <div className="flex items-center gap-1">
+                    Tasks
+                    <CountBadge
+                      todo
+                      count={0}
+                      selected={lastSelectedTab === "tasks"}
+                    />
+                  </div>
+                </CustomTabsTrigger>
+                <CustomTabsTrigger value="calls">
+                  <div className="flex items-center gap-1">
+                    Calls
+                    <CountBadge
+                      todo
+                      count={0}
+                      selected={lastSelectedTab === "calls"}
+                    />
+                  </div>
+                </CustomTabsTrigger>
               </CustomTabsList>
               <CustomTabsContent value="booking" className="px-0">
                 <BookingInfoTab conversationData={conversationData} />
@@ -245,7 +318,10 @@ export const OperationsRightSidebar = ({
               <div className="px-6 py-5 flex flex-col gap-[10px]">
                 <div
                   className="text-secondary text-subtitle-xs flex items-center gap-2 hover:cursor-pointer hover:text-primary"
-                  onClick={() => setSelectedTab("default")}
+                  onClick={() => {
+                    // reset the status to not sent
+                    setSelectedTab("default");
+                  }}
                 >
                   <ChevronDownIcon className="rotate-90" />
                   Back
@@ -340,10 +416,44 @@ export const OperationsRightSidebar = ({
                 />
               </div>
 
-              {/* Edit Message */}
-              <div className="px-6"></div>
+              <div className="border-b border-primary"></div>
 
-              {/* Actions */}
+              {/* Edit Message */}
+              <div className="px-6">
+                <AutosizeTextarea
+                  disabled={
+                    selectedTab.data.status !== UpsellStatusEnum.NotSent
+                  }
+                  placeholder="Your upsell message here..."
+                  defaultValue={editedUpsellText!}
+                  onChange={(e) => setEditedUpsellText(e.target.value)}
+                  className="resize-none bg-primary"
+                  maxHeight={300}
+                  minHeight={80}
+                />
+              </div>
+
+              {/* Only show the actions if the upsell is not sent */}
+              {selectedTab.data.status === UpsellStatusEnum.NotSent && (
+                <div className="flex gap-2 px-6">
+                  <Button
+                    variant="secondary"
+                    size="xs"
+                    className="w-full"
+                    onClick={handleDeleteUpsell}
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    variant="default"
+                    size="xs"
+                    className="w-full"
+                    onClick={handleSendUpsell}
+                  >
+                    Send
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         )}
