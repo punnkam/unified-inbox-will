@@ -54,6 +54,7 @@ import { toast } from "sonner";
 import { useHotkeys } from "react-hotkeys-hook";
 import { AssignMemberComboBox } from "../../components/AssignMemberCombobox";
 import clsx from "clsx";
+import CountBadge from "@/components/custom/CountBadge";
 
 // Add custom properties TableMeta (to let us see if row is hovered (for now))
 declare module "@tanstack/react-table" {
@@ -329,16 +330,7 @@ export function InboxLandingPage<TData, TValue>({
                       )}
                     >
                       Todo
-                      <span
-                        className={cn(
-                          "h-6 w-[28px] rounded-lg flex items-center justify-center text-tertiary text-subtitle-xs",
-                          table.getColumn("messageStatus")?.getFilterValue() ===
-                            false &&
-                            "text-brand text-subtitle-xs bg-primary border border-primary"
-                        )}
-                      >
-                        17
-                      </span>
+                      <CountBadge count={17} selected={table.getColumn("messageStatus")?.getFilterValue() === false} />
                     </p>
                     {table.getColumn("messageStatus")?.getFilterValue() ===
                       false && (
@@ -445,7 +437,10 @@ export function InboxLandingPage<TData, TValue>({
             </div>
           </div>
         </div>
-        <div className="bg-primary shadow-inner h-full overflow-y-auto">
+        <div 
+          className="bg-primary h-full overflow-y-auto"
+          style={{ boxShadow: "inset 0 14px 10px -6px rgba(0, 0, 0, 0.03)" }}
+        >
           <FilterTags
             columnFilters={table.getState().columnFilters}
             clearFilters={clearFilters}
@@ -543,7 +538,8 @@ export function InboxLandingPage<TData, TValue>({
         {table.getSelectedRowModel().rows.length > 0 && (
           <motion.div
             key={"actionBar"}
-            className="absolute  bottom-[32px] left-1/2 w-fit shadow-lg rounded-xl bg-primary border border-primary flex items-center text-subtitle-xs"
+            className="absolute  bottom-[40px] left-1/2 w-fit rounded-xl bg-primary border border-secondary flex items-center text-subtitle-xs"
+            style={{ boxShadow: "0px 4px 30px 0px rgba(0, 0, 0, 0.25)" }}
             initial={{ y: 32, x: "-50%", opacity: 0 }}
             animate={{ y: 0, x: "-50%", opacity: 1 }}
             exit={{ y: 32, x: "-50%", opacity: 0 }}

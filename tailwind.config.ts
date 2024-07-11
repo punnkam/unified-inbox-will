@@ -137,7 +137,7 @@ const config = {
       textColor: {
         primary: "#191919",
         secondary: "#4B5563",
-        tertiary: "#71717A",
+        tertiary: "#A1A1AA",
         brand: "#10275B",
         disabled: "#A1A1AA",
         placeholder: "#A1A1AA",
@@ -195,7 +195,7 @@ const config = {
         "bold-2xs": ["10px", { lineHeight: "14.4px", fontWeight: 900 }],
         "bold-2.5xs": ["11px", { lineHeight: "13.2px", fontWeight: 900 }],
         "bold-3xs": ["10px", { lineHeight: "12px", fontWeight: 900 }],
-        "bold-section": ["10px", { lineHeight: "13.2px", fontWeight: 900 }],
+        "bold-section": ["10px", { lineHeight: "13.2px", letterSpacing: "1px", fontWeight: 900 }],
       },
       lineHeight: {
         "3xs": "10px",

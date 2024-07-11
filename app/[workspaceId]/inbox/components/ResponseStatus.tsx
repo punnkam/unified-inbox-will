@@ -10,7 +10,7 @@ import {
 const IconMap = {
   Current: {
     icon: <Home02Icon />,
-    classes: "text-link bg-blue-500/10",
+    classes: "text-sky-500 bg-sky-500/10",
   },
   Inquiry: {
     icon: <CalendarPlus />,
