@@ -24,7 +24,7 @@ import { OutboundMessage } from "./OutboundMessage";
 import { format } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import { useTableContext } from "../../TableContext";
-import { OperationsLeftSidebar } from "./OperationsLeftSidebar";
+import { OperationsRightSidebar } from "./OperationsRightSidebar";
 import { AiReply } from "./AiReply";
 
 export const ChatWindow = ({
@@ -280,7 +280,7 @@ export const ChatWindow = ({
           </div>
         </div>
       </div>
-      <OperationsLeftSidebar
+      <OperationsRightSidebar
         conversationData={conversationData}
         onTagClick={handleTagClick}
         selectedTagId={selectedTagId}

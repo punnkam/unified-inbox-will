@@ -23,7 +23,7 @@ import {
 import { BookingInfoTab } from "../components/BookingInfoTab";
 import { UpsellsTab } from "../components/UpsellsTab";
 
-export const OperationsLeftSidebar = ({
+export const OperationsRightSidebar = ({
   conversationData,
   onTagClick,
   selectedTagId,
