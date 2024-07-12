@@ -62,6 +62,7 @@ import {
   TaskTypeDropdown,
 } from "../components/TaskDropdowns";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 
 export const OperationsRightSidebar = ({
   conversationData,
@@ -107,7 +108,18 @@ export const OperationsRightSidebar = ({
       );
     }
     if (selectedTab.type == "task") {
-      setEditedTask(selectedTab.data ? selectedTab.data : null);
+      setEditedTask(
+        selectedTab.data
+          ? selectedTab.data
+          : {
+              id: "task-" + Date.now().toString(),
+              type: TaskTypeEnum.Cleaning, // Default to cleaning task
+              assignee: null,
+              status: TaskStatusEnum.Todo,
+              messages: [],
+              sendToBreezeway: false,
+            }
+      );
     }
   }, [selectedTab]);
 
@@ -241,21 +253,30 @@ export const OperationsRightSidebar = ({
   };
 
   const handleSaveTask = () => {
-    console.log("Save task", selectedTab.data.id);
+    console.log("Save task", selectedTab.data);
 
     // TODO API: handle save task
 
-    // update all task data state (set tasks sate to replace the past one with editedTask data)
-    setTasks(
-      tasks.map((task) => {
-        if (task.id === selectedTab.data.id) {
-          return editedTask!;
-        }
-        return task;
-      })
-    );
-
-    toast.success("Task saved successfully");
+    if (!selectedTab.data) {
+      // Add a new task
+      const newTask = {
+        ...editedTask!,
+        id: "task-" + Date.now().toString(), // Generate a new ID for the task id (if not provided)
+      };
+      setTasks([...tasks, newTask]);
+      toast.success("Task added successfully");
+    } else {
+      // Update existing task
+      setTasks(
+        tasks.map((task) => {
+          if (task.id === selectedTab.data.id) {
+            return editedTask!;
+          }
+          return task;
+        })
+      );
+      toast.success("Task saved successfully");
+    }
 
     // go back to the default tab
     setSelectedTab("default");
@@ -729,18 +750,28 @@ export const OperationsRightSidebar = ({
                 <TaskAndUpsellOptions
                   title="Send task to Breezeway"
                   value={
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      disabled={selectedTab.data?.sendToBreezeway}
-                      className="h-[30px]"
-                      onClick={handleSendTaskToBreezeway}
-                    >
-                      <div className="flex gap-2 items-center">
+                    selectedTab.data ? (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        disabled={selectedTab.data?.sendToBreezeway}
+                        className="h-[30px] flex gap-2 items-center"
+                        onClick={handleSendTaskToBreezeway}
+                      >
                         <BreezewayIcon className="size-fit" />
                         {selectedTab.data?.sendToBreezeway ? "Sent" : "Send"}
-                      </div>
-                    </Button>
+                      </Button>
+                    ) : (
+                      <Switch
+                        checked={editedTask?.sendToBreezeway}
+                        onCheckedChange={(value) => {
+                          setEditedTask((prevTask) => ({
+                            ...prevTask!,
+                            sendToBreezeway: value,
+                          }));
+                        }}
+                      />
+                    )
                   }
                 />
               </div>
@@ -825,7 +856,7 @@ export const OperationsRightSidebar = ({
                   size="xs"
                   className="w-full"
                   onClick={handleSaveTask}
-                  disabled={selectedTab.data == editedTask}
+                  disabled={selectedTab.data == editedTask || !editedTask?.name}
                 >
                   Save
                 </Button>
