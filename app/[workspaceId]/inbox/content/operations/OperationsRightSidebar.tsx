@@ -6,8 +6,6 @@ import {
   PauseSqareIcon,
   PhoneIcon,
   ArrowCircleBrokenRightIcon,
-  CheckCircleIcon,
-  CircleIcon,
   FilledCheckCircleIcon,
   Loading02Icon,
   SkinnyCircleIcon,
@@ -58,7 +56,6 @@ import { cn } from "@/lib/utils";
 import { AutosizeTextarea } from "@/components/ui/textarea";
 import CountBadge from "@/components/custom/CountBadge";
 import { TasksTab } from "../components/TasksTab";
-import { AssignMemberComboBox } from "../components/AssignMemberCombobox";
 import {
   TaskAssigneeDropdown,
   TaskStatusDropdown,
