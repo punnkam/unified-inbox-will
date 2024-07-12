@@ -394,6 +394,9 @@ export const ChatInput = ({
           ref={savedRepliesRef}
           key={"savedReplies"}
           className="pt-[30px] mb-[9px] bg-primary flex flex-col gap-[10px] border border-primary rounded-lg relative"
+          style={{
+            boxShadow: "0px 4px 50px 0px rgba(0, 0, 0, 0.1)",
+          }}
         >
           <XIcon
             className="h-4 w-4 text-icon-tertiary hover:text-icon-secondary hover:cursor-pointer absolute top-3 right-3"
