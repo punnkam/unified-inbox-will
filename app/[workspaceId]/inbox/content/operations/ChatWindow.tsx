@@ -4,6 +4,8 @@ import { KeyboardShortcut } from "@/components/custom/KeyBoardShortcut";
 import {
   CheckCircleIcon,
   ChevronDownIcon,
+  File05Icon,
+  PhoneIcon,
   SlackIcon,
 } from "@/components/icons/CustomIcons";
 import {
@@ -26,6 +28,8 @@ import { useEffect, useRef, useState } from "react";
 import { useTableContext } from "../../TableContext";
 import { OperationsRightSidebar } from "./OperationsRightSidebar";
 import { AiReply } from "./AiReply";
+import { InChatActivity } from "../components/InChatActivity";
+import { useOpsRightSidebar } from "../../OpsRightSidebarContext";
 
 export const ChatWindow = ({
   conversationData,
@@ -39,6 +43,7 @@ export const ChatWindow = ({
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const { setView } = useTableContext();
+  const { setSelectedTab } = useOpsRightSidebar();
 
   const addMessage = (newMessage: MessageItem) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -234,6 +239,30 @@ export const ChatWindow = ({
                   }
                   AiStep="initial"
                   guestData={conversationData.guest}
+                />
+
+                <InChatActivity
+                  title="Call Ended."
+                  time="12:32 PM"
+                  description="You and rob called for 20 min."
+                  image={conversationData.guest.imageUrl!}
+                  icon={<PhoneIcon />}
+                  action="View call"
+                  onAction={() => {
+                    setSelectedTab({ type: "calls", data: null });
+                  }}
+                />
+
+                <InChatActivity
+                  title="Note Created"
+                  time="12:32 PM"
+                  description="Punn and Will added"
+                  image={conversationData.guest.imageUrl!}
+                  icon={<File05Icon className="h-5" />}
+                  action="notes"
+                  onAction={() => {
+                    setSelectedTab({ type: "notes", data: null });
+                  }}
                 />
               </div>
             </AnimatePresence>

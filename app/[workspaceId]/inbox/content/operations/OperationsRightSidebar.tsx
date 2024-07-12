@@ -864,6 +864,10 @@ export const OperationsRightSidebar = ({
             </div>
           </div>
         )}
+
+        {selectedTab.type === "notes" && <p>notes</p>}
+
+        {selectedTab.type === "calls" && <p>calls</p>}
       </div>
       <ScrollBar orientation="vertical" />
     </ScrollArea>
