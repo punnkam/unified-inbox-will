@@ -3,10 +3,12 @@ import {
   CurrencyDollarIcon,
   FilledCheckCircleIcon,
   Loading02Icon,
+  PhoneIcon,
   SkinnyCircleIcon,
   XCircleIcon,
 } from "@/components/icons/CustomIcons";
 import {
+  Call,
   TaskItem,
   TaskStatusEnum,
   UpsellItem,
@@ -28,14 +30,16 @@ export const ReusableCard = ({
   type,
   upsellData,
   taskData,
+  callData,
   onUpdateStatus,
   onUpdateTaskStatus,
 }: {
   title: string;
   description: string;
-  type?: "upsell" | "task" | "phone";
+  type?: "upsell" | "task" | "call";
   upsellData?: UpsellItem;
   taskData?: TaskItem;
+  callData?: Call;
   onUpdateStatus?: (status: UpsellStatusEnum) => void;
   onUpdateTaskStatus?: (status: TaskStatusEnum) => void;
 }) => {
@@ -65,7 +69,7 @@ export const ReusableCard = ({
   return (
     <div
       className={cn(
-        "flex items-center gap-[10px] p-4 rounded-md border border-secondary w-full transition-colors duration-200",
+        "flex items-center gap-[10px] p-4 rounded-md border border-primary w-full transition-colors duration-200",
         isIconHovered
           ? "bg-primary"
           : "bg-primary hover:bg-hover active:bg-pressed hover:cursor-pointer"
@@ -77,6 +81,9 @@ export const ReusableCard = ({
         }
         if (type === "task") {
           setSelectedTab({ type: "task", data: taskData });
+        }
+        if (type === "call") {
+          setSelectedTab({ type: "call", data: callData });
         }
       }}
     >
@@ -148,6 +155,13 @@ export const ReusableCard = ({
             onUpdateStatus={handleUpdateTaskStatus}
           />
         </DropdownMenu>
+      )}
+
+      {type === "call" && (
+        // show a phone icon
+        <div className="flex items-center justify-center size-[25px] min-w-[25px] min-h-[25px] rounded-full bg-secondary">
+          <PhoneIcon className="text-icon-brand size-[13.95px]" />
+        </div>
       )}
 
       <div className="flex flex-col gap-1 truncate">

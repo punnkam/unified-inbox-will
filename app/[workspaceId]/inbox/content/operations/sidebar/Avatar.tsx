@@ -6,12 +6,14 @@ export const Avatar = ({
   image,
   greenDot,
 }: {
-  size: "small" | "medium" | "large";
+  size: "xs" | "small" | "medium" | "large";
   image?: string;
   greenDot?: boolean;
 }) => {
   const sizeClass =
-    size === "small"
+    size === "xs"
+      ? "size-[20px] min-w-[20px] min-h-[20px]"
+      : size === "small"
       ? "size-6 min-w-6 min-h-6"
       : size === "medium"
       ? "size-9 min-w-9 min-h-9"

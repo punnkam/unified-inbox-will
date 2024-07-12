@@ -27,6 +27,8 @@ import {
   UpsellItem,
   UpsellStatusEnum,
   fakeMembersData,
+  fakeCallData,
+  Transcript,
 } from "@/lib/realDataSchema";
 import { Assignee } from "./sidebar/Assignee";
 import { ConversationTagItem } from "./sidebar/ConversationTag";
@@ -64,6 +66,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
+import { CallsTab } from "./sidebar/CallsTab";
+import AudioPlayer from "@/components/custom/AudioPlayer";
 
 export const OperationsRightSidebar = ({
   conversationData,
@@ -442,7 +446,7 @@ export const OperationsRightSidebar = ({
                         Calls
                         <CountBadge
                           todo
-                          count={0}
+                          count={fakeCallData.length}
                           selected={lastSelectedTab === "calls"}
                         />
                       </div>
@@ -461,7 +465,7 @@ export const OperationsRightSidebar = ({
                     <TasksTab tasks={tasks} updateTaskData={updateTaskData} />
                   </CustomTabsContent>
                   <CustomTabsContent value="calls">
-                    <p>calls</p>
+                    <CallsTab calls={fakeCallData} />
                   </CustomTabsContent>
                 </CustomTabs>
               </div>
@@ -881,7 +885,88 @@ export const OperationsRightSidebar = ({
 
             {selectedTab.type === "notes" && <p>notes</p>}
 
-            {selectedTab.type === "calls" && <p>calls</p>}
+            {selectedTab.type === "call" && (
+              <div>
+                <div className="py-3 border-b border-primary">
+                  <div className="px-6 py-5 flex flex-col gap-[10px]">
+                    <div
+                      className="text-secondary text-subtitle-xs flex items-center gap-2 hover:cursor-pointer hover:text-primary"
+                      onClick={() => {
+                        // reset the status to not sent
+                        setSelectedTab("default");
+                      }}
+                    >
+                      <ChevronDownIcon className="rotate-90" />
+                      Back
+                    </div>
+                    <p className="text-title-05xl">
+                      Call with {selectedTab.data.guestName}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Data */}
+                <div className="flex flex-col gap-6 py-6">
+                  <div className="px-6">
+                    {/* TODO: these times are not stores in the given schema */}
+                    <TaskAndUpsellOptions title="Start time" value="9:36 PM" />
+                    <TaskAndUpsellOptions title="End time" value="9:36 PM" />
+                    <TaskAndUpsellOptions
+                      title="Support agent"
+                      value={selectedTab.data.userData?.name}
+                      icon={
+                        <Avatar
+                          size="xs"
+                          image={selectedTab.data.userData?.image!}
+                        />
+                      }
+                    />
+                  </div>
+
+                  <div className="border-b border-primary"></div>
+
+                  {selectedTab.data.recordingUrl && (
+                    <div className="px-6">
+                      {/* Phone call recording */}
+                      <div className="bg-white border border-primary rounded-md p-2">
+                        <audio
+                          className="w-full"
+                          controls
+                          src={selectedTab.data.recordingUrl}
+                        >
+                          Your browser does not support the audio element.
+                        </audio>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="border-b border-primary"></div>
+
+                  <div className="flex flex-col gap-2 px-6">
+                    {/*  transcript */}
+                    {selectedTab.data.transcript.map(
+                      (transcript: Transcript, i: number) => (
+                        <div
+                          key={i}
+                          className="flex flex-col gap-1 p-4 bg-primary rounded-md border border-primary"
+                        >
+                          {transcript.author === "guest" ? (
+                            <p className="text-subtitle-xs text-icon-active">
+                              {selectedTab.data.guestName.split(" ")[0]}
+                            </p>
+                          ) : (
+                            <p className="text-subtitle-xs text-success">
+                              {selectedTab.data.userData?.name.split(" ")[0]}
+                            </p>
+                          )}
+                          <p className="text-body-xs">{transcript.text}</p>
+                        </div>
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </CollapsibleContent>
       </Collapsible>

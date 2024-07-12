@@ -168,3 +168,36 @@ p.is-editor-empty:first-child::before {
 blockquote {
   @apply pl-4 py-2 border-l-2 border-primary;
 }
+
+/* audioPlayer css */
+audio::-webkit-media-controls-panel {
+  background-color: white;
+}
+
+audio::-webkit-media-controls-play-button {
+  background-color: #f3f4f6;
+  border-radius: 6px;
+}
+
+audio::-webkit-media-controls-play-button:hover {
+  background-color: #e4e4e7;
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+  @apply text-body-2xs text-secondary;
+}
+
+audio::-webkit-media-controls-timeline {
+  background-color: #d4d4d8;
+  border-radius: 50%;
+  padding: 0px;
+  margin: 0px 0px 0px 5px;
+}
+
+audio::-webkit-media-controls-volume-slider {
+  background-color: #e5e7eb;
+  border-radius: 50%;
+  padding-left: 8px;
+  padding-right: 8px;
+}

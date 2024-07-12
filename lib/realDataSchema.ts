@@ -559,6 +559,116 @@ export type ConversationTable = ReturnType<typeof useReactTable<Conversation>>;
 
 // --------- Generated Data ------------------------------------------
 
+export interface Transcript {
+  author: "guest" | "agent";
+  text: string;
+}
+
+export interface Call {
+  userId?: string;
+  userData?: Member;
+  workspaceId: string;
+  callId: string;
+  timestamp: number;
+  fromPhone: string;
+  guestName?: string;
+  reservationId?: string;
+  transcript: Transcript[];
+  recordingUrl?: string;
+}
+
+// New fake data for call transcripts
+
+export const fakeCallData: Call[] = [
+  {
+    userId: "1",
+    userData: fakeMembersData[0],
+    workspaceId: "1",
+    callId: "call_001",
+    timestamp: 1622518800,
+    fromPhone: "+1234567890",
+    guestName: "Alice Smith",
+    reservationId: "res_001",
+    transcript: [
+      {
+        author: "guest",
+        text: "Hello, I have a question about my reservation.",
+      },
+      { author: "agent", text: "Sure, how can I help you?" },
+      { author: "guest", text: "What time is check-in?" },
+      { author: "agent", text: "Check-in is at 3pm." },
+      {
+        author: "guest",
+        text: "Hello, I have a question about my reservation.",
+      },
+      { author: "agent", text: "Sure, how can I help you?" },
+      { author: "guest", text: "What time is check-in?" },
+      { author: "agent", text: "Check-in is at 3pm." },
+      {
+        author: "guest",
+        text: "Hello, I have a question about my reservation.",
+      },
+      { author: "agent", text: "Sure, how can I help you?" },
+      { author: "guest", text: "What time is check-in?" },
+      { author: "agent", text: "Check-in is at 3pm." },
+      {
+        author: "guest",
+        text: "Hello, I have a question about my reservation.",
+      },
+      { author: "agent", text: "Sure, how can I help you?" },
+      { author: "guest", text: "What time is check-in?" },
+      { author: "agent", text: "Check-in is at 3pm." },
+    ],
+    recordingUrl:
+      "https://us-tuna-sounds-files.voicemod.net/fc3a77c8-217a-4d3d-a5e4-5114b6532cf8-1643157419129.mp3",
+  },
+  {
+    userId: "2",
+    userData: fakeMembersData[1],
+    workspaceId: "2",
+    callId: "call_002",
+    timestamp: 1622522400,
+    fromPhone: "+1987654321",
+    guestName: "Bob Johnson",
+    reservationId: "res_002",
+    transcript: [
+      { author: "guest", text: "Hi, I need to change my reservation dates." },
+      {
+        author: "agent",
+        text: "I can help with that. What dates would you like to change to?",
+      },
+      { author: "guest", text: "I want to extend my stay by two days." },
+      { author: "agent", text: "Okay, let me update that for you." },
+    ],
+    recordingUrl:
+      "https://us-tuna-sounds-files.voicemod.net/fc3a77c8-217a-4d3d-a5e4-5114b6532cf8-1643157419129.mp3",
+  },
+  {
+    userId: "3",
+    userData: fakeMembersData[2],
+    workspaceId: "1",
+    callId: "call_003",
+    timestamp: 1622526000,
+    fromPhone: "+1122334455",
+    guestName: "Charlie Brown",
+    reservationId: "res_003",
+    transcript: [
+      { author: "guest", text: "Can I get an early check-in?" },
+      {
+        author: "agent",
+        text: "Let me check the availability. Please hold for a moment.",
+      },
+      { author: "guest", text: "Sure, thank you." },
+      {
+        author: "agent",
+        text: "Yes, we can accommodate an early check-in at 1pm.",
+      },
+    ],
+    recordingUrl:
+      "https://us-tuna-sounds-files.voicemod.net/fc3a77c8-217a-4d3d-a5e4-5114b6532cf8-1643157419129.mp3",
+  },
+];
+
 const fakeAllMessages: MessageItem[] = [
   {
     id: 101,

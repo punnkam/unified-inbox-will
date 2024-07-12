@@ -25,7 +25,10 @@ export const TaskAndUpsellOptions = ({
   const MainData = (
     <div className={cn("flex items-center gap-1", !isDropdown && "p-1")}>
       {typeof value === "string" ? (
-        <p className="text-subtitle-sm">{value}</p>
+        <div className="flex items-center gap-1">
+          {icon}
+          <p className="text-subtitle-sm">{value}</p>
+        </div>
       ) : (
         value
       )}

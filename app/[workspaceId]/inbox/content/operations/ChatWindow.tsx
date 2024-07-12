@@ -13,6 +13,7 @@ import {
   ConversationTag,
   MessageItem,
   UnifiedConversationType,
+  fakeCallData,
 } from "@/lib/realDataSchema";
 import { NotesButton } from "./NotesButton";
 import { ChatSidebarButton } from "./ChatSidebarButton";
@@ -244,12 +245,14 @@ export const ChatWindow = ({
                 <InChatActivity
                   title="Call Ended."
                   time="12:32 PM"
-                  description="You and rob called for 20 min."
+                  description={`You and ${
+                    fakeCallData[0].guestName?.split(" ")[0]
+                  } called for 20 min.`}
                   image={conversationData.guest.imageUrl!}
                   icon={<PhoneIcon />}
                   action="View call"
                   onAction={() => {
-                    setSelectedTab({ type: "calls", data: null });
+                    setSelectedTab({ type: "call", data: fakeCallData[0] });
                   }}
                 />
 
