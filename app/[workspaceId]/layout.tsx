@@ -14,12 +14,19 @@ export default function ProtectedPathsLayout({
   // some sort of auth check here
 
   return (
-    <div className="flex">
-      {/* Side bar */}
-      <SideBar />
+      <div className="flex">
+        {/* Side bar */}
+        <SideBar />
 
-      {/* Page Content */}
-      <div className="flex-grow bg-primary overflow-x-clip">{children}</div>
-    </div>
+        {/* Page Content */}
+        <div
+          className="flex-grow bg-primary overflow-x-clip"
+          style={{
+            boxShadow: "-10px 4px 15px 0px rgba(0, 0, 0, 0.02)",
+          }}
+        >
+          {children}
+        </div>
+      </div>
   );
 }

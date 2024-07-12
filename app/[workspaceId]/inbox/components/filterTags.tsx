@@ -16,9 +16,13 @@ export const Tag = ({
   onRemove: () => void;
 }) => {
   return (
-    <div className="flex gap-1 justify-center items-center bg-blue-500/10 text-link border border-info rounded-full px-2 py-1 ">
-      <IconComponent icon={icon} classNames="size-3 text-info" />
-      <div className="flex items-center gap-1 whitespace-nowrap">
+    <div 
+      className="flex gap-1 justify-center items-center text-link border border-info rounded-full px-3 "
+      style={{ backgroundColor: "rgba(241, 246, 255, 0.5)" }}
+    >
+      
+      <IconComponent icon={icon} classNames="size-3 text-info mr-[2px]" />
+      <div className="flex items-center gap-[4px] whitespace-nowrap">
         <p className="text-body-sm">{title}:</p>
         <p className="text-subtitle-sm">{value}</p>
       </div>

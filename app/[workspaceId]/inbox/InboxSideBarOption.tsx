@@ -3,6 +3,7 @@ import cn from "classnames";
 import { colorMap } from "@/lib/types";
 import { useSidebar } from "./SidebarContext";
 import { useWindowSize } from "@/lib/hooks/useWindowSize";
+import CountBadge from "@/components/custom/CountBadge";
 
 export const InboxSideBarOption = ({
   path,
@@ -30,7 +31,7 @@ export const InboxSideBarOption = ({
     <Link href={path}>
       <div
         className={cn(
-          "flex items-center justify-between w-full px-2 py-1 h-8 active:bg-pressed rounded-md gap-2",
+          "flex items-center justify-between w-full px-2 py-1 h-9 active:bg-pressed rounded-md gap-2",
           selected ? "bg-selected hover:bg-selected" : "hover:bg-hover"
         )}
         onClick={() => {
@@ -70,15 +71,8 @@ export const InboxSideBarOption = ({
           )}
           <p>{name}</p>
         </div>
-        {count && (
-          <div
-            className={cn(
-              "rounded-lg text-subtitle-xs h-6 w-[28px] flex items-center justify-center",
-              selected ? "text-brand bg-primary" : "text-tertiary"
-            )}
-          >
-            {count}
-          </div>
+        {count !== undefined && (
+          <CountBadge count={count} selected={selected} />
         )}
       </div>
     </Link>

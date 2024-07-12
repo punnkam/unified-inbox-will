@@ -48,7 +48,7 @@ export const InboxSidebar = () => {
 
         <div className="flex flex-col justify-between">
           <div className="flex flex-col gap-[32px]">
-            <div>
+            <div className="flex flex-col space-y-[4px]">
               <InboxSideBarOption
                 path={`/${workspaceId}/inbox/all-conversations`}
                 name="All conversations"
@@ -86,7 +86,7 @@ export const InboxSidebar = () => {
                   <AccordionTrigger className="px-1 rounded-md py-0.5">
                     Reservation labels
                   </AccordionTrigger>
-                  <AccordionContent className="pb-0 pt-2">
+                  <AccordionContent className="pb-0 pt-2 flex flex-col space-y-[4px]">
                     {fakeReservationLabels.map((label) => (
                       <InboxSideBarOption
                         key={label.id}
@@ -112,7 +112,7 @@ export const InboxSidebar = () => {
                     Listing groups
                   </AccordionTrigger>
 
-                  <AccordionContent className="pb-0 pt-2">
+                  <AccordionContent className="pb-0 pt-2 flex flex-col space-y-[4px]">
                     {fakeListingGroupsData.map((group) => (
                       <InboxSideBarOption
                         key={group.id}
