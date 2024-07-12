@@ -78,6 +78,7 @@ export interface Reservation {
   numNights?: number;
   aiPaused?: boolean;
   upsells?: UpsellItem[];
+  tasks?: TaskItem[];
   guestExternalAccountId?: string;
   reservationLabels?: ReservationLabel[];
 }
@@ -278,6 +279,36 @@ export enum UpsellStatusEnum {
   HostDeclined = "Host declined",
   HostAccepted = "Host accepted",
 }
+
+// --------- (Start) I made this up to handle tasks
+
+export type TaskItem = {
+  id: string;
+  name: string;
+  type: TaskTypeEnum;
+  status: TaskStatusEnum;
+  assignee?: Member;
+  messages?: MessageItem[];
+  sendToBreezeway?: boolean;
+};
+
+export enum TaskStatusEnum {
+  Cancelled = "Cancelled",
+  Todo = "Todo",
+  InProgress = "In progress",
+  Done = "Done",
+  Backlog = "Backlog",
+}
+
+export enum TaskTypeEnum {
+  Cleaning = "Cleaning",
+  Maintenance = "Maintenance",
+  Safety = "Safety",
+  Supplies = "Supplies",
+  Other = "Other",
+}
+
+// --------- (End) I made this up to handle tasks
 
 export enum Sentiment {
   HAPPY = "HAPPY",
@@ -1122,6 +1153,52 @@ export const mockConversationData: Conversation[] = [
           totalPriceWithDiscount: 70,
           currency: "USD",
           finalMessage: "Would you like a spa package for an additional $70?",
+        },
+      ],
+      tasks: [
+        {
+          id: "1",
+          name: "Fix the kitchen sink",
+          type: TaskTypeEnum.Maintenance,
+          status: TaskStatusEnum.Todo,
+          assignee: fakeMembersData[0],
+          sendToBreezeway: true,
+          messages: [
+            {
+              id: "1",
+              text: "Bro the kitchen sink is so fucking broken",
+              timestamp: 1622519100,
+              author: "guest",
+              isIncoming: true,
+              isSeen: true,
+              status: "delivered",
+              type: UnifiedConversationType.Airbnb,
+            },
+            {
+              id: "2",
+              text: "the sink in the kitchen is on fire - reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeaaaaaaaaaaaa lllllllllllllllllllllll llllllllllllong",
+              timestamp: 1622522700,
+              author: "guest",
+              isIncoming: true,
+              isSeen: true,
+              status: "delivered",
+              type: UnifiedConversationType.Airbnb,
+            },
+          ],
+        },
+        {
+          id: "2",
+          name: "Sink is broken",
+          type: TaskTypeEnum.Cleaning,
+          status: TaskStatusEnum.InProgress,
+          assignee: fakeMembersData[1],
+        },
+        {
+          id: "3",
+          name: "Restock toilet paper",
+          type: TaskTypeEnum.Supplies,
+          status: TaskStatusEnum.Done,
+          assignee: fakeMembersData[2],
         },
       ],
       reservationLabels: [fakeReservationLabels[1]],

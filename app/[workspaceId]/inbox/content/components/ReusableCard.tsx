@@ -1,5 +1,17 @@
-import { CurrencyDollarIcon } from "@/components/icons/CustomIcons";
-import { UpsellItem, UpsellStatusEnum } from "@/lib/realDataSchema";
+import {
+  ArrowCircleBrokenRightIcon,
+  CurrencyDollarIcon,
+  FilledCheckCircleIcon,
+  Loading02Icon,
+  SkinnyCircleIcon,
+  XCircleIcon,
+} from "@/components/icons/CustomIcons";
+import {
+  TaskItem,
+  TaskStatusEnum,
+  UpsellItem,
+  UpsellStatusEnum,
+} from "@/lib/realDataSchema";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import {
@@ -8,19 +20,24 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useOpsRightSidebar } from "../../OpsRightSidebarContext";
 import { StatusDropdown } from "./StatusDropdown";
+import { TaskStatusDropdown } from "./TaskDropdowns";
 
 export const ReusableCard = ({
   title,
   description,
   type,
   upsellData,
+  taskData,
   onUpdateStatus,
+  onUpdateTaskStatus,
 }: {
   title: string;
   description: string;
-  type: "upsell" | "task" | "phone";
+  type?: "upsell" | "task" | "phone";
   upsellData?: UpsellItem;
+  taskData?: TaskItem;
   onUpdateStatus?: (status: UpsellStatusEnum) => void;
+  onUpdateTaskStatus?: (status: TaskStatusEnum) => void;
 }) => {
   const [isIconHovered, setIsIconHovered] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -30,6 +47,15 @@ export const ReusableCard = ({
   const handleUpdateUpsellAcceptStatus = (status: UpsellStatusEnum) => {
     if (onUpdateStatus) {
       onUpdateStatus(status);
+    }
+
+    // Close the dropdown
+    setIsDropdownOpen(false);
+  };
+
+  const handleUpdateTaskStatus = (status: TaskStatusEnum) => {
+    if (onUpdateTaskStatus) {
+      onUpdateTaskStatus(status);
     }
 
     // Close the dropdown
@@ -48,6 +74,9 @@ export const ReusableCard = ({
       onClick={() => {
         if (type === "upsell") {
           setSelectedTab({ type: "upsell", data: upsellData });
+        }
+        if (type === "task") {
+          setSelectedTab({ type: "task", data: taskData });
         }
       }}
     >
@@ -82,6 +111,41 @@ export const ReusableCard = ({
           <StatusDropdown
             align="start"
             onUpdateStatus={handleUpdateUpsellAcceptStatus}
+          />
+        </DropdownMenu>
+      )}
+
+      {type === "task" && (
+        <DropdownMenu
+          open={isDropdownOpen}
+          onOpenChange={() => setIsDropdownOpen(!isDropdownOpen)}
+        >
+          <DropdownMenuTrigger asChild>
+            <div
+              className="flex items-center justify-center size-[30px] min-w-[30px] min-h-[30px] rounded-md hover:bg-hover hover:cursor-pointer active:bg-pressed"
+              onMouseEnter={() => setIsIconHovered(true)}
+              onMouseLeave={() => setIsIconHovered(false)}
+            >
+              {taskData?.status === TaskStatusEnum.Cancelled && (
+                <XCircleIcon className="text-icon-error" />
+              )}
+              {taskData?.status === TaskStatusEnum.Done && (
+                <FilledCheckCircleIcon className="text-icon-success" />
+              )}
+              {taskData?.status === TaskStatusEnum.InProgress && (
+                <ArrowCircleBrokenRightIcon className="text-icon-active" />
+              )}
+              {taskData?.status === TaskStatusEnum.Todo && (
+                <SkinnyCircleIcon className="text-icon-secondary" />
+              )}
+              {taskData?.status === TaskStatusEnum.Backlog && (
+                <Loading02Icon className="text-icon-tertiary" />
+              )}
+            </div>
+          </DropdownMenuTrigger>
+          <TaskStatusDropdown
+            align="start"
+            onUpdateStatus={handleUpdateTaskStatus}
           />
         </DropdownMenu>
       )}

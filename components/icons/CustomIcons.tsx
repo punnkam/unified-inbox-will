@@ -2118,3 +2118,111 @@ export const PauseSqareIcon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const XCircleIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={26}
+    height={26}
+    fill="none"
+    viewBox="0 0 26 26"
+    {...props}
+  >
+    <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M13 .167C5.912.167.167 5.912.167 13S5.912 25.833 13 25.833 25.833 20.088 25.833 13 20.088.167 13 .167Zm4.325 8.508a1.167 1.167 0 0 1 0 1.65L14.65 13l2.675 2.675a1.167 1.167 0 1 1-1.65 1.65L13 14.65l-2.675 2.675a1.167 1.167 0 1 1-1.65-1.65L11.35 13l-2.675-2.675a1.167 1.167 0 0 1 1.65-1.65L13 11.35l2.675-2.675a1.167 1.167 0 0 1 1.65 0Z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
+
+export const FilledCheckCircleIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={26}
+    height={26}
+    fill="none"
+    viewBox="0 0 26 26"
+    {...props}
+  >
+    <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M13 .167C5.912.167.167 5.912.167 13S5.912 25.833 13 25.833 25.833 20.088 25.833 13 20.088.167 13 .167Zm6.075 10.158a1.167 1.167 0 1 0-1.65-1.65L11.25 14.85l-2.675-2.675a1.167 1.167 0 1 0-1.65 1.65l3.5 3.5a1.167 1.167 0 0 0 1.65 0l7-7Z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
+
+export const SkinnyCircleIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={26}
+    height={26}
+    fill="none"
+    viewBox="0 0 26 26"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M13 24.667c6.443 0 11.667-5.224 11.667-11.667S19.443 1.333 13 1.333 1.333 6.557 1.333 13 6.557 24.667 13 24.667Z"
+    />
+  </svg>
+);
+
+export const ArrowCircleBrokenRightIcon = (
+  props: React.SVGProps<SVGSVGElement>
+) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={26}
+    height={26}
+    fill="none"
+    viewBox="0 0 26 26"
+    {...props}
+  >
+    <path
+      fill="currentColor"
+      d="M.563 16.178c-.148-.582-.222-.873-.127-1.186.076-.249.287-.52.51-.656.28-.17.625-.17 1.316-.17H14.85l-2.675 2.676a1.167 1.167 0 0 0 1.65 1.65l4.667-4.667a1.167 1.167 0 0 0 0-1.65l-4.667-4.667a1.167 1.167 0 1 0-1.65 1.65l2.675 2.675H2.262c-.691 0-1.037 0-1.316-.17a1.274 1.274 0 0 1-.51-.655c-.095-.313-.021-.604.127-1.186C1.978 4.272 7.01.167 13 .167 20.088.167 25.833 5.912 25.833 13S20.088 25.833 13 25.833c-5.99 0-11.022-4.104-12.437-9.655Z"
+    />
+  </svg>
+);
+
+export const Loading02Icon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={26}
+    height={26}
+    fill="none"
+    viewBox="0 0 26 26"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M13 1.333V6m0 14v4.667M6 13H1.333m23.334 0H20m1.258 8.258-3.3-3.3m3.3-13.125-3.3 3.3M4.742 21.258l3.3-3.3m-3.3-13.125 3.3 3.3"
+    />
+  </svg>
+);
+
+export const PlusIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={8}
+    height={8}
+    fill="none"
+    viewBox="0 0 8 8"
+    {...props}
+  >
+    <path
+      fill="currentColor"
+      d="M4.5.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3Z"
+    />
+  </svg>
+);

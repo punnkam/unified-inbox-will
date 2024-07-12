@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useWindowSize } from "@/lib/hooks/useWindowSize";
-import { UpsellItem } from "@/lib/realDataSchema";
+import { TaskItem, UpsellItem } from "@/lib/realDataSchema";
 
 const OpsRightSidebarContext = createContext<any>(null);
 
@@ -16,6 +16,7 @@ export const OpsRightSidebarProvider = ({
   const [selectedTab, setSelectedTab] = useState<
     | "default"
     | { type: "upsell"; data: UpsellItem }
+    | { type: "task"; data: TaskItem }
     | { type: "phone"; id: string }
     | { type: "notes"; id: string }
   >("default");

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +15,7 @@ export const TaskAndUpsellOptions = ({
   icon,
 }: {
   title: string;
-  value: string;
+  value: string | React.ReactNode;
   isDropdown?: boolean;
   dropdownContent?: React.ReactNode;
   icon?: React.ReactNode;
@@ -24,7 +24,11 @@ export const TaskAndUpsellOptions = ({
 
   const MainData = (
     <div className={cn("flex items-center gap-1", !isDropdown && "p-1")}>
-      <p className="text-subtitle-sm">{value}</p>
+      {typeof value === "string" ? (
+        <p className="text-subtitle-sm">{value}</p>
+      ) : (
+        value
+      )}
     </div>
   );
 

@@ -5,15 +5,30 @@ import {
   CurrencyDollarIcon,
   PauseSqareIcon,
   PhoneIcon,
+  ArrowCircleBrokenRightIcon,
+  CheckCircleIcon,
+  CircleIcon,
+  FilledCheckCircleIcon,
+  Loading02Icon,
+  SkinnyCircleIcon,
+  XCircleIcon,
+  PlusIcon,
+  HorizontalDotsIcon,
+  BreezewayIcon,
 } from "@/components/icons/CustomIcons";
 import { Avatar } from "./sidebar/Avatar";
 import {
   Conversation,
   ConversationTag,
+  Member,
   MessageItem,
+  TaskItem,
+  TaskStatusEnum,
+  TaskTypeEnum,
   UnifiedConversationType,
   UpsellItem,
   UpsellStatusEnum,
+  fakeMembersData,
 } from "@/lib/realDataSchema";
 import { Assignee } from "./sidebar/Assignee";
 import { ConversationTagItem } from "./sidebar/ConversationTag";
@@ -42,6 +57,14 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { AutosizeTextarea } from "@/components/ui/textarea";
 import CountBadge from "@/components/custom/CountBadge";
+import { TasksTab } from "../components/TasksTab";
+import { AssignMemberComboBox } from "../components/AssignMemberCombobox";
+import {
+  TaskAssigneeDropdown,
+  TaskStatusDropdown,
+  TaskTypeDropdown,
+} from "../components/TaskDropdowns";
+import { Input } from "@/components/ui/input";
 
 export const OperationsRightSidebar = ({
   conversationData,
@@ -62,20 +85,33 @@ export const OperationsRightSidebar = ({
   const [upsells, setUpsells] = useState<UpsellItem[]>(
     conversationData.reservation.upsells || []
   );
-
   // useState to store the edited upsell text
   const [editedUpsellText, setEditedUpsellText] = useState<string | null>("");
+
+  // State to store all tasks data
+  const [tasks, setTasks] = useState<TaskItem[]>(
+    conversationData.reservation.tasks || []
+  );
+
+  // State to store the edited task name
+  const [editedTask, setEditedTask] = useState<TaskItem>();
 
   // useEffect to update the state data when the conversation id
   useEffect(() => {
     setUpsells(conversationData.reservation.upsells || []);
+    setTasks(conversationData.reservation.tasks || []);
     setSelectedTab("default");
   }, [conversationData.id]);
 
   useEffect(() => {
-    setEditedUpsellText(
-      selectedTab.data ? selectedTab.data.finalMessage : null
-    );
+    if (selectedTab.type == "upsell") {
+      setEditedUpsellText(
+        selectedTab.data ? selectedTab.data.finalMessage : null
+      );
+    }
+    if (selectedTab.type == "task") {
+      setEditedTask(selectedTab.data ? selectedTab.data : null);
+    }
   }, [selectedTab]);
 
   // handler to update an upsell status
@@ -97,6 +133,30 @@ export const OperationsRightSidebar = ({
           return updatedUpsell;
         }
         return upsell;
+      })
+    );
+  };
+
+  const updateTaskData = (
+    taskId: string,
+    key: keyof TaskItem,
+    value: TaskItem[keyof TaskItem]
+  ) => {
+    console.log("Updating task data", taskId, key, value);
+
+    // TODO API: handle updating task data
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => {
+        if (task.id === taskId) {
+          const updatedTask = { ...task, [key]: value };
+
+          console.log("Updated task", updatedTask);
+
+          // Update the selected tab data (so the status dropdown updates)
+          setSelectedTab({ type: "task", data: updatedTask });
+          return updatedTask;
+        }
+        return task;
       })
     );
   };
@@ -155,6 +215,66 @@ export const OperationsRightSidebar = ({
 
     // remove the upsell from the state
     setUpsells(upsells.filter((upsell) => upsell.id !== selectedTab.data.id));
+  };
+
+  const handleDeleteTaskMessage = (messageId: string) => {
+    console.log("Delete message", messageId);
+    // TODO API: handle delete message
+
+    // Remove the message from the task edit state
+    setEditedTask((prevTask) => ({
+      ...prevTask!,
+      messages: prevTask!.messages?.filter(
+        (message: MessageItem) => message.id.toString() !== messageId
+      ),
+    }));
+  };
+
+  const handleDeleteTask = () => {
+    console.log("Delete task", selectedTab.data.id);
+    toast.success("Task deleted successfully");
+
+    // TODO API: handle delete task
+
+    // go back to the default tab (since we deleted the task we are on)
+    setSelectedTab("default");
+
+    // remove the task from the state
+    setTasks(tasks.filter((task) => task.id !== selectedTab.data.id));
+  };
+
+  const handleSaveTask = () => {
+    console.log("Save task", selectedTab.data.id);
+
+    // TODO API: handle save task
+
+    // update all task data state (set tasks sate to replace the past one with editedTask data)
+    setTasks(
+      tasks.map((task) => {
+        if (task.id === selectedTab.data.id) {
+          return editedTask!;
+        }
+        return task;
+      })
+    );
+
+    toast.success("Task saved successfully");
+
+    // go back to the default tab
+    setSelectedTab("default");
+  };
+
+  const handleSendTaskToBreezeway = () => {
+    // this does not go into the edited state (goes straight to the main task state)
+
+    console.log("Send task to breezeway id:", selectedTab.data.id);
+
+    // TODO API: handle send task to breezeway
+
+    // update the task data state
+    updateTaskData(selectedTab.data.id, "sendToBreezeway", true);
+
+    toast.success("Task sent to Breezeway successfully");
   };
 
   return (
@@ -311,7 +431,7 @@ export const OperationsRightSidebar = ({
                 />
               </CustomTabsContent>
               <CustomTabsContent value="tasks">
-                <p>tasks</p>
+                <TasksTab tasks={tasks} updateTaskData={updateTaskData} />
               </CustomTabsContent>
               <CustomTabsContent value="calls">
                 <p>calls</p>
@@ -461,6 +581,258 @@ export const OperationsRightSidebar = ({
                   </Button>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {selectedTab.type === "task" && (
+          <div>
+            <div className="py-3 border-b border-primary">
+              <div className="px-6 py-5 flex flex-col gap-[10px]">
+                <div
+                  className="text-secondary text-subtitle-xs flex items-center gap-2 hover:cursor-pointer hover:text-primary"
+                  onClick={() => {
+                    // reset the status to not sent
+                    setSelectedTab("default");
+                  }}
+                >
+                  <ChevronDownIcon className="rotate-90" />
+                  Back
+                </div>
+                <p className="text-title-05xl">
+                  {selectedTab.data ? "Edit" : "Add"} task
+                </p>
+              </div>
+            </div>
+
+            {/* Data */}
+            <div className="flex flex-col gap-6 py-6">
+              {/* Name in an input field */}
+              <div className="px-6 flex flex-col gap-2">
+                <p className="text-subtitle-xs">Task name</p>
+
+                <Input
+                  className="h-9"
+                  placeholder="Task name"
+                  value={editedTask?.name || ""}
+                  onChange={(e) =>
+                    setEditedTask({ ...editedTask!, name: e.target.value })
+                  }
+                />
+              </div>
+
+              <div className="border-b border-primary"></div>
+
+              <div className="px-6">
+                <TaskAndUpsellOptions
+                  title="Assignee"
+                  value={
+                    editedTask?.assignee
+                      ? editedTask?.assignee.name!
+                      : "Unassigned"
+                  }
+                  isDropdown
+                  icon={
+                    <div className="pe-1">
+                      <Avatar
+                        image={
+                          editedTask?.assignee && editedTask?.assignee.image
+                        }
+                        size="small"
+                      />
+                    </div>
+                  }
+                  dropdownContent={
+                    <TaskAssigneeDropdown
+                      onUpdateAssignee={(newAssignee: Member | undefined) =>
+                        // update the task edit data
+                        setEditedTask((prevTask) => ({
+                          ...prevTask!,
+                          assignee: newAssignee,
+                        }))
+                      }
+                      availableMembers={fakeMembersData}
+                    />
+                  }
+                />
+
+                <TaskAndUpsellOptions
+                  title="Category"
+                  value={editedTask?.type!}
+                  icon={
+                    <div className="pe-1">
+                      <div
+                        className={cn(
+                          "size-[11px] rounded-full",
+                          editedTask?.type === TaskTypeEnum.Cleaning &&
+                            "bg-icon-success",
+                          editedTask?.type === TaskTypeEnum.Maintenance &&
+                            "bg-icon-active",
+                          editedTask?.type === TaskTypeEnum.Safety &&
+                            "bg-icon-error",
+                          editedTask?.type === TaskTypeEnum.Supplies &&
+                            "bg-orange-500",
+                          editedTask?.type === TaskTypeEnum.Other &&
+                            "bg-icon-disabled"
+                        )}
+                      ></div>
+                    </div>
+                  }
+                  isDropdown
+                  dropdownContent={
+                    <TaskTypeDropdown
+                      value={editedTask?.type!}
+                      setValue={(newType: TaskTypeEnum) => {
+                        // update the task edit data
+                        setEditedTask((prevTask) => ({
+                          ...prevTask!,
+                          type: newType,
+                        }));
+                      }}
+                    />
+                  }
+                />
+
+                <TaskAndUpsellOptions
+                  title="Status"
+                  value={editedTask?.status!}
+                  icon={
+                    <div>
+                      {editedTask?.status === TaskStatusEnum.Cancelled && (
+                        <XCircleIcon className="text-icon-error h-[13.3px] w-fit" />
+                      )}
+                      {editedTask?.status === TaskStatusEnum.Done && (
+                        <FilledCheckCircleIcon className="text-icon-success h-[13.3px] w-fit" />
+                      )}
+                      {editedTask?.status === TaskStatusEnum.InProgress && (
+                        <ArrowCircleBrokenRightIcon className="text-icon-active h-[13.3px] w-fit" />
+                      )}
+                      {editedTask?.status === TaskStatusEnum.Todo && (
+                        <SkinnyCircleIcon className="text-icon-secondary h-[13.3px] w-fit" />
+                      )}
+                      {editedTask?.status === TaskStatusEnum.Backlog && (
+                        <Loading02Icon className="text-icon-tertiary h-[13.3px] w-fit" />
+                      )}
+                    </div>
+                  }
+                  isDropdown
+                  dropdownContent={
+                    <TaskStatusDropdown
+                      onUpdateStatus={(newStatus: TaskStatusEnum) => {
+                        // update the task edit data
+                        setEditedTask((prevTask) => ({
+                          ...prevTask!,
+                          status: newStatus,
+                        }));
+                      }}
+                    />
+                  }
+                />
+
+                <TaskAndUpsellOptions
+                  title="Send task to Breezeway"
+                  value={
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled={selectedTab.data?.sendToBreezeway}
+                      className="h-[30px]"
+                      onClick={handleSendTaskToBreezeway}
+                    >
+                      <div className="flex gap-2 items-center">
+                        <BreezewayIcon className="size-fit" />
+                        {selectedTab.data?.sendToBreezeway ? "Sent" : "Send"}
+                      </div>
+                    </Button>
+                  }
+                />
+              </div>
+
+              <div className="border-b border-primary"></div>
+
+              {/* Edit Message */}
+              <div className="px-6 flex flex-col gap-2">
+                <div className="flex items-center justify-between py-2 h-[28px]">
+                  <p className="text-subtitle-xs">Attach messages</p>
+                  <div className="pr-2">
+                    {/* TODO: (no design) add logic for adding a new message */}
+                    <Button variant={"secondary"} size={"iconXs"}>
+                      <PlusIcon />
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Messages */}
+                {editedTask?.messages?.map((message: MessageItem) => (
+                  <div className="flex justify-between p-3 border border-secondary bg-primary rounded-md">
+                    <div className="flex gap-2 w-full">
+                      <Avatar
+                        size={"small"}
+                        image={conversationData.guest.imageUrl!}
+                      />
+                      <div className="flex flex-col gap-[2px]">
+                        <div className="flex items-center gap-1">
+                          <p className="text-subtitle-sm">
+                            {conversationData.guest.name}
+                          </p>
+                          <p className="text-body-xs text-secondary">
+                            {format(message.timestamp, "h:mm a")}
+                          </p>
+                        </div>
+                        <p className="text-body-xs text-secondary break-all">
+                          {message.text}
+                        </p>
+                      </div>
+                    </div>
+
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="iconXs"
+                          className="size-4 min-w-4 min-h-4"
+                        >
+                          <HorizontalDotsIcon className="text-icon-tertiary w-[9px] min-w-[9px]" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        align="end"
+                        className="text-subtitle-xs"
+                      >
+                        <DropdownMenuItem
+                          onSelect={() => {
+                            handleDeleteTaskMessage(message.id.toString());
+                          }}
+                        >
+                          Remove message
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                ))}
+              </div>
+
+              <div className="border-b border-primary"></div>
+
+              <div className="flex gap-2 px-6">
+                <Button
+                  variant="destructive"
+                  size="xs"
+                  className="w-full"
+                  onClick={handleDeleteTask}
+                >
+                  Delete
+                </Button>
+                <Button
+                  variant="default"
+                  size="xs"
+                  className="w-full"
+                  onClick={handleSaveTask}
+                  disabled={selectedTab.data == editedTask}
+                >
+                  Save
+                </Button>
+              </div>
             </div>
           </div>
         )}
