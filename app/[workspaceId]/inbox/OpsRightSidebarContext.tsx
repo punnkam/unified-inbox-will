@@ -20,13 +20,15 @@ export const OpsRightSidebarProvider = ({
     | { type: "phone"; id: string }
     | { type: "notes"; id: string }
   >("default");
+  const [initialLoad, setInitialLoad] = useState(false);
 
   // open sidebar by default on desktop
   useEffect(() => {
-    if (size.width && size.width > 705 && !isOpen) {
+    if (size.width && size.width > 705 && !isOpen && !initialLoad) {
       setIsOpen(true);
+      setInitialLoad(true);
     }
-  }, [size]);
+  }, [size, initialLoad]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
