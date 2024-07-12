@@ -6,12 +6,14 @@ export const Avatar = ({
   image,
   greenDot,
 }: {
-  size: "xs" | "small" | "medium" | "large";
+  size: "xxs" | "xs" | "small" | "medium" | "large";
   image?: string;
   greenDot?: boolean;
 }) => {
   const sizeClass =
-    size === "xs"
+    size === "xxs"
+      ? "size-[18px] min-w-[18px] min-h-[18px]"
+      : size === "xs"
       ? "size-[20px] min-w-[20px] min-h-[20px]"
       : size === "small"
       ? "size-6 min-w-6 min-h-6"
@@ -20,7 +22,7 @@ export const Avatar = ({
       : "size-10 min-w-10 min-h-10";
 
   return (
-    <div className="relative">
+    <div className="relative h-fit">
       {image ? (
         <img
           src={image}

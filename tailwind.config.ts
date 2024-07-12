@@ -139,6 +139,7 @@ const config = {
         secondary: "#6B7280",
         tertiary: "#A1A1AA",
         brand: "#10275B",
+        "brand-hover": "#40527C",
         disabled: "#A1A1AA",
         placeholder: "#A1A1AA",
         error: "#EF4444",

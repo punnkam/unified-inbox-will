@@ -2262,3 +2262,22 @@ export const VolumeMaxIcon = (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
+
+export const Trash02Icon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={16}
+    height={18}
+    fill="none"
+    viewBox="0 0 16 18"
+    {...props}
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M11 4.5v-.6c0-.84 0-1.26-.164-1.581a1.5 1.5 0 0 0-.655-.656C9.861 1.5 9.441 1.5 8.6 1.5H7.4c-.84 0-1.26 0-1.581.163a1.5 1.5 0 0 0-.656.656C5 2.639 5 3.059 5 3.9v.6m-3.75 0h13.5m-1.5 0v8.4c0 1.26 0 1.89-.245 2.371-.216.424-.56.768-.984.984-.48.245-1.11.245-2.371.245h-3.3c-1.26 0-1.89 0-2.371-.245a2.25 2.25 0 0 1-.984-.983C2.75 14.79 2.75 14.16 2.75 12.9V4.5"
+    />
+  </svg>
+);

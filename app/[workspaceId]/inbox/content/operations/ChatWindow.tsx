@@ -31,6 +31,8 @@ import { OperationsRightSidebar } from "./OperationsRightSidebar";
 import { AiReply } from "./AiReply";
 import { InChatActivity } from "./sidebar/InChatActivity";
 import { useOpsRightSidebar } from "../../OpsRightSidebarContext";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Notes } from "./sidebar/Notes";
 
 export const ChatWindow = ({
   conversationData,
@@ -40,6 +42,7 @@ export const ChatWindow = ({
   // local state for messages
   const [messages, setMessages] = useState<MessageItem[]>([]);
   const [selectedTagId, setSelectedTagId] = useState<number | null>(null);
+  const [isNotesOpen, setIsNotesOpen] = useState(false);
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
@@ -144,7 +147,17 @@ export const ChatWindow = ({
 
             <div className="flex gap-2">
               {/* TODO: Add logic for when the new notes is true + when selected */}
-              <NotesButton newNotes={true} />
+              <Sheet
+                open={isNotesOpen}
+                onOpenChange={() => setIsNotesOpen(!isNotesOpen)}
+              >
+                <SheetTrigger>
+                  <NotesButton newNotes={true} selected={isNotesOpen} />
+                </SheetTrigger>
+                <SheetContent className="p-0">
+                  <Notes />
+                </SheetContent>
+              </Sheet>
               <ChatSidebarButton selected={true} />
             </div>
           </div>
@@ -312,6 +325,7 @@ export const ChatWindow = ({
           </div>
         </div>
       </div>
+
       <OperationsRightSidebar
         conversationData={conversationData}
         onTagClick={handleTagClick}

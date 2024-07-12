@@ -882,8 +882,6 @@ export const OperationsRightSidebar = ({
               </div>
             )}
 
-            {selectedTab.type === "notes" && <p>notes</p>}
-
             {selectedTab.type === "call" && (
               <div>
                 <div className="py-3 border-b border-primary">
@@ -963,6 +961,50 @@ export const OperationsRightSidebar = ({
                       )
                     )}
                   </div>
+                </div>
+              </div>
+            )}
+
+            {selectedTab.type === "notes" && (
+              // TODO: Detrmine if notes will be a sheet or in the sidebar
+              <div>
+                <div className="py-3 border-b border-primary">
+                  <div className="px-6 py-5 flex flex-col gap-[10px]">
+                    <div
+                      className="text-secondary text-subtitle-xs flex items-center gap-2 hover:cursor-pointer hover:text-primary"
+                      onClick={() => {
+                        // reset the status to not sent
+                        setSelectedTab("default");
+                      }}
+                    >
+                      <ChevronDownIcon className="rotate-90" />
+                      Back
+                    </div>
+                    <p className="text-title-05xl">Notes</p>
+                  </div>
+                </div>
+
+                {/* Data */}
+                <div className="flex flex-col gap-6 py-6">
+                  <div className="px-6">
+                    {/* TODO: these times are not stores in the given schema */}
+                    <TaskAndUpsellOptions title="Start time" value="9:36 PM" />
+                    <TaskAndUpsellOptions title="End time" value="9:36 PM" />
+                    {/* <TaskAndUpsellOptions
+                      title="Support agent"
+                      value={selectedTab.data.userData?.name}
+                      icon={
+                        <Avatar
+                          size="xs"
+                          image={selectedTab.data.userData?.image!}
+                        />
+                      }
+                    /> */}
+                  </div>
+
+                  <div className="border-b border-primary"></div>
+
+                  <div className="flex flex-col gap-2 px-6"></div>
                 </div>
               </div>
             )}
