@@ -807,7 +807,10 @@ export const OperationsRightSidebar = ({
 
                     {/* Messages */}
                     {editedTask?.messages?.map((message: MessageItem) => (
-                      <div className="flex justify-between p-3 border border-secondary bg-primary rounded-md">
+                      <div
+                        className="flex justify-between p-3 border border-secondary bg-primary rounded-md"
+                        key={message.id}
+                      >
                         <div className="flex gap-2 w-full">
                           <Avatar
                             size={"small"}

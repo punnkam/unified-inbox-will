@@ -284,7 +284,7 @@ export const NoteMessage = ({
       {/* reply, edit, delete */}
       <div className="hidden group-hover:flex absolute -top-[17px] right-[2px]  items-center gap-[2px] bg-primary p-[3px] rounded-md border border-primary">
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <Button size="iconXs" variant={"ghost"}>
               <CornerUpLeftIcon className="size-3 text-icon-secondary" />
             </Button>
@@ -295,7 +295,7 @@ export const NoteMessage = ({
         </Tooltip>
 
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <Button size="iconXs" variant={"ghost"}>
               <Edit05Icon className="size-3 text-icon-secondary" />
             </Button>
@@ -305,7 +305,7 @@ export const NoteMessage = ({
           </TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <Button size="iconXs" variant={"ghost"}>
               <Trash02Icon className="size-3 text-icon-secondary" />
             </Button>

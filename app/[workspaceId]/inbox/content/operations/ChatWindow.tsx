@@ -32,7 +32,13 @@ import { OperationsRightSidebar } from "./OperationsRightSidebar";
 import { AiReply } from "./AiReply";
 import { InChatActivity } from "./sidebar/InChatActivity";
 import { useOpsRightSidebar } from "../../OpsRightSidebarContext";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { Notes } from "./sidebar/Notes";
 import { MultiplayerTyping } from "./MultiplayerTyping";
 
@@ -157,6 +163,10 @@ export const ChatWindow = ({
                   <NotesButton newNotes={true} selected={isNotesOpen} />
                 </SheetTrigger>
                 <SheetContent className="p-0">
+                  <SheetTitle className="hidden">Notes</SheetTitle>
+                  <SheetDescription className="hidden">
+                    Send notes to your team
+                  </SheetDescription>
                   <Notes />
                 </SheetContent>
               </Sheet>

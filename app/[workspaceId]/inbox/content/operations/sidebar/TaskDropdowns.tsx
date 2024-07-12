@@ -159,9 +159,11 @@ export const TaskAssigneeDropdown = ({
               </CommandItem>
             </DropdownMenuItem>
             {availableMembers.map((member) => (
-              <DropdownMenuItem className="p-0 active:bg-transparent">
+              <DropdownMenuItem
+                className="p-0 active:bg-transparent"
+                key={member.id}
+              >
                 <CommandItem
-                  key={member.id}
                   value={member.name}
                   onSelect={() => {
                     handleUpdateAssignee(member);
@@ -207,9 +209,11 @@ export const TaskTypeDropdown = ({
           <CommandEmpty>No matches.</CommandEmpty>
           <CommandGroup className="w-full">
             {Object.entries(TaskTypeEnum).map(([type, typeValue]) => (
-              <DropdownMenuItem className="p-0 active:bg-transparent">
+              <DropdownMenuItem
+                className="p-0 active:bg-transparent"
+                key={type}
+              >
                 <CommandItem
-                  key={type}
                   value={type}
                   onSelect={() => {
                     handleUpdateType(typeValue);
