@@ -67,7 +67,6 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
 import { CallsTab } from "./sidebar/CallsTab";
-import AudioPlayer from "@/components/custom/AudioPlayer";
 
 export const OperationsRightSidebar = ({
   conversationData,
