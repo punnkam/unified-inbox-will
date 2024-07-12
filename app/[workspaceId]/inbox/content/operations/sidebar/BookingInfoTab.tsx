@@ -6,7 +6,7 @@ import {
   ReservationLabel,
   fakeReservationLabels,
 } from "@/lib/realDataSchema";
-import { LabelsTagsGroups } from "./LabelsTagsGroups";
+import { LabelsTagsGroups } from "../../components/LabelsTagsGroups";
 import { BookingInfo } from "./BookingInfo";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";

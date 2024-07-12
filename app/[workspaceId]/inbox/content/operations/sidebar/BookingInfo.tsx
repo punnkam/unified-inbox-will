@@ -1,5 +1,5 @@
 import { BookingChannel, Reservation } from "@/lib/realDataSchema";
-import { ReservationStatus } from "./ReservationStatus";
+import { ReservationStatus } from "../../components/ReservationStatus";
 import {
   DropdownMenu,
   DropdownMenuContent,

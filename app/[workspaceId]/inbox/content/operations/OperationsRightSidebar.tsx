@@ -45,22 +45,22 @@ import {
   CustomTabsList,
   CustomTabsTrigger,
 } from "@/components/ui/custom-tabs";
-import { BookingInfoTab } from "../components/BookingInfoTab";
-import { UpsellsTab } from "../components/UpsellsTab";
+import { BookingInfoTab } from "./sidebar/BookingInfoTab";
+import { UpsellsTab } from "./sidebar/UpsellsTab";
 import { useOpsRightSidebar } from "../../OpsRightSidebarContext";
 import { TaskAndUpsellOptions } from "./TaskAndUpsellOptions";
 import { format, set } from "date-fns";
-import { StatusDropdown } from "../components/StatusDropdown";
+import { StatusDropdown } from "./sidebar/StatusDropdown";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { AutosizeTextarea } from "@/components/ui/textarea";
 import CountBadge from "@/components/custom/CountBadge";
-import { TasksTab } from "../components/TasksTab";
+import { TasksTab } from "./sidebar/TasksTab";
 import {
   TaskAssigneeDropdown,
   TaskStatusDropdown,
   TaskTypeDropdown,
-} from "../components/TaskDropdowns";
+} from "./sidebar/TaskDropdowns";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";

@@ -28,7 +28,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTableContext } from "../../TableContext";
 import { OperationsRightSidebar } from "./OperationsRightSidebar";
 import { AiReply } from "./AiReply";
-import { InChatActivity } from "../components/InChatActivity";
+import { InChatActivity } from "./sidebar/InChatActivity";
 import { useOpsRightSidebar } from "../../OpsRightSidebarContext";
 
 export const ChatWindow = ({

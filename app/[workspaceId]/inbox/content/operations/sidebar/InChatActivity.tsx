@@ -1,4 +1,4 @@
-import { Avatar } from "../operations/sidebar/Avatar";
+import { Avatar } from "./Avatar";
 
 export const InChatActivity = ({
   title,

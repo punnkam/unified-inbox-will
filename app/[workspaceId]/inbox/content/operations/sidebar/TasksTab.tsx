@@ -2,7 +2,7 @@ import React from "react";
 import { TaskItem, TaskStatusEnum } from "@/lib/realDataSchema";
 import { ReusableCard } from "./ReusableCard";
 import { PlusIcon } from "@/components/icons/CustomIcons";
-import { useOpsRightSidebar } from "../../OpsRightSidebarContext";
+import { useOpsRightSidebar } from "../../../OpsRightSidebarContext";
 
 export const TasksTab = ({
   tasks,

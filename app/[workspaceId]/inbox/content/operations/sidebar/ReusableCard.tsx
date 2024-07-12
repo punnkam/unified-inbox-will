@@ -18,7 +18,7 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useOpsRightSidebar } from "../../OpsRightSidebarContext";
+import { useOpsRightSidebar } from "../../../OpsRightSidebarContext";
 import { StatusDropdown } from "./StatusDropdown";
 import { TaskStatusDropdown } from "./TaskDropdowns";
 

@@ -1,5 +1,5 @@
 import { Listing, fakeListingGroupsData } from "@/lib/realDataSchema";
-import { LabelsTagsGroups } from "./LabelsTagsGroups";
+import { LabelsTagsGroups } from "../../components/LabelsTagsGroups";
 
 export const ListingCard = ({ listingData }: { listingData: Listing }) => {
   // find the listing group data for the listing
