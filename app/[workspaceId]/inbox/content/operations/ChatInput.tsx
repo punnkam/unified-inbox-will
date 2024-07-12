@@ -1,7 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { TagInput } from "emblor";
 import { cn } from "@/lib/utils";
 import { AutosizeTextarea } from "@/components/ui/textarea";
@@ -36,6 +36,7 @@ import {
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { MessageItem, UnifiedConversationType } from "@/lib/realDataSchema";
+import { XIcon } from "lucide-react";
 
 export type initialState = "Collapsed" | "Active" | "Inactive";
 
@@ -85,6 +86,10 @@ export const ChatInput = ({
   const [selectedText, setSelectedText] = useState("");
   const [isLinkDialogOpen, setIsLinkDialogOpen] = useState(false);
   const [linkValue, setLinkValue] = useState<string>("");
+  const [isSavedRepliesOpen, setIsSavedRepliesOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const [selectedReplyIndex, setSelectedReplyIndex] = useState(0);
+  const savedRepliesRef = useRef<HTMLDivElement>(null);
 
   // Init tiptap editor
   const editor = useEditor({
@@ -282,8 +287,153 @@ export const ChatInput = ({
     setIsLinkDialogOpen(true);
   };
 
+  // fake saved replies
+  const savedReplies = [
+    {
+      id: "1",
+      title: "Early check-in reply",
+      content: "Sorry check in is not allowed early",
+    },
+    {
+      id: "2",
+      title: "Rude guest template answer",
+      content: "Hey listen up buddy, you smell like a rude person",
+    },
+    {
+      id: "3",
+      title: "Airbnb privacy policy response",
+      content: "You can find the privacy policy here...",
+    },
+    {
+      id: "4",
+      title: "About Ekwede stays answer",
+      content: "About Ekwede stays",
+    },
+  ];
+
+  // filter the saved replies based on the search input
+  const filteredSavedReplies = savedReplies.filter((reply) =>
+    reply.title.toLowerCase().includes(search.toLowerCase())
+  );
+
+  // replace the message with the selected saved reply
+  const handleSavedReplySelect = (reply: (typeof savedReplies)[number]) => {
+    setMessage(reply.content);
+    if (editor) {
+      editor.commands.setContent(reply.content);
+    }
+
+    setIsSavedRepliesOpen(false);
+  };
+
+  // Listen for keyboard events to navigate through saved replies
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isSavedRepliesOpen) return;
+
+      switch (e.key) {
+        case "ArrowDown":
+          e.preventDefault();
+          setSelectedReplyIndex((prev) =>
+            prev < filteredSavedReplies.length - 1 ? prev + 1 : prev
+          );
+          break;
+        case "ArrowUp":
+          e.preventDefault();
+          setSelectedReplyIndex((prev) => (prev > 0 ? prev - 1 : prev));
+          break;
+        case "Enter":
+          e.preventDefault();
+          if (
+            selectedReplyIndex >= 0 &&
+            selectedReplyIndex < filteredSavedReplies.length
+          ) {
+            handleSavedReplySelect(filteredSavedReplies[selectedReplyIndex]);
+          }
+          break;
+        case "Escape":
+          e.preventDefault();
+          setIsSavedRepliesOpen(false);
+          break;
+      }
+    };
+
+    // Close the dropdown when the user clicks outside of it
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        savedRepliesRef.current &&
+        !savedRepliesRef.current.contains(event.target as Node)
+      ) {
+        setIsSavedRepliesOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isSavedRepliesOpen, filteredSavedReplies, selectedReplyIndex]);
+
+  const toggleSavedReplies = () => {
+    setIsSavedRepliesOpen((prev) => !prev);
+    setSelectedReplyIndex(0);
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    setSelectedReplyIndex(-1);
+  };
+
   return (
     <div>
+      {state === "Active" && isSavedRepliesOpen && (
+        <div
+          ref={savedRepliesRef}
+          key={"savedReplies"}
+          className="pt-[30px] mb-[9px] bg-primary flex flex-col gap-[10px] border border-primary rounded-lg relative"
+        >
+          <XIcon
+            className="h-4 w-4 text-icon-tertiary hover:text-icon-secondary hover:cursor-pointer absolute top-3 right-3"
+            onClick={() => setIsSavedRepliesOpen(false)}
+          />
+          <div className="flex flex-col gap-1 px-3">
+            {filteredSavedReplies.map((reply, index) => (
+              <div
+                key={reply.id}
+                className={cn(
+                  "group/saved flex items-center justify-between rounded-lg p-2 hover:cursor-pointer focus:bg-selected hover:bg-selected",
+                  index === selectedReplyIndex && "bg-selected"
+                )}
+                onClick={() => handleSavedReplySelect(reply)}
+                onMouseEnter={() => setSelectedReplyIndex(index)}
+              >
+                <p className="text-subtitle-sm">{reply.title}</p>
+                <div
+                  className={cn(
+                    "hidden group-hover/saved:flex gap-2 items-center",
+                    index === selectedReplyIndex && "flex"
+                  )}
+                >
+                  <CornerDownLeftIcon className="size-[10.5px] text-icon-secondary" />
+                  <p className="text-subtitle-xs text-secondary">To select</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* <div className="px-4 py-3 bg-primary-subtle border-t border-primary"> */}
+          <Input
+            placeholder="Search saved reply here"
+            value={search}
+            onChange={handleSearchChange}
+            className="px-4 py-3 bg-primary-subtle border-0 border-t border-primary rounded-t-none text-body-sm"
+          />
+          {/* </div> */}
+        </div>
+      )}
       {state === "Collapsed" && (
         <div
           className="p-4 border border-primary rounded-lg text-body-sm text-placeholder h-[52px]"
@@ -452,7 +602,12 @@ export const ChatInput = ({
                   {/* Zap? */}
                   <Tooltip>
                     <TooltipTrigger>
-                      <Button size={"iconSm"} variant={"ghost"}>
+                      <Button
+                        size={"iconSm"}
+                        variant={"ghost"}
+                        onClick={() => toggleSavedReplies()}
+                        className={isSavedRepliesOpen ? "bg-hover" : ""}
+                      >
                         <ZapIcon className="h-[15px] text-icon-tertiary" />
                       </Button>
                     </TooltipTrigger>
