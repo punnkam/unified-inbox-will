@@ -13,7 +13,7 @@ export const OpsRightSidebarProvider = ({
 }) => {
   const size = useWindowSize();
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedTab, setSelectedTab] = useState<
+  const [selectedTab, setSidebarSelectedTab] = useState<
     | "default"
     | { type: "upsell"; data: UpsellItem }
     | { type: "task"; data: TaskItem }
@@ -21,6 +21,11 @@ export const OpsRightSidebarProvider = ({
     | { type: "notes"; id: string }
   >("default");
   const [initialLoad, setInitialLoad] = useState(false);
+
+  const setSelectedTab = (tab: any) => {
+    setSidebarSelectedTab(tab);
+    if (!isOpen) setIsOpen(true);
+  };
 
   // open sidebar by default on desktop
   useEffect(() => {
