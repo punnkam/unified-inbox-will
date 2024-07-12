@@ -48,7 +48,7 @@ import {
 import { BookingInfoTab } from "./sidebar/BookingInfoTab";
 import { UpsellsTab } from "./sidebar/UpsellsTab";
 import { useOpsRightSidebar } from "../../OpsRightSidebarContext";
-import { TaskAndUpsellOptions } from "./TaskAndUpsellOptions";
+import { TaskAndUpsellOptions } from "./sidebar/TaskAndUpsellOptions";
 import { format, set } from "date-fns";
 import { StatusDropdown } from "./sidebar/StatusDropdown";
 import { useEffect, useState } from "react";
