@@ -19,8 +19,7 @@ export const NotesButton = ({
       )}
       onClick={() => {
         // open the sidebar if it is closed so the user can see the buttons
-        if (isOpen) return;
-        toggleSidebar();
+        if (!isOpen) toggleSidebar();
       }}
     >
       <div className="size-6 min-w-6 min-h-6 flex items-center justify-center relative">
