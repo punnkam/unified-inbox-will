@@ -857,27 +857,48 @@ export const OperationsRightSidebar = ({
 
                   <div className="border-b border-primary"></div>
 
-                  <div className="flex gap-2 px-6">
-                    <Button
-                      variant="destructive"
-                      size="xs"
-                      className="w-full"
-                      onClick={handleDeleteTask}
-                    >
-                      Delete
-                    </Button>
-                    <Button
-                      variant="default"
-                      size="xs"
-                      className="w-full"
-                      onClick={handleSaveTask}
-                      disabled={
-                        selectedTab.data == editedTask || !editedTask?.name
-                      }
-                    >
-                      Save
-                    </Button>
-                  </div>
+                  {selectedTab.data ? (
+                    <div className="flex gap-2 px-6">
+                      <Button
+                        variant="destructive"
+                        size="xs"
+                        className="w-full"
+                        onClick={handleDeleteTask}
+                      >
+                        Delete
+                      </Button>
+                      <Button
+                        variant="default"
+                        size="xs"
+                        className="w-full"
+                        onClick={handleSaveTask}
+                        disabled={
+                          selectedTab.data == editedTask || !editedTask?.name
+                        }
+                      >
+                        Save
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="flex gap-2 px-6">
+                      <Button
+                        variant="secondary"
+                        size="xs"
+                        className="w-full"
+                        onClick={() => setSelectedTab("default")}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        variant="default"
+                        size="xs"
+                        className="w-full"
+                        onClick={handleSaveTask}
+                      >
+                        Save
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
