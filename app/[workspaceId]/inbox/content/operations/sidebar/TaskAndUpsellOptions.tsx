@@ -44,7 +44,6 @@ export const TaskAndUpsellOptions = ({
         <DropdownMenu open={isOpen} onOpenChange={() => setIsOpen(!isOpen)}>
           <DropdownMenuTrigger asChild>
             <div className="flex items-center gap-1 w-fit rounded-md hover:bg-hover hover:cursor-pointer p-1">
-              {icon}
               {MainData}
               <ChevronDownIcon className="size-fit text-icon-tertiary" />
             </div>
