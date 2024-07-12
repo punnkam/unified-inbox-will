@@ -113,6 +113,32 @@
       width: 0px;
     }
   }
+
+  /* Collapse animations for inbox ops right sidebar */
+  .CollapsibleContentOpsRight[data-state="open"] {
+    animation: slideRightBig 250ms ease-out;
+  }
+  .CollapsibleContentOpsRight[data-state="closed"] {
+    animation: slideLeftBig 250ms ease-out;
+  }
+
+  @keyframes slideRightBig {
+    from {
+      width: 0px;
+    }
+    to {
+      width: 400px;
+    }
+  }
+
+  @keyframes slideLeftBig {
+    from {
+      width: 400px;
+    }
+    to {
+      width: 0px;
+    }
+  }
 }
 
 /* Custom scrollbar classes */

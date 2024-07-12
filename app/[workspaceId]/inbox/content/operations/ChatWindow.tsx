@@ -30,6 +30,7 @@ import { OperationsRightSidebar } from "./OperationsRightSidebar";
 import { AiReply } from "./AiReply";
 import { InChatActivity } from "../components/InChatActivity";
 import { useOpsRightSidebar } from "../../OpsRightSidebarContext";
+import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
 
 export const ChatWindow = ({
   conversationData,
@@ -43,7 +44,7 @@ export const ChatWindow = ({
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const { setView } = useTableContext();
-  const { setSelectedTab } = useOpsRightSidebar();
+  const { setSelectedTab, isOpen } = useOpsRightSidebar();
 
   const addMessage = (newMessage: MessageItem) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -309,12 +310,16 @@ export const ChatWindow = ({
           </div>
         </div>
       </div>
-      <OperationsRightSidebar
-        conversationData={conversationData}
-        onTagClick={handleTagClick}
-        selectedTagId={selectedTagId}
-        addMessage={addMessage}
-      />
+      <Collapsible open={isOpen}>
+        <CollapsibleContent className="CollapsibleContentOpsRight">
+          <OperationsRightSidebar
+            conversationData={conversationData}
+            onTagClick={handleTagClick}
+            selectedTagId={selectedTagId}
+            addMessage={addMessage}
+          />
+        </CollapsibleContent>
+      </Collapsible>
     </div>
   );
 };
