@@ -6,12 +6,14 @@ export const Avatar = ({
   image,
   greenDot,
 }: {
-  size: "xxs" | "xs" | "small" | "medium" | "large";
+  size: "3xs" | "xxs" | "xs" | "small" | "medium" | "large";
   image?: string;
   greenDot?: boolean;
 }) => {
   const sizeClass =
-    size === "xxs"
+    size === "3xs"
+      ? "size-[16px] min-w-[16px] min-h-[16px]"
+      : size === "xxs"
       ? "size-[18px] min-w-[18px] min-h-[18px]"
       : size === "xs"
       ? "size-[20px] min-w-[20px] min-h-[20px]"
@@ -38,6 +40,12 @@ export const Avatar = ({
         >
           <User03Icon className="size-fit text-icon-tertiary" />
         </div>
+      )}
+      {greenDot && size === "3xs" && (
+        <div className="absolute bottom-[1px] right-0 size-[4px] rounded-full bg-icon-success"></div>
+      )}
+      {greenDot && size === "xxs" && (
+        <div className="absolute bottom-[1px] right-0 size-[4px] rounded-full bg-icon-success"></div>
       )}
       {greenDot && size === "small" && (
         <div className="absolute bottom-[1px] right-0 size-[6px] rounded-full bg-icon-success"></div>

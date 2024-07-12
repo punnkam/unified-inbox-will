@@ -14,6 +14,7 @@ import {
   MessageItem,
   UnifiedConversationType,
   fakeCallData,
+  fakeMembersData,
 } from "@/lib/realDataSchema";
 import { NotesButton } from "./NotesButton";
 import { ChatSidebarButton } from "./ChatSidebarButton";
@@ -33,6 +34,7 @@ import { InChatActivity } from "./sidebar/InChatActivity";
 import { useOpsRightSidebar } from "../../OpsRightSidebarContext";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Notes } from "./sidebar/Notes";
+import { MultiplayerTyping } from "./MultiplayerTyping";
 
 export const ChatWindow = ({
   conversationData,
@@ -301,11 +303,22 @@ export const ChatWindow = ({
                 <div className="flex items-center justify-between">
                   {/* Teach your AI button */}
                   <div
-                    className="h-9 text-secondary py-2 flex items-center gap-2 text-subtitle-xs hover:cursor-pointer hover:text-primary"
+                    className="h-9 text-secondary py-2 flex items-center gap-2 text-subtitle-xs hover:cursor-pointer hover:text-primary text-nowrap"
                     onClick={handleTrainAI}
                   >
                     Teach your AI
                     <KeyboardShortcut shortcut="K" />
+                  </div>
+
+                  {/* Multiplayer typing */}
+                  <div className="w-full px-4">
+                    <MultiplayerTyping
+                      membersTyping={[
+                        fakeMembersData[0],
+                        fakeMembersData[1],
+                        fakeMembersData[2],
+                      ]}
+                    />
                   </div>
 
                   {/* Mark as done button */}
