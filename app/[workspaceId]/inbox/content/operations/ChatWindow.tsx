@@ -41,6 +41,7 @@ import {
 } from "@/components/ui/sheet";
 import { Notes } from "./sidebar/Notes";
 import { MultiplayerTyping } from "./MultiplayerTyping";
+import { MessageTypeDropdown } from "./MessageTypeDropdown";
 
 export const ChatWindow = ({
   conversationData,
@@ -49,6 +50,8 @@ export const ChatWindow = ({
 }) => {
   // local state for messages
   const [messages, setMessages] = useState<MessageItem[]>([]);
+  const [selectedMessageType, setSelectedMessageType] =
+    useState<UnifiedConversationType>(conversationData.conversationType!);
   const [selectedTagId, setSelectedTagId] = useState<number | null>(null);
   const [isNotesOpen, setIsNotesOpen] = useState(false);
 
@@ -80,6 +83,7 @@ export const ChatWindow = ({
   // Use useEffect to load the messages state
   useEffect(() => {
     setMessages(conversationData.allMessages || []);
+    setSelectedMessageType(conversationData.conversationType!);
   }, [conversationData]);
 
   // Use useEffect to update the context view
@@ -114,6 +118,19 @@ export const ChatWindow = ({
     }
   };
 
+  const handleInboxMessageTypeChange = (
+    newMessageType: UnifiedConversationType
+  ) => {
+    setSelectedMessageType(newMessageType);
+
+    // I have not hooked this up to filtering yet - as i am not sure if there is an "all" state for messages type
+    // if so this will need to be updated
+    // But currently no design - so I am just using the same dropdown as the chat input
+
+    // TODO: handle this
+    toast.success("Changed message type to " + newMessageType);
+  };
+
   return (
     <div className="h-full flex">
       <div
@@ -136,19 +153,12 @@ export const ChatWindow = ({
 
           {/* Right side of header */}
           <div className="flex items-center gap-3">
-            {/* TODO: (Slack) I assume this is supposed to be some kind of a dropdown (it is not in designs) */}
-            <div className="p-3">
-              <div className="flex items-center gap-2">
-                <SlackIcon className="size-[16px]" />
-                <div className="flex items-center gap-2">
-                  <p className="text-subtitle-sm text-secondary">Slack</p>
-                  <KeyboardShortcut shortcut="T" />
-                  {/* <div className="size-[16px]"> */}
-                  <ChevronDownIcon />
-                  {/* </div> */}
-                </div>
-              </div>
-            </div>
+            <MessageTypeDropdown
+              messageType={selectedMessageType!}
+              setMessageType={handleInboxMessageTypeChange}
+              enableHotkey={true}
+              chatWindow={true}
+            />
 
             {/* Divider */}
             <div className="border-r border-secondary h-[28px]"></div>
