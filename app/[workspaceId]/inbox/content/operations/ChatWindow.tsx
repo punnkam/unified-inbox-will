@@ -59,7 +59,7 @@ export const ChatWindow = ({
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const { setView } = useTableContext();
-  const { setSelectedTab, isOpen } = useOpsRightSidebar();
+  const { setSelectedTab, isOpen, toggleSidebar } = useOpsRightSidebar();
 
   const addMessage = (newMessage: MessageItem) => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -311,7 +311,8 @@ export const ChatWindow = ({
                   icon={<File05Icon className="h-5" />}
                   action="notes"
                   onAction={() => {
-                    setSelectedTab({ type: "notes", data: null });
+                    setIsNotesOpen(true);
+                    if (!isOpen) toggleSidebar();
                   }}
                 />
               </div>
