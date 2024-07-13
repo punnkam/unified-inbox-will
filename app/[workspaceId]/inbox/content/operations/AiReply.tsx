@@ -92,7 +92,7 @@ export const AiReply = ({
   return (
     <div
       className={cn(
-        "self-end flex flex-col gap-5 p-4 border border-primary rounded-xl w-[384px]",
+        "self-end flex flex-col gap-5 p-4 border border-primary rounded-xl w-[384px] mt-5",
         !isOpen && "hidden"
       )}
     >

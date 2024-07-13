@@ -42,6 +42,7 @@ import {
 import { Notes } from "./sidebar/Notes";
 import { MultiplayerTyping } from "./MultiplayerTyping";
 import { MessageTypeDropdown } from "./MessageTypeDropdown";
+import clsx from "clsx";
 
 export const ChatWindow = ({
   conversationData,
@@ -191,7 +192,7 @@ export const ChatWindow = ({
             {/* Chat window */}
             <AnimatePresence initial={false}>
               <div
-                className="h-full flex flex-col gap-5 px-8 overflow-auto"
+                className="h-full flex flex-col px-8 overflow-auto"
                 ref={chatContainerRef}
               >
                 {messages?.reduce<React.ReactNode[]>(
@@ -225,18 +226,29 @@ export const ChatWindow = ({
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
-                          className="text-center text-bold-section text-secondary uppercase"
+                          className={clsx(
+                            "text-center text-bold-section text-secondary uppercase",
+                            acc.length > 0 && "pt-5"
+                          )}
                         >
                           {dayHeader}
                         </motion.div>
                       );
                     }
 
+                    const isSameAuthorAsPrevious =
+                      previousMessage &&
+                      previousMessage.author === message.author &&
+                      messageDay === previousMessageDay;
+
                     acc.push(
                       <motion.div
                         key={message.id}
                         id={`message-${message.id}`}
-                        className="flex flex-col gap-2"
+                        className={clsx(
+                          "flex flex-col",
+                          isSameAuthorAsPrevious ? "pt-2" : "pt-5"
+                        )}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}

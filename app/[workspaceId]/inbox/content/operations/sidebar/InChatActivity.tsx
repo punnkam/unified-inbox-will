@@ -22,7 +22,7 @@ export const InChatActivity = ({
   };
 
   return (
-    <div className="self-end flex items-center gap-2 py-3 pr-4 pl-3 border border-primary rounded-lg w-min">
+    <div className="self-end flex items-center gap-2 py-3 pr-4 pl-3 border border-primary rounded-lg w-min mt-5">
       <div className="flex space-x-[-12px] items-center">
         {image && <Avatar size={"medium"} image={image} />}
         {icon && (
