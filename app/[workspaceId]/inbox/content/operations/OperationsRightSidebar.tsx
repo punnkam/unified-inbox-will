@@ -141,8 +141,11 @@ export const OperationsRightSidebar = ({
         if (upsell.id === upsellId) {
           const updatedUpsell = { ...upsell, [key]: value };
 
-          // Update the selected tab data (so the status dropdown updates)
-          setSelectedTab({ type: "upsell", data: updatedUpsell });
+          if (selectedTab == "upsell") {
+            // Update the selected tab data (so the status dropdown updates)
+            setSelectedTab({ type: "upsell", data: updatedUpsell });
+          }
+
           return updatedUpsell;
         }
         return upsell;
@@ -165,8 +168,11 @@ export const OperationsRightSidebar = ({
 
           console.log("Updated task", updatedTask);
 
-          // Update the selected tab data (so the status dropdown updates)
-          setSelectedTab({ type: "task", data: updatedTask });
+          if (selectedTab == "task") {
+            // Update the selected tab data (so the status dropdown updates)
+            setSelectedTab({ type: "task", data: updatedTask });
+          }
+
           return updatedTask;
         }
         return task;

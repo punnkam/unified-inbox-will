@@ -27,7 +27,11 @@ export const StatusDropdown = ({
   };
 
   return (
-    <DropdownMenuContent align={align} className="text-subtitle-xs p-0">
+    <DropdownMenuContent
+      align={align}
+      className="text-subtitle-xs p-0"
+      onClick={(e) => e.stopPropagation()}
+    >
       <Command>
         <CommandInput placeholder={`Search`} autoFocus={true} />
         <CommandList>
