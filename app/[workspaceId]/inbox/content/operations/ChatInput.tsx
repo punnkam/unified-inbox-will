@@ -615,7 +615,7 @@ export const ChatInput = ({
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent className="px-3 py-[6px]">
-                      <p className="text-subtitle-2xs">Zap</p>
+                      <p className="text-subtitle-2xs">Saved replies</p>
                     </TooltipContent>
                   </Tooltip>
 
@@ -772,7 +772,26 @@ export const ChatInput = ({
                 minHeight={80}
                 autoFocus
               />
-              <div className="flex justify-end items-center">
+              <div className="flex justify-between items-center">
+                <div className="flex gap-2">
+                  {/* Saved replies */}
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Button
+                        size={"iconSm"}
+                        variant={"ghost"}
+                        onClick={() => toggleSavedReplies()}
+                        className={isSavedRepliesOpen ? "bg-hover" : ""}
+                      >
+                        <ZapIcon className="h-[15px] text-icon-tertiary" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent className="px-3 py-[6px]">
+                      <p className="text-subtitle-2xs">Saved replies</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
+
                 <div className="flex items-center gap-1">
                   <MessageTypeDropdown
                     messageType={messageType}
