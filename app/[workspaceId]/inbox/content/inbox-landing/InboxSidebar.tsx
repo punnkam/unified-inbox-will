@@ -27,6 +27,7 @@ import cn from "classnames";
 import { colorMap } from "@/lib/types";
 import { useWindowSize } from "@/lib/hooks/useWindowSize";
 import { useSearchParams } from "next/navigation";
+import CountBadge from "@/components/custom/CountBadge";
 
 export const InboxSidebar = () => {
   const pathname = usePathname();
@@ -54,7 +55,7 @@ export const InboxSidebar = () => {
 
         <div className="flex flex-col justify-between">
           <div className="flex flex-col gap-[32px]">
-            <div>
+            <div className="flex flex-col space-y-[4px]">
               <InboxSideBarOption
                 path={`/${workspaceId}/inbox/all-conversations`}
                 name="All conversations"
@@ -63,6 +64,7 @@ export const InboxSidebar = () => {
                 )}
                 icon={<MessageChatCircleIcon />}
                 count={13}
+                className="h-9"
               />
               <InboxSideBarOption
                 path={`/${workspaceId}/inbox/your-conversations`}
@@ -71,6 +73,7 @@ export const InboxSidebar = () => {
                   `/${workspaceId}/inbox/your-conversations`
                 )}
                 image="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                className="h-9"
               />
               <InboxSideBarOption
                 path={`/${workspaceId}/inbox/unassigned-conversations`}
@@ -79,6 +82,7 @@ export const InboxSidebar = () => {
                   `/${workspaceId}/inbox/unassigned-conversations`
                 )}
                 icon={<User03Icon />}
+                className="h-9"
               />
             </div>
 
@@ -92,7 +96,7 @@ export const InboxSidebar = () => {
                   <AccordionTrigger className="px-1 rounded-md py-0.5">
                     Reservation labels
                   </AccordionTrigger>
-                  <AccordionContent className="pb-0 pt-2">
+                  <AccordionContent className="pb-0 pt-2 flex flex-col space-y-[4px]">
                     {fakeReservationLabels.map((label) => (
                       <InboxSideBarOption
                         key={label.id}
@@ -121,7 +125,7 @@ export const InboxSidebar = () => {
                     Listing groups
                   </AccordionTrigger>
 
-                  <AccordionContent className="pb-0 pt-2">
+                  <AccordionContent className="pb-0 pt-2 flex flex-col space-y-[4px]">
                     {fakeListingGroupsData.map((group) => (
                       <InboxSideBarOption
                         key={group.id}
@@ -158,6 +162,7 @@ export const InboxSideBarOption = ({
   count,
   color,
   emoji,
+  className,
 }: {
   path: string;
   name: string;
@@ -167,6 +172,7 @@ export const InboxSideBarOption = ({
   emoji?: string;
   count?: number;
   color?: keyof typeof colorMap;
+  className?: string;
 }) => {
   const { toggleSidebar } = useSidebar();
   const size = useWindowSize();
@@ -176,7 +182,8 @@ export const InboxSideBarOption = ({
       <div
         className={cn(
           "flex items-center justify-between w-full px-2 py-1 h-8 active:bg-pressed rounded-md gap-2",
-          selected ? "bg-selected hover:bg-selected" : "hover:bg-hover"
+          selected ? "bg-selected hover:bg-selected" : "hover:bg-hover",
+          className
         )}
         onClick={() => {
           if (size.width! <= 705) {
@@ -184,7 +191,7 @@ export const InboxSideBarOption = ({
           }
         }}
       >
-        <div className="text-subtitle-sm flex items-center gap-2">
+        <div className="text-subtitle-sidebar flex items-center gap-2">
           {color && (
             <div className={cn(`w-2 h-2 rounded-full`, colorMap[color])}></div>
           )}
@@ -215,15 +222,8 @@ export const InboxSideBarOption = ({
           )}
           <p>{name}</p>
         </div>
-        {count && (
-          <div
-            className={cn(
-              "rounded-lg text-subtitle-xs h-6 w-[28px] flex items-center justify-center",
-              selected ? "text-brand bg-primary" : "text-tertiary"
-            )}
-          >
-            {count}
-          </div>
+        {count !== undefined && (
+          <CountBadge count={count} selected={selected} />
         )}
       </div>
     </Link>

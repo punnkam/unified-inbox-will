@@ -51,6 +51,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useHotkeys } from "react-hotkeys-hook";
 import { AssignMemberComboBox } from "../components/AssignMemberCombobox";
 import clsx from "clsx";
+import CountBadge from "@/components/custom/CountBadge";
 import { useRouter } from "next/navigation";
 import {
   handleMarkDone,
@@ -99,6 +100,8 @@ export const InboxLandingView = ({
     null
   );
 
+  const [attributesOpen, setAttributesOpen] = useState(false);
+
   const { columnFilters, setColumnFilters, setView, setData, setColumns } =
     useTableContext();
 
@@ -144,7 +147,7 @@ export const InboxLandingView = ({
           <div className="flex flex-wrap md:flex-nowrap gap-2 items-center justify-between">
             <div className="flex items-center gap-3">
               <SidebarTrigger />
-              <p className="text-title-3xl">{title}</p>
+              <p className="text-title-3xl text-nowrap">{title}</p>
             </div>
             <div className="flex items-center relative w-full sm:w-fit">
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
@@ -220,16 +223,13 @@ export const InboxLandingView = ({
                       )}
                     >
                       Todo
-                      <span
-                        className={cn(
-                          "h-6 w-[28px] rounded-lg flex items-center justify-center text-tertiary text-subtitle-xs",
+                      <CountBadge
+                        count={17}
+                        selected={
                           table.getColumn("messageStatus")?.getFilterValue() ===
-                            false &&
-                            "text-brand text-subtitle-xs bg-primary border border-primary"
-                        )}
-                      >
-                        17
-                      </span>
+                          false
+                        }
+                      />
                     </p>
                     {table.getColumn("messageStatus")?.getFilterValue() ===
                       false && (
@@ -262,7 +262,10 @@ export const InboxLandingView = ({
             </Tabs>
 
             <div className="flex items-center gap-2">
-              <DropdownMenu>
+              <DropdownMenu
+                open={attributesOpen}
+                onOpenChange={() => setAttributesOpen(!attributesOpen)}
+              >
                 <DropdownMenuTrigger asChild className="flex md:hidden">
                   <Button variant="ghost" size={"icon"} className="w-fit">
                     <AttributesIcon className="text-icon-secondary size-[15px] mr-2" />
@@ -282,12 +285,7 @@ export const InboxLandingView = ({
                     <XIcon
                       className="h-4 w-4 text-icon-tertiary hover:text-icon-secondary hover:cursor-pointer"
                       onClick={() => {
-                        table
-                          .getAllColumns()
-                          .filter((column) => column.getCanHide())
-                          .map((column) => {
-                            column.toggleVisibility(true);
-                          });
+                        setAttributesOpen(false);
                       }}
                     />
                   </div>
@@ -299,7 +297,10 @@ export const InboxLandingView = ({
                         return (
                           <div
                             key={column.id}
-                            className="p-2 hover:bg-hover rounded-md cursor-pointer"
+                            className={cn(
+                              "p-2 hover:bg-hover rounded-md cursor-pointer",
+                              !column.getIsVisible() && "opacity-50"
+                            )}
                             onClick={() =>
                               column.toggleVisibility(!column.getIsVisible())
                             }
@@ -339,7 +340,10 @@ export const InboxLandingView = ({
             </div>
           </div>
         </div>
-        <div className="bg-primary shadow-inner h-full overflow-y-auto">
+        <div
+          className="bg-primary h-full overflow-y-auto"
+          style={{ boxShadow: "inset 0 14px 10px -6px rgba(0, 0, 0, 0.03)" }}
+        >
           <FilterTags
             clearFilters={clearFilters}
             removeFilter={removeFilter}
@@ -441,7 +445,8 @@ export const InboxLandingView = ({
         {table.getSelectedRowModel().rows.length > 0 && (
           <motion.div
             key={"actionBar"}
-            className="absolute  bottom-[32px] left-1/2 w-fit shadow-lg rounded-xl bg-primary border border-primary flex items-center text-subtitle-xs"
+            className="absolute  bottom-[40px] left-1/2 w-fit rounded-xl bg-primary border border-secondary flex items-center text-subtitle-xs"
+            style={{ boxShadow: "0px 4px 30px 0px rgba(0, 0, 0, 0.25)" }}
             initial={{ y: 32, x: "-50%", opacity: 0 }}
             animate={{ y: 0, x: "-50%", opacity: 1 }}
             exit={{ y: 32, x: "-50%", opacity: 0 }}

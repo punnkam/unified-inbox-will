@@ -75,6 +75,14 @@
     font-style: normal;
   }
 
+  @font-face {
+    font-family: "Instrument Sans";
+    src: url("./fonts/InstrumentSans-Variable.ttf") format("truetype");
+    font-weight: 400 700;
+    font-display: swap;
+    font-style: normal;
+  }
+
   * {
     @apply border-border;
   }
@@ -200,4 +208,45 @@ audio::-webkit-media-controls-volume-slider {
   border-radius: 50%;
   padding-left: 8px;
   padding-right: 8px;
+}
+
+/* Apply Instrument Sans font to all titles */
+.text-title-6xl {
+  font-family: "Instrument Sans";
+}
+
+.text-title-5xl {
+  font-family: "Instrument Sans";
+}
+
+.text-title-4xl {
+  font-family: "Instrument Sans";
+}
+
+.text-title-3xl {
+  font-family: "Instrument Sans";
+}
+
+.text-title-2xl {
+  font-family: "Instrument Sans";
+}
+
+.text-title-xl {
+  font-family: "Instrument Sans";
+}
+
+.text-title-05xl {
+  font-family: "Instrument Sans";
+}
+
+.text-title-lg {
+  font-family: "Instrument Sans";
+}
+
+.text-title-md {
+  font-family: "Instrument Sans";
+}
+
+.text-title-sm {
+  font-family: "Instrument Sans";
 }

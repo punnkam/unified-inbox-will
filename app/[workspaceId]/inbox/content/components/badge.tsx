@@ -60,12 +60,15 @@ export const Badge = ({
   const foundIcon = fakeIconsData.find((iconSearch) => iconSearch.id === icon);
 
   return (
-    <div className={cn("py-2 md:px-2 md:py-0", className)}>
+    <div className={cn("py-2 md:px-2 md:py-0 overflow-visible", className)}>
       <div
         className={cn(
           "flex-shrink-0 p-4 flex flex-col gap-5 border border-primary rounded-xl bg-primary hover:border-secondary cursor-pointer",
           loading && "opacity-50"
         )}
+        style={{
+          boxShadow: "0px 4px 50px rgba(0, 0, 0, 0.02)"
+        }}
         onClick={() => {
           !isDialogOpen &&
             handleSelect({
@@ -84,15 +87,12 @@ export const Badge = ({
           <div className="flex items-center gap-2">
             <div
               className={clsx(
-                "flex items-center justify-center h-9 w-9 min-h-9 min-w-9 text-white rounded-lg",
-                iconType === "error" && "bg-error",
-                iconType === "success" && "bg-success",
-                iconType === "active" && "bg-icon-active",
-                iconType === "tertiary" && "bg-icon-tertiary"
+                "flex items-center justify-center h-8 w-8 min-h-8 min-w-8 text-white rounded-lg",
+                iconType === "error" && "bg-gray-800",
+                iconType === "success" && "bg-blue-800",
+                iconType === "active" && "bg-purple-800",
+                iconType === "tertiary" && "bg-cyan-800"
               )}
-              style={{
-                boxShadow: "0px 4px 4px 0px rgba(196, 217, 255, 0.25) inset",
-              }}
             >
               <IconComponent icon={foundIcon?.icon || fakeIconsData[0].icon} />
             </div>
