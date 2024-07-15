@@ -214,7 +214,7 @@ export const InboxLandingView = ({
                   onClick={() => handleTabChange(table, false)}
                 >
                   <div className="relative">
-                    <p
+                    <div
                       className={clsx(
                         "flex items-center gap-2 h-9 text-title-sm",
                         // Add active styles
@@ -230,7 +230,7 @@ export const InboxLandingView = ({
                           false
                         }
                       />
-                    </p>
+                    </div>
                     {table.getColumn("messageStatus")?.getFilterValue() ===
                       false && (
                       <div className="h-[3px] mt-[11px] right-0 left-0 w-full bg-brand absolute" />
