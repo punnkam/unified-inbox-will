@@ -14,6 +14,7 @@ export const InboxSideBarOption = ({
   count,
   color,
   emoji,
+  className,
 }: {
   path: string;
   name: string;
@@ -23,6 +24,7 @@ export const InboxSideBarOption = ({
   emoji?: string;
   count?: number;
   color?: keyof typeof colorMap;
+  className?: string;
 }) => {
   const { toggleSidebar } = useSidebar();
   const size = useWindowSize();
@@ -31,8 +33,9 @@ export const InboxSideBarOption = ({
     <Link href={path}>
       <div
         className={cn(
-          "flex items-center justify-between w-full px-2 py-1 h-9 active:bg-pressed rounded-md gap-2",
-          selected ? "bg-selected hover:bg-selected" : "hover:bg-hover"
+          "flex items-center justify-between w-full px-2 py-1 h-8 active:bg-pressed rounded-md gap-2",
+          selected ? "bg-selected hover:bg-selected" : "hover:bg-hover",
+          className
         )}
         onClick={() => {
           if (size.width! <= 705) {
@@ -40,7 +43,7 @@ export const InboxSideBarOption = ({
           }
         }}
       >
-        <div className="text-subtitle-sm flex items-center gap-2">
+        <div className="text-subtitle-sidebar flex items-center gap-2">
           {color && (
             <div className={cn(`w-2 h-2 rounded-full`, colorMap[color])}></div>
           )}

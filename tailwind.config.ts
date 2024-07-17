@@ -178,6 +178,7 @@ const config = {
         "subtitle-lg": ["18px", { lineHeight: "24px", fontWeight: 500 }],
         "subtitle-md": ["16px", { lineHeight: "21.6px", fontWeight: 500 }],
         "subtitle-sm": ["14px", { lineHeight: "19.2px", fontWeight: 500 }],
+        "subtitle-sidebar": ["13px", { lineHeight: "15.6px", fontWeight: 500 }],
         "subtitle-xs": ["12px", { lineHeight: "16.8px", fontWeight: 500 }],
         "subtitle-2xs": ["10px", { lineHeight: "14.4px", fontWeight: 500 }],
         "subtitle-3xs": ["10px", { lineHeight: "12px", fontWeight: 500 }],
