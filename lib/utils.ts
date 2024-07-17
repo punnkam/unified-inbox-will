@@ -1,44 +1,52 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { AllFilters, FilterValue, FilterValues } from "@/lib/realDataSchema";
-import { ColumnFiltersState } from "@tanstack/react-table";
+import DOMPurify from "dompurify";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-// function to handle selecting a filter value and updating table states
-export const handleSelect = ({
-  filter,
-  label,
-  columnId,
-  columnFilters,
-  setColumnFilters,
-}: {
-  filter: keyof AllFilters;
-  label: FilterValue;
-  columnId: string;
-  columnFilters: ColumnFiltersState;
-  setColumnFilters: (columnId: string, value: any) => void;
-}) => {
-  // Find the current filter parent and current values for the column
-  const currentFilter = columnFilters.find((f) => f.id === columnId)?.value as
-    | FilterValues
-    | undefined;
+export const sanitizeHTML = (html: string) => {
+  if (typeof window !== "undefined") {
+    const purify = DOMPurify(window);
+    return purify.sanitize(html, {
+      USE_PROFILES: { html: true },
+    });
+  }
+  return html;
+};
 
-  // Determine the new filter values for the specified filter parent
-  const newFilterValues = currentFilter?.[filter]
-    ? currentFilter[filter].some((item) => item.id === label.id)
-      ? // If the value is already included, remove it
-        currentFilter[filter].filter((item) => item.id !== label.id)
-      : // If the value is not included, add it
-        [...currentFilter[filter], label]
-    : // If there are no current filters for this filter parent, start a new array with the label
-      [label];
+export const formatTimestampTo12Hour = (date: Date | undefined) => {
+  if (!date) return "";
+  const hours = date.getHours();
+  const hour = hours % 12 || 12;
+  const ampm = hours < 12 ? "AM" : "PM";
+  return `${hour.toString().padStart(2, "0")}:00 ${ampm}`;
+};
 
-  // Create a new filter object with the updated filter values
-  const newFilter = { [filter]: newFilterValues };
+// Generate an array of time options for the dropdown
+export const generateTimeOptions = () => {
+  const options = [];
+  for (let i = 0; i < 24; i++) {
+    const hour = i % 12 || 12;
+    const ampm = i < 12 ? "AM" : "PM";
+    options.push(`${hour.toString().padStart(2, "0")}:00 ${ampm}`);
+  }
+  return options;
+};
 
-  // Update the column filters by merging the current filter object with the new filter object
-  setColumnFilters(columnId, { ...currentFilter, ...newFilter });
+// Take in a date and change the hour to the specified hour
+export const handleValueChange = (selectedValue: string, value?: Date) => {
+  const [time, period] = selectedValue.split(" ");
+  const [hours] = time.split(":");
+  const date = value || new Date();
+  let hour = parseInt(hours, 10);
+
+  if (period === "PM" && hour !== 12) hour += 12;
+  if (period === "AM" && hour === 12) hour = 0;
+
+  date.setHours(hour, 0, 0, 0);
+  console.log("Date:", date);
+
+  return date;
 };

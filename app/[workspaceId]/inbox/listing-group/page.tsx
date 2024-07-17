@@ -1,5 +1,4 @@
-import { InboxLandingPage } from "../../content/inbox-landing/InboxLandingPage";
-import { columns } from "../../content/inbox-landing/columns";
+import { columns } from "../content/inbox-landing/columns";
 import {
   fetchAvailableMembers,
   fetchConversationTags,
@@ -8,14 +7,17 @@ import {
 } from "@/app/actions";
 import { ConversationTag } from "@/lib/types";
 import { redirect } from "next/navigation";
+import { InboxLandingView } from "../content/inbox-landing/InboxLandingView";
 
 export default async function AllConversationsPage({
-  params: { workspaceId, groupId },
+  params: { workspaceId },
+  searchParams: { group },
 }: {
-  params: { workspaceId: string; groupId: string };
+  params: { workspaceId: string };
+  searchParams: { group: string };
 }) {
   // fetch the listing group data
-  const listingGroupData = await fetchListingGroup(groupId);
+  const listingGroupData = await fetchListingGroup(group);
 
   if (
     !listingGroupData ||
@@ -27,7 +29,7 @@ export default async function AllConversationsPage({
   }
 
   // fetch the conversations with the current reservation label
-  const data = await fetchListingGroupConversations(workspaceId, groupId);
+  const data = await fetchListingGroupConversations(workspaceId, group);
 
   if (!data || !data.success || !data.data) {
     return null;
@@ -62,7 +64,7 @@ export default async function AllConversationsPage({
   const availableMembers = await fetchAvailableMembers(workspaceId);
 
   return (
-    <InboxLandingPage
+    <InboxLandingView
       title={listingGroupData.data.name}
       columns={columns}
       data={data.data}

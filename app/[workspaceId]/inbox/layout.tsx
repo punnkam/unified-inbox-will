@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { InboxSidebar } from "./InboxSidebar";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import { SidebarProvider, useSidebar } from "./SidebarContext";
+import { TableProvider } from "./TableContext";
+import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
+import { InboxSidebar } from "./content/inbox-landing/InboxSidebar";
 import { cn } from "@/lib/utils";
+import { useTableContext } from "./TableContext";
+import { InboxChatSidebar } from "./content/operations/InboxChatSidebar";
+import { OpsRightSidebarProvider } from "./OpsRightSidebarContext";
 
 export default function InboxLayout({
   children,
@@ -16,35 +16,67 @@ export default function InboxLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <SidebarProvider>
-      <InboxLayoutContent>{children}</InboxLayoutContent>
-    </SidebarProvider>
+    <TableProvider>
+      <OpsRightSidebarProvider>
+        <SidebarProvider>
+          <InboxLayoutContent>{children}</InboxLayoutContent>
+        </SidebarProvider>
+      </OpsRightSidebarProvider>
+    </TableProvider>
   );
 }
 
 function InboxLayoutContent({ children }: { children: React.ReactNode }) {
   const { isOpen } = useSidebar();
+  const { view } = useTableContext();
 
-  return (
-    <Collapsible open={isOpen} className="space-y-2">
-      <div className="flex">
-        {/* Side bar */}
-        <CollapsibleContent className="CollapsibleContent space-y-2">
-          <InboxSidebar />
-        </CollapsibleContent>
+  if (view === "landing") {
+    return (
+      <Collapsible open={isOpen} className="space-y-2">
+        <div className="flex">
+          {/* Side bar */}
+          <CollapsibleContent className="CollapsibleContent space-y-2">
+            <InboxSidebar />
+          </CollapsibleContent>
 
-        {/* Page Content */}
-        <div
-          className={cn(
-            "h-screen flex-grow bg-primary md:overflow-clip relative",
-            isOpen
-              ? "w-0 overflow-hidden sm:w-[calc(100vw-80px-280px)]"
-              : "w-[calc(100vw-80px)] sm:w-full"
-          )}
-        >
-          {children}
+          {/* Page Content */}
+          <div
+            className={cn(
+              "h-screen flex-grow bg-primary md:overflow-clip relative",
+              isOpen
+                ? "w-0 overflow-hidden sm:w-[calc(100vw-80px-280px)]"
+                : "w-[calc(100vw-80px)] sm:w-full"
+            )}
+          >
+            {children}
+          </div>
         </div>
-      </div>
-    </Collapsible>
-  );
+      </Collapsible>
+    );
+  }
+
+  if (view === "chat") {
+    return (
+      <Collapsible open={isOpen} className="space-y-2">
+        <div className="flex">
+          {/* Side bar */}
+          {/* <CollapsibleContent className="CollapsibleContent space-y-2"> */}
+          <InboxChatSidebar />
+          {/* </CollapsibleContent> */}
+
+          {/* Page Content */}
+          <div
+            className={cn(
+              "h-screen flex-grow bg-primary md:overflow-clip relative",
+              isOpen
+                ? "w-0 overflow-hidden sm:w-[calc(100vw-80px-300px)]"
+                : "w-[calc(100vw-80px)]"
+            )}
+          >
+            {children}
+          </div>
+        </div>
+      </Collapsible>
+    );
+  }
 }

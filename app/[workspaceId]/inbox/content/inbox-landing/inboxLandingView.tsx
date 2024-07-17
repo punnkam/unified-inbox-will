@@ -12,8 +12,7 @@ import {
   VisibilityState,
   RowData,
 } from "@tanstack/react-table";
-import { Badge } from "../../components/badge";
-
+import { Badge } from "../components/badge";
 import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
@@ -28,7 +27,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { SearchIcon, XIcon } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs-inbox";
 import { SidebarTrigger } from "../../SidebarTrigger";
@@ -37,7 +36,6 @@ import { Conversation, ConversationTag, Member } from "@/lib/realDataSchema";
 import { Button } from "@/components/ui/button";
 import {
   TagIcon,
-  KeyIcon,
   AttributesIcon,
   EyeIcon,
   EyeOffIcon,
@@ -46,23 +44,26 @@ import {
   ContrastIcon,
   CheckCircleIcon,
 } from "@/components/icons/CustomIcons";
-import { FilterPopover } from "../../components/FilterPopover";
-import { FilterTags } from "../../components/filterTags";
+import { FilterPopover } from "../components/FilterPopover";
+import { FilterTags } from "../components/filterTags";
 import { KeyboardShortcut } from "@/components/custom/KeyBoardShortcut";
 import { AnimatePresence, motion } from "framer-motion";
-import { toast } from "sonner";
 import { useHotkeys } from "react-hotkeys-hook";
-import { AssignMemberComboBox } from "../../components/AssignMemberCombobox";
+import { AssignMemberComboBox } from "../components/AssignMemberCombobox";
 import clsx from "clsx";
 import CountBadge from "@/components/custom/CountBadge";
-
-// Add custom properties TableMeta (to let us see if row is hovered (for now))
-declare module "@tanstack/react-table" {
-  //allows us to define custom properties for our columns
-  interface TableMeta<TData extends RowData> {
-    hoverRow: string | null;
-  }
-}
+import { useRouter } from "next/navigation";
+import {
+  handleMarkDone,
+  handleAssign,
+  handleFilterChange,
+  handleMarkUnread,
+  handleSelect,
+  handleTabChange,
+  removeFilter,
+  clearFilters,
+} from "@/lib/tableUtils";
+import { useTableContext } from "../../TableContext";
 
 const AttributesIconMap = {
   "Reservation labels": <ContrastIcon className="size-4 text-icon-tertiary" />,
@@ -71,43 +72,48 @@ const AttributesIconMap = {
   Assignee: <User03Icon className="size-4 text-icon-tertiary" />,
 };
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+declare module "@tanstack/react-table" {
+  //allows us to define custom properties for our columns
+  interface TableMeta<TData extends RowData> {
+    hoverRow: string | null;
+  }
+}
+
+export const InboxLandingView = ({
+  title,
+  conversationLabels,
+  availableMembers,
+  columns,
+  data,
+  conversationPath,
+}: {
+  title: string;
   conversationLabels: (ConversationTag & {
     numberOfUses: number;
   })[];
   availableMembers: Member[];
-  title: string;
-}
-
-export function InboxLandingPage<TData, TValue>({
-  columns,
-  data,
-  conversationLabels,
-  availableMembers,
-  title,
-}: DataTableProps<TData, TValue>) {
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
-    {
-      id: "messageStatus",
-      value: false,
-    },
-  ]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
-    messageStatus: false,
-    guestName: false,
-  });
-  const [rowSelection, setRowSelection] = useState({});
-
+  columns: ColumnDef<Conversation>[];
+  data: Conversation[];
+  conversationPath?: string;
+}) => {
   const [currentRowHovered, setCurrentRowHovered] = useState<string | null>(
     null
   );
 
   const [attributesOpen, setAttributesOpen] = useState(false);
 
-  // hotkey hooks
-  useHotkeys("e", () => handleMarkDone());
+  const { columnFilters, setColumnFilters, setView, setData, setColumns } =
+    useTableContext();
+
+  // Use useEffect to update the context view
+  useEffect(() => {
+    // update the context view so we can handle loading states and sidebar
+    setView("landing");
+    setData(data);
+    setColumns(columns);
+  }, [setView]);
+
+  const router = useRouter();
 
   const table = useReactTable({
     data,
@@ -115,12 +121,8 @@ export function InboxLandingPage<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
     state: {
       columnFilters,
-      columnVisibility,
-      rowSelection,
     },
     meta: {
       // Pass a hover value so we can access in columns.tsx
@@ -135,117 +137,8 @@ export function InboxLandingPage<TData, TValue>({
     },
   });
 
-  // API: Function to handle mark selected rows as unread
-  const handleMarkUnread = () => {
-    const count = table.getSelectedRowModel().rows.length;
-
-    // If no rows are selected, return
-    if (count === 0) {
-      return;
-    }
-
-    table.getSelectedRowModel().rows.map((row) => {
-      const rowData = row.original as Conversation;
-      console.log("Mark as unread", rowData);
-
-      // Do something with the rows to mark them as unread
-
-      // Unselect the rows after update (either refresh or this manual way)
-      row.toggleSelected(false);
-    });
-
-    // Placeholder toast message
-    toast.success(`${count} conversations marked as unread`);
-  };
-
-  // API: Function to handle mark selected rows as done
-  const handleMarkDone = () => {
-    const count = table.getSelectedRowModel().rows.length;
-
-    // If no rows are selected, return
-    if (count === 0) {
-      return;
-    }
-
-    table.getSelectedRowModel().rows.map((row) => {
-      const rowData = row.original as Conversation;
-      console.log("Mark as done", rowData);
-
-      // Do something with the rows to mark them as done
-
-      // Unselect the rows after update (either refresh or this manual way)
-      row.toggleSelected(false);
-    });
-
-    // Placeholder toast message
-    toast.success(`${count} conversations marked as done`);
-  };
-
-  // API: Placeholder function to assign a member to selected rows
-  const handleAssign = (member: Member) => {
-    const count = table.getSelectedRowModel().rows.length;
-
-    // If no rows are selected, return
-    if (count === 0) {
-      return;
-    }
-
-    table.getSelectedRowModel().rows.map((row) => {
-      const rowData = row.original as Conversation;
-      console.log("Assign", rowData, "to", member);
-
-      // Do something with the rows to assign them to a member
-
-      // Unselect the rows after update (either refresh or this manual way)
-      row.toggleSelected(false);
-    });
-
-    // Placeholder toast message
-    toast.success(`${count} conversations assigned to ${member.name}`);
-  };
-
-  // Function to clear all filters except for search and tab
-  const clearFilters = () => {
-    columnFilters.forEach((filter) => {
-      if (
-        // guestName comes from search
-        // messageStatus is the tab
-        filter.id === "guestName" ||
-        filter.id === "messageStatus"
-      ) {
-        return;
-      }
-      table.getColumn(filter.id)?.setFilterValue(null);
-    });
-  };
-
-  const handleTabChange = (tab: boolean) => {
-    console.log("Tab change", tab);
-    table.getColumn("messageStatus")?.setFilterValue(tab);
-  };
-
-  // Helper for filtering dropdown
-  const handleFilterChange = (columnId: string, value: string) => {
-    table.getColumn(columnId)?.setFilterValue(value);
-  };
-
-  // Function to remove filter tag groups
-  const removeFilter = (columnId: string, filterKey: string) => {
-    setColumnFilters((prevFilters) =>
-      prevFilters.map((filter) => {
-        if (
-          filter.id === columnId &&
-          typeof filter.value === "object" &&
-          filter.value !== null
-        ) {
-          const newValue = { ...(filter.value as Record<string, unknown>) };
-          delete newValue[filterKey];
-          return { ...filter, value: newValue };
-        }
-        return filter;
-      })
-    );
-  };
+  // hotkey hooks
+  useHotkeys("e", () => handleMarkDone(table));
 
   return (
     <div className="h-full">
@@ -271,7 +164,7 @@ export function InboxLandingPage<TData, TValue>({
                     .getColumn("guestName")
                     ?.setFilterValue(event.target.value)
                 }
-                className="pl-10 rounded-xl w-full md:max-w-sm md:w-[300px]"
+                className="pl-10 rounded-xl w-full md:max-w-sm md:w-[300px] h-12"
               />
             </div>
           </div>
@@ -291,7 +184,7 @@ export function InboxLandingPage<TData, TValue>({
                     iconType={item.type.color}
                     percentage={-12}
                     setColumnFilters={(columnId, value) =>
-                      handleFilterChange(columnId, value)
+                      handleFilterChange(table, columnId, value)
                     }
                     columnFilters={columnFilters}
                     className={
@@ -318,10 +211,10 @@ export function InboxLandingPage<TData, TValue>({
               <TabsList>
                 <TabsTrigger
                   value="Todo"
-                  onClick={() => handleTabChange(false)}
+                  onClick={() => handleTabChange(table, false)}
                 >
                   <div className="relative">
-                    <p
+                    <div
                       className={clsx(
                         "flex items-center gap-2 h-9 text-title-sm",
                         // Add active styles
@@ -330,15 +223,24 @@ export function InboxLandingPage<TData, TValue>({
                       )}
                     >
                       Todo
-                      <CountBadge count={17} selected={table.getColumn("messageStatus")?.getFilterValue() === false} />
-                    </p>
+                      <CountBadge
+                        count={17}
+                        selected={
+                          table.getColumn("messageStatus")?.getFilterValue() ===
+                          false
+                        }
+                      />
+                    </div>
                     {table.getColumn("messageStatus")?.getFilterValue() ===
                       false && (
                       <div className="h-[3px] mt-[11px] right-0 left-0 w-full bg-brand absolute" />
                     )}
                   </div>
                 </TabsTrigger>
-                <TabsTrigger value="done" onClick={() => handleTabChange(true)}>
+                <TabsTrigger
+                  value="done"
+                  onClick={() => handleTabChange(table, true)}
+                >
                   <div className="relative">
                     <p
                       className={clsx(
@@ -430,21 +332,22 @@ export function InboxLandingPage<TData, TValue>({
               <FilterPopover
                 columnFilters={columnFilters}
                 setColumnFilters={(columnId, value) =>
-                  handleFilterChange(columnId, value)
+                  handleFilterChange(table, columnId, value)
                 }
                 clearFilters={clearFilters}
+                table={table}
               />
             </div>
           </div>
         </div>
-        <div 
+        <div
           className="bg-primary h-full overflow-y-auto"
           style={{ boxShadow: "inset 0 14px 10px -6px rgba(0, 0, 0, 0.03)" }}
         >
           <FilterTags
-            columnFilters={table.getState().columnFilters}
             clearFilters={clearFilters}
             removeFilter={removeFilter}
+            table={table}
           />
           <Table>
             <TableHeader hidden>
@@ -477,6 +380,10 @@ export function InboxLandingPage<TData, TValue>({
                       "hover:bg-secondary hover:cursor-pointer",
                       row.getIsSelected() && "bg-selected"
                     )}
+                    onClick={() => {
+                      // This is ugly way to navigate but what people recommend
+                      router.push(`./chat?c=${row.original.id}`);
+                    }}
                   >
                     {row.getVisibleCells().map((cell, index) => (
                       <TableCell
@@ -569,7 +476,7 @@ export function InboxLandingPage<TData, TValue>({
             <div
               className="px-5 py-4 border-r border-primary flex items-center gap-2 whitespace-nowrap hover:cursor-pointer hover:bg-hover"
               onClick={() => {
-                handleMarkUnread();
+                handleMarkUnread(table);
               }}
             >
               <div className="size-[14px] rounded-full bg-icon-tertiary"></div>
@@ -577,7 +484,7 @@ export function InboxLandingPage<TData, TValue>({
             </div>
             <div
               className="px-5 py-4 border-r border-primary flex items-center gap-3 hover:cursor-pointer hover:bg-hover"
-              onClick={() => handleMarkDone()}
+              onClick={() => handleMarkDone(table)}
             >
               <div className="flex items-center gap-2 whitespace-nowrap">
                 <CheckCircleIcon className="size-[13px] rounded-full text-icon-tertiary" />
@@ -588,7 +495,7 @@ export function InboxLandingPage<TData, TValue>({
             <AssignMemberComboBox
               availableMembers={availableMembers}
               onAssign={(member) => {
-                handleAssign(member);
+                handleAssign(table, member);
               }}
             />
 
@@ -609,4 +516,4 @@ export function InboxLandingPage<TData, TValue>({
       </AnimatePresence>
     </div>
   );
-}
+};

@@ -26,7 +26,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ThickCarrotIcon } from "@/components/icons/CustomIcons";
 import { ColumnFiltersState } from "@tanstack/react-table";
-import { handleSelect } from "@/lib/utils";
+import { handleSelect } from "@/lib/tableUtils";
 
 export const Badge = ({
   subscipton,

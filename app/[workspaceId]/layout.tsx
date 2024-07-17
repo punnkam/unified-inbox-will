@@ -3,6 +3,7 @@
 
 import React from "react";
 import { SideBar } from "./SideBar";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export default function ProtectedPathsLayout({
   children,
@@ -14,6 +15,7 @@ export default function ProtectedPathsLayout({
   // some sort of auth check here
 
   return (
+    <TooltipProvider>
       <div className="flex">
         {/* Side bar */}
         <SideBar />
@@ -28,5 +30,6 @@ export default function ProtectedPathsLayout({
           {children}
         </div>
       </div>
+    </TooltipProvider>
   );
 }

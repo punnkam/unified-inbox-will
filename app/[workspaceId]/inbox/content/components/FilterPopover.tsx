@@ -30,16 +30,24 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { useEffect, useState } from "react";
 import { IconComponent } from "@/components/icons/IconComponent";
-import { handleSelect } from "@/lib/utils";
+import { handleSelect } from "@/lib/tableUtils";
+import { ConversationTable } from "@/lib/realDataSchema";
 
 export const FilterPopover = ({
   columnFilters,
   setColumnFilters,
   clearFilters,
+  table,
+  view,
 }: {
   columnFilters: ColumnFiltersState;
   setColumnFilters: (columnId: string, value: any) => void;
-  clearFilters: () => void;
+  clearFilters: (
+    table: ConversationTable,
+    columnFilters: ColumnFiltersState
+  ) => void;
+  table: ConversationTable;
+  view?: "landing" | "chat";
 }) => {
   const [open, setOpen] = useState(false);
   const [pinned, setPinned] = useState<FilterValues>({});
@@ -98,24 +106,39 @@ export const FilterPopover = ({
   return (
     <div>
       <DropdownMenu open={open} onOpenChange={() => setOpen(!open)}>
-        <DropdownMenuTrigger asChild className="flex md:hidden">
-          <Button variant="ghost" size={"icon"} className="w-fit">
-            <FilterLinesIcon className="text-icon-secondary size-[15px] mr-2" />
-          </Button>
-        </DropdownMenuTrigger>
+        {view === "chat" ? (
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant={"ghost"}
+              size={"iconSm"}
+              className="size-[28px] max-h-[28px] min-w-[28px]"
+            >
+              <FilterLinesIcon className="text-icon-tertiary h-[10px]" />
+            </Button>
+          </DropdownMenuTrigger>
+        ) : (
+          <>
+            <DropdownMenuTrigger asChild className="flex md:hidden">
+              <Button variant="ghost" size={"icon"} className="w-fit">
+                <FilterLinesIcon className="text-icon-secondary size-[15px] mr-2" />
+              </Button>
+            </DropdownMenuTrigger>
 
-        <DropdownMenuTrigger asChild className="hidden md:flex">
-          <Button variant="ghost" size={"md"} className="w-fit">
-            <FilterLinesIcon className="text-icon-secondary size-[15px] mr-2" />
-            Filters
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuInboxContent align="end">
+            <DropdownMenuTrigger asChild className="hidden md:flex">
+              <Button variant="ghost" size={"md"} className="w-fit">
+                <FilterLinesIcon className="text-icon-secondary size-[15px] mr-2" />
+                Filters
+              </Button>
+            </DropdownMenuTrigger>
+          </>
+        )}
+        <DropdownMenuInboxContent align={view === "chat" ? "start" : "end"}>
           <div className="p-4 flex items-center justify-between w-[284px] border-b border-primary">
             <p className="text-subtitle-sm">Add filter</p>
             <XIcon
               className="h-4 w-4 text-icon-tertiary hover:text-icon-secondary hover:cursor-pointer"
               onClick={() => {
+                clearFilters(table, columnFilters);
                 setOpen(false);
               }}
             />

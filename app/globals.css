@@ -121,6 +121,32 @@
       width: 0px;
     }
   }
+
+  /* Collapse animations for inbox ops right sidebar */
+  .CollapsibleContentOpsRight[data-state="open"] {
+    animation: slideRightBig 250ms ease-out;
+  }
+  .CollapsibleContentOpsRight[data-state="closed"] {
+    animation: slideLeftBig 250ms ease-out;
+  }
+
+  @keyframes slideRightBig {
+    from {
+      width: 0px;
+    }
+    to {
+      width: 400px;
+    }
+  }
+
+  @keyframes slideLeftBig {
+    from {
+      width: 400px;
+    }
+    to {
+      width: 0px;
+    }
+  }
 }
 
 /* Custom scrollbar classes */
@@ -136,6 +162,52 @@
 ::-webkit-scrollbar-thumb {
   background: #71717a;
   border-radius: 10px;
+}
+
+/* Placeholder text for empty rich text editors */
+p.is-editor-empty:first-child::before {
+  @apply text-placeholder;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+blockquote {
+  @apply pl-4 py-2 border-l-2 border-primary;
+}
+
+/* audioPlayer css */
+audio::-webkit-media-controls-panel {
+  background-color: white;
+}
+
+audio::-webkit-media-controls-play-button {
+  background-color: #f3f4f6;
+  border-radius: 6px;
+}
+
+audio::-webkit-media-controls-play-button:hover {
+  background-color: #e4e4e7;
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+  @apply text-body-2xs text-secondary;
+}
+
+audio::-webkit-media-controls-timeline {
+  background-color: #d4d4d8;
+  border-radius: 50%;
+  padding: 0px;
+  margin: 0px 0px 0px 5px;
+}
+
+audio::-webkit-media-controls-volume-slider {
+  background-color: #e5e7eb;
+  border-radius: 50%;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 /* Apply Instrument Sans font to all titles */

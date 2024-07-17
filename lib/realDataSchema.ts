@@ -13,12 +13,14 @@ import {
   BuildingIcon,
 } from "@/components/icons/CustomIcons";
 import { fakeIconsData } from "./types";
+import { useReactTable } from "@tanstack/react-table";
 
 export interface Conversation {
   id: number | string;
   guest: Guest;
   conversationType?: UnifiedConversationType;
   lastMessage?: MessageItem;
+  allMessages?: MessageItem[];
   hasUnreadMessages?: boolean;
   lastMessageReceivedAt?: string | undefined | null;
   lastMessageSentAt?: string | undefined | null;
@@ -76,6 +78,7 @@ export interface Reservation {
   numNights?: number;
   aiPaused?: boolean;
   upsells?: UpsellItem[];
+  tasks?: TaskItem[];
   guestExternalAccountId?: string;
   reservationLabels?: ReservationLabel[];
 }
@@ -132,10 +135,17 @@ export interface MessageItem {
   isIncoming: boolean;
   isSeen: boolean;
   status: string;
-  type: string;
-  tags?: string[];
+  type: UnifiedConversationType; // updated to be a real type of convo rather than string
+  tags?: ConversationTag[]; // updated to be an array of tags rather than strings
   pictureUrl?: string;
   senderName?: string;
+  emailData?: {
+    // added this to support email
+    to: string[];
+    cc?: string[];
+    bcc?: string[];
+    subject: string;
+  };
 }
 
 export type MessageAuthor = "guest" | "host";
@@ -270,6 +280,36 @@ export enum UpsellStatusEnum {
   HostAccepted = "Host accepted",
 }
 
+// --------- (Start) I made this up to handle tasks
+
+export type TaskItem = {
+  id: string;
+  name: string;
+  type: TaskTypeEnum;
+  status: TaskStatusEnum;
+  assignee?: Member;
+  messages?: MessageItem[];
+  sendToBreezeway?: boolean;
+};
+
+export enum TaskStatusEnum {
+  Cancelled = "Cancelled",
+  Todo = "Todo",
+  InProgress = "In progress",
+  Done = "Done",
+  Backlog = "Backlog",
+}
+
+export enum TaskTypeEnum {
+  Cleaning = "Cleaning",
+  Maintenance = "Maintenance",
+  Safety = "Safety",
+  Supplies = "Supplies",
+  Other = "Other",
+}
+
+// --------- (End) I made this up to handle tasks
+
 export enum Sentiment {
   HAPPY = "HAPPY",
   NEUTRAL = "NEUTRAL",
@@ -283,6 +323,7 @@ export interface Guest {
   imageUrl?: string | null;
   email?: string | null;
   phone?: string | null;
+  whatsapp?: string | null;
 }
 
 export enum UnifiedConversationType {
@@ -292,6 +333,8 @@ export enum UnifiedConversationType {
   Whatsapp = "whatsapp",
   Voice = "voice",
   Ota = "ota",
+  Guesty = "guesty",
+  Airbnb = "airbnb",
 }
 
 export interface ListingGroup {
@@ -403,7 +446,8 @@ export const fakeConversationTags: ConversationTag[] = [
     workspaceId: 1,
     iconId: 0,
     name: "Early Check-In",
-    description: "This conversation needs immediate attention",
+    description:
+      "This conversation needs immediate attention reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeealllly long description",
     type: conversationTagTypes[0],
     actionItem: "Mark as done",
     inboxDashboard: true,
@@ -510,7 +554,312 @@ export const fakeMembersData: Member[] = [
   },
 ];
 
+// Type for a table with conversation data
+export type ConversationTable = ReturnType<typeof useReactTable<Conversation>>;
+
 // --------- Generated Data ------------------------------------------
+
+export interface Transcript {
+  author: "guest" | "agent";
+  text: string;
+}
+
+export interface Call {
+  userId?: string;
+  userData?: Member;
+  workspaceId: string;
+  callId: string;
+  timestamp: number;
+  fromPhone: string;
+  guestName?: string;
+  reservationId?: string;
+  transcript: Transcript[];
+  recordingUrl?: string;
+}
+
+// New fake data for call transcripts
+
+export const fakeCallData: Call[] = [
+  {
+    userId: "1",
+    userData: fakeMembersData[0],
+    workspaceId: "1",
+    callId: "call_001",
+    timestamp: 1622518800,
+    fromPhone: "+1234567890",
+    guestName: "Alice Smith",
+    reservationId: "res_001",
+    transcript: [
+      {
+        author: "guest",
+        text: "Hello, I have a question about my reservation.",
+      },
+      { author: "agent", text: "Sure, how can I help you?" },
+      { author: "guest", text: "What time is check-in?" },
+      { author: "agent", text: "Check-in is at 3pm." },
+      {
+        author: "guest",
+        text: "Hello, I have a question about my reservation.",
+      },
+      { author: "agent", text: "Sure, how can I help you?" },
+      { author: "guest", text: "What time is check-in?" },
+      { author: "agent", text: "Check-in is at 3pm." },
+      {
+        author: "guest",
+        text: "Hello, I have a question about my reservation.",
+      },
+      { author: "agent", text: "Sure, how can I help you?" },
+      { author: "guest", text: "What time is check-in?" },
+      { author: "agent", text: "Check-in is at 3pm." },
+      {
+        author: "guest",
+        text: "Hello, I have a question about my reservation.",
+      },
+      { author: "agent", text: "Sure, how can I help you?" },
+      { author: "guest", text: "What time is check-in?" },
+      { author: "agent", text: "Check-in is at 3pm." },
+    ],
+    recordingUrl:
+      "https://us-tuna-sounds-files.voicemod.net/fc3a77c8-217a-4d3d-a5e4-5114b6532cf8-1643157419129.mp3",
+  },
+  {
+    userId: "2",
+    userData: fakeMembersData[1],
+    workspaceId: "2",
+    callId: "call_002",
+    timestamp: 1622522400,
+    fromPhone: "+1987654321",
+    guestName: "Bob Johnson",
+    reservationId: "res_002",
+    transcript: [
+      { author: "guest", text: "Hi, I need to change my reservation dates." },
+      {
+        author: "agent",
+        text: "I can help with that. What dates would you like to change to?",
+      },
+      { author: "guest", text: "I want to extend my stay by two days." },
+      { author: "agent", text: "Okay, let me update that for you." },
+    ],
+    recordingUrl:
+      "https://us-tuna-sounds-files.voicemod.net/fc3a77c8-217a-4d3d-a5e4-5114b6532cf8-1643157419129.mp3",
+  },
+  {
+    userId: "3",
+    userData: fakeMembersData[2],
+    workspaceId: "1",
+    callId: "call_003",
+    timestamp: 1622526000,
+    fromPhone: "+1122334455",
+    guestName: "Charlie Brown",
+    reservationId: "res_003",
+    transcript: [
+      { author: "guest", text: "Can I get an early check-in?" },
+      {
+        author: "agent",
+        text: "Let me check the availability. Please hold for a moment.",
+      },
+      { author: "guest", text: "Sure, thank you." },
+      {
+        author: "agent",
+        text: "Yes, we can accommodate an early check-in at 1pm.",
+      },
+    ],
+    recordingUrl:
+      "https://us-tuna-sounds-files.voicemod.net/fc3a77c8-217a-4d3d-a5e4-5114b6532cf8-1643157419129.mp3",
+  },
+];
+
+const fakeAllMessages: MessageItem[] = [
+  {
+    id: 101,
+    text: "What time is check-in?",
+    timestamp: 1622519100,
+    author: "guest",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: UnifiedConversationType.Airbnb,
+  },
+  {
+    id: 102,
+    text: "Check-in is at 3pm Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+    timestamp: 1622522700,
+    author: "host",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: UnifiedConversationType.Airbnb,
+  },
+  {
+    id: 103,
+    text: "ok great, oh by the way - the dryer is broken, can you fix it?",
+    timestamp: 1622522700,
+    author: "guest",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: UnifiedConversationType.Airbnb,
+  },
+  {
+    id: 104,
+    text: "I'll fix it, thanks!",
+    timestamp: 1622522700,
+    author: "host",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: UnifiedConversationType.Airbnb,
+  },
+  {
+    id: 105,
+    text: "I'll fix it, thanks!",
+    timestamp: 1622522700,
+    author: "host",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: UnifiedConversationType.Airbnb,
+  },
+  {
+    id: 106,
+    text: "Can I check-in early?",
+    timestamp: 1720394655,
+    author: "guest",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: UnifiedConversationType.Airbnb,
+  },
+  {
+    id: 107,
+    text: "Sure, you can check-in at 1pm.",
+    timestamp: 1720398255,
+    author: "host",
+    isIncoming: false,
+    isSeen: true,
+    status: "delivered",
+    type: UnifiedConversationType.Airbnb,
+  },
+  {
+    id: 108,
+    text: "Thank you!",
+    timestamp: 1720401855,
+    author: "guest",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: UnifiedConversationType.Airbnb,
+  },
+  {
+    id: 109,
+    text: "Is there a parking space available?",
+    timestamp: 1720405455,
+    author: "guest",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: UnifiedConversationType.Airbnb,
+    tags: [fakeConversationTags[1]],
+  },
+  {
+    id: 110,
+    text: "Yes, there is a parking space in front of the building.",
+    timestamp: 1720409055,
+    author: "host",
+    isIncoming: false,
+    isSeen: true,
+    status: "delivered",
+    type: UnifiedConversationType.Airbnb,
+  },
+  {
+    id: 111,
+    text: "Great, see you soon!",
+    timestamp: 1720412655,
+    author: "guest",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: UnifiedConversationType.Airbnb,
+  },
+  {
+    id: 112,
+    text: "Can you provide extra towels?",
+    timestamp: 1720416255,
+    author: "guest",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: UnifiedConversationType.Airbnb,
+    tags: [fakeConversationTags[3]],
+  },
+  {
+    id: 113,
+    text: "Extra towels have been placed in your room.",
+    timestamp: 1720419855,
+    author: "host",
+    isIncoming: false,
+    isSeen: true,
+    status: "delivered",
+    type: UnifiedConversationType.Airbnb,
+  },
+  {
+    id: 114,
+    text: "The Wi-Fi password is not working.",
+    timestamp: 1720423455,
+    author: "guest",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: UnifiedConversationType.Airbnb,
+    // tags: [fakeConversationTags[0], fakeConversationTags[2]],
+  },
+  {
+    id: 115,
+    text: `Hello, this is a test email <strong>This is <em>a test</em> email</strong><br/><br/>
+    
+    On Fri, Jun 14, 2024 at 12:01PM Casa Ka’an <info@casakaan.com> wrote:<br></br>
+    
+    <blockquote>Hi Jared, Hope all is well<br/>Can we hop on a call to discuss<br><br>On Thurs, June 13, 2024 at 12:01 PM Jared <jared@hostai.app> wrote:<br></br><blockquote>Hi Nico, <br>Thank you for this information</blockquote></blockquote>`,
+    timestamp: 1720427055,
+    author: "host",
+    isIncoming: false,
+    isSeen: true,
+    status: "delivered",
+    type: UnifiedConversationType.Email,
+  },
+  {
+    id: 116,
+    text: "The new password worked, thank you!",
+    timestamp: 1720430655,
+    author: "guest",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: UnifiedConversationType.Airbnb,
+  },
+  //ex of email
+  {
+    id: 117,
+    text: `Hello, this is a test email <strong>This is <em>a test</em> email</strong><br/><br/>
+    
+    On Fri, Jun 14, 2024 at 12:01PM Casa Ka’an <info@casakaan.com> wrote:<br></br>
+    
+    <blockquote>Hi Jared, Hope all is well<br/>Can we hop on a call to discuss<br><br>On Thurs, June 13, 2024 at 12:01 PM Jared <jared@hostai.app> wrote:<br></br><blockquote>Hi Nico, <br>Thank you for this information</blockquote></blockquote>`,
+    timestamp: 1720430655,
+    author: "guest",
+    isIncoming: true,
+    isSeen: false,
+    status: "delivered",
+    type: UnifiedConversationType.Email,
+    emailData: {
+      to: ["guest@hostai.app"],
+      cc: ["guest1@hostai.app"],
+      bcc: ["guest2@hostai.app"],
+      subject: "Test email",
+    },
+  },
+];
+
 export const fakeListingsData: Listing[] = [
   {
     userId: "1",
@@ -528,6 +877,7 @@ export const fakeListingsData: Listing[] = [
     formData: {},
     faqData: {},
     lastDynamicLearning: 1622518800,
+    automated: true,
   },
   {
     userId: "2",
@@ -545,6 +895,7 @@ export const fakeListingsData: Listing[] = [
     formData: {},
     faqData: {},
     lastDynamicLearning: 1622522400,
+    automated: true,
   },
   {
     userId: "3",
@@ -579,6 +930,7 @@ export const fakeListingsData: Listing[] = [
     formData: {},
     faqData: {},
     lastDynamicLearning: 1622542400,
+    automated: true,
   },
   {
     userId: "4",
@@ -673,8 +1025,9 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
+    allMessages: fakeAllMessages,
     hasUnreadMessages: true,
     lastMessageReceivedAt: "2024-06-24T10:30:00Z",
     lastMessageSentAt: "2024-06-24T10:32:00Z",
@@ -682,10 +1035,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1001,
       createdAtTimestamp: 1622518800,
-      arrivalDate: "2024-06-22",
-      departureDate: "2024-06-29",
-      checkInTime: "15:00",
-      checkOutTime: "11:00",
+      arrivalDate: "2024-06-22T00:00:00.000Z",
+      departureDate: "2024-06-29T00:00:00.000Z",
+      checkInTime: "2024-06-22T15:00:00.000Z",
+      checkOutTime: "2024-06-29T11:00:00.000Z",
       guest: {
         name: "Alice Smith",
         firstName: "Alice",
@@ -770,18 +1123,20 @@ export const mockConversationData: Conversation[] = [
         "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       email: "bob@example.com",
       phone: "987-654-3210",
+      whatsapp: "987-654-3210",
     },
     conversationType: UnifiedConversationType.Whatsapp,
     lastMessage: {
       id: 102,
       text: "Can I have a late check-out?",
-      timestamp: 1622522700,
+      timestamp: 1720043484,
       author: "host",
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
+    allMessages: fakeAllMessages,
     hasUnreadMessages: true,
     lastMessageReceivedAt: "2024-06-24T11:30:00Z",
     lastMessageSentAt: "2024-06-24T11:35:00Z",
@@ -789,10 +1144,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1002,
       createdAtTimestamp: 1622522400,
-      arrivalDate: "2024-06-20",
-      departureDate: "2024-06-27",
-      checkInTime: "15:00",
-      checkOutTime: "11:00",
+      arrivalDate: "2024-07-12T00:00:00.000Z",
+      departureDate: "2024-07-20T00:00:00.000Z",
+      checkInTime: "2024-07-12T15:00:00.000Z",
+      checkOutTime: "2024-07-20T11:00:00.000Z",
       guest: {
         name: "Bob Johnson",
         firstName: "Bob",
@@ -801,6 +1156,7 @@ export const mockConversationData: Conversation[] = [
           "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         email: "bob@example.com",
         phone: "987-654-3210",
+        whatsapp: "987-654-3210",
       },
       numberOfGuests: 4,
       listing: fakeListingsData[1],
@@ -825,6 +1181,32 @@ export const mockConversationData: Conversation[] = [
           country: "USA",
         },
       },
+      customFields: [
+        {
+          field: "Arbio Reservation ID",
+          value: "rsv-asfkl78",
+        },
+        {
+          field: "Guest Favorite Color",
+          value: "Blue",
+        },
+        {
+          field: "Special Requests",
+          value: "Extra pillows",
+        },
+        {
+          field: "Preferred Language",
+          value: "English",
+        },
+        {
+          field: "VIP Status",
+          value: "Gold",
+        },
+        {
+          field: "Dietary Restrictions",
+          value: "Vegetarian",
+        },
+      ],
       pmsPlatform: PMSPlatformEnum.HOSTAWAY,
       status: "Current",
       channel: BookingChannel.Vrbo,
@@ -838,12 +1220,95 @@ export const mockConversationData: Conversation[] = [
       upsells: [
         {
           id: "2",
-          type: "Early Check-in",
+          type: "Post-Stay Gap Night",
           status: UpsellStatusEnum.Awaiting,
-          totalPriceWithDiscount: 40,
+          totalPriceWithDiscount: 400.5,
           currency: "USD",
           finalMessage:
-            "Would you like an early check-in for an additional $40?",
+            "Hi Robb, I’m reaching out about your stay with us in King’s Landing. We have 1 night that opened up right after your check-out date I’d like to offer to you at a 20% discount if you have the flexibility in your travel schedule. I’m happy to extend your reservation for you to stay a day later. Just let me know.",
+          newCheckInDate: "2024-07-12T00:00:00.000Z",
+          newCheckOutDate: "2024-07-21T00:00:00.000Z",
+        },
+        {
+          id: "3",
+          type: "Late Check-out",
+          status: UpsellStatusEnum.GuestAccepted,
+          totalPriceWithDiscount: 50,
+          currency: "USD",
+          finalMessage:
+            "Would you like a late check-out for an additional $50?",
+        },
+        {
+          id: "4",
+          type: "Room Upgrade",
+          status: UpsellStatusEnum.NotSent,
+          totalPriceWithDiscount: 100,
+          currency: "USD",
+          finalMessage:
+            "Would you like to upgrade your room for an additional $100?",
+        },
+        {
+          id: "5",
+          type: "Airport Transfer",
+          status: UpsellStatusEnum.GuestAccepted,
+          totalPriceWithDiscount: 30,
+          currency: "USD",
+          finalMessage:
+            "Would you like an airport transfer for an additional $30?",
+        },
+        {
+          id: "6",
+          type: "Spa Package",
+          status: UpsellStatusEnum.GuestDeclined,
+          totalPriceWithDiscount: 70,
+          currency: "USD",
+          finalMessage: "Would you like a spa package for an additional $70?",
+        },
+      ],
+      tasks: [
+        {
+          id: "1",
+          name: "Fix the kitchen sink",
+          type: TaskTypeEnum.Maintenance,
+          status: TaskStatusEnum.Todo,
+          assignee: fakeMembersData[0],
+          sendToBreezeway: true,
+          messages: [
+            {
+              id: "1",
+              text: "Bro the kitchen sink is so fucking broken",
+              timestamp: 1622519100,
+              author: "guest",
+              isIncoming: true,
+              isSeen: true,
+              status: "delivered",
+              type: UnifiedConversationType.Airbnb,
+            },
+            {
+              id: "2",
+              text: "the sink in the kitchen is on fire - reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeaaaaaaaaaaaa lllllllllllllllllllllll llllllllllllong",
+              timestamp: 1622522700,
+              author: "guest",
+              isIncoming: true,
+              isSeen: true,
+              status: "delivered",
+              type: UnifiedConversationType.Airbnb,
+            },
+          ],
+        },
+        {
+          id: "2",
+          name: "Sink is broken",
+          type: TaskTypeEnum.Cleaning,
+          status: TaskStatusEnum.InProgress,
+          assignee: fakeMembersData[1],
+        },
+        {
+          id: "3",
+          name: "Restock toilet paper",
+          type: TaskTypeEnum.Supplies,
+          status: TaskStatusEnum.Done,
+          assignee: fakeMembersData[2],
         },
       ],
       reservationLabels: [fakeReservationLabels[1]],
@@ -852,7 +1317,7 @@ export const mockConversationData: Conversation[] = [
     hasInboxMessageQueue: false,
     archived: false,
     timezone: "America/Denver",
-    tags: [fakeConversationTags[1]],
+    tags: fakeAllMessages.map((message) => message.tags!).flat(),
     conversationDetails: {
       showSummary: true,
       summary: {
@@ -887,7 +1352,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     hasUnreadMessages: false,
     lastMessageReceivedAt: "2024-06-24T12:30:00Z",
@@ -896,10 +1361,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1003,
       createdAtTimestamp: 1622532400,
-      arrivalDate: "2024-06-26",
-      departureDate: "2024-07-05",
-      checkInTime: "14:00",
-      checkOutTime: "10:00",
+      arrivalDate: "2024-06-26T00:00:00.000Z",
+      departureDate: "2024-07-05T00:00:00.000Z",
+      checkInTime: "2024-06-26T14:00:00.000Z",
+      checkOutTime: "2024-07-05T10:00:00.000Z",
       guest: {
         name: "Charlie Brown",
         firstName: "Charlie",
@@ -993,7 +1458,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     hasUnreadMessages: true,
     lastMessageReceivedAt: "2024-06-24T13:30:00Z",
@@ -1002,10 +1467,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1004,
       createdAtTimestamp: 1622542400,
-      arrivalDate: "2024-06-27",
-      departureDate: "2024-07-15",
-      checkInTime: "16:00",
-      checkOutTime: "12:00",
+      arrivalDate: "2024-06-27T00:00:00.000Z",
+      departureDate: "2024-07-15T00:00:00.000Z",
+      checkInTime: "2024-06-27T16:00:00.000Z",
+      checkOutTime: "2024-07-15T12:00:00.000Z",
       guest: {
         name: "David Wilson",
         firstName: "David",
@@ -1100,7 +1565,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     hasUnreadMessages: false,
     lastMessageReceivedAt: "2024-06-24T14:30:00Z",
@@ -1109,10 +1574,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1005,
       createdAtTimestamp: 1622552400,
-      arrivalDate: "2024-07-15",
-      departureDate: "2024-07-20",
-      checkInTime: "15:00",
-      checkOutTime: "11:00",
+      arrivalDate: "2024-07-15T00:00:00.000Z",
+      departureDate: "2024-07-20T00:00:00.000Z",
+      checkInTime: "2024-07-15T15:00:00.000Z",
+      checkOutTime: "2024-07-20T11:00:00.000Z",
       guest: {
         name: "Eva Green",
         firstName: "Eva",
@@ -1206,7 +1671,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     hasUnreadMessages: true,
     lastMessageReceivedAt: "2024-06-24T15:30:00Z",
@@ -1215,10 +1680,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1006,
       createdAtTimestamp: 1622562400,
-      arrivalDate: "2024-07-20",
-      departureDate: "2024-07-25",
-      checkInTime: "13:00",
-      checkOutTime: "10:00",
+      arrivalDate: "2024-07-20T00:00:00.000Z",
+      departureDate: "2024-07-25T00:00:00.000Z",
+      checkInTime: "2024-07-20T13:00:00.000Z",
+      checkOutTime: "2024-07-25T10:00:00.000Z",
       guest: {
         name: "Franklin White",
         firstName: "Franklin",
@@ -1312,7 +1777,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     hasUnreadMessages: false,
     lastMessageReceivedAt: "2024-06-24T16:30:00Z",
@@ -1321,10 +1786,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1007,
       createdAtTimestamp: 1622572400,
-      arrivalDate: "2024-08-01",
-      departureDate: "2024-08-05",
-      checkInTime: "12:00",
-      checkOutTime: "11:00",
+      arrivalDate: "2024-08-01T00:00:00.000Z",
+      departureDate: "2024-08-05T00:00:00.000Z",
+      checkInTime: "2024-08-01T12:00:00.000Z",
+      checkOutTime: "2024-08-05T11:00:00.000Z",
       guest: {
         name: "Grace Lee",
         firstName: "Grace",
@@ -1418,7 +1883,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     hasUnreadMessages: false,
     lastMessageReceivedAt: "2024-06-24T17:30:00Z",
@@ -1427,10 +1892,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1008,
       createdAtTimestamp: 1622582400,
-      arrivalDate: "2024-06-30",
-      departureDate: "2024-08-15",
-      checkInTime: "14:00",
-      checkOutTime: "11:00",
+      arrivalDate: "2024-06-30T00:00:00.000Z",
+      departureDate: "2024-08-15T00:00:00.000Z",
+      checkInTime: "2024-06-30T14:00:00.000Z",
+      checkOutTime: "2024-08-15T11:00:00.000Z",
       guest: {
         name: "Henry Ford",
         firstName: "Henry",
@@ -1524,7 +1989,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     hasUnreadMessages: false,
     lastMessageReceivedAt: "2024-06-24T18:30:00Z",
@@ -1533,10 +1998,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1009,
       createdAtTimestamp: 1622592400,
-      arrivalDate: "2024-08-15",
-      departureDate: "2024-08-20",
-      checkInTime: "14:00",
-      checkOutTime: "11:00",
+      arrivalDate: "2024-08-15T00:00:00.000Z",
+      departureDate: "2024-08-20T00:00:00.000Z",
+      checkInTime: "2024-08-15T14:00:00.000Z",
+      checkOutTime: "2024-08-20T11:00:00.000Z",
       guest: {
         name: "Irene Adler",
         firstName: "Irene",
@@ -1630,7 +2095,7 @@ export const mockConversationData: Conversation[] = [
       isIncoming: true,
       isSeen: false,
       status: "delivered",
-      type: "text",
+      type: UnifiedConversationType.Airbnb,
     },
     hasUnreadMessages: false,
     lastMessageReceivedAt: "2024-06-24T19:30:00Z",
@@ -1639,10 +2104,10 @@ export const mockConversationData: Conversation[] = [
     reservation: {
       id: 1010,
       createdAtTimestamp: 1622602400,
-      arrivalDate: "2024-08-20",
-      departureDate: "2024-08-25",
-      checkInTime: "15:00",
-      checkOutTime: "11:00",
+      arrivalDate: "2024-08-20T00:00:00.000Z",
+      departureDate: "2024-08-25T00:00:00.000Z",
+      checkInTime: "2024-08-20T15:00:00.000Z",
+      checkOutTime: "2024-08-25T11:00:00.000Z",
       guest: {
         name: "Jake Black",
         firstName: "Jake",

@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { InboxSideBarOption } from "./InboxSideBarOption";
 import {
   AtSignIcon,
   ChevronSelectorVertical,
@@ -21,10 +20,18 @@ import {
   fakeListingGroupsData,
   fakeReservationLabels,
 } from "@/lib/realDataSchema";
-import { SidebarTrigger } from "./SidebarTrigger";
+import { SidebarTrigger } from "../../SidebarTrigger";
+import { useSidebar } from "../../SidebarContext";
+import Link from "next/link";
+import cn from "classnames";
+import { colorMap } from "@/lib/types";
+import { useWindowSize } from "@/lib/hooks/useWindowSize";
+import { useSearchParams } from "next/navigation";
+import CountBadge from "@/components/custom/CountBadge";
 
 export const InboxSidebar = () => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const workspaceId = pathname.split("/")[1];
 
@@ -93,11 +100,14 @@ export const InboxSidebar = () => {
                     {fakeReservationLabels.map((label) => (
                       <InboxSideBarOption
                         key={label.id}
-                        path={`/${workspaceId}/inbox/reservation-label/${label.id}`}
+                        path={`/${workspaceId}/inbox/reservation-label?label=${label.id}`}
                         name={label.name}
-                        selected={pathname.startsWith(
-                          `/${workspaceId}/inbox/reservation-label/${label.id}`
-                        )}
+                        selected={
+                          pathname.startsWith(
+                            `/${workspaceId}/inbox/reservation-label`
+                          ) &&
+                          searchParams.get("label") === label.id?.toString()
+                        }
                         emoji={label.emojiId}
                       />
                     ))}
@@ -119,11 +129,13 @@ export const InboxSidebar = () => {
                     {fakeListingGroupsData.map((group) => (
                       <InboxSideBarOption
                         key={group.id}
-                        path={`/${workspaceId}/inbox/listing-group/${group.id}`}
+                        path={`/${workspaceId}/inbox/listing-group?group=${group.id}`}
                         name={group.name}
-                        selected={pathname.startsWith(
-                          `/${workspaceId}/inbox/listing-group/${group.id}`
-                        )}
+                        selected={
+                          pathname.startsWith(
+                            `/${workspaceId}/inbox/listing-group`
+                          ) && searchParams.get("group") === group.id.toString()
+                        }
                         color={group.color}
                       />
                     ))}
@@ -138,5 +150,82 @@ export const InboxSidebar = () => {
         <SidebarTrigger />
       </div>
     </div>
+  );
+};
+
+export const InboxSideBarOption = ({
+  path,
+  name,
+  selected,
+  icon,
+  image,
+  count,
+  color,
+  emoji,
+  className,
+}: {
+  path: string;
+  name: string;
+  selected: boolean;
+  icon?: React.ReactNode;
+  image?: string;
+  emoji?: string;
+  count?: number;
+  color?: keyof typeof colorMap;
+  className?: string;
+}) => {
+  const { toggleSidebar } = useSidebar();
+  const size = useWindowSize();
+
+  return (
+    <Link href={path}>
+      <div
+        className={cn(
+          "flex items-center justify-between w-full px-2 py-1 h-8 active:bg-pressed rounded-md gap-2",
+          selected ? "bg-selected hover:bg-selected" : "hover:bg-hover",
+          className
+        )}
+        onClick={() => {
+          if (size.width! <= 705) {
+            toggleSidebar();
+          }
+        }}
+      >
+        <div className="text-subtitle-sidebar flex items-center gap-2">
+          {color && (
+            <div className={cn(`w-2 h-2 rounded-full`, colorMap[color])}></div>
+          )}
+
+          {icon && (
+            <div
+              className={cn(
+                "size-[18px] flex justify-center items-center",
+                selected ? "text-icon-brand" : "text-icon-tertiary"
+              )}
+            >
+              {icon}
+            </div>
+          )}
+
+          {emoji && (
+            <span role="img" aria-label="Emoji" className="text-body-2xs">
+              {String.fromCodePoint(parseInt(emoji, 16))}
+            </span>
+          )}
+
+          {image && (
+            <img
+              src={image}
+              alt="icon"
+              className="size-[18px] rounded-full object-cover"
+            />
+          )}
+          <p>{name}</p>
+        </div>
+        {count !== undefined && (
+          <CountBadge count={count} selected={selected} />
+        )}
+      </div>
+    </Link>
   );
 };

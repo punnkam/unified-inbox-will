@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { clsx } from "clsx";
 
 const buttonVariants = cva(
-  "py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-icon-active focus-visible:ring-offset-2 disabled:pointer-events-none disabled:bg-secondary disabled:text-disabled",
+  "py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-icon-active focus-visible:ring-offset-2 disabled:pointer-events-none disabled:bg-disabled disabled:text-disabled",
   {
     variants: {
       variant: {
@@ -27,6 +27,7 @@ const buttonVariants = cva(
         md: "text-subtitle-xs h-10 px-4",
         lg: "text-subtitle-sm h-11 px-4",
         xl: "text-subtitle-sm h-12 px-4",
+        iconMd: "h-10 w-10 flex items-center justify-center",
         iconSm: "h-8 w-8",
         icon: "h-10 w-10",
         iconXs: "h-6 w-6",

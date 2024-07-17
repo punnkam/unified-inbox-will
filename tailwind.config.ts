@@ -57,8 +57,8 @@ const config = {
         // Custom colors
         icon: {
           primary: "#191919",
-          secondary: "#4B5563",
-          tertiary: "#71717A",
+          secondary: "#6B7280",
+          tertiary: "#A1A1AA",
           brand: "#10275B",
           disabled: "#D1D5DB",
           error: "#EF4444",
@@ -136,9 +136,10 @@ const config = {
       },
       textColor: {
         primary: "#191919",
-        secondary: "#4B5563",
+        secondary: "#6B7280",
         tertiary: "#A1A1AA",
         brand: "#10275B",
+        "brand-hover": "#40527C",
         disabled: "#A1A1AA",
         placeholder: "#A1A1AA",
         error: "#EF4444",
@@ -169,6 +170,7 @@ const config = {
         "title-3xl": ["30px", { lineHeight: "38.4px", fontWeight: 500 }],
         "title-2xl": ["24px", { lineHeight: "33.6px", fontWeight: 500 }],
         "title-xl": ["22px", { lineHeight: "28.8px", fontWeight: 500 }],
+        "title-05xl": ["20px", { lineHeight: "24px", fontWeight: 500 }],
         "title-lg": ["18px", { lineHeight: "24px", fontWeight: 500 }],
         "title-md": ["16px", { lineHeight: "21.6px", fontWeight: 500 }],
         "title-sm": ["14px", { lineHeight: "19.2px", fontWeight: 500 }],
@@ -236,6 +238,7 @@ const config = {
       },
       gradientColorStops: {
         "primary-subtle": "#F9FAFB",
+        "selected-subtle": "#F1F6FF",
       },
     },
   },
